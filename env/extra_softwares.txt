@@ -1,0 +1,3 @@
+minimap2
+sratoolkit 0 fasterq-dump
+samtools
