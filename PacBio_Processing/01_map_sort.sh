@@ -19,7 +19,7 @@ working_dir=${Mother_dir}/PacBio_Processing/
 
 Ref_file=${Mother_dir}/Genomes_Input/syn1_genome.fasta
 # Isoform_file=${Isoform_dir}2-hq_transcripts.fasta
-FLNC_file=${working_dir}/all.FLNC.fastq.gz
+FLNC_file=${working_dir}/intermediate_files/all.FLNC.fastq.gz
 
 # ---------- Checks ----------
 # for exe in minimap2 samtools; do
