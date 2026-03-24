@@ -1,3 +1,4 @@
-minimap2
-sratoolkit 0 fasterq-dump
-samtools
+minimap2 # Mapping PacBio Reads
+sratoolkit 0 fasterq-dump # Download fastq files from NCBI
+samtools # 
+ViennaRNA # RNA secondary structure and pairing prediction
