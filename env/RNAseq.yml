@@ -337,6 +337,8 @@ dependencies:
   - rich-click=1.9.7=pyh8f84b5b_0
   - rpds-py=0.26.0=py310hbcd0ec0_0
   - samtools=1.23=h96c455f_0
+  - sra-tools
+  - pigz
   - send2trash=1.8.3=pyh0d859eb_1
   - setuptools=80.10.2=pyh332efcf_0
   - sip=6.10.0=py310hf71b8c6_0
