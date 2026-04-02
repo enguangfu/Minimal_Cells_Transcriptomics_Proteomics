@@ -7,14 +7,17 @@ set -euo pipefail
 #############################################
 
 # ---------- Location of executables ----------
-MINIMAP2_PATH=~/Desktop/minimap2-2.30_x64-linux/minimap2 # replace with your minimap2 path if not in PATH
+MINIMAP2_PATH=$(which minimap2 2>/dev/null)
+if [ -z "$MINIMAP2_PATH" ]; then
+    echo "Error: minimap2 not found in the active conda environment. Please activate the appropriate environment."
+    exit 1
+fi
 
 # ---------- User inputs ----------
 THREADS=16
 
 # Required: reference genome FASTA and HQ isoform FASTA
-Mother_dir=/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics
-# Isoform_dir=${Mother_dir}RNAseq_Data/syn1_data/pacbio_rawreads/Syn1_PacBio_2024_02_20/hq_transcripts/
+Mother_dir="$(cd "$(dirname "$0")/.." && pwd)"
 working_dir=${Mother_dir}/PacBio_Processing/
 
 Ref_file=${Mother_dir}/Genomes_Input/syn1_genome.fasta

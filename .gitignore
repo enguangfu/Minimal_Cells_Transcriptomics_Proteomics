@@ -2,3 +2,52 @@
 #bad_transcriptome_assembly/
 #Later/
 #old/
+
+# ----------------------------
+# Raw FASTQ files
+# ----------------------------
+Illumina_Raw/*.fastq
+Illumina_Raw/*.fastq.gz
+PacBio_Raw/*.fastq
+PacBio_Raw/*.fastq.gz
+
+# ----------------------------
+# Illumina processing outputs
+# ----------------------------
+Illumina_Processing/bam/
+Illumina_Processing/depth_bedgraph/
+Illumina_Processing/logs/
+Illumina_Processing/qc/
+
+# ----------------------------
+# PacBio processing outputs
+# ----------------------------
+PacBio_Processing/intermediate_files/
+PacBio_Processing/depth_bedgraph/
+PacBio_Processing/*.bam
+PacBio_Processing/*.bam.csi
+PacBio_Processing/*.log
+PacBio_Processing/*.txt
+PacBio_Processing/*.tsv
+syn1.PacBio.FLNC.sorted.HQ.bam
+syn1.PacBio.FLNC.sorted.HQ.bam.bai
+
+# ----------------------------
+# Isoform annotation outputs
+# ----------------------------
+isoform_annotation/
+
+# ----------------------------
+# Novel ORF discovery outputs
+# ----------------------------
+novel_orf_discovery/candidate_orfs_*.tsv
+novel_orf_discovery/candidate_orfs_*.xlsx
+novel_orf_discovery/novel_orfs_*.fasta
+novel_orf_discovery/novel_orfs_*.tsv
+novel_orf_discovery/novel_orfs_*.xlsx
+novel_orf_discovery/*.png
+novel_orf_discovery/trypsin_digest/
+#bad_alignment/
+#bad_transcriptome_assembly/
+#Later/
+#old/
