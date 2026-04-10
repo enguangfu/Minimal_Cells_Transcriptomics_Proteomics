@@ -1,4 +1,4 @@
-Loaded 911 gene intervals from GFF3 (chrom length 1,078,516)
+Loaded 828 protein-coding gene intervals from GFF3 (chrom length 1,078,516)
 Isoforms loaded (n_reads >= 50): 4064
 
 ======================================================================
@@ -6,48 +6,48 @@ ENDPOINT-CONTEXT CATEGORY SUMMARY
 ======================================================================
 Category                   Isoforms        %          Reads        %
 ----------------------------------------------------------------------
-canonical                       376     9.3%        509,000    26.3%
-5p_intragenic_only              723    17.8%        160,226     8.3%
-3p_intragenic_only            1,477    36.3%        990,285    51.1%
-both_intragenic               1,488    36.6%        278,538    14.4%
+canonical                       493    12.1%        560,991    28.9%
+5p_intragenic_only              728    17.9%        152,225     7.9%
+3p_intragenic_only            1,475    36.3%        963,451    49.7%
+both_intragenic               1,368    33.7%        261,382    13.5%
 ----------------------------------------------------------------------
 TOTAL                         4,064   100.0%      1,938,049   100.0%
 
 Intragenic-endpoint totals (counting any isoform with that end intragenic):
-  5' intragenic: 2,211 isoforms / 438,764 reads
-  3' intragenic: 2,965 isoforms / 1,268,823 reads
+  5' intragenic: 2,096 isoforms / 413,607 reads
+  3' intragenic: 2,843 isoforms / 1,224,833 reads
 
-5'→3' / 3'→5' ratio (by unique isoform kinds):  0.75
-5'→3' / 3'→5' ratio (by unique isoform counts): 0.35
+5'→3' / 3'→5' ratio (by unique isoform kinds):  0.74
+5'→3' / 3'→5' ratio (by unique isoform counts): 0.34
 
 Per-strand breakdown:
-  + strand: 5'-intra=1198 (264,325 reads), 3'-intra=1376 (593,072 reads), ratio_iso=0.87, ratio_read=0.45
-  - strand: 5'-intra=1013 (174,439 reads), 3'-intra=1589 (675,751 reads), ratio_iso=0.64, ratio_read=0.26
+  + strand: 5'-intra=1158 (247,366 reads), 3'-intra=1350 (588,246 reads), ratio_iso=0.86, ratio_read=0.42
+  - strand: 5'-intra=938 (166,241 reads), 3'-intra=1493 (636,587 reads), ratio_iso=0.63, ratio_read=0.26
 
 Figures saved:
   ./RNase/RNase_asymmetry_isoform_categories.pdf
   ./RNase/RNase_asymmetry_exoribo_categories.pdf
 Saved: ./RNase/isoform_endpoint_context.tsv (4064 rows)
 
-Loaded 911 gene intervals for ORF analysis
-ORFs (start codon contained in an isoform): 5,962
-  from 3,164 isoforms (1,604 carry ≥2 ORFs)
+Loaded 828 gene intervals for ORF analysis
+ORFs (start codon contained in an isoform): 5,659
+  from 3,070 isoforms (1,512 carry ≥2 ORFs)
 
 ======================================================================
 ORFs WITH START CODON BUT NO STOP CODON
 ======================================================================
   (each ORF in a polycistronic isoform is counted independently)
   By unique ORF observations:
-    no-stop / total = 2,472 / 5,962 = 41.46%
+    no-stop / total = 2,369 / 5,659 = 41.86%
   By read-weighted observations:
-    no-stop / total = 1,197,731 / 3,110,391 = 38.51%
+    no-stop / total = 1,157,178 / 2,996,500 = 38.62%
 
-  ORFs-per-isoform distribution: mean=1.88, max=10
+  ORFs-per-isoform distribution: mean=1.84, max=10
 
   Per-strand:
-    + strand: no-stop 1,116 / 2,517 (44.34%)
-    - strand: no-stop 1,356 / 3,445 (39.36%)
+    + strand: no-stop 1,097 / 2,381 (46.07%)
+    - strand: no-stop 1,272 / 3,278 (38.80%)
 
-Saved: ./RNase/orf_start_stop_observations.tsv (3164 rows)
+Saved: ./RNase/orf_start_stop_observations.tsv (3070 rows)
 
 Done.

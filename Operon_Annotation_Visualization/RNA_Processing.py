@@ -57,7 +57,8 @@ MIN_READS = 50    # only keep well-supported isoforms
 # ═══════════════════════════════════════════════════════════════════════════════
 def load_intragenic_mask(gff3_path: str) -> dict:
     """Return {'+': bool array, '-': bool array} marking intragenic
-    positions on each strand, indexed in 0-based genomic coordinates."""
+    positions on each strand, indexed in 0-based genomic coordinates.
+    Only protein-coding genes (rna_type=mRNA) are included."""
     gene_rows = []
     chrom_len = 0
     with open(gff3_path) as fh:
@@ -66,6 +67,9 @@ def load_intragenic_mask(gff3_path: str) -> dict:
                 continue
             f = line.rstrip("\n").split("\t")
             if len(f) < 8 or f[2] != "gene":
+                continue
+            attrs = f[8] if len(f) >= 9 else ""
+            if "rna_type=mRNA" not in attrs:
                 continue
             s1, e1, strand = int(f[3]), int(f[4]), f[6]
             gene_rows.append((s1 - 1, e1, strand))   # → 0-based half-open
@@ -76,7 +80,7 @@ def load_intragenic_mask(gff3_path: str) -> dict:
     for s0, e0, strand in gene_rows:
         if strand in mask:
             mask[strand][s0:e0] = True
-    print(f"Loaded {len(gene_rows)} gene intervals from GFF3 "
+    print(f"Loaded {len(gene_rows)} protein-coding gene intervals from GFF3 "
           f"(chrom length {chrom_len:,})")
     return mask
 
@@ -299,6 +303,7 @@ print(f"Saved: {out_tsv} ({len(df_iso)} rows)")
 #              stop  codon = [start0,   start0+3)
 
 def load_gene_intervals(gff3_path: str) -> pd.DataFrame:
+    """Load gene intervals, keeping only protein-coding genes (rna_type=mRNA)."""
     rows = []
     with open(gff3_path) as fh:
         for line in fh:
@@ -307,8 +312,10 @@ def load_gene_intervals(gff3_path: str) -> pd.DataFrame:
             f = line.rstrip("\n").split("\t")
             if len(f) < 8 or f[2] != "gene":
                 continue
-            s1, e1, strand = int(f[3]), int(f[4]), f[6]
             attrs = f[8] if len(f) >= 9 else ""
+            if "rna_type=mRNA" not in attrs:
+                continue
+            s1, e1, strand = int(f[3]), int(f[4]), f[6]
             locus = ""
             for kv in attrs.split(";"):
                 if kv.startswith("locus_tag="):
