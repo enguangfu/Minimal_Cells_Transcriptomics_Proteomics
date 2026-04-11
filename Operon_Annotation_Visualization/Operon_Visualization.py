@@ -291,89 +291,75 @@ def draw_gene_arrows(ax, oc: OperonCoord, genes_df: pd.DataFrame):
 	HEAD_MIN  = 20     # minimum head length in TX units (≈ bp)
 
 	if genes_df.empty:
-		ax.text(0.01, 0.5, "No genes in interval",
-				transform=ax.transAxes, va="center")
-		ax.set_ylim(0, 1)
-		ax.set_yticks([])
-		ax.spines["left"].set_visible(False)
-		ax.spines["right"].set_visible(False)
-		ax.spines["bottom"].set_visible(False)
-		return
+		ax.text(0.5, 0.7, "No genes in interval",
+				transform=ax.transAxes, ha="center", va="center",
+				fontsize=GENE_LABEL_FONTSIZE, fontweight="bold")
 
-	# Single baseline running through the panel
+	# Single baseline running through the panel (drawn even when no genes)
 	xlim_lo, xlim_hi = ax.get_xlim()
 	ax.hlines(Y_BASE, xlim_lo, xlim_hi, color="black", lw=2, zorder=1)
 
-	genes_sorted = genes_df.sort_values("start0").reset_index(drop=True)
-	for gi, r in genes_sorted.iterrows():
-		g0 = int(r["start0"])
-		g1 = int(r["end0"])
-		gstrand = str(r["strand"])
-		in_syn3a = bool(r.get("in_syn3a", False))
+	if not genes_df.empty:
+		genes_sorted = genes_df.sort_values("start0").reset_index(drop=True)
+		for _, r in genes_sorted.iterrows():
+			g0 = int(r["start0"])
+			g1 = int(r["end0"])
+			gstrand = str(r["strand"])
+			in_syn3a = bool(r.get("in_syn3a", False))
 
-		x0 = oc.tx_of_genome_pos0(g0)
-		x1 = oc.tx_of_genome_pos0(g1)
-		xleft  = min(x0, x1)
-		xright = max(x0, x1)
-		xcen   = (xleft + xright) / 2
-		width  = xright - xleft
+			x0 = oc.tx_of_genome_pos0(g0)
+			x1 = oc.tx_of_genome_pos0(g1)
+			xleft  = min(x0, x1)
+			xright = max(x0, x1)
+			xcen   = (xleft + xright) / 2
+			width  = xright - xleft
 
-		head_len = max(HEAD_MIN, width * HEAD_FRAC)
-		head_len = min(head_len, width)   # never longer than the gene itself
+			head_len = max(HEAD_MIN, width * HEAD_FRAC)
+			head_len = min(head_len, width)
 
-		color = GENE_COLORS[gstrand]
-		alpha = 1 if in_syn3a else 1
+			color = GENE_COLORS[gstrand]
+			points_right = (gstrand == oc.strand)
 
-		# Direction of transcription in TX (display) space:
-		# the operon is always laid out left→right in TX coords, so a gene
-		# whose strand matches the operon strand transcribes left→right
-		# (triangle on the right). Antisense genes point the opposite way.
-		points_right = (gstrand == oc.strand)
+			if points_right:
+				tip_x  = xright
+				base_x = xright - head_len
+				verts = [
+					(xleft,  Y_BASE - RECT_H / 2),
+					(base_x, Y_BASE - RECT_H / 2),
+					(base_x, Y_BASE - TRI_H / 2),
+					(tip_x,  Y_BASE),
+					(base_x, Y_BASE + TRI_H / 2),
+					(base_x, Y_BASE + RECT_H / 2),
+					(xleft,  Y_BASE + RECT_H / 2),
+				]
+			else:
+				tip_x  = xleft
+				base_x = xleft + head_len
+				verts = [
+					(xright, Y_BASE - RECT_H / 2),
+					(base_x, Y_BASE - RECT_H / 2),
+					(base_x, Y_BASE - TRI_H / 2),
+					(tip_x,  Y_BASE),
+					(base_x, Y_BASE + TRI_H / 2),
+					(base_x, Y_BASE + RECT_H / 2),
+					(xright, Y_BASE + RECT_H / 2),
+				]
 
-		# Build rectangle-with-triangle-head as one closed polygon
-		if points_right:
-			tip_x  = xright
-			base_x = xright - head_len
-			verts = [
-				(xleft,  Y_BASE - RECT_H / 2),
-				(base_x, Y_BASE - RECT_H / 2),
-				(base_x, Y_BASE - TRI_H / 2),
-				(tip_x,  Y_BASE),
-				(base_x, Y_BASE + TRI_H / 2),
-				(base_x, Y_BASE + RECT_H / 2),
-				(xleft,  Y_BASE + RECT_H / 2),
-			]
-		else:
-			tip_x  = xleft
-			base_x = xleft + head_len
-			verts = [
-				(xright, Y_BASE - RECT_H / 2),
-				(base_x, Y_BASE - RECT_H / 2),
-				(base_x, Y_BASE - TRI_H / 2),
-				(tip_x,  Y_BASE),
-				(base_x, Y_BASE + TRI_H / 2),
-				(base_x, Y_BASE + RECT_H / 2),
-				(xright, Y_BASE + RECT_H / 2),
-			]
+			ax.add_patch(mpatches.Polygon(
+				verts, closed=True,
+				facecolor=color, edgecolor="black",
+				lw=0, alpha=1, zorder=2,
+			))
 
-		poly = mpatches.Polygon(
-			verts, closed=True,
-			facecolor=color, edgecolor="black",
-			lw=0, alpha=alpha, zorder=2,
-		)
-		ax.add_patch(poly)
-
-		# Gene name label above the gene
-		label = make_gene_label(str(r.get("locus_tag", "")), str(r.get("gene_name", "")))
-		if label:
-			ax.text(xcen, Y_BASE + TRI_H / 2 + 0.06, label,
-					ha="center", va="bottom",
-					fontsize=GENE_LABEL_FONTSIZE, color=color, clip_on=True)
-		# Syn3A absence marker
-		if not in_syn3a and label:
-			ax.text(xcen, Y_BASE - TRI_H / 2 - 0.06, "×",
-					ha="center", va="top",
-					fontsize=GENE_LABEL_FONTSIZE, color="grey", clip_on=True)
+			label = make_gene_label(str(r.get("locus_tag", "")), str(r.get("gene_name", "")))
+			if label:
+				ax.text(xcen, Y_BASE + TRI_H / 2 + 0.06, label,
+						ha="center", va="bottom",
+						fontsize=GENE_LABEL_FONTSIZE, color=color, clip_on=True)
+			if not in_syn3a and label:
+				ax.text(xcen, Y_BASE - TRI_H / 2 - 0.06, "×",
+						ha="center", va="top",
+						fontsize=GENE_LABEL_FONTSIZE, color="grey", clip_on=True)
 
 	ax.set_ylim(0, 1)
 	ax.set_yticks([])
@@ -434,7 +420,8 @@ def draw_depth(ax, oc: OperonCoord, depth_df: pd.DataFrame, plot_s0: int, plot_e
 	ax.set_ylabel(f"Depth {strand_text} Strand", fontsize=LABEL_FONTSIZE)
 	ax.spines["right"].set_visible(False)
 	ax.spines["top"].set_visible(False)
-
+	
+	ax.tick_params(axis="y", which="major", labelsize=LABEL_FONTSIZE - 2)
 
 # ----------------------------
 # Panel: Isoforms
