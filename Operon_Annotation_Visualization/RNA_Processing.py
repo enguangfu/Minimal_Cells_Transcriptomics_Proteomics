@@ -49,7 +49,7 @@ ISOFORMS_TSV  = MOTHER_FOLDER + "/isoform_annotation/isoform_clusters_annotated.
 GFF3_FILE     = MOTHER_FOLDER + "/Genomes_Input/syn1.genes.gff3"
 OUT_FOLDER    = "./RNase"
 
-MIN_READS = 50    # only keep well-supported isoforms
+MIN_READS = 10    # only keep well-supported isoforms
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

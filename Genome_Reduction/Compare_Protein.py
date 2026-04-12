@@ -88,27 +88,39 @@ print(low[["locus_num", "gene_name_syn1", "gene_name_syn3a",
            "iPM_fold_change", "sense_covering_ops"]].to_string(index=False))
 
 # ── Plot: distribution of iPM_fold_change ────────────────────────────────────
+fc = result["iPM_fold_change"]
+fc_stats = fc.describe(percentiles=[0.05, 0.25, 0.5, 0.75, 0.95])
+print(f"\niPM fold change statistics (n={int(fc_stats['count'])}):")
+print(f"  mean={fc_stats['mean']:.3f}  median={fc_stats['50%']:.3f}  std={fc_stats['std']:.3f}")
+print(f"  5th={fc_stats['5%']:.3f}  25th={fc_stats['25%']:.3f}  75th={fc_stats['75%']:.3f}  95th={fc_stats['95%']:.3f}")
+print(f"  min={fc_stats['min']:.3f}  max={fc_stats['max']:.3f}")
+
 fig, ax = plt.subplots(figsize=(4, 4))
-ax.hist(result["iPM_fold_change"], bins=50, color="steelblue", edgecolor="white", linewidth=0.4)
+ax.hist(fc, bins=50, color="steelblue", edgecolor="white", linewidth=0.4)
 ax.axvline(10,  color="red",    linestyle="--", linewidth=1.2, label="FC = 10")
 ax.axvline(0.1, color="orange", linestyle="--", linewidth=1.2, label="FC = 0.1")
 ax.set_xlabel("iPM fold change  (syn3A / syn1)", fontsize=11)
 ax.set_ylabel("Number of proteins", fontsize=11)
-ax.set_title("Protein fold change distribution", fontsize=12)
 ax.legend(fontsize=9)
 plt.tight_layout()
 fig.savefig("iPM_fold_change_distribution.pdf")
 plt.close(fig)
-print("\nSaved: iPM_fold_change_distribution.pdf")
+print("Saved: iPM_fold_change_distribution.pdf")
 
 # ── Plot: distribution of iPM_log10FC ────────────────────────────────────────
+log10fc = result["iPM_log10FC"]
+log10fc_stats = log10fc.describe(percentiles=[0.05, 0.25, 0.5, 0.75, 0.95])
+print(f"\niPM log10FC statistics (n={int(log10fc_stats['count'])}):")
+print(f"  mean={log10fc_stats['mean']:.3f}  median={log10fc_stats['50%']:.3f}  std={log10fc_stats['std']:.3f}")
+print(f"  5th={log10fc_stats['5%']:.3f}  25th={log10fc_stats['25%']:.3f}  75th={log10fc_stats['75%']:.3f}  95th={log10fc_stats['95%']:.3f}")
+print(f"  min={log10fc_stats['min']:.3f}  max={log10fc_stats['max']:.3f}")
+
 fig, ax = plt.subplots(figsize=(4, 4))
-ax.hist(result["iPM_log10FC"], bins=50, color="steelblue", edgecolor="white", linewidth=0.4)
+ax.hist(log10fc, bins=50, color="steelblue", edgecolor="white", linewidth=0.4)
 ax.axvline( np.log10(10),  color="red",    linestyle="--", linewidth=1.2, label="log10(10) = 1")
 ax.axvline( np.log10(0.1), color="orange", linestyle="--", linewidth=1.2, label="log10(0.1) = −1")
-ax.set_xlabel("log10(iPM fold change)  (syn3A / syn1)", fontsize=11)
+ax.set_xlabel("log10(iPM fold change)  (syn3A / syn1)", fontsize=12)
 ax.set_ylabel("Number of proteins", fontsize=11)
-ax.set_title("Protein log10 fold change distribution", fontsize=12)
 ax.legend(fontsize=9)
 plt.tight_layout()
 fig.savefig("iPM_log10FC_distribution.pdf")
@@ -124,14 +136,21 @@ y = result["iPM_mean_syn3a"]
 pearson_r, pearson_p = stats.pearsonr(np.log10(x), np.log10(y))
 spearman_r, spearman_p = stats.spearmanr(x, y)
 
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.scatter(x, y, s=12, alpha=0.55, color="steelblue", edgecolors="none")
+# Colour groups: highlight only if FC crosses boundary AND syn1 iPM > 100
+abundant = result["iPM_mean_syn1"] > 100
+mask_high = (result["iPM_fold_change"] > 10)  & abundant
+mask_low  = (result["iPM_fold_change"] < 0.1) & abundant
+mask_mid  = ~mask_high & ~mask_low   # everything else stays blue
 
-# diagonal reference line (FC = 1)
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.scatter(x[mask_mid],  y[mask_mid],  s=12, alpha=0.55, color="steelblue", edgecolors="none", label="other")
+ax.scatter(x[mask_high], y[mask_high], s=25, alpha=0.90, color="red",       edgecolors="none", label="FC > 10  & syn1 iPM > 100")
+ax.scatter(x[mask_low],  y[mask_low],  s=25, alpha=0.90, color="orange",    edgecolors="none", label="FC < 0.1 & syn1 iPM > 100")
+
 lims = [min(x.min(), y.min()) * 0.5, max(x.max(), y.max()) * 2]
-ax.plot(lims, lims,          color="black",  linewidth=0.8, linestyle="--", label="FC = 1")
-ax.plot(lims, [v * 10  for v in lims], color="red",    linewidth=0.6, linestyle=":", label="FC = 10")
-ax.plot(lims, [v * 0.1 for v in lims], color="orange", linewidth=0.6, linestyle=":", label="FC = 0.1")
+ax.plot(lims, lims,                    color="black",  linewidth=0.8, linestyle="--")
+ax.plot(lims, [v * 10  for v in lims], color="red",    linewidth=0.6, linestyle=":")
+ax.plot(lims, [v * 0.1 for v in lims], color="orange", linewidth=0.6, linestyle=":")
 
 ax.set_xscale("log")
 ax.set_yscale("log")
@@ -139,12 +158,11 @@ ax.set_xlim(lims)
 ax.set_ylim(lims)
 ax.set_xlabel("syn1  iPM mean (log scale)", fontsize=12)
 ax.set_ylabel("syn3A  iPM mean (log scale)", fontsize=12)
-ax.set_title("Protein abundance correlation\nsyn1 vs syn3A", fontsize=12)
 ax.text(0.04, 0.96,
         f"Pearson r = {pearson_r:.3f}  (log10)\nSpearman r = {spearman_r:.3f}\nn = {len(result)}",
         transform=ax.transAxes, fontsize=12, verticalalignment="top",
         bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.7))
-ax.legend(fontsize=12, loc="lower right")
+ax.legend(fontsize=10, loc="lower right")
 plt.tight_layout()
 fig.savefig("iPM_correlation_syn1_vs_syn3a.pdf")
 plt.close(fig)

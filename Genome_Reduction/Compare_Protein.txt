@@ -21,7 +21,16 @@ FC < 0.1  (4 genes):
        270            NaN      tsaE; yjeE    8469.819012        23/739      598.695599        232/446         0.070686           OP_00149
        416            NaN             NaN      84.078689       523/739        6.755151        435/446         0.080343           OP_00233
 
+iPM fold change statistics (n=425):
+  mean=3.305  median=1.574  std=16.842
+  5th=0.479  25th=1.058  75th=2.439  95th=6.574
+  min=0.014  max=336.320
 Saved: iPM_fold_change_distribution.pdf
+
+iPM log10FC statistics (n=425):
+  mean=0.207  median=0.197  std=0.400
+  5th=-0.320  25th=0.025  75th=0.387  95th=0.818
+  min=-1.862  max=2.527
 Saved: iPM_log10FC_distribution.pdf
 Saved: iPM_correlation_syn1_vs_syn3a.pdf
 
