@@ -5,7 +5,7 @@ Quantify the directionality of mRNA degradation in Syn1 by labelling
 each PacBio FLNC isoform endpoint as intragenic or intergenic.
 
 Logic:
-  A canonical, intact transcript starts at a promoter (5' end in an
+  A unprocessed, intact transcript starts at a promoter (5' end in an
   intergenic region) and ends at a terminator (3' end in an intergenic
   region). Endpoints that fall *inside* a gene body cannot be explained
   by promoter/terminator usage and must come from RNA processing or
@@ -21,7 +21,7 @@ Logic:
     ┌──────────────────────────┬─────────────┬─────────────┐
     │  Category                │ 5' end      │ 3' end      │
     │──────────────────────────┼─────────────┼─────────────│
-    │  canonical               │ intergenic  │ intergenic  │
+    │  Unprocessed             │ intergenic  │ intergenic  │
     │  5p_intragenic_only      │ intragenic  │ intergenic  │
     │  3p_intragenic_only      │ intergenic  │ intragenic  │
     │  both_intragenic         │ intragenic  │ intragenic  │
@@ -129,7 +129,7 @@ def categorise(row) -> str:
         return "5p_intragenic_only"
     if row["intragenic_3p"]:
         return "3p_intragenic_only"
-    return "canonical"
+    return "unprocessed"
 
 df_iso["category"] = df_iso.apply(categorise, axis=1)
 
@@ -137,11 +137,11 @@ df_iso["category"] = df_iso.apply(categorise, axis=1)
 # ═══════════════════════════════════════════════════════════════════════════════
 # Step 3 — Summary statistics
 # ═══════════════════════════════════════════════════════════════════════════════
-CATS = ["canonical", "5p_intragenic_only", "3p_intragenic_only", "both_intragenic"]
-LABELS = ["Canonical\n(5' & 3' intergenic)",
+CATS = ["unprocessed", "5p_intragenic_only", "3p_intragenic_only", "both_intragenic"]
+LABELS = ["Unprocessed\n(5' & 3' intergenic)",
           "5' intragenic only",
           "3' intragenic only",
-          "Both ends eroded)"]
+          "Both ends eroded"]
 COLORS = ["#969696", "#2166AC", "#B2182B", "#762A83"]
 
 cat_counts = df_iso["category"].value_counts()
@@ -229,6 +229,43 @@ figA.tight_layout()
 figA.savefig(f"{OUT_FOLDER}/RNase_asymmetry_isoform_categories.pdf",
              dpi=300, bbox_inches="tight")
 plt.close(figA)
+
+
+# --- Panel A2: Stacked 100% bar (kinds vs counts) ---
+figA2, ax = plt.subplots(figsize=(8, 5))
+
+bar_labels  = ["By isoform kinds", "By isoform counts"]
+vals_matrix = [iso_vals, read_vals]   # 2 bars × 4 categories
+tots        = [total_iso, total_reads]
+
+bottoms = [0.0, 0.0]
+for i, (cat, label, color) in enumerate(zip(CATS, LABELS, COLORS)):
+    heights = [v / tot * 100 for v, tot in zip([vals[i] for vals in vals_matrix], tots)]
+    bars = ax.bar([0, 1], heights, 0.45, bottom=bottoms,
+                  color=color, edgecolor="white", linewidth=0.6, label=label)
+    for b_idx, (bar, val, tot) in enumerate(
+            zip(bars, [iso_vals[i], read_vals[i]], tots)):
+        pct = val / tot * 100
+        mid = bottoms[b_idx] + pct / 2
+        if pct >= 3:
+            n_str = f"{val:,}" if b_idx == 0 else f"{round(val/1000)}k"
+            ax.text(bar.get_x() + bar.get_width() / 2, mid,
+                    f"{n_str}\n({pct:.1f}%)",
+                    ha="center", va="center", fontsize=8.5,
+                    color="white" if pct > 8 else "black")
+    bottoms = [b + h for b, h in zip(bottoms, heights)]
+
+ax.set_xticks([0, 1])
+ax.set_xticklabels(bar_labels, fontsize=12)
+ax.set_ylabel("Percentage (%)", fontsize=12)
+ax.set_ylim(0, 100)
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(decimals=0))
+ax.legend(title="Category", fontsize=10, title_fontsize=10,
+          loc="upper left", bbox_to_anchor=(1.01, 1), borderaxespad=0)
+figA2.tight_layout()
+figA2.savefig(f"{OUT_FOLDER}/RNase_asymmetry_stacked100.pdf",
+              dpi=300, bbox_inches="tight")
+plt.close(figA2)
 
 
 # --- Panel B: 5'→3' vs 3'→5' exo activity bar chart + ratio ---

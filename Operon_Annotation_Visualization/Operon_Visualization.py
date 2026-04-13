@@ -504,7 +504,7 @@ def layout_isoform_tracks(iso_df: pd.DataFrame, oc: OperonCoord, plot_s0: int, p
 	lws = []
 	alphas = []
 
-	base_y = 0
+	base_y = 1
 	group_gap = 1  # vertical gap between start groups
 
 		# Prepare style columns
@@ -512,8 +512,6 @@ def layout_isoform_tracks(iso_df: pd.DataFrame, oc: OperonCoord, plot_s0: int, p
 	iso["y"] = float("nan")
 	iso["lw"] = float("nan")
 	iso["alpha"] = float("nan")
-
-	base_y = 0
 
 	# Group by tx_left — which is always the 5' (TSS) end in TX space for both strands.
 	# (For + strand tx_left == genomic start0; for - strand tx_left == genomic end0.)
@@ -757,7 +755,7 @@ def plot_one_operon(
 
 	bottom_ax.xaxis.set_major_locator(FixedLocator(ticks_tx))
 	bottom_ax.xaxis.set_major_formatter(FuncFormatter(lambda x, pos=None: str(int(round(x)))))
-	bottom_ax.set_xlabel("Transcript coordinate (bp, 5'→3')", fontsize=18)
+	bottom_ax.set_xlabel("Transcript coordinate (nt)", fontsize=18)
 	bottom_ax.tick_params(axis="x", which="major",
 						  top=False, labeltop=False,
 						  bottom=True, labelbottom=True,
