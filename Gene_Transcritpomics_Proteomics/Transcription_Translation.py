@@ -23,6 +23,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import spearmanr, pearsonr
+from adjustText import adjust_text
 
 # =============================================================================
 # 2. Paths
@@ -108,15 +109,34 @@ print(f"  Pearson  r          : {r:.4f}  (p = {p_pearson:.2e})")
 #   Right — cytosolic proteins only (ptn_localization == 'cytoplasmic')
 
 def _scatter_panel(ax, df, rho, r, p_rho, p_r):
-    """Draw one correlation scatter panel with OLS fit and stats box."""
+    """Draw one correlation scatter panel with OLS fit, colored outliers, and non-overlapping labels."""
+    df = df.copy()
     z      = np.polyfit(df['log10_TPM'], df['log10_iPM'], 1)
     x_line = np.linspace(df['log10_TPM'].min(), df['log10_TPM'].max(), 100)
 
+    # Compute residuals to identify outliers
+    df['residual'] = df['log10_iPM'] - np.polyval(z, df['log10_TPM'])
+    top_high = df.nlargest(5,  'residual').index
+    top_low  = df.nsmallest(5, 'residual').index
+    outlier_idx = top_high.union(top_low)
+
+    # Assign per-point colors: red = high residual, green = low residual, blue = regular
+    colors = pd.Series('#4C8BB5', index=df.index)
+    colors[top_high] = '#D94F4F'   # red
+    colors[top_low]  = '#3A9E5F'   # green
+
     ax.scatter(df['log10_TPM'], df['log10_iPM'],
-               alpha=0.55, s=25, color='#4C8BB5',
+               alpha=0.55, s=25, c=colors,
                edgecolors='white', linewidths=0.3, zorder=2)
+
+    # Re-draw outlier points on top with full opacity and larger size
+    ax.scatter(df.loc[top_high, 'log10_TPM'], df.loc[top_high, 'log10_iPM'],
+               s=40, color='#D94F4F', edgecolors='white', linewidths=0.4, zorder=4)
+    ax.scatter(df.loc[top_low,  'log10_TPM'], df.loc[top_low,  'log10_iPM'],
+               s=40, color='#3A9E5F', edgecolors='white', linewidths=0.4, zorder=4)
+
     ax.plot(x_line, np.polyval(z, x_line),
-            color='#E05A5A', linewidth=1.8, alpha=0.9, zorder=3)
+            color='#555555', linewidth=1.5, alpha=0.7, zorder=3)
 
     ax.set_xlabel('log$_{10}$(TPM)  —  Transcriptomics', fontsize=12)
     ax.set_ylabel('log$_{10}$(iPM)  —  Proteomics', fontsize=12)
@@ -130,16 +150,18 @@ def _scatter_panel(ax, df, rho, r, p_rho, p_r):
             bbox=dict(boxstyle='round,pad=0.45', facecolor='#FFF8E7',
                       edgecolor='#CCBBAA', alpha=0.85))
 
-    # Annotate top 5 positive and negative residual outliers
+    # Annotate outliers — use adjustText to avoid label overlaps
     # Label with the numeric suffix of locus_tag (e.g. MMSYN1_0042 → 0042)
-    df = df.copy()
-    df['residual'] = df['log10_iPM'] - np.polyval(z, df['log10_TPM'])
-    outliers = pd.concat([df.nlargest(5, 'residual'), df.nsmallest(5, 'residual')])
-    for _, row in outliers.iterrows():
-        locus_num = row['locus_tag'].split('_')[-1]
-        ax.annotate(locus_num, (row['log10_TPM'], row['log10_iPM']),
-                    fontsize=7, color='#333333', alpha=0.85,
-                    xytext=(5, 4), textcoords='offset points')
+    texts = []
+    for idx, row in df.loc[outlier_idx].iterrows():
+        locus_num  = row['locus_tag'].split('_')[-1]
+        txt_color  = '#D94F4F' if idx in top_high else '#3A9E5F'
+        texts.append(ax.text(row['log10_TPM'], row['log10_iPM'], locus_num,
+                             fontsize=7.5, color=txt_color, fontweight='bold', zorder=5))
+
+    adjust_text(texts, ax=ax,
+                arrowprops=dict(arrowstyle='-', color='#AAAAAA', lw=0.6),
+                expand=(1.4, 1.6), force_text=(0.5, 0.8))
 
     ax.spines[['top', 'right']].set_visible(False)
     ax.grid(True, alpha=0.25, linestyle='--')
@@ -244,6 +266,13 @@ plt.savefig('./protein_copy_number_log10.pdf', dpi=300, bbox_inches='tight')
 # 10. Copy number statistics by subcellular localization
 # =============================================================================
 
+LOC_COLORS = {
+    'cytoplasmic' : '#4C8BB5',
+    'membrane'    : '#E05A5A',
+    'lipoprotein' : '#E8A838',
+    'extracellular': '#7B5EA7',
+}
+
 stats_rows = []
 for loc in LOC_CATEGORIES:
     subset = plot_df.loc[plot_df['ptn_localization'] == loc, 'ptn_copy_number']
@@ -267,3 +296,33 @@ print(stats_df.to_string(index=False, float_format=lambda x: f'{x:.2f}'))
 
 stats_df.to_csv('./protein_copy_number_stats_by_localization.csv', index=False, float_format='%.4f')
 print("\nSaved: protein_copy_number_stats_by_localization.csv")
+
+# --- Histogram by localization (log10 scale) ---
+fig, ax = plt.subplots(figsize=(6, 6))
+
+for loc in LOC_CATEGORIES:
+    subset = plot_df.loc[plot_df['ptn_localization'] == loc, 'ptn_copy_number']
+    if subset.empty:
+        continue
+    median_val = subset.median()
+    color      = LOC_COLORS[loc]
+
+    ax.hist(np.log10(subset), bins=30, alpha=0.55, color=color,
+            edgecolor='white', linewidth=0.3,
+            label=f'{loc} (n={len(subset)})')
+
+    # Vertical median line; label at top of axes in data-x / axes-y coords
+    ax.axvline(np.log10(median_val), color=color, linewidth=1.5,
+               linestyle='--', alpha=0.9)
+    ax.text(np.log10(median_val), 1.01, f' {median_val:.0f}',
+            transform=ax.get_xaxis_transform(),
+            color=color, fontsize=12, va='bottom', ha='left', fontweight='bold')
+
+ax.set_xlabel('log$_{10}$(protein copy number per cell)', fontsize=12)
+ax.set_ylabel('Number of unique proteins', fontsize=12)
+ax.legend(fontsize=10, framealpha=0.85)
+ax.spines[['top', 'right']].set_visible(False)
+ax.grid(True, alpha=0.25, linestyle='--')
+plt.tight_layout()
+plt.savefig('./protein_copy_number_by_localization.pdf', dpi=300, bbox_inches='tight')
+# plt.show()
