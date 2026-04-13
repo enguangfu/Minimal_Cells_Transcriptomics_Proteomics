@@ -156,8 +156,8 @@ ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlim(lims)
 ax.set_ylim(lims)
-ax.set_xlabel("syn1  iPM mean (log scale)", fontsize=12)
-ax.set_ylabel("syn3A  iPM mean (log scale)", fontsize=12)
+ax.set_xlabel("syn1  iPM (log scale)", fontsize=12)
+ax.set_ylabel("syn3A  iPM (log scale)", fontsize=12)
 ax.text(0.04, 0.96,
         f"Pearson r = {pearson_r:.3f}  (log10)\nSpearman r = {spearman_r:.3f}\nn = {len(result)}",
         transform=ax.transAxes, fontsize=12, verticalalignment="top",
