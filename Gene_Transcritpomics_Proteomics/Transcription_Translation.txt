@@ -1,0 +1,69 @@
+Transcriptomics loaded: 911 genes
+Proteomics loaded: 911 entries
+  Columns: ['chrom', 'feature', 'start0', 'end0', 'strand', 'locus_tag', 'gene_name', 'rna_type', 'gene_product', 'protein_mw_Da', 'iPM_rep1', 'iPM_rep2', 'iPM_rep3', 'iPM_mean', 'iPM_CV', 'ptn_copy_number', 'TMRs', 'topo_regions', 'protein_length', 'signalP', 'ptn_localization']
+  Localization categories: ['Non_proteins', 'cytoplasmic', 'extracellular', 'lipoprotein', 'membrane']
+
+Protein detection coverage (mRNA genes only):
+  Total mRNA genes : 828
+  With iPM data    : 739 (89.3%)
+  Without iPM data : 89
+
+Saved: syn1_genes_transcriptomics_proteomics.csv
+
+Correlation: iPM vs avg_sense_TPM
+  Localization filter : Non_proteins, cytoplasmic, extracellular, lipoprotein, membrane
+  N genes             : 735
+  Spearman ρ          : 0.6588  (p = 1.14e-92)
+  Pearson  r          : 0.5932  (p = 4.48e-71)
+
+Correlation — all proteins    : Spearman ρ=0.6588, Pearson r=0.5932, n=735
+Correlation — cytosolic only  : Spearman ρ=0.7392, Pearson r=0.6720, n=519
+
+=== Top 15: MORE protein than expected from mRNA ===
+(high translational efficiency or stable protein)
+
+      locus_tag gene_name                                                              gene_product  log10_TPM  log10_iPM  residual
+0   MMSYN1_0270       NaN                                                       ATPase_ YjeE family  -0.257118   3.927874  2.939783
+1   MMSYN1_0592       NaN                                                                      cdsf   0.014058   2.992012  1.848238
+2   MMSYN1_0250       NaN                                            conserved hypothetical protein  -0.238072   2.774312  1.775286
+3   MMSYN1_0442       NaN                                            nitrogen fixation protein nifu  -0.442252   2.380582  1.498777
+4   MMSYN1_0189       NaN                                            conserved hypothetical protein   1.858426   3.572745  1.370116
+5   MMSYN1_0398       NaN                                                       putative liporotein   0.059526   2.450549  1.280672
+6   MMSYN1_0443     mthfs                                     5-formyltetrahydrofolate cyclo-ligase  -0.434034   2.143914  1.257390
+7   MMSYN1_0628      argF                                            ornithine carbamoyltransferase   2.933513   4.075413  1.255574
+8   MMSYN1_0151       tuf                                          translation elongation factor Tu   4.112891   4.734734  1.237811
+9   MMSYN1_0580       NaN                                            conserved hypothetical protein   0.641811   2.729802  1.225633
+10  MMSYN1_0190       NaN                                                     leucyl aminopeptidase   2.671462   3.883042  1.213646
+11  MMSYN1_0187       NaN                                    transcriptional regulator_ GntR family   2.353038   3.684545  1.197957
+12  MMSYN1_0223       NaN                                                     NADH oxidase (noxase)   3.745012   4.474892  1.189169
+13  MMSYN1_0225      pdhA  pyruvate dehydrogenase (acetyl-transferring) E1 component_ alpha subunit   3.755351   4.472649  1.180990
+14  MMSYN1_0746       NaN                                            conserved hypothetical protein  -0.398157   2.084643  1.177522
+
+=== Top 15: LESS protein than expected from mRNA ===
+(poor translation, rapid degradation, or low proteomics coverage)
+
+      locus_tag gene_name                              gene_product  log10_TPM  log10_iPM  residual
+0   MMSYN1_0335      vlcC              lipoprotein_ putative (VlcC)   2.543390  -1.221143 -3.817012
+1   MMSYN1_0795      atpE                      ATP synthase c chain   3.188930  -0.273543 -3.240018
+2   MMSYN1_0035       NaN            conserved hypothetical protein   1.654866  -0.728219 -2.813985
+3   MMSYN1_0312       NaN            conserved hypothetical protein   1.679805  -0.692785 -2.792868
+4   MMSYN1_0784    arcC_2                        carbamate kinase 1   2.705473  -0.101103 -2.790025
+5   MMSYN1_0526      rpmF                     ribosomal protein L32   4.374972   0.916423 -2.730962
+6   MMSYN1_0369       NaN        YeeE/YedE family protein_ putative   1.113020  -0.885677 -2.660368
+7   MMSYN1_0781    tnpB_5              IS1296 transposase protein B   2.160421  -0.074786 -2.450791
+8   MMSYN1_0785       NaN             arginine/ornithine antiporter   2.491363   0.247830 -2.318170
+9   MMSYN1_0596       NaN                      hypothetical protein   1.141108  -0.443373 -2.234188
+10  MMSYN1_0243       NaN                       putative liporotein   0.041274  -1.021713 -2.181112
+11  MMSYN1_0060       NaN                 putative membrane protein   2.826574   0.597962 -2.160483
+12  MMSYN1_0192       NaN                  chromate ion transporter   1.930808   0.108032 -2.136153
+13  MMSYN1_0774      secG      preprotein translocase_ SecG subunit   2.916176   0.690924 -2.118963
+14  MMSYN1_0272       NaN  efflux ABC transporter_ permease protein   1.182871  -0.174393 -1.989185
+
+Protein copy number statistics by localization (molecules per cell):
+ localization   n  min    Q1  median   mean     Q3     max   CV
+  cytoplasmic 523 0.05 14.52   45.15 224.19 155.78 6887.36 2.43
+     membrane 131 0.02  2.11    8.54  31.21  22.71  776.98 2.68
+  lipoprotein  72 0.01  3.87   20.55  71.08  73.75 1450.49 2.59
+extracellular  13 0.02  1.01    3.57  30.70  12.88  215.65 2.11
+
+Saved: protein_copy_number_stats_by_localization.csv
