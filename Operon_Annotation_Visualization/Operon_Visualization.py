@@ -415,7 +415,7 @@ def draw_depth(ax, oc: OperonCoord, depth_df: pd.DataFrame, plot_s0: int, plot_e
 	x_tx = np.array([oc.tx_of_genome_pos0(int(p)) for p in genome_positions], dtype=int)
 
 	order = np.argsort(x_tx)
-	ax.plot(x_tx[order], y[order])
+	ax.plot(x_tx[order], y[order], linewidth=3, color="grey")
 	strand_text = "Forward" if strand == "+" else "Reverse"
 	ax.set_ylabel(f"Depth {strand_text} Strand", fontsize=LABEL_FONTSIZE)
 	ax.spines["right"].set_visible(False)
@@ -456,23 +456,21 @@ def _pack_intervals_min_rows(intervals: List[Tuple[int,int]]) -> List[int]:
 
 def layout_isoform_tracks(iso_df: pd.DataFrame, oc: OperonCoord, plot_s0: int, plot_e0: int) -> pd.DataFrame:
 	"""
-	- Clip to plotting window
-	- Group by start0 (exact), then within each group:
-		* sort by abundance
-		* assign rows via interval packing to avoid overlap
-	Adds columns:
-	  tx_left, tx_right, group_id, y, lw, alpha
+	- Take top MAX_ISOFORMS_TO_PLOT by n_reads
+	- Clip to plotting window and convert to TX coordinates
+	- Sort by tx_left ascending (correct spatial order for both strands)
+	- Global interval packing across all isoforms so non-overlapping isoforms
+	  from different TSS groups can share the same y-row
+	- Style (lw, alpha) scaled per TSS group relative to group's own n_reads range
+	Adds columns: tx_left, tx_right, group_id, y, lw, alpha
 	"""
 	if iso_df.empty:
 		return iso_df
 
-	iso = iso_df.copy()
-	if oc.strand == "+":
-		iso = iso.sort_values(["start0", "end0", "n_reads"], ascending=[True, True, False]).head(MAX_ISOFORMS_TO_PLOT).copy()
-	else:
-		iso = iso.sort_values(["start0", "end0", "n_reads"], ascending=[False, False, False]).head(MAX_ISOFORMS_TO_PLOT).copy()
+	# Step 1: keep top N by abundance
+	iso = iso_df.sort_values("n_reads", ascending=False).head(MAX_ISOFORMS_TO_PLOT).copy()
 
-	# clip in genome space then convert to tx intervals
+	# Step 2: clip in genome space and convert to TX coordinates
 	tx_lefts, tx_rights = [], []
 	for _, r in iso.iterrows():
 		s = int(r["start0"])
@@ -484,56 +482,38 @@ def layout_isoform_tracks(iso_df: pd.DataFrame, oc: OperonCoord, plot_s0: int, p
 		tx_lefts.append(min(x0, x1))
 		tx_rights.append(max(x0, x1))
 
-	iso["tx_left"] = tx_lefts
+	iso["tx_left"]  = tx_lefts
 	iso["tx_right"] = tx_rights
 
-	# Drop zero-length after clipping (can happen if isoform is fully outside)
+	# Drop zero-length after clipping
 	iso = iso[iso["tx_right"] > iso["tx_left"]].copy()
 	if iso.empty:
 		return iso
 
-	# Encode thickness & opacity within each start group
+	# Step 3: sort by tx_left ascending — correct spatial order for both strands
+	iso = iso.sort_values(["tx_left", "tx_right"], ascending=[True, True]).reset_index(drop=True)
+
+	# Step 4: global interval packing — non-overlapping isoforms share y-rows
+	intervals = list(zip(iso["tx_left"].astype(int), iso["tx_right"].astype(int)))
+	rows = _pack_intervals_min_rows(intervals)
+	iso["y"] = [r + 1 for r in rows]
+
+	# Step 5: style (lw, alpha) scaled within each TSS group
 	def _scale_alpha(n, nmin, nmax):
 		if nmax <= nmin:
 			return 0.9
-		# map to [0.5, 0.95]
-		t = (n - nmin) / (nmax - nmin)
-		return float(0.5 + 0.45 * t)
+		return float(0.5 + 0.45 * (n - nmin) / (nmax - nmin))
 
-	ys = []
-	lws = []
-	alphas = []
-
-	base_y = 1
-	group_gap = 1  # vertical gap between start groups
-
-		# Prepare style columns
-	iso = iso.copy()
-	iso["y"] = float("nan")
-	iso["lw"] = float("nan")
+	iso["lw"]    = float("nan")
 	iso["alpha"] = float("nan")
 
-	# Group by tx_left — which is always the 5' (TSS) end in TX space for both strands.
-	# (For + strand tx_left == genomic start0; for - strand tx_left == genomic end0.)
-	for g_start, g in iso.groupby("tx_left", sort=False):
-		g = g.sort_values(["n_reads", "tx_right"], ascending=[False, True]).copy()
-
-		# Row packing to avoid overlap (based on tx intervals)
-		intervals = list(zip(g["tx_left"].astype(int).tolist(), g["tx_right"].astype(int).tolist()))
-		rows = _pack_intervals_min_rows(intervals)  # rows[i] corresponds to g.iloc[i]
-
-		# Thickness + opacity
+	for g_start, g in iso.groupby("tx_left", sort=True):
 		nvals = g["n_reads"].astype(float).to_numpy()
 		nmin, nmax = float(nvals.min()), float(nvals.max())
-
-		# Assign styles back to the right isoform rows using g.index
-		iso.loc[g.index, "y"]     = [base_y + r for r in rows]
 		iso.loc[g.index, "lw"]    = [max(0.3, thickness_from_count(float(n))) for n in nvals]
 		iso.loc[g.index, "alpha"] = [_scale_alpha(float(n), nmin, nmax) for n in nvals]
 
-		base_y += (max(rows) + 1) + group_gap
-
-	# group id for color mapping: use tx_left (= 5' end in TX space) so same TSS = same color
+	# group_id for color mapping: tx_left = 5' end in TX space → same TSS = same color
 	iso["group_id"] = iso["tx_left"].astype(int)
 
 	return iso
