@@ -1,0 +1,296 @@
+Loading transcriptomics + proteomics table ...
+  tRNA genes: 30
+Loading operons ...
+
+tRNA-containing operons (>= 2 tRNAs):
+  OP_00381        +   856723-857575   n= 9  Arg,Pro,Ala,Met,Met,Ser,Met,Asp,Phe
+  OP_00277        -   612085-612511   n= 5  Leu,Lys,Gln,Tyr,Thr
+  OP_00363        -   813369-813699   n= 4  Thr,Val,Glu,Asn
+  OP_00341        -   764109-764297   n= 2  Trp,Sec
+Saved: trna_genome_map.pdf
+
+tRNA TPM correlation (n = 30)
+  Pearson  (log10) r = 0.618  p = 2.75e-04
+  Spearman         r = 0.578  p = 8.13e-04
+Saved: trna_illumina_vs_pacbio_TPM.pdf
+
+Level 2 preliminary (tRNA map + TPM correlation) complete.
+Outputs in: ./residual_analysis/
+
+Protein-coding loci in faa: 828
+  CDSs extracted: 828 (skipped non-multiple-of-3: 0)
+  CAI reference set (top 20% by iPM_mean): 148/739 genes
+  Localization fractions in top 20% iPM_mean:
+    cytoplasmic     :  90.5%  (n = 134)
+    lipoprotein     :   5.4%  (n = 8)
+    membrane        :   3.4%  (n = 5)
+    extracellular   :   0.7%  (n = 1)
+  gene_CAI.csv written (828 genes)
+
+CAI vs log10(iPM_mean):   Pearson r = 0.282 (p=6.21e-15)   Spearman ρ = 0.352 (p=7.31e-23)   n=735
+CAI vs log10(avg_TPM):    Pearson r = 0.001 (p=9.75e-01)
+  mean CAI in reference set: 0.745
+  mean CAI outside:          0.716
+
+Baseline log10(iPM) ~ log10(TPM): Pearson r = 0.593  (R² = 0.352)  n = 735
+CAI vs proteome residual:  Pearson r = 0.350 (p=1.40e-22)  Spearman ρ = 0.396 (p=5.49e-29)
+
+Baseline   R² (log10 iPM ~ log10 TPM)          = 0.3519
+Augmented  R² (log10 iPM ~ log10 TPM + CAI)    = 0.4312
+ΔR² from CAI                                    = +0.0793  (+22.5% of baseline)
+  Augmented coefficients: intercept=-1.562, β_logTPM=0.574, β_CAI=3.741
+
+[Cytosolic only, n = 519]
+  Baseline  R² (log10 iPM ~ log10 TPM)        = 0.4516
+  Augmented R² (log10 iPM ~ log10 TPM + CAI)  = 0.5059
+  ΔR² from CAI                                 = +0.0544
+Saved: CAI_vs_omics.pdf
+Saved: CAI_vs_residual_all.pdf
+Saved: CAI_vs_residual_cytosolic.pdf
+Saved: CAI_deltaR2_bar.pdf
+
+[tAI] tRNAscan-SE rows: 31
+[tAI] tRNAs matched to omics: 30 / 30
+[tAI] tRNAscan rows with no omics match (dropped): [{'aa': 'Undet', 'anticodon': 'NNN', 'start0': 204222, 'end0': 204289, 'score': 25.3}]
+[tAI] codons with no decoding tRNA: ['CGG']
+
+[tAI] codon weights (w_rel, rounded):
+  A  GCT:0.08(n=1)  GCC:0.01(n=1)  GCA:0.25(n=1)  GCG:0.08(n=1)
+  C  TGT:0.00(n=1)  TGC:0.00(n=1)
+  D  GAT:0.15(n=1)  GAC:0.25(n=1)
+  E  GAA:0.48(n=1)  GAG:0.15(n=1)
+  F  TTT:0.43(n=1)  TTC:0.73(n=1)
+  G  GGT:0.00(n=1)  GGC:0.00(n=1)  GGA:0.01(n=1)  GGG:0.00(n=1)
+  H  CAT:0.00(n=1)  CAC:0.00(n=1)
+  I  ATT:0.00(n=1)  ATC:0.00(n=1)  ATA:0.04(n=1)
+  K  AAA:0.36(n=2)  AAG:0.12(n=3)
+  L  TTA:0.15(n=1)  TTG:0.07(n=2)  CTT:0.01(n=1)  CTC:0.00(n=1)  CTA:0.04(n=1)  CTG:0.01(n=1)
+  M  ATG:1.00(n=2)
+  N  AAT:0.28(n=1)  AAC:0.47(n=1)
+  P  CCT:0.06(n=1)  CCC:0.01(n=1)  CCA:0.22(n=1)  CCG:0.07(n=1)
+  Q  CAA:0.47(n=1)  CAG:0.15(n=1)
+  R  CGT:0.22(n=1)  CGC:0.16(n=1)  CGA:0.00(n=1)  CGG:nan(n=0)  AGA:0.06(n=1)  AGG:0.02(n=1)
+  S  TCT:0.12(n=1)  TCC:0.02(n=1)  TCA:0.40(n=1)  TCG:0.13(n=1)  AGT:0.01(n=1)  AGC:0.01(n=1)
+  T  ACT:1.00(n=2)  ACC:0.02(n=1)  ACA:0.40(n=1)  ACG:0.13(n=1)
+  V  GTT:0.12(n=1)  GTC:0.02(n=1)  GTA:0.39(n=1)  GTG:0.13(n=1)
+  W  TGA:1.00(n=1)  TGG:1.00(n=2)
+  Y  TAT:0.44(n=1)  TAC:0.74(n=1)
+[tAI] Saved: tAI_codon_weights.csv, tAI_tRNA_table.csv
+
+[tAI] gene_tAI.csv written (828 genes, CGG fallback w = 0.043)
+
+tAI vs log10(avg_TPM):    Pearson r = -0.173 (p=2.54e-06)
+tAI vs log10(iPM_mean):   Pearson r = -0.008 (p=8.20e-01)  Spearman ρ = 0.020
+tAI vs proteome residual: Pearson r = 0.117 (p=1.52e-03)  Spearman ρ = 0.152
+tAI vs CAI (codon-metric agreement): r = -0.066 (p=7.49e-02)
+
+n = 735
+Baseline   R² (log10 iPM ~ log10 TPM)                = 0.3519
++ tAI       R² (log10 iPM ~ log10 TPM + tAI)         = 0.3610  ΔR² = +0.0091
++ CAI       R² (log10 iPM ~ log10 TPM + CAI)         = 0.4312  ΔR² = +0.0793
++ CAI + tAI R² (log10 iPM ~ log10 TPM + CAI + tAI)   = 0.4443  ΔR² = +0.0924
+    coeffs: int=-2.208  β_logTPM=0.593  β_CAI=3.842  β_tAI=5.134
+    ΔR² attributable to tAI *beyond CAI* = +0.0131
+
+[Cytosolic only, n = 519]  CAI/tAI co-correlation
+  tAI vs CAI:                                  r = 0.045 (p=3.11e-01)
+  Baseline   R² (log10 iPM ~ log10 TPM)        = 0.4516
+  + tAI       R² = 0.4659  ΔR² = +0.0143
+  + CAI       R² = 0.5059  ΔR² = +0.0544
+  + CAI + tAI R² = 0.5179  ΔR² = +0.0663
+    ΔR² of tAI beyond CAI = +0.0119
+Saved: tAI_vs_omics.pdf
+
+[tAI_aa] per-amino-acid-normalized tAI  (n = 735)
+  vs log10(TPM):           r = 0.121 (p=9.91e-04)
+  vs log10(iPM):           r = 0.204 (p=2.56e-08)
+  vs proteome residual:    r = 0.164 (p=8.30e-06)
+  vs CAI:                  r = 0.082
+  vs global-normalized tAI: r = 0.739
+
+  Baseline R²                                  = 0.3519
+  + tAI_aa            R² = 0.3695  ΔR² = +0.0176
+  + CAI + tAI_aa      R² = 0.4433  ΔR² = +0.0914
+    ΔR² of tAI_aa beyond CAI = +0.0121
+    coeffs: int=-2.527  β_logTPM=0.561  β_CAI=3.621  β_tAI_aa=2.304
+
+[Cytosolic only, n = 519]  CAI/tAI_aa co-correlation
+  tAI_aa vs CAI:                               r = 0.186 (p=1.92e-05)
+  Baseline      R²                            = 0.4516
+  + tAI_aa       R² = 0.4734  ΔR² = +0.0218
+  + CAI          R² = 0.5059  ΔR² = +0.0544
+  + CAI + tAI_aa R² = 0.5171  ΔR² = +0.0655
+    ΔR² of tAI_aa beyond CAI = +0.0112
+Saved: tAI_aa_vs_omics.pdf
+Saved: tAI_aa_vs_residual.pdf
+
+[codon-level] w_rel vs frac_iPM   Pearson (log10) r = +0.290 (p=2.33e-02)   Spearman ρ = +0.336
+[codon-level] w_rel vs frac_raw   Pearson (log10) r = +0.329 (p=9.66e-03)   Spearman ρ = +0.344
+Saved: codon_w_vs_usage.pdf
+
+================================================================================
+Level 2 — Translation Elongation Efficiency in JCVI-Syn1.0
+Report generated from Translation_Residual_L2_elongation.py
+================================================================================
+
+GOAL
+----
+Quantify how much of the log10(iPM) ~ log10(mRNA TPM) residual (the r ≈ 0.6
+transcriptome-proteome correlation in Syn1) is explained by codon-level
+elongation efficiency, without touching the Level 1 initiation model.
+
+DATA
+----
+  - Transcriptomics + proteomics table: syn1_genes_transcriptomics_proteomics.csv
+  - Protein-coding loci:                828 (from syn1_proteins.faa)
+  - CDSs extracted and frame-valid:     828
+  - tRNAs in omics table:               30
+  - Genome:                             JCVI-Syn1.0 (CP002027.1), 1,078,809 bp, circular
+  - Genetic code:                       Mycoplasma table 4 (UGA = Trp)
+
+PRELIMINARY — tRNA distribution and expression
+-----------------------------------------------
+  Illumina vs PacBio tRNA TPM correlation (n = 30):
+    Pearson (log10) r = 0.618   p = 2.75e-04
+    Spearman        r = 0.578   p = 8.13e-04
+  Measured tRNA abundance spans ~2 orders of magnitude, justifying use of
+  measured tRNA TPM rather than gene copy number in tAI.
+
+  4 multi-tRNA operons identified:
+    OP_00381  (+)  n=9   Arg,Pro,Ala,Met,Met,Ser,Met,Asp,Phe
+    OP_00277  (-)  n=5   Leu,Lys,Gln,Tyr,Thr
+    OP_00363  (-)  n=4   Thr,Val,Glu,Asn
+    OP_00341  (-)  n=2   Trp,Sec (Sup-UCA reading UGA)
+
+CAI — codon adaptation index
+----------------------------
+  Reference set: top 20% of protein-coding genes by iPM_mean
+                 (148 genes out of 739 with iPM data)
+  Correlations (n = 735):
+    CAI vs log10(avg_sense_TPM):   Pearson r = +0.001  p = 9.75e-01
+    CAI vs log10(iPM_mean):        Pearson r = +0.282  p = 6.21e-15
+                                   Spearman r = +0.352  p = 7.31e-23
+    CAI vs proteome residual:      Pearson r = +0.350  p = 1.40e-22
+  Mean CAI in reference set: 0.745
+  Mean CAI outside:          0.716
+
+tAI — decoding matrix (Maier et al. 2011, Mpn s-values + sG:U = 0.41)
+---------------------------------------------------------------------
+  s-values used:
+      Watson-Crick                                 s = 0.00
+      G34 : U3                                     s = 0.41   (dos Reis default)
+      U34 : G3                                     s = 0.68
+      I34 : U3   I34 : C3   I34 : A3               s = 0.00, 0.28, 0.99
+      L34 : A3   (lysidine, Ile2-CAU -> AUA)       s = 0.89
+      Four-way wobble  U34 : U3 / U34 : C3         s = 0.70, 0.95
+  Four-way wobble applied to U34 tRNAs of single-decoder 4-codon boxes:
+      Ala-UGC, Pro-UGG, Val-UAC   (paper)
+      Gly-UCC, Leu-UAG, Ser-UGA, Thr-UGU  (Syn1 extension, same logic)
+  Inosine I34 applied only to Arg-ACG (the one bacterial A-to-I case).
+
+  Decoder coverage of the 62 sense codons: 61 reachable, 1 orphan.
+  Orphan codon: CGG (Arg) — no cognate tRNA in Syn1.
+      Arg-ACG (I34) reads CGU/CGC/CGA but I:G is disallowed.
+      Arg-UCU reads the AGR box, never CGN at all.
+  Usage of CGG in Syn1 CDSs:  24 / 307,942 codons (0.008%), the rarest
+  Arg codon by ~40x. Syn1 strongly prefers AGA (2.07%) for Arg, so the
+  CGG orphan has negligible functional impact.
+  All Arg codons (Syn1 coded proteome):
+      CGU 0.33%   CGC 0.05%   CGA 0.05%   CGG 0.01%
+      AGA 2.07%   AGG 0.06%
+  For per-gene tAI, CGG is assigned w = geomean of defined w =
+  0.043 (global) / 0.280 (per-aa), per dos Reis 2004.
+
+  tAI codon weight distribution (w_rel, global normalization):
+      Met/Trp forced to 1.00 (single-codon families under Myco code).
+      Thr-ACU reaches 1.00 because the cognate tRNA dominates Illumina TPM.
+      Cys, His, Gly codons drop below 0.01 — their cognate tRNAs are the
+      least-expressed in the Illumina data, which crushes them under
+      global w = W/max(W) normalization.
+
+CORRELATIONS (n = 735)
+-----------------------------
+                            vs log10(TPM)  vs log10(iPM)  vs residual
+  CAI                         +0.001         +0.282         +0.350
+  tAI (global W/maxW)         -0.173         -0.008         +0.117
+  tAI (per-aa family)         +0.121         +0.204         +0.164
+
+  Cross-metric:
+    CAI  vs tAI (global):  r = -0.066
+    CAI  vs tAI (per-aa):  r = +0.082
+    tAI  vs tAI (per-aa):  r = +0.739
+
+REGRESSION ΔR² (dependent variable = log10(iPM_mean))
+-----------------------------------------------------
+  Baseline model:  log10(iPM) ~ log10(TPM)
+      R² = 0.3519   (Pearson r = 0.593, n = 735)
+
+  Single-metric additions:
+      + CAI                                   R² = 0.4312   ΔR² = +0.0793
+      + tAI (global)                          R² = 0.3610   ΔR² = +0.0091
+      + tAI (per-aa)                          R² = 0.3695   ΔR² = +0.0176
+
+  Joint additions:
+      + CAI + tAI (global)                    R² = 0.4443   ΔR² = +0.0924
+      + CAI + tAI (per-aa)                    R² = 0.4433   ΔR² = +0.0914
+
+  Best joint-model coefficients (CAI + tAI_global):
+      intercept = -2.208
+      β_logTPM  = +0.593
+      β_CAI     = +3.842
+      β_tAI     = +5.134
+
+  ΔR² of tAI(global) beyond CAI      = +0.0131
+  ΔR² of tAI(per-aa) beyond CAI      = +0.0121
+
+INTERPRETATION
+--------------
+  1. CAI carries the dominant codon-level signal (+0.079 ΔR², ~23% of
+     baseline R²). Proteome-based reference selection (top 20% by iPM)
+     finds exactly the codons that predict protein abundance; mRNA level
+     is uninformative for CAI (r ~ 0), so the ΔR² is nearly orthogonal
+     to the baseline transcriptome term.
+
+  2. Measured-tRNA-TPM tAI adds only ~+0.012 beyond CAI, regardless of
+     normalization. Global-w tAI even has a negative correlation with
+     mRNA TPM (r = -0.173) — an artifact of a few super-abundant tRNAs
+     (Thr-ACU, Met) dominating the denominator. Per-amino-acid
+     normalization flips the TPM correlation to the expected sign
+     (r = +0.121) and roughly doubles standalone ΔR², but the
+     beyond-CAI contribution stays near +0.012.
+
+  3. CAI and tAI are essentially uncorrelated (r = -0.066 global,
+     r = +0.082 per-aa). In most bacteria CAI and tAI correlate
+     strongly; the decoupling in Syn1 suggests that Illumina tRNA TPM
+     is a noisy proxy for functional decoding capacity — aminoacylation
+     status, anticodon modifications, and ribosome-local tRNA delivery
+     are not captured by steady-state RNA-seq.
+
+  4. For the Level 1 / Level 2 / Level 3 decomposition, CAI should be
+     kept as the Level 2 elongation term. tAI can be retained as a
+     sensitivity check but does not earn an independent slot in the
+     explanatory model.
+
+OUTPUTS
+-------
+  residual_analysis/
+    trna_genome_annotation.csv
+    trna_genome_map.pdf
+    trna_TPM_illumina_vs_pacbio.csv
+    trna_illumina_vs_pacbio_TPM.pdf
+    gene_CAI.csv
+    gene_CAI_omics_merged.csv
+    CAI_vs_omics.pdf
+    syn1_trnascan.out
+    syn1_trnascan.ss
+    tAI_tRNA_table.csv
+    tAI_codon_weights.csv       (+ count_raw, frac_raw, frac_iPM)
+    gene_tAI.csv                (both tAI and tAI_aa)
+    gene_tAI_omics_merged.csv
+    tAI_vs_omics.pdf
+    tAI_aa_vs_omics.pdf
+
+================================================================================
+END OF LEVEL 2 REPORT
+================================================================================
+

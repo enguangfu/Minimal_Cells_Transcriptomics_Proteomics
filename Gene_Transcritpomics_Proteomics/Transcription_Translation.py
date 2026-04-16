@@ -33,6 +33,7 @@ HOME_DIR = ".."
 PROTEOME_FOLDER   = HOME_DIR + "/Proteomics"
 TRANSCRIPTOME_CSV = "./syn1_Illumina_PacBio_TPM_profiles.csv"
 PROTEOME_CSV      = PROTEOME_FOLDER + "/syn1_proteomics_localization_2026.csv"
+PROTEOME_SYN3A_CSV = PROTEOME_FOLDER + "/syn3a_proteomics_summary_2026.csv"
 
 # Which transcriptome column to correlate against iPM:
 #   "avg_sense_TPM"   → merged Illumina TPM
@@ -53,12 +54,29 @@ print(f"Proteomics loaded: {len(prot)} entries")
 print(f"  Columns: {prot.columns.tolist()}")
 print(f"  Localization categories: {sorted(prot['ptn_localization'].dropna().unique())}")
 
+# --- 3c. Syn3A proteomics (for Syn3A gene_name mapping) ---
+prot_syn3a = pd.read_csv(PROTEOME_SYN3A_CSV)
+print(f"Syn3A proteomics loaded: {len(prot_syn3a)} entries")
+
+# Map Syn3A gene_name onto Syn1 genes by numeric locus suffix
+# (MMSYN1_0001 ↔ JCVISYN3A_0001)
+syn3a_name_map = (
+    prot_syn3a.assign(locus_num=prot_syn3a['locus_tag'].str.split('_').str[-1])
+              .dropna(subset=['gene_name'])
+              .drop_duplicates(subset=['locus_num'])
+              .set_index('locus_num')['gene_name']
+)
+genes['gene_name_syn3A'] = (
+    genes['locus_tag'].str.split('_').str[-1].map(syn3a_name_map)
+                      .fillna('deleted')
+)
+
 # =============================================================================
 # 4. Merge proteomics onto genes dataframe
 # =============================================================================
 
 # Map iPM replicates, mean, CV, and localization onto genes by locus_tag
-iPM_cols = ['iPM_rep1', 'iPM_rep2', 'iPM_rep3', 'iPM_mean', 'iPM_CV', 'ptn_localization']
+iPM_cols = ['iPM_rep1', 'iPM_rep2', 'iPM_rep3', 'iPM_mean', 'iPM_CV', 'ptn_localization','ptn_copy_number']
 iPM_map  = prot.set_index('locus_tag')[iPM_cols]
 
 for col in iPM_cols:
@@ -100,6 +118,8 @@ print(f"  Localization filter : {', '.join(sorted(loc_categories))}")
 print(f"  N genes             : {len(corr_df)}")
 print(f"  Spearman ρ          : {rho:.4f}  (p = {p_spearman:.2e})")
 print(f"  Pearson  r          : {r:.4f}  (p = {p_pearson:.2e})")
+print(f"  Pearson r²         : {r**2:.4f}")
+
 
 # =============================================================================
 # 6. Scatter plot — log10(iPM) vs log10(TPM)
@@ -143,12 +163,12 @@ def _scatter_panel(ax, df, rho, r, p_rho, p_r):
 
     # Stats annotation box
     ax.text(0.04, 0.97,
-            f'Spearman ρ = {rho:.3f}  (p = {p_rho:.1e})\n'
-            f'Pearson  r = {r:.3f}  (p = {p_r:.1e})\n'
+            # f'Spearman ρ = {rho:.3f}  (p = {p_rho:.1e})\n'
+            f'Pearson  r = {r:.3f}, r² = {r**2:.3f} (p = {p_r:.1e})\n'
             f'n = {len(df)} genes',
-            transform=ax.transAxes, fontsize=9.5, verticalalignment='top',
-            bbox=dict(boxstyle='round,pad=0.45', facecolor='#FFF8E7',
-                      edgecolor='#CCBBAA', alpha=0.85))
+            transform=ax.transAxes, fontsize=9.5, verticalalignment='top')
+            # bbox=dict(boxstyle='round,pad=0.45', facecolor='#FFF8E7',
+                    #   edgecolor='#CCBBAA', alpha=0.85))
 
     # Annotate outliers — use adjustText to avoid label overlaps
     # Label with the numeric suffix of locus_tag (e.g. MMSYN1_0042 → 0042)
@@ -177,8 +197,8 @@ cyto_df = corr_df[corr_df['ptn_localization'] == 'cytoplasmic'].copy()
 rho_cyto, p_rho_cyto = spearmanr(cyto_df['log10_iPM'], cyto_df['log10_TPM'])
 r_cyto,   p_r_cyto   = pearsonr( cyto_df['log10_iPM'], cyto_df['log10_TPM'])
 
-print(f"\nCorrelation — all proteins    : Spearman ρ={rho_all:.4f}, Pearson r={r_all:.4f}, n={len(corr_df)}")
-print(f"Correlation — cytosolic only  : Spearman ρ={rho_cyto:.4f}, Pearson r={r_cyto:.4f}, n={len(cyto_df)}")
+print(f"\nCorrelation — all proteins    : Spearman ρ={rho_all:.4f}, Pearson r={r_all:.4f}, Pearson r²={r_all**2:.4f}, n={len(corr_df)}")
+print(f"Correlation — cytosolic only  : Spearman ρ={rho_cyto:.4f}, Pearson r={r_cyto:.4f}, Pearson r²={r_cyto**2:.4f}, n={len(cyto_df)}")
 
 # All proteins
 fig, ax = plt.subplots(figsize=(6, 6))
@@ -202,15 +222,19 @@ plt.savefig('./protein_vs_mRNA_correlation_cytosolic.pdf', dpi=300, bbox_inches=
 # Negative residual: less protein than expected from mRNA
 #   → poor translation, rapid protein degradation, or low proteomics coverage
 
-cols_show = ['locus_tag', 'gene_name', 'gene_product', 'log10_TPM', 'log10_iPM', 'residual']
+cols_show = ['locus_tag', 'gene_name', 'gene_name_syn3A', 'gene_product', 'ptn_localization', 'ptn_copy_number', 'log10_TPM', 'log10_iPM', 'residual']
 
-print("\n=== Top 15: MORE protein than expected from mRNA ===")
+print("\n=== Top 20: MORE protein than expected from mRNA ===")
 print("(high translational efficiency or stable protein)\n")
-print(corr_df.nlargest(15, 'residual')[cols_show].reset_index(drop=True).to_string())
+print(corr_df.nlargest(20, 'residual')[cols_show].reset_index(drop=True).to_string())
 
-print("\n=== Top 15: LESS protein than expected from mRNA ===")
+print("\n=== Top 20: LESS protein than expected from mRNA ===")
 print("(poor translation, rapid degradation, or low proteomics coverage)\n")
-print(corr_df.nsmallest(15, 'residual')[cols_show].reset_index(drop=True).to_string())
+print(corr_df.nsmallest(20, 'residual')[cols_show].reset_index(drop=True).to_string())
+
+print("\n=== Top 20: LESS protein in CYTOSOLIC than expected from mRNA ===")
+print("(poor translation, rapid degradation, or low proteomics coverage)\n")
+print(corr_df[corr_df['ptn_localization'] == 'cytoplasmic'].nsmallest(20, 'residual')[cols_show].reset_index(drop=True).to_string())
 
 # =============================================================================
 # 8. Protein copy number distribution — linear scale
