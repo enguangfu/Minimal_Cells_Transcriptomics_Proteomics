@@ -1,0 +1,60 @@
+======================================================================
+ Homology build report: mpn vs syn1
+======================================================================
+Run (UTC):          2026-04-17T21:02:54+00:00
+Inputs:             Mpn.gb, syn1.gb
+Output directory:   homology_syn1_mpn
+
+Parameters
+----------
+  blastp evalue:        1e-05
+  max_target_seqs:      5
+  threads:              4
+  strict min %identity: 25.0
+  strict min qcov/scov: 50.0 / 50.0
+  strict max evalue:    1e-05
+  strict min bitscore:  50.0
+
+Protein counts
+--------------
+  mpn proteins (guest): 672
+  syn1 proteins (host):  828
+
+Homology results
+----------------
+  Best-hit pairs (guest -> host):   346
+  Reciprocal best hits (any qual): 309
+  Strict RBH (pass all filters):   265
+  Guest proteins with strict RBH:  265 / 672 (39.4%)
+  Host  proteins with strict RBH:  265 / 828 (32.0%)
+
+Strict-RBH quality (distribution across kept pairs)
+---------------------------------------------------
+  %identity:       median=39.5  mean=40.9  min=25.0  max=82.0
+  bitscore:        median=179.0  mean=240.8  min=50.1  max=1179.0
+  mpn coverage %: median=97.3  mean=92.9  min=51.0  max=113.9
+  syn1 coverage %:  median=97.3  mean=92.7  min=52.1  max=105.6
+
+  %identity histogram (strict RBH):
+       <25%  0
+     25-30%  31
+     30-40%  109
+     40-60%  110
+     60-80%  14
+      >=80%  1
+
+Outputs
+-------
+  mpn_proteins.faa
+  syn1_proteins.faa
+  mpn_proteins_annotation.tsv
+  syn1_proteins_annotation.tsv
+  mpn_syn1.tsv  (blastp guest -> host)
+  syn1_mpn.tsv  (blastp host -> guest)
+  mpn_syn1_besthits_table.tsv        (all best-hit pairs + RBH flag)
+  mpn_syn1_rbh_homology_table.tsv        (strict RBH subset)
+
+Note: RBH with BLASTP is reliable for clear orthologs but can miss
+twilight-zone homologs (<30% identity) and domain-fusion cases.
+Consider eggNOG-mapper or HMMER/Pfam to recover those.
+======================================================================
