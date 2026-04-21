@@ -1,0 +1,43 @@
+Burgos entries with half-life: 488
+Mapped to RefSeq locus_tag:    476
+Syn1 proteins with a Mpn RBH ortholog:               265
+Syn1 proteins with Mpn RBH-derived half-life mapped: 245
+
+Localization of the 245 RBH-mapped Syn1 proteins:
+ptn_localization
+cytoplasmic    225
+membrane        19
+lipoprotein      1
+
+Cyto_Halflive_factor (Lon):  0.629
+Mem_Halflive_factor  (FtsH): 1.557
+
+Half-life stats (hours):
+  [Mpn, all 245] n=245  median=36.02  mean=67.65  min=5.63  max=300.00
+  [Mpn cytoplasmic] n=225  median=35.87  mean=63.05  min=5.63  max=300.00
+  [Mpn membrane+lipo] n=20  median=42.56  mean=119.39  min=16.79  max=300.00
+  [Syn1-corrected (all w/ factor)] n=245  median=24.20  mean=51.60  min=3.54  max=467.20
+  [Syn1-corrected cytoplasmic] n=225  median=22.57  mean=39.66  min=3.54  max=188.72
+  [Syn1-corrected membrane+lipo] n=20  median=66.28  mean=185.94  min=26.15  max=467.20
+
+Wrote residual_analysis/syn1_ptn_degradation_from_mpn.csv (245 rows)
+
+Base correlation log10(TPM) vs log10(iPM): Pearson r = 0.593 (p=4.48e-71), n=735
+Fit: log10(iPM) = 0.574 * log10(TPM) + 1.136
+Residual vs log10(half-life): Pearson r = -0.154 (p=1.66e-02), Spearman rho = -0.018 (p=7.78e-01), n=242
+Wrote residual_analysis/syn1_halflife_from_mpn_dist.pdf and residual_analysis/syn1_residual_vs_halflife.pdf
+
+[ALL half-lives (incl. clipped)]  n=242
+  log10(iPM) = 1.410 + 0.688*log10(TPM) + -0.226*log10(t1/2)
+    β(TPM)   = 0.688 ± 0.048   p=1.30e-33
+    β(t1/2)  = -0.226 ± 0.088   p=1.10e-02   (theory: ≈ 1)
+    R²(full) = 0.462   R²(TPM only) = 0.447   ΔR² = 0.015
+    partial-r(log10 t1/2 | log10 TPM) = -0.163  (p=1.09e-02)
+
+[UNCLIPPED half-lives only]  n=221
+  log10(iPM) = 0.984 + 0.697*log10(TPM) + 0.082*log10(t1/2)
+    β(TPM)   = 0.697 ± 0.043   p=1.10e-39
+    β(t1/2)  = 0.082 ± 0.103   p=4.28e-01   (theory: ≈ 1)
+    R²(full) = 0.553   R²(TPM only) = 0.552   ΔR² = 0.001
+    partial-r(log10 t1/2 | log10 TPM) = 0.054  (p=4.27e-01)
+Wrote residual_analysis/syn1_partial_residual_halflife.pdf
