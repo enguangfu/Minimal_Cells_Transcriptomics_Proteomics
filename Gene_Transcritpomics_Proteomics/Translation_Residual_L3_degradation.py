@@ -31,7 +31,7 @@ BLAST_COLS = [
 
 Lon_Syn1_Num = 128 # This study
 FtsH_Syn1_Num = 292 # This study
-Syn1_Volume = 0.033 # fL, 0.2 um radius
+Syn1_Volume = 0.044 # fL, 0.22 um radius
 
 Lon_Mpn_Num = 122 # Quantification of mRNA and protein and integration with protein turnover in a bacterium, 2011
 FtsH_Mpn_Num = 689 # Quantification of mRNA and protein and integration with protein turnover in a bacterium, 2011

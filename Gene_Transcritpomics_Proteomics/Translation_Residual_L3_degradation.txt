@@ -9,16 +9,16 @@ cytoplasmic    225
 membrane        19
 lipoprotein      1
 
-Cyto_Halflive_factor (Lon):  0.629
-Mem_Halflive_factor  (FtsH): 1.557
+Cyto_Halflive_factor (Lon):  0.839
+Mem_Halflive_factor  (FtsH): 2.076
 
 Half-life stats (hours):
   [Mpn, all 245] n=245  median=36.02  mean=67.65  min=5.63  max=300.00
   [Mpn cytoplasmic] n=225  median=35.87  mean=63.05  min=5.63  max=300.00
   [Mpn membrane+lipo] n=20  median=42.56  mean=119.39  min=16.79  max=300.00
-  [Syn1-corrected (all w/ factor)] n=245  median=24.20  mean=51.60  min=3.54  max=467.20
-  [Syn1-corrected cytoplasmic] n=225  median=22.57  mean=39.66  min=3.54  max=188.72
-  [Syn1-corrected membrane+lipo] n=20  median=66.28  mean=185.94  min=26.15  max=467.20
+  [Syn1-corrected (all w/ factor)] n=245  median=32.26  mean=68.80  min=4.72  max=622.93
+  [Syn1-corrected cytoplasmic] n=225  median=30.09  mean=52.88  min=4.72  max=251.62
+  [Syn1-corrected membrane+lipo] n=20  median=88.38  mean=247.91  min=34.87  max=622.93
 
 Wrote residual_analysis/syn1_ptn_degradation_from_mpn.csv (245 rows)
 
@@ -28,14 +28,14 @@ Residual vs log10(half-life): Pearson r = -0.120 (p=6.27e-02), Spearman rho = -0
 Wrote residual_analysis/syn1_halflife_from_mpn_dist.pdf and residual_analysis/syn1_residual_vs_halflife.pdf
 
 [ALL half-lives (incl. clipped)]  n=242
-  log10(iPM) = 1.343 + 0.688*log10(TPM) + -0.169*log10(t1/2)
+  log10(iPM) = 1.364 + 0.688*log10(TPM) + -0.169*log10(t1/2)
     β(TPM)   = 0.688 ± 0.046   p=3.59e-36
     β(t1/2)  = -0.169 ± 0.084   p=4.45e-02   (theory: ≈ 1)
     R²(full) = 0.485   R²(TPM only) = 0.477   ΔR² = 0.009
     partial-r(log10 t1/2 | log10 TPM) = -0.130  (p=4.41e-02)
 
 [UNCLIPPED half-lives only]  n=221
-  log10(iPM) = 0.999 + 0.691*log10(TPM) + 0.088*log10(t1/2)
+  log10(iPM) = 0.988 + 0.691*log10(TPM) + 0.088*log10(t1/2)
     β(TPM)   = 0.691 ± 0.043   p=7.21e-39
     β(t1/2)  = 0.088 ± 0.104   p=3.99e-01   (theory: ≈ 1)
     R²(full) = 0.545   R²(TPM only) = 0.544   ΔR² = 0.001
