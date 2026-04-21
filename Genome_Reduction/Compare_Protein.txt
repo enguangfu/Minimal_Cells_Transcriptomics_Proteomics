@@ -1,42 +1,40 @@
-Saved: syn1_vs_syn3a_protein_fold_change.csv  (425 genes)
+Saved: syn1_vs_syn3a_protein_fold_change.csv  (423 genes)
 
-FC > 10  (11 genes):
+FC > 10  (10 genes):
  locus_num gene_name_syn1 gene_name_syn3a  iPM_mean_syn1 rank_syn1_str  iPM_mean_syn3a rank_syn3a_str  iPM_fold_change sense_covering_ops
-       620            NaN            perR       1.108737       728/739      372.889974        279/446       336.319651           OP_00341
-       526           rpmF            rpmF       8.249408       684/739      468.041365        257/446        56.736356           OP_00282
-        60            NaN             NaN       3.962435       716/739      176.837555        349/446        44.628506           OP_00036
-       730            NaN             NaN       1.059129       729/739       39.619753        419/446        37.407870           OP_00382
-       530            NaN             NaN     114.386154       493/739     3132.934617         83/446        27.389107           OP_00284
-       813           galE            galE      81.320434       528/739     2067.739455        116/446        25.427059           OP_00420
-       876            NaN             NaN      12.894143       667/739      322.844320        289/446        25.038060           OP_00452
-       609            NaN            dnaB       1.404008       725/739       24.098959        427/446        17.164400           OP_00335
-       906            NaN             NaN      45.554855       587/739      546.909997        239/446        12.005526           OP_00479
-       115            NaN      galU; gtaB     312.916071       326/739     3744.997002         70/446        11.968056           OP_00065
-       877            NaN      fmnP; ribU      12.045501       668/739      123.485839        377/446        10.251615           OP_00453
+       620            NaN            perR       1.183528       713/721      372.889974        279/446       315.066418           OP_00341
+       526           rpmF            rpmF       7.996638       679/721      468.041365        257/446        58.529764           OP_00282
+        60            NaN             NaN       4.348791       701/721      176.837555        349/446        40.663617           OP_00036
+       730            NaN             NaN       1.110378       714/721       39.619753        419/446        35.681315           OP_00382
+       813           galE            galE      77.626331       531/721     2067.739455        116/446        26.637089           OP_00420
+       876            NaN             NaN      12.644918       665/721      322.844320        289/446        25.531548           OP_00452
+       530            NaN             NaN     203.285080       395/721     3132.934617         83/446        15.411533           OP_00284
+       609            NaN            dnaB       1.667944       709/721       24.098959        427/446        14.448298           OP_00335
+       906            NaN             NaN      47.021171       579/721      546.909997        239/446        11.631144           OP_00479
+       115            NaN      galU; gtaB     368.780952       299/721     3744.997002         70/446        10.155072           OP_00065
 
-FC < 0.1  (4 genes):
+FC < 0.1  (3 genes):
  locus_num gene_name_syn1 gene_name_syn3a  iPM_mean_syn1 rank_syn1_str  iPM_mean_syn3a rank_syn3a_str  iPM_fold_change sense_covering_ops
-       350            hup            hupA   15019.848108        10/739      206.289617        336/446         0.013734           OP_00196
-       264            NaN      prkC; stkP      85.244571       521/739        2.044445        441/446         0.023983  OP_00146,OP_00147
-       270            NaN      tsaE; yjeE    8469.819012        23/739      598.695599        232/446         0.070686           OP_00149
-       416            NaN             NaN      84.078689       523/739        6.755151        435/446         0.080343           OP_00233
+       350            hup            hupA    8991.264880        24/721      206.289617        336/446         0.022943           OP_00196
+       264            NaN      prkC; stkP      88.403157       518/721        2.044445        441/446         0.023126  OP_00146,OP_00147
+       416            NaN             NaN      94.174365       512/721        6.755151        435/446         0.071730           OP_00233
 
-iPM fold change statistics (n=425):
-  mean=3.305  median=1.574  std=16.842
-  5th=0.479  25th=1.058  75th=2.439  95th=6.574
-  min=0.014  max=336.320
+iPM fold change statistics (n=423):
+  mean=3.162  median=1.544  std=15.836
+  5th=0.511  25th=1.037  75th=2.392  95th=6.344
+  min=0.023  max=315.066
 Saved: iPM_fold_change_distribution.pdf
 
-iPM log10FC statistics (n=425):
-  mean=0.207  median=0.197  std=0.400
-  5th=-0.320  25th=0.025  75th=0.387  95th=0.818
-  min=-1.862  max=2.527
+iPM log10FC statistics (n=423):
+  mean=0.201  median=0.189  std=0.386
+  5th=-0.291  25th=0.016  75th=0.379  95th=0.802
+  min=-1.639  max=2.498
 Saved: iPM_log10FC_distribution.pdf
 Saved: iPM_correlation_syn1_vs_syn3a.pdf
 
-Correlation (log10 iPM):  Pearson r = 0.859  (p = 2.89e-125)
-Correlation (raw iPM):    Spearman r = 0.883  (p = 3.59e-141)
+Correlation (log10 iPM):  Pearson r = 0.867  (p = 3.63e-129)
+Correlation (raw iPM):    Spearman r = 0.890  (p = 1.47e-145)
 Saved: upgrade/genes_FC_gt10.csv  +  operon_summary_FC_gt10.txt
-  Copied 22 plot(s) to upgrade/
+  Copied 20 plot(s) to upgrade/
 Saved: downgrade/genes_FC_lt0.1.csv  +  operon_summary_FC_lt0.1.txt
-  Copied 10 plot(s) to downgrade/
+  Copied 8 plot(s) to downgrade/

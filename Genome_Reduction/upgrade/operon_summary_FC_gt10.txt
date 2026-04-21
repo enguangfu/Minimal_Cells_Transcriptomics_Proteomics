@@ -1,70 +1,64 @@
-# FC_GT10 proteins  (n=11)
+# FC_GT10 proteins  (n=10)
 
 ## Operon OP_00036  —  3 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
 MMSYN1_0059        ald                   N/A        N/A      N/A
-MMSYN1_0060                              4.0      176.8   44.629 <<<
-MMSYN1_0061        serS               2268.1     3098.8    1.366
+MMSYN1_0060                              4.3      176.8   40.664 <<<
+MMSYN1_0061        serS               2435.3     3098.8    1.272
 
 ## Operon OP_00065  —  1 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0115                            312.9     3745.0   11.968 <<<
+MMSYN1_0115                            368.8     3745.0   10.155 <<<
 
 ## Operon OP_00282  —  5 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0523                            376.2      273.2    0.726
-MMSYN1_0524        mraW                 56.1      133.9    2.387
-MMSYN1_0525        mraZ                 46.1       92.1    1.998
-MMSYN1_0526        rpmF                  8.2      468.0   56.736 <<<
-MMSYN1_0527                            531.7      841.2    1.582
+MMSYN1_0523                             68.9      273.2    3.963
+MMSYN1_0524        mraW                 54.7      133.9    2.448
+MMSYN1_0525        mraZ                 48.0       92.1    1.920
+MMSYN1_0526        rpmF                  8.0      468.0   58.530 <<<
+MMSYN1_0527                            546.4      841.2    1.540
 
 ## Operon OP_00284  —  1 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0530                            114.4     3132.9   27.389 <<<
+MMSYN1_0530                            203.3     3132.9   15.412 <<<
 
 ## Operon OP_00335  —  1 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0609                              1.4       24.1   17.164 <<<
+MMSYN1_0609                              1.7       24.1   14.448 <<<
 
 ## Operon OP_00341  —  4 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
 MMSYN1_0618                              N/A        N/A      N/A
 MMSYN1_0619                              N/A        N/A      N/A
-MMSYN1_0620                              1.1      372.9  336.320 <<<
-MMSYN1_0621                             79.7      104.5    1.310
+MMSYN1_0620                              1.2      372.9  315.066 <<<
+MMSYN1_0621                             92.5      104.5    1.130
 
 ## Operon OP_00382  —  2 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0730                              1.1       39.6   37.408 <<<
+MMSYN1_0730                              1.1       39.6   35.681 <<<
 MMSYN1_0731                              N/A        N/A      N/A
 
 ## Operon OP_00420  —  3 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0813        galE                 81.3     2067.7   25.427 <<<
-MMSYN1_0814        glf                  97.3      957.6    9.841
+MMSYN1_0813        galE                 77.6     2067.7   26.637 <<<
+MMSYN1_0814        glf                  96.6      957.6    9.909
 MMSYN1_0815                              N/A        N/A      N/A
 
 ## Operon OP_00452  —  1 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0876                             12.9      322.8   25.038 <<<
-
-## Operon OP_00453  —  2 total genes, 1 with extreme FC
-locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
-------------------------------------------------------------------
-MMSYN1_0877                             12.0      123.5   10.252 <<<
-MMSYN1_0878                             47.8      449.7    9.403
+MMSYN1_0876                             12.6      322.8   25.532 <<<
 
 ## Operon OP_00479  —  2 total genes, 1 with extreme FC
 locus_tag          gene_name        iPM_syn1  iPM_syn3a       FC
 ------------------------------------------------------------------
-MMSYN1_0906                             45.6      546.9   12.006 <<<
-MMSYN1_0907                            137.9      160.8    1.167
+MMSYN1_0906                             47.0      546.9   11.631 <<<
+MMSYN1_0907                            140.9      160.8    1.142
