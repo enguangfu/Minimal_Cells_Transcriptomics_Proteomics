@@ -19,31 +19,31 @@ Outputs in: ./residual_analysis/
 
 Protein-coding loci in faa: 828
   CDSs extracted: 828 (skipped non-multiple-of-3: 0)
-  CAI reference set (top 20% by iPM_mean): 148/739 genes
+  CAI reference set (top 20% by iPM_mean): 144/721 genes
   Localization fractions in top 20% iPM_mean:
-    cytoplasmic     :  90.5%  (n = 134)
-    lipoprotein     :   5.4%  (n = 8)
-    membrane        :   3.4%  (n = 5)
+    cytoplasmic     :  91.0%  (n = 131)
+    lipoprotein     :   4.9%  (n = 7)
+    membrane        :   3.5%  (n = 5)
     extracellular   :   0.7%  (n = 1)
   gene_CAI.csv written (828 genes)
 
-CAI vs log10(iPM_mean):   Pearson r = 0.282 (p=6.21e-15)   Spearman ρ = 0.352 (p=7.31e-23)   n=735
-CAI vs log10(avg_TPM):    Pearson r = 0.001 (p=9.75e-01)
-  mean CAI in reference set: 0.745
-  mean CAI outside:          0.716
+CAI vs log10(iPM_mean):   Pearson r = 0.286 (p=5.51e-15)   Spearman ρ = 0.349 (p=5.09e-22)   n=717
+CAI vs log10(avg_TPM):    Pearson r = 0.006 (p=8.71e-01)
+  mean CAI in reference set: 0.748
+  mean CAI outside:          0.715
 
-Baseline log10(iPM) ~ log10(TPM): Pearson r = 0.593  (R² = 0.352)  n = 735
-CAI vs proteome residual:  Pearson r = 0.350 (p=1.40e-22)  Spearman ρ = 0.396 (p=5.49e-29)
+Baseline log10(iPM) ~ log10(TPM): Pearson r = 0.614  (R² = 0.377)  n = 717
+CAI vs proteome residual:  Pearson r = 0.358 (p=4.30e-23)  Spearman ρ = 0.397 (p=1.67e-28)
 
-Baseline   R² (log10 iPM ~ log10 TPM)          = 0.3519
-Augmented  R² (log10 iPM ~ log10 TPM + CAI)    = 0.4312
-ΔR² from CAI                                    = +0.0793  (+22.5% of baseline)
-  Augmented coefficients: intercept=-1.562, β_logTPM=0.574, β_CAI=3.741
+Baseline   R² (log10 iPM ~ log10 TPM)          = 0.3770
+Augmented  R² (log10 iPM ~ log10 TPM + CAI)    = 0.4568
+ΔR² from CAI                                    = +0.0798  (+21.2% of baseline)
+  Augmented coefficients: intercept=-1.489, β_logTPM=0.575, β_CAI=3.667
 
-[Cytosolic only, n = 519]
-  Baseline  R² (log10 iPM ~ log10 TPM)        = 0.4516
-  Augmented R² (log10 iPM ~ log10 TPM + CAI)  = 0.5059
-  ΔR² from CAI                                 = +0.0544
+[Cytosolic only, n = 512]
+  Baseline  R² (log10 iPM ~ log10 TPM)        = 0.4859
+  Augmented R² (log10 iPM ~ log10 TPM + CAI)  = 0.5375
+  ΔR² from CAI                                 = +0.0515
 Saved: CAI_vs_omics.pdf
 Saved: CAI_vs_residual_all.pdf
 Saved: CAI_vs_residual_cytosolic.pdf
@@ -79,52 +79,52 @@ Saved: CAI_deltaR2_bar.pdf
 
 [tAI] gene_tAI.csv written (828 genes, CGG fallback w = 0.043)
 
-tAI vs log10(avg_TPM):    Pearson r = -0.173 (p=2.54e-06)
-tAI vs log10(iPM_mean):   Pearson r = -0.008 (p=8.20e-01)  Spearman ρ = 0.020
-tAI vs proteome residual: Pearson r = 0.117 (p=1.52e-03)  Spearman ρ = 0.152
-tAI vs CAI (codon-metric agreement): r = -0.066 (p=7.49e-02)
+tAI vs log10(avg_TPM):    Pearson r = -0.168 (p=6.05e-06)
+tAI vs log10(iPM_mean):   Pearson r = -0.008 (p=8.37e-01)  Spearman ρ = 0.016
+tAI vs proteome residual: Pearson r = 0.121 (p=1.17e-03)  Spearman ρ = 0.146
+tAI vs CAI (codon-metric agreement): r = -0.065 (p=8.11e-02)
 
-n = 735
-Baseline   R² (log10 iPM ~ log10 TPM)                = 0.3519
-+ tAI       R² (log10 iPM ~ log10 TPM + tAI)         = 0.3610  ΔR² = +0.0091
-+ CAI       R² (log10 iPM ~ log10 TPM + CAI)         = 0.4312  ΔR² = +0.0793
-+ CAI + tAI R² (log10 iPM ~ log10 TPM + CAI + tAI)   = 0.4443  ΔR² = +0.0924
-    coeffs: int=-2.208  β_logTPM=0.593  β_CAI=3.842  β_tAI=5.134
-    ΔR² attributable to tAI *beyond CAI* = +0.0131
+n = 717
+Baseline   R² (log10 iPM ~ log10 TPM)                = 0.3770
++ tAI       R² (log10 iPM ~ log10 TPM + tAI)         = 0.3864  ΔR² = +0.0094
++ CAI       R² (log10 iPM ~ log10 TPM + CAI)         = 0.4568  ΔR² = +0.0798
++ CAI + tAI R² (log10 iPM ~ log10 TPM + CAI + tAI)   = 0.4702  ΔR² = +0.0931
+    coeffs: int=-2.114  β_logTPM=0.594  β_CAI=3.765  β_tAI=4.981
+    ΔR² attributable to tAI *beyond CAI* = +0.0133
 
-[Cytosolic only, n = 519]  CAI/tAI co-correlation
-  tAI vs CAI:                                  r = 0.045 (p=3.11e-01)
-  Baseline   R² (log10 iPM ~ log10 TPM)        = 0.4516
-  + tAI       R² = 0.4659  ΔR² = +0.0143
-  + CAI       R² = 0.5059  ΔR² = +0.0544
-  + CAI + tAI R² = 0.5179  ΔR² = +0.0663
-    ΔR² of tAI beyond CAI = +0.0119
+[Cytosolic only, n = 512]  CAI/tAI co-correlation
+  tAI vs CAI:                                  r = 0.045 (p=3.14e-01)
+  Baseline   R² (log10 iPM ~ log10 TPM)        = 0.4859
+  + tAI       R² = 0.4955  ΔR² = +0.0096
+  + CAI       R² = 0.5375  ΔR² = +0.0515
+  + CAI + tAI R² = 0.5451  ΔR² = +0.0592
+    ΔR² of tAI beyond CAI = +0.0076
 Saved: tAI_vs_omics.pdf
 
-[tAI_aa] per-amino-acid-normalized tAI  (n = 735)
-  vs log10(TPM):           r = 0.121 (p=9.91e-04)
-  vs log10(iPM):           r = 0.204 (p=2.56e-08)
-  vs proteome residual:    r = 0.164 (p=8.30e-06)
-  vs CAI:                  r = 0.082
+[tAI_aa] per-amino-acid-normalized tAI  (n = 717)
+  vs log10(TPM):           r = 0.128 (p=6.02e-04)
+  vs log10(iPM):           r = 0.219 (p=3.31e-09)
+  vs proteome residual:    r = 0.178 (p=1.72e-06)
+  vs CAI:                  r = 0.095
   vs global-normalized tAI: r = 0.739
 
-  Baseline R²                                  = 0.3519
-  + tAI_aa            R² = 0.3695  ΔR² = +0.0176
-  + CAI + tAI_aa      R² = 0.4433  ΔR² = +0.0914
-    ΔR² of tAI_aa beyond CAI = +0.0121
-    coeffs: int=-2.527  β_logTPM=0.561  β_CAI=3.621  β_tAI_aa=2.304
+  Baseline R²                                  = 0.3770
+  + tAI_aa            R² = 0.3970  ΔR² = +0.0200
+  + CAI + tAI_aa      R² = 0.4701  ΔR² = +0.0931
+    ΔR² of tAI_aa beyond CAI = +0.0132
+    coeffs: int=-2.446  β_logTPM=0.562  β_CAI=3.525  β_tAI_aa=2.325
 
-[Cytosolic only, n = 519]  CAI/tAI_aa co-correlation
-  tAI_aa vs CAI:                               r = 0.186 (p=1.92e-05)
-  Baseline      R²                            = 0.4516
-  + tAI_aa       R² = 0.4734  ΔR² = +0.0218
-  + CAI          R² = 0.5059  ΔR² = +0.0544
-  + CAI + tAI_aa R² = 0.5171  ΔR² = +0.0655
-    ΔR² of tAI_aa beyond CAI = +0.0112
+[Cytosolic only, n = 512]  CAI/tAI_aa co-correlation
+  tAI_aa vs CAI:                               r = 0.187 (p=2.03e-05)
+  Baseline      R²                            = 0.4859
+  + tAI_aa       R² = 0.5029  ΔR² = +0.0170
+  + CAI          R² = 0.5375  ΔR² = +0.0515
+  + CAI + tAI_aa R² = 0.5454  ΔR² = +0.0595
+    ΔR² of tAI_aa beyond CAI = +0.0080
 Saved: tAI_aa_vs_omics.pdf
 Saved: tAI_aa_vs_residual.pdf
 
-[codon-level] w_rel vs frac_iPM   Pearson (log10) r = +0.290 (p=2.33e-02)   Spearman ρ = +0.336
+[codon-level] w_rel vs frac_iPM   Pearson (log10) r = +0.288 (p=2.42e-02)   Spearman ρ = +0.337
 [codon-level] w_rel vs frac_raw   Pearson (log10) r = +0.329 (p=9.66e-03)   Spearman ρ = +0.344
 Saved: codon_w_vs_usage.pdf
 
@@ -165,14 +165,14 @@ PRELIMINARY — tRNA distribution and expression
 CAI — codon adaptation index
 ----------------------------
   Reference set: top 20% of protein-coding genes by iPM_mean
-                 (148 genes out of 739 with iPM data)
-  Correlations (n = 735):
-    CAI vs log10(avg_sense_TPM):   Pearson r = +0.001  p = 9.75e-01
-    CAI vs log10(iPM_mean):        Pearson r = +0.282  p = 6.21e-15
-                                   Spearman r = +0.352  p = 7.31e-23
-    CAI vs proteome residual:      Pearson r = +0.350  p = 1.40e-22
-  Mean CAI in reference set: 0.745
-  Mean CAI outside:          0.716
+                 (144 genes out of 721 with iPM data)
+  Correlations (n = 717):
+    CAI vs log10(avg_sense_TPM):   Pearson r = +0.006  p = 8.71e-01
+    CAI vs log10(iPM_mean):        Pearson r = +0.286  p = 5.51e-15
+                                   Spearman r = +0.349  p = 5.09e-22
+    CAI vs proteome residual:      Pearson r = +0.358  p = 4.30e-23
+  Mean CAI in reference set: 0.748
+  Mean CAI outside:          0.715
 
 tAI — decoding matrix (Maier et al. 2011, Mpn s-values + sG:U = 0.41)
 ---------------------------------------------------------------------
@@ -208,40 +208,40 @@ tAI — decoding matrix (Maier et al. 2011, Mpn s-values + sG:U = 0.41)
       least-expressed in the Illumina data, which crushes them under
       global w = W/max(W) normalization.
 
-CORRELATIONS (n = 735)
+CORRELATIONS (n = 717)
 -----------------------------
                             vs log10(TPM)  vs log10(iPM)  vs residual
-  CAI                         +0.001         +0.282         +0.350
-  tAI (global W/maxW)         -0.173         -0.008         +0.117
-  tAI (per-aa family)         +0.121         +0.204         +0.164
+  CAI                         +0.006         +0.286         +0.358
+  tAI (global W/maxW)         -0.168         -0.008         +0.121
+  tAI (per-aa family)         +0.128         +0.219         +0.178
 
   Cross-metric:
-    CAI  vs tAI (global):  r = -0.066
-    CAI  vs tAI (per-aa):  r = +0.082
+    CAI  vs tAI (global):  r = -0.065
+    CAI  vs tAI (per-aa):  r = +0.095
     tAI  vs tAI (per-aa):  r = +0.739
 
 REGRESSION ΔR² (dependent variable = log10(iPM_mean))
 -----------------------------------------------------
   Baseline model:  log10(iPM) ~ log10(TPM)
-      R² = 0.3519   (Pearson r = 0.593, n = 735)
+      R² = 0.3770   (Pearson r = 0.614, n = 717)
 
   Single-metric additions:
-      + CAI                                   R² = 0.4312   ΔR² = +0.0793
-      + tAI (global)                          R² = 0.3610   ΔR² = +0.0091
-      + tAI (per-aa)                          R² = 0.3695   ΔR² = +0.0176
+      + CAI                                   R² = 0.4568   ΔR² = +0.0798
+      + tAI (global)                          R² = 0.3864   ΔR² = +0.0094
+      + tAI (per-aa)                          R² = 0.3970   ΔR² = +0.0200
 
   Joint additions:
-      + CAI + tAI (global)                    R² = 0.4443   ΔR² = +0.0924
-      + CAI + tAI (per-aa)                    R² = 0.4433   ΔR² = +0.0914
+      + CAI + tAI (global)                    R² = 0.4702   ΔR² = +0.0931
+      + CAI + tAI (per-aa)                    R² = 0.4701   ΔR² = +0.0931
 
   Best joint-model coefficients (CAI + tAI_global):
-      intercept = -2.208
-      β_logTPM  = +0.593
-      β_CAI     = +3.842
-      β_tAI     = +5.134
+      intercept = -2.114
+      β_logTPM  = +0.594
+      β_CAI     = +3.765
+      β_tAI     = +4.981
 
-  ΔR² of tAI(global) beyond CAI      = +0.0131
-  ΔR² of tAI(per-aa) beyond CAI      = +0.0121
+  ΔR² of tAI(global) beyond CAI      = +0.0133
+  ΔR² of tAI(per-aa) beyond CAI      = +0.0132
 
 INTERPRETATION
 --------------
@@ -253,14 +253,14 @@ INTERPRETATION
 
   2. Measured-tRNA-TPM tAI adds only ~+0.012 beyond CAI, regardless of
      normalization. Global-w tAI even has a negative correlation with
-     mRNA TPM (r = -0.173) — an artifact of a few super-abundant tRNAs
+     mRNA TPM (r = -0.168) — an artifact of a few super-abundant tRNAs
      (Thr-ACU, Met) dominating the denominator. Per-amino-acid
      normalization flips the TPM correlation to the expected sign
-     (r = +0.121) and roughly doubles standalone ΔR², but the
+     (r = +0.128) and roughly doubles standalone ΔR², but the
      beyond-CAI contribution stays near +0.012.
 
-  3. CAI and tAI are essentially uncorrelated (r = -0.066 global,
-     r = +0.082 per-aa). In most bacteria CAI and tAI correlate
+  3. CAI and tAI are essentially uncorrelated (r = -0.065 global,
+     r = +0.095 per-aa). In most bacteria CAI and tAI correlate
      strongly; the decoupling in Syn1 suggests that Illumina tRNA TPM
      is a noisy proxy for functional decoding capacity — aminoacylation
      status, anticodon modifications, and ribosome-local tRNA delivery

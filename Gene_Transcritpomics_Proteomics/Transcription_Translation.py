@@ -318,8 +318,8 @@ stats_df = pd.DataFrame(stats_rows)
 print("\nProtein copy number statistics by localization (molecules per cell):")
 print(stats_df.to_string(index=False, float_format=lambda x: f'{x:.2f}'))
 
-stats_df.to_csv('./protein_copy_number_stats_by_localization.csv', index=False, float_format='%.4f')
-print("\nSaved: protein_copy_number_stats_by_localization.csv")
+# stats_df.to_csv('./protein_copy_number_stats_by_localization.csv', index=False, float_format='%.4f')
+# print("\nSaved: protein_copy_number_stats_by_localization.csv")
 
 # --- Histogram by localization (log10 scale) ---
 fig, ax = plt.subplots(figsize=(6, 6))

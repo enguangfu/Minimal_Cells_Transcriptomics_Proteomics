@@ -1,6 +1,6 @@
 Cached TIR files found (./residual_analysis/isoform_TIR.csv, ./residual_analysis/gene_TIR.csv) — skipping sections 5–7 (genome load, isoform match, OSTIR).
 Loading transcriptomics + proteomics table ...
-  mRNA genes with both TPM and iPM > 0: 735
+  mRNA genes with both TPM and iPM > 0: 717
 Loaded cached TIR tables: 14307 isoform rows, 735 gene rows
 
 5' UTR statistics (per isoform):
@@ -9,18 +9,18 @@ Loaded cached TIR tables: 14307 isoform rows, 735 gene rows
   Mean UTR length          : 28.4 bp
 Saved: utr_length_distribution.pdf
 
-Genes for residual analysis: 572
+Genes for residual analysis: 566
 
 Baseline regression (iPM ~ TPM):
-  Pearson r  = 0.5795   R² = 0.3358
+  Pearson r  = 0.5929   R² = 0.3515
 
 Multiple regression (iPM ~ TPM + TIR):
-  R²_baseline   = 0.3358
-  R²_full       = 0.3568
-  ΔR² from TIR  = 0.0210  (2.1% of total variance)
+  R²_baseline   = 0.3515
+  R²_full       = 0.3714
+  ΔR² from TIR  = 0.0199  (2.0% of total variance)
 
 Residual vs log10(TIR):
-  Pearson r = 0.1745  (p = 2.70e-05)
+  Pearson r = 0.1715  (p = 4.09e-05)
 Saved: gene_TIR_omics_merged.csv
 Saved: TIR_residual_analysis.pdf
 Saved: TIR_vs_residual.pdf

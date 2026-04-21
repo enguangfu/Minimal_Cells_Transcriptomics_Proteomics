@@ -6,101 +6,101 @@ Syn3A proteomics loaded: 455 entries
 
 Protein detection coverage (mRNA genes only):
   Total mRNA genes : 828
-  With iPM data    : 739 (89.3%)
-  Without iPM data : 89
+  With iPM data    : 721 (87.1%)
+  Without iPM data : 107
 
 Saved: syn1_genes_transcriptomics_proteomics.csv
 
 Correlation: iPM vs avg_sense_TPM
   Localization filter : Non_proteins, cytoplasmic, extracellular, lipoprotein, membrane
-  N genes             : 735
-  Spearman ρ          : 0.6588  (p = 1.14e-92)
-  Pearson  r          : 0.5932  (p = 4.48e-71)
-  Pearson r²         : 0.3519
+  N genes             : 717
+  Spearman ρ          : 0.6658  (p = 5.03e-93)
+  Pearson  r          : 0.6140  (p = 1.63e-75)
+  Pearson r²         : 0.3770
 
-Correlation — all proteins    : Spearman ρ=0.6588, Pearson r=0.5932, Pearson r²=0.3519, n=735
-Correlation — cytosolic only  : Spearman ρ=0.7392, Pearson r=0.6720, Pearson r²=0.4516, n=519
+Correlation — all proteins    : Spearman ρ=0.6658, Pearson r=0.6140, Pearson r²=0.3770, n=717
+Correlation — cytosolic only  : Spearman ρ=0.7488, Pearson r=0.6971, Pearson r²=0.4859, n=512
 
 === Top 20: MORE protein than expected from mRNA ===
 (high translational efficiency or stable protein)
 
-      locus_tag gene_name gene_name_syn3A                                                              gene_product ptn_localization  ptn_copy_number  log10_TPM  log10_iPM  residual
-0   MMSYN1_0270       NaN      tsaE; yjeE                                                       ATPase_ YjeE family      cytoplasmic      1074.466805  -0.257118   3.927874  2.939783
-1   MMSYN1_0592       NaN         deleted                                                                      cdsf      cytoplasmic       124.546325   0.014058   2.992012  1.848238
-2   MMSYN1_0250       NaN         deleted                                            conserved hypothetical protein      cytoplasmic        75.444990  -0.238072   2.774312  1.775286
-3   MMSYN1_0442       NaN            iscU                                            nitrogen fixation protein nifu      cytoplasmic        30.471979  -0.442252   2.380582  1.498777
-4   MMSYN1_0189       NaN         deleted                                            conserved hypothetical protein      cytoplasmic       474.312276   1.858426   3.572745  1.370116
-5   MMSYN1_0398       NaN         deleted                                                       putative liporotein      lipoprotein        35.798730   0.059526   2.450549  1.280672
-6   MMSYN1_0443     mthfs            yggN                                     5-formyltetrahydrofolate cyclo-ligase      cytoplasmic        17.669840  -0.434034   2.143914  1.257390
-7   MMSYN1_0628      argF         deleted                                            ornithine carbamoyltransferase      cytoplasmic      1509.148583   2.933513   4.075413  1.255574
-8   MMSYN1_0151       tuf             tuf                                          translation elongation factor Tu      cytoplasmic      6887.364023   4.112891   4.734734  1.237811
-9   MMSYN1_0580       NaN         deleted                                            conserved hypothetical protein      cytoplasmic        68.095870   0.641811   2.729802  1.225633
-10  MMSYN1_0190       NaN         deleted                                                     leucyl aminopeptidase      cytoplasmic       969.082248   2.671462   3.883042  1.213646
-11  MMSYN1_0187       NaN         deleted                                    transcriptional regulator_ GntR family      cytoplasmic       613.569171   2.353038   3.684545  1.197957
-12  MMSYN1_0223       NaN         deleted                                                     NADH oxidase (noxase)      cytoplasmic      3786.261568   3.745012   4.474892  1.189169
-13  MMSYN1_0225      pdhA         deleted  pyruvate dehydrogenase (acetyl-transferring) E1 component_ alpha subunit      cytoplasmic      3766.755733   3.755351   4.472649  1.180990
-14  MMSYN1_0746       NaN         deleted                                            conserved hypothetical protein      cytoplasmic        15.415643  -0.398157   2.084643  1.177522
-15  MMSYN1_0365      rplS            rplS                                                     ribosomal protein L19      cytoplasmic      1470.097574   3.088314   4.064027  1.155316
-16  MMSYN1_0579       NaN         deleted                                            conserved hypothetical protein      cytoplasmic        44.834071   0.456396   2.548289  1.150568
-17  MMSYN1_0647      rpsM            rpsM                                                 30S ribosomal protein S13      cytoplasmic      1744.872292   3.228838   4.138445  1.149059
-18  MMSYN1_0332       NaN         deleted                                            conserved hypothetical protein         membrane        29.865521   0.157003   2.371851  1.146012
-19  MMSYN1_0604       NaN  lemA/lemA-gacS                                                               LemA family         membrane       776.983309   2.634074   3.787093  1.139162
+      locus_tag gene_name gene_name_syn3A                                gene_product ptn_localization  ptn_copy_number  log10_TPM  log10_iPM  residual
+0   MMSYN1_0592       NaN         deleted                                        cdsf      cytoplasmic       129.350107   0.014058   3.005076  1.841501
+1   MMSYN1_0250       NaN         deleted              conserved hypothetical protein      cytoplasmic        82.021392  -0.238072   2.807236  1.789155
+2   MMSYN1_0442       NaN            iscU              nitrogen fixation protein nifu      cytoplasmic        31.842438  -0.442252   2.396316  1.496058
+3   MMSYN1_0443     mthfs            yggN       5-formyltetrahydrofolate cyclo-ligase      cytoplasmic        28.583100  -0.434034   2.349419  1.444419
+4   MMSYN1_0189       NaN         deleted              conserved hypothetical protein      cytoplasmic       510.135136   1.858426   3.600995  1.373113
+5   MMSYN1_0398       NaN         deleted                         putative liporotein      lipoprotein        37.636852   0.059526   2.468923  1.279110
+6   MMSYN1_0270       NaN      tsaE; yjeE                         ATPase_ YjeE family      cytoplasmic        24.065857  -0.257118   2.274711  1.267620
+7   MMSYN1_0628      argF         deleted              ornithine carbamoyltransferase      cytoplasmic      1500.233077   2.933513   4.069468  1.221199
+8   MMSYN1_0151       tuf             tuf            translation elongation factor Tu      cytoplasmic      7172.911583   4.112891   4.749005  1.220166
+9   MMSYN1_0580       NaN         deleted              conserved hypothetical protein      cytoplasmic        67.959066   0.641811   2.725557  1.199732
+10  MMSYN1_0187       NaN         deleted      transcriptional regulator_ GntR family      cytoplasmic       617.708424   2.353038   3.684093  1.170791
+11  MMSYN1_0579       NaN         deleted              conserved hypothetical protein      cytoplasmic        47.080914   0.456396   2.566154  1.147324
+12  MMSYN1_0447       NaN             dut                         dUTPase superfamily      cytoplasmic       175.890916   1.452316   3.138553  1.145020
+13  MMSYN1_0528      pheT           pheRS  phenylalanyl-tRNA synthetase_ beta subunit      cytoplasmic       150.574286   1.341872   3.071060  1.141260
+14  MMSYN1_0647      rpsM            rpsM                   30S ribosomal protein S13      cytoplasmic      1831.198723   3.228838   4.156045  1.137356
+15  MMSYN1_0365      rplS            rplS                       ribosomal protein L19      cytoplasmic      1516.267173   3.088314   4.074085  1.136486
+16  MMSYN1_0332       NaN         deleted              conserved hypothetical protein         membrane        30.059793   0.157003   2.371295  1.125233
+17  MMSYN1_0289      rbfA            rbfA                   ribosome-binding factor A      cytoplasmic       634.176740   2.456931   3.695520  1.122266
+18  MMSYN1_0536       frr             frr                   ribosome recycling factor      cytoplasmic       909.646113   2.745323   3.852182  1.112509
+19  MMSYN1_0665      rpsC            rpsC                        ribosomal protein S3      cytoplasmic      2275.612466   3.439405   4.250408  1.110210
 
 === Top 20: LESS protein than expected from mRNA ===
 (poor translation, rapid degradation, or low proteomics coverage)
 
-      locus_tag gene_name gene_name_syn3A                              gene_product ptn_localization  ptn_copy_number  log10_TPM  log10_iPM  residual
-0   MMSYN1_0335      vlcC         deleted              lipoprotein_ putative (VlcC)      lipoprotein         0.007624   2.543390  -1.221143 -3.817012
-1   MMSYN1_0795      atpE            atpE                      ATP synthase c chain         membrane         0.067573   3.188930  -0.273543 -3.240018
-2   MMSYN1_0035       NaN         deleted            conserved hypothetical protein    extracellular         0.023719   1.654866  -0.728219 -2.813985
-3   MMSYN1_0312       NaN         deleted            conserved hypothetical protein         membrane         0.025736   1.679805  -0.692785 -2.792868
-4   MMSYN1_0784    arcC_2         deleted                        carbamate kinase 1      cytoplasmic         0.100511   2.705473  -0.101103 -2.790025
-5   MMSYN1_0526      rpmF            rpmF                     ribosomal protein L32      cytoplasmic         1.046506   4.374972   0.916423 -2.730962
-6   MMSYN1_0369       NaN         deleted        YeeE/YedE family protein_ putative         membrane         0.016506   1.113020  -0.885677 -2.660368
-7   MMSYN1_0781    tnpB_5         deleted              IS1296 transposase protein B      cytoplasmic         0.106791   2.160421  -0.074786 -2.450791
-8   MMSYN1_0785       NaN         deleted             arginine/ornithine antiporter         membrane         0.224465   2.491363   0.247830 -2.318170
-9   MMSYN1_0596       NaN         deleted                      hypothetical protein      cytoplasmic         0.045703   1.141108  -0.443373 -2.234188
-10  MMSYN1_0243       NaN         deleted                       putative liporotein      lipoprotein         0.012067   0.041274  -1.021713 -2.181112
-11  MMSYN1_0060       NaN         deleted                 putative membrane protein         membrane         0.502668   2.826574   0.597962 -2.160483
-12  MMSYN1_0192       NaN         deleted                  chromate ion transporter         membrane         0.162686   1.930808   0.108032 -2.136153
-13  MMSYN1_0774      secG            secG      preprotein translocase_ SecG subunit         membrane         0.622648   2.916176   0.690924 -2.118963
-14  MMSYN1_0272       NaN         deleted  efflux ABC transporter_ permease protein         membrane         0.084904   1.182871  -0.174393 -1.989185
-15  MMSYN1_0159       NaN         deleted                       putative liporotein      lipoprotein         0.230419   1.935976   0.259200 -1.987951
-16  MMSYN1_0620       NaN            perR                   ferric uptake regulator      cytoplasmic         0.140652   1.533325   0.044828 -1.971160
-17  MMSYN1_0124       NaN         deleted         hexosephosphate transport protein         membrane         1.862754   3.356298   1.166837 -1.895725
-18  MMSYN1_0909      rnpA            rnpA          ribonuclease P protein component      cytoplasmic         1.003061   2.807802   0.898008 -1.849660
-19  MMSYN1_0730       NaN         deleted            conserved hypothetical protein      cytoplasmic         0.134359   1.285305   0.024949 -1.848651
+      locus_tag gene_name gene_name_syn3A                                  gene_product ptn_localization  ptn_copy_number  log10_TPM  log10_iPM  residual
+0   MMSYN1_0335      vlcC         deleted                  lipoprotein_ putative (VlcC)      lipoprotein         0.021039   2.543390  -0.783656 -3.406801
+1   MMSYN1_0784    arcC_2         deleted                            carbamate kinase 1      cytoplasmic         0.108437   2.705473  -0.071512 -2.788189
+2   MMSYN1_0526      rpmF            rpmF                         ribosomal protein L32      cytoplasmic         1.022347   4.374972   0.902907 -2.777167
+3   MMSYN1_0208       NaN         deleted                           putative liporotein      lipoprotein         0.060300   2.048228  -0.326375 -2.663783
+4   MMSYN1_0369       NaN         deleted            YeeE/YedE family protein_ putative         membrane         0.022255   1.113020  -0.759263 -2.557003
+5   MMSYN1_0292       NaN         deleted                         peptidase_ S41 family    extracellular         0.099902   2.009543  -0.107118 -2.422203
+6   MMSYN1_0785       NaN         deleted                 arginine/ornithine antiporter         membrane         0.198843   2.491363   0.191819 -2.401304
+7   MMSYN1_0774      secG            secG          preprotein translocase_ SecG subunit         membrane         0.603520   2.916176   0.674001 -2.164264
+8   MMSYN1_0060       NaN         deleted                     putative membrane protein         membrane         0.555980   2.826574   0.638368 -2.148191
+9   MMSYN1_0192       NaN         deleted                      chromate ion transporter         membrane         0.169604   1.930808   0.122746 -2.146904
+10  MMSYN1_0620       NaN            perR                       ferric uptake regulator      cytoplasmic         0.151311   1.533325   0.073179 -1.967101
+11  MMSYN1_0124       NaN         deleted             hexosephosphate transport protein         membrane         1.716839   3.356298   1.128039 -1.964202
+12  MMSYN1_0855       NaN         deleted          PTS system_ iibc component_ putative         membrane         0.414652   2.215907   0.510993 -1.923176
+13  MMSYN1_0730       NaN         deleted                conserved hypothetical protein      cytoplasmic         0.141959   1.285305   0.045471 -1.851687
+14  MMSYN1_0860       NaN         deleted                           putative liporotein      lipoprotein         1.021273   2.748185   0.902451 -1.838873
+15  MMSYN1_0902      vlcH         deleted                  lipoprotein_ putative (VlcH)      lipoprotein         0.414039   2.006266   0.510350 -1.802844
+16  MMSYN1_0836       NaN            ecfS                conserved hypothetical protein         membrane         0.714065   2.391044   0.747047 -1.788186
+17  MMSYN1_0925       NaN         deleted                      conserved domain protein      cytoplasmic         0.040888   0.209300  -0.495091 -1.771332
+18  MMSYN1_0590       NaN         deleted      type III restriction enzyme_ res subunit      cytoplasmic         0.496431   2.013109   0.589169 -1.727974
+19  MMSYN1_0337       NaN         deleted  PTS system ascorbate-specific enzyme IIC/IIB         membrane         0.554441   2.053042   0.637165 -1.703022
 
 === Top 20: LESS protein in CYTOSOLIC than expected from mRNA ===
 (poor translation, rapid degradation, or low proteomics coverage)
 
       locus_tag gene_name gene_name_syn3A                                                   gene_product ptn_localization  ptn_copy_number  log10_TPM  log10_iPM  residual
-0   MMSYN1_0784    arcC_2         deleted                                             carbamate kinase 1      cytoplasmic         0.100511   2.705473  -0.101103 -2.790025
-1   MMSYN1_0526      rpmF            rpmF                                          ribosomal protein L32      cytoplasmic         1.046506   4.374972   0.916423 -2.730962
-2   MMSYN1_0781    tnpB_5         deleted                                   IS1296 transposase protein B      cytoplasmic         0.106791   2.160421  -0.074786 -2.450791
-3   MMSYN1_0596       NaN         deleted                                           hypothetical protein      cytoplasmic         0.045703   1.141108  -0.443373 -2.234188
-4   MMSYN1_0620       NaN            perR                                        ferric uptake regulator      cytoplasmic         0.140652   1.533325   0.044828 -1.971160
-5   MMSYN1_0909      rnpA            rnpA                               ribonuclease P protein component      cytoplasmic         1.003061   2.807802   0.898008 -1.849660
-6   MMSYN1_0730       NaN         deleted                                 conserved hypothetical protein      cytoplasmic         0.134359   1.285305   0.024949 -1.848651
-7   MMSYN1_0587       NaN         deleted    mycoplasma virulence signal region (Myco_arth_vir_N) family      cytoplasmic         0.455518   1.963169   0.555187 -1.707576
-8   MMSYN1_0590       NaN         deleted                       type III restriction enzyme_ res subunit      cytoplasmic         0.509686   2.013109   0.603984 -1.687450
-9   MMSYN1_0770       NaN         deleted                                 conserved hypothetical protein      cytoplasmic         0.623859   2.094828   0.691768 -1.646581
-10  MMSYN1_0735    tnpB_4         deleted                                   IS1296 transposase protein B      cytoplasmic         0.640830   1.702441   0.703424 -1.409654
-11  MMSYN1_0364      trmD            trmD                            tRNA (guanine-N1)-methyltransferase      cytoplasmic         2.600485   2.614091   1.311735 -1.324723
-12  MMSYN1_0748       NaN         deleted                                          IS1296 transposase EH      cytoplasmic         2.992614   2.518181   1.372732 -1.208665
-13  MMSYN1_0083       NaN         deleted                                 conserved hypothetical protein      cytoplasmic         0.703432   1.374877   0.743903 -1.181120
-14  MMSYN1_0583       NaN         deleted    mycoplasma virulence signal region (Myco_arth_vir_N) family      cytoplasmic         2.619610   2.355432   1.314918 -1.173044
-15  MMSYN1_0358      recA         deleted                                                   protein RecA      cytoplasmic         2.955694   2.414713   1.367341 -1.154655
-16  MMSYN1_0705       NaN         deleted                            C-5 cytosine-specific DNA methylase      cytoplasmic         0.744553   1.356899   0.768577 -1.146126
-17  MMSYN1_0609       NaN            dnaB  chromosome replication initiation/membrane attachment protein      cytoplasmic         0.178110   0.185457   0.147370 -1.094805
-18  MMSYN1_0339       NaN         deleted                     Na+ ABC transporter_ ATP-binding component      cytoplasmic         1.794365   1.907556   1.150592 -1.080244
-19  MMSYN1_0759       NaN         deleted                                       sugar kinase_ ROK family      cytoplasmic         0.619863   0.998543   0.688977 -1.019992
+0   MMSYN1_0784    arcC_2         deleted                                             carbamate kinase 1      cytoplasmic         0.108437   2.705473  -0.071512 -2.788189
+1   MMSYN1_0526      rpmF            rpmF                                          ribosomal protein L32      cytoplasmic         1.022347   4.374972   0.902907 -2.777167
+2   MMSYN1_0620       NaN            perR                                        ferric uptake regulator      cytoplasmic         0.151311   1.533325   0.073179 -1.967101
+3   MMSYN1_0730       NaN         deleted                                 conserved hypothetical protein      cytoplasmic         0.141959   1.285305   0.045471 -1.851687
+4   MMSYN1_0925       NaN         deleted                                       conserved domain protein      cytoplasmic         0.040888   0.209300  -0.495091 -1.771332
+5   MMSYN1_0590       NaN         deleted                       type III restriction enzyme_ res subunit      cytoplasmic         0.496431   2.013109   0.589169 -1.727974
+6   MMSYN1_0587       NaN         deleted    mycoplasma virulence signal region (Myco_arth_vir_N) family      cytoplasmic         0.571618   1.963169   0.650415 -1.637909
+7   MMSYN1_0770       NaN         deleted                                 conserved hypothetical protein      cytoplasmic         0.850920   2.094828   0.823198 -1.541101
+8   MMSYN1_0862       NaN         deleted                                 conserved hypothetical protein      cytoplasmic         0.068599   0.102639  -0.270372 -1.485063
+9   MMSYN1_0364      trmD            trmD                            tRNA (guanine-N1)-methyltransferase      cytoplasmic         2.683554   2.614091   1.322020 -1.341925
+10  MMSYN1_0583       NaN         deleted    mycoplasma virulence signal region (Myco_arth_vir_N) family      cytoplasmic         2.476893   2.355432   1.287216 -1.227467
+11  MMSYN1_0339       NaN         deleted                     Na+ ABC transporter_ ATP-binding component      cytoplasmic         1.583563   1.907556   1.092945 -1.163288
+12  MMSYN1_0909      rnpA            rnpA                               ribonuclease P protein component      cytoplasmic         5.347981   2.807802   1.621499 -1.154227
+13  MMSYN1_0358      recA         deleted                                                   protein RecA      cytoplasmic         3.284948   2.414713   1.409838 -1.139054
+14  MMSYN1_0748       NaN         deleted                                          IS1296 transposase EH      cytoplasmic         3.845534   2.518181   1.478266 -1.130333
+15  MMSYN1_0894       NaN         deleted                  viral A-type inclusion protein repeat protein      cytoplasmic         0.655311   1.182948   0.709757 -1.128335
+16  MMSYN1_0890       NaN         deleted                                 conserved hypothetical protein      cytoplasmic         0.756513   1.209676   0.772125 -1.081390
+17  MMSYN1_0237       NaN         deleted               dihydroxyacetone kinase_ phosphotransfer subunit      cytoplasmic         5.182619   2.651882   1.607859 -1.077893
+18  MMSYN1_0758       NaN         deleted                                               beta-glucosidase      cytoplasmic         0.856603   1.243675   0.826089 -1.047046
+19  MMSYN1_0609       NaN            dnaB  chromosome replication initiation/membrane attachment protein      cytoplasmic         0.213242   0.185457   0.222182 -1.040300
 
 Protein copy number statistics by localization (molecules per cell):
  localization   n  min    Q1  median   mean     Q3     max   CV
-  cytoplasmic 523 0.05 14.52   45.15 224.19 155.78 6887.36 2.43
-     membrane 131 0.02  2.11    8.54  31.21  22.71  776.98 2.68
-  lipoprotein  72 0.01  3.87   20.55  71.08  73.75 1450.49 2.59
-extracellular  13 0.02  1.01    3.57  30.70  12.88  215.65 2.11
+  cytoplasmic 516 0.04 14.61   46.94 229.30 157.27 7172.91 2.44
+     membrane 126 0.02  2.66    9.61  31.98  23.26  681.61 2.48
+  lipoprotein  68 0.02  4.66   20.68  74.72  80.40 1393.11 2.46
+extracellular  11 0.10  1.30    3.11  36.69  18.03  226.57 1.99
 
 Saved: protein_copy_number_stats_by_localization.csv
