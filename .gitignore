@@ -30,7 +30,7 @@ syn1.PacBio.FLNC.sorted.HQ.bam.bai
 # ----------------------------
 # Isoform annotation outputs
 # ----------------------------
-isoform_annotation/
+Isoform_Cluster/isoform*
 
 # ----------------------------
 # Novel ORF discovery outputs
