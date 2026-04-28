@@ -1,0 +1,616 @@
+# TPM FC_GT10 genes  (n=112)
+
+## Operon OP_00001  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0001        dnaA_1                198.6       1451.6    7.309
+MMSYN1_0002        dnaN                   98.0       1029.8   10.512 <<<
+
+## Operon OP_00002  —  2 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0003        rnmV                   26.7        486.9   18.265 <<<
+MMSYN1_0004        ksgA                   10.9        309.5   28.481 <<<
+
+## Operon OP_00019  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0029                             1039.2      12855.4   12.371 <<<
+
+## Operon OP_00028  —  4 total genes, 3 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0040                                7.0       1000.7  142.037 <<<
+MMSYN1_0042                              258.1       2612.8   10.122 <<<
+MMSYN1_0043                               52.7        371.0    7.035
+MMSYN1_0044                                5.8        236.4   40.601 <<<
+
+## Operon OP_00034  —  5 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0052                             1412.6          nan      nan
+MMSYN1_0053                              225.9          nan      nan
+MMSYN1_0054                              250.8       3368.2   13.430 <<<
+MMSYN1_0055        mmyCVR                115.3          nan      nan
+MMSYN1_0056        mmyC5VM               218.2          nan      nan
+
+## Operon OP_00036  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0059        ald                  8978.4          nan      nan
+MMSYN1_0060                             1041.6      13590.3   13.048 <<<
+MMSYN1_0061        serS                  361.6       2007.1    5.551
+
+## Operon OP_00038  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0065        trxA                 9780.2      21437.5    2.192
+MMSYN1_0066                              485.3       9589.0   19.761 <<<
+
+## Operon OP_00053  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0093                                6.5          nan      nan
+MMSYN1_0094                               10.1        646.3   64.009 <<<
+
+## Operon OP_00063  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0113                              143.6       1867.3   13.004 <<<
+
+## Operon OP_00065  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0115                              570.9      10133.9   17.750 <<<
+
+## Operon OP_00074  —  3 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0131        fba                  2726.7       7600.9    2.788
+MMSYN1_0132                               54.7       1923.2   35.184 <<<
+MMSYN1_0133                               91.3       1449.5   15.876 <<<
+
+## Operon OP_00077  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0137        rpmE                32251.7       1309.5    0.041
+MMSYN1_0138                               48.8        937.0   19.210 <<<
+
+## Operon OP_00078  —  4 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0139                              242.5        918.7    3.788
+MMSYN1_0140        tdk                   652.2        788.3    1.209
+MMSYN1_0141        prfA                  969.0        883.5    0.912
+MMSYN1_0142        prmC                    9.6        323.3   33.647 <<<
+
+## Operon OP_00079  —  3 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0143                               10.0        373.0   37.132 <<<
+MMSYN1_0144                               10.7        587.5   55.021 <<<
+MMSYN1_0145                             1554.3       4236.1    2.726
+
+## Operon OP_00081  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0147                                3.5        132.1   37.705 <<<
+
+## Operon OP_00094  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0164                                7.5        478.9   64.019 <<<
+
+## Operon OP_00114  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0202                               13.9        200.3   14.366 <<<
+MMSYN1_0203        gmk                   170.1        634.1    3.728
+
+## Operon OP_00120  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0214                               17.9         90.5    5.069
+MMSYN1_0215                              372.1       1348.9    3.625
+MMSYN1_0216        hpt_1                 427.6       5054.4   11.821 <<<
+
+## Operon OP_00127  —  5 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0231                              109.8          nan      nan
+MMSYN1_0232        coaD                    5.4          nan      nan
+MMSYN1_0233        ptsP                  881.9       1607.0    1.822
+MMSYN1_0234                             3958.7       8465.0    2.138
+MMSYN1_0235                              377.7       8217.6   21.755 <<<
+
+## Operon OP_00130  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0239                                1.1        114.3  107.351 <<<
+
+## Operon OP_00137  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0246                              472.8          nan      nan
+MMSYN1_0247        ysxC                  159.3       2426.2   15.234 <<<
+
+## Operon OP_00138  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0248                               10.8       1089.7  101.182 <<<
+
+## Operon OP_00139  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0249                                1.7       1546.3  915.689 <<<
+
+## Operon OP_00140  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0250                                0.9       2396.6 2670.273 <<<
+
+## Operon OP_00142  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0254        uvrC                   10.6       1031.3   97.516 <<<
+MMSYN1_0255                                2.6          nan      nan
+
+## Operon OP_00146  —  5 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0260        valS                  202.1       2472.2   12.235 <<<
+MMSYN1_0261        thiN                  295.4          nan      nan
+MMSYN1_0262        rpe                   629.7       2621.3    4.163
+MMSYN1_0263        rsgA                  165.8        468.8    2.827
+MMSYN1_0264                              202.7        109.7    0.541
+
+## Operon OP_00149  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0270                                0.9        834.1  971.062 <<<
+MMSYN1_0271                                nan        623.6      nan
+
+## Operon OP_00157  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0280                                N/A          N/A      N/A
+MMSYN1_0281                               13.3        265.3   19.941 <<<
+MMSYN1_0282        proS                  253.6        398.0    1.569
+
+## Operon OP_00161  —  3 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0289        rbfA                  444.7       4012.0    9.022
+MMSYN1_0290        truB                    2.2        762.1  347.703 <<<
+MMSYN1_0291                                5.2        872.1  166.910 <<<
+
+## Operon OP_00165  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0296                               21.6        412.8   19.139 <<<
+
+## Operon OP_00167  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0304        cdsA                   50.5        593.5   11.745 <<<
+
+## Operon OP_00175  —  4 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0314                             1704.9       1579.5    0.926
+MMSYN1_0315                               53.8        654.5   12.176 <<<
+MMSYN1_0316        tkt                   843.5       1139.1    1.350
+MMSYN1_0317                             1308.7       1689.2    1.291
+
+## Operon OP_00182  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0325                                3.9        242.7   62.716 <<<
+
+## Operon OP_00183  —  6 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0326                                6.5        183.6   28.117 <<<
+MMSYN1_0327        scpA                   70.4        552.6    7.851
+MMSYN1_0328        scpB                  123.6        366.5    2.964
+MMSYN1_0329                              210.2       1500.9    7.141
+MMSYN1_0330                              305.1       1542.0    5.054
+MMSYN1_0331                              623.4          nan      nan
+
+## Operon OP_00184  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0332                                2.2        889.3  398.954 <<<
+
+## Operon OP_00194  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0345                              469.0        556.6    1.187
+MMSYN1_0346                                5.8        394.5   67.928 <<<
+
+## Operon OP_00195  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0346                                5.8        394.5   67.928 <<<
+MMSYN1_0347        cmk                    56.8        451.9    7.961
+MMSYN1_0348        engA                   67.6        477.5    7.063
+
+## Operon OP_00196  —  4 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0349        gpsA                  110.3          nan      nan
+MMSYN1_0350        hup                  7738.2        973.3    0.126
+MMSYN1_0352                               44.1        130.3    2.952
+MMSYN1_0353                               69.1       1955.9   28.323 <<<
+
+## Operon OP_00199  —  6 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0356        rnpB                    N/A          N/A      N/A
+MMSYN1_0357                              104.8          nan      nan
+MMSYN1_0358        recA                  403.5          nan      nan
+MMSYN1_0359                              652.3        743.8    1.140
+MMSYN1_0360        ffh                   892.8        977.7    1.095
+MMSYN1_0361                               33.7        719.1   21.321 <<<
+
+## Operon OP_00200  —  5 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0362        rpsP                 2008.8       3422.1    1.704
+MMSYN1_0363        rimM                  140.3       3767.6   26.848 <<<
+MMSYN1_0364        trmD                  638.6       2466.6    3.863
+MMSYN1_0365        rplS                 1903.0       2640.4    1.388
+MMSYN1_0366        ylqF                  184.3       2075.1   11.261 <<<
+
+## Operon OP_00201  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0366        ylqF                  184.3       2075.1   11.261 <<<
+MMSYN1_0367        rnhB                  160.0          nan      nan
+
+## Operon OP_00205  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0373                               16.4        307.7   18.815 <<<
+
+## Operon OP_00208  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0376                               48.9        845.8   17.310 <<<
+
+## Operon OP_00211  —  2 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0381        mtnN                   20.7        539.4   26.065 <<<
+MMSYN1_0382                               10.7        726.1   67.749 <<<
+
+## Operon OP_00217  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0389                               41.0        525.3   12.827 <<<
+
+## Operon OP_00219  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0391        efp                  1772.2       1241.1    0.700
+MMSYN1_0392                              173.2       2651.9   15.313 <<<
+MMSYN1_0393        tig                   758.3          nan      nan
+
+## Operon OP_00220  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0394        lon                   455.7       6595.3   14.472 <<<
+
+## Operon OP_00223  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0398                                1.8        205.8  115.568 <<<
+
+## Operon OP_00226  —  5 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0401                                nan        108.8      nan
+MMSYN1_0402                               66.3        209.0    3.154
+MMSYN1_0403        era                    66.8        395.3    5.916
+MMSYN1_0404        recO                    8.4        256.4   30.520 <<<
+MMSYN1_0405        glyS                 1306.3        726.2    0.556
+
+## Operon OP_00227  —  4 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0405        glyS                 1306.3        726.2    0.556
+MMSYN1_0406        dnaG                   76.1        415.3    5.455
+MMSYN1_0407        rpoD                 1559.9       1179.5    0.756
+MMSYN1_0408                               78.5        847.6   10.804 <<<
+
+## Operon OP_00228  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0409                                1.1        203.0  188.475 <<<
+
+## Operon OP_00231  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0414                              142.6       1746.4   12.245 <<<
+
+## Operon OP_00233  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0416                               11.2       1445.4  128.843 <<<
+MMSYN1_0417                              217.3          nan      nan
+
+## Operon OP_00242  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0437                              725.7      12233.6   16.857 <<<
+
+## Operon OP_00244  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0441                                7.3        602.8   82.852 <<<
+
+## Operon OP_00245  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0442                                0.6        191.0  340.491 <<<
+
+## Operon OP_00246  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0443        mthfs                   0.6        126.2  220.726 <<<
+
+## Operon OP_00248  —  5 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0445        pgi                  1875.9       1998.1    1.065
+MMSYN1_0446                             1011.9          nan      nan
+MMSYN1_0447                               44.0      12929.0  293.856 <<<
+MMSYN1_0448                             1406.7      19613.8   13.943 <<<
+MMSYN1_0449        tnpA_2                139.8          nan      nan
+
+## Operon OP_00262  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0479                               13.0        290.4   22.382 <<<
+
+## Operon OP_00275  —  5 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0499        rpmA                 7040.1       7209.7    1.024
+MMSYN1_0500                             2262.4      10896.9    4.817
+MMSYN1_0501        rplU                 8149.8       4691.5    0.576
+MMSYN1_0503                              153.4        588.4    3.836
+MMSYN1_0504                               24.2       1580.0   65.331 <<<
+
+## Operon OP_00276  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0505                              110.3       1802.6   16.346 <<<
+
+## Operon OP_00277  —  6 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0506                                N/A          N/A      N/A
+MMSYN1_0507                                N/A          N/A      N/A
+MMSYN1_0508                                N/A          N/A      N/A
+MMSYN1_0509                                N/A          N/A      N/A
+MMSYN1_0510                                N/A          N/A      N/A
+MMSYN1_0511                               17.8       3378.2  190.198 <<<
+
+## Operon OP_00279  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0513        acpS                   25.9        725.2   28.000 <<<
+
+## Operon OP_00281  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0520                              171.5       3447.7   20.098 <<<
+MMSYN1_0521                             1049.8       3000.6    2.858
+MMSYN1_0522        ftsZ                 4658.1       2610.0    0.560
+
+## Operon OP_00282  —  5 total genes, 3 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0523                               11.3        390.6   34.452 <<<
+MMSYN1_0524        mraW                   91.3       1059.8   11.612 <<<
+MMSYN1_0525        mraZ                  213.3       2213.6   10.380 <<<
+MMSYN1_0526        rpmF                36820.1      11020.7    0.299
+MMSYN1_0527                             6470.4       4906.3    0.758
+
+## Operon OP_00283  —  2 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0528        pheT                   34.1       1704.7   49.966 <<<
+MMSYN1_0529        pheS                  182.8       4828.4   26.407 <<<
+
+## Operon OP_00290  —  3 total genes, 3 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0543        grpE                  141.5       1937.2   13.688 <<<
+MMSYN1_0544        hrcA                   66.4       2452.4   36.919 <<<
+MMSYN1_0545                              345.1       4985.4   14.448 <<<
+
+## Operon OP_00291  —  4 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0546                             1953.3          nan      nan
+MMSYN1_0547                              380.5          nan      nan
+MMSYN1_0548                              905.4       1886.6    2.084
+MMSYN1_0549                               56.9       1164.1   20.455 <<<
+
+## Operon OP_00326  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0591        mmyCImod               90.7          nan      nan
+MMSYN1_0592                                1.6        236.4  147.382 <<<
+
+## Operon OP_00331  —  5 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0600                             1148.2        614.3    0.535
+MMSYN1_0601                              151.7       4225.3   27.856 <<<
+MMSYN1_0602                               67.3          nan      nan
+MMSYN1_0604                              668.6        998.0    1.493
+MMSYN1_0603                                N/A          N/A      N/A
+
+## Operon OP_00334  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0608                                3.2        330.7  102.146 <<<
+
+## Operon OP_00335  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0609                                2.4        395.9  166.333 <<<
+
+## Operon OP_00341  —  4 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0618                                N/A          N/A      N/A
+MMSYN1_0619                                N/A          N/A      N/A
+MMSYN1_0620                               53.0       1115.3   21.036 <<<
+MMSYN1_0621                              459.9       1012.3    2.201
+
+## Operon OP_00342  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0622                                3.9         50.9   13.112 <<<
+
+## Operon OP_00343  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0623                                1.0         13.8   14.372 <<<
+
+## Operon OP_00352  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0636                               46.1        606.6   13.145 <<<
+
+## Operon OP_00353  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0637        rpsI                11798.3      22362.3    1.895
+MMSYN1_0638        rplM                19860.8      10003.0    0.504
+MMSYN1_0639                               34.1        462.7   13.574 <<<
+
+## Operon OP_00354  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0639                               34.1        462.7   13.574 <<<
+
+## Operon OP_00366  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0683                               46.8          nan      nan
+MMSYN1_0684        folD                  207.1       1002.3    4.840
+MMSYN1_0685                               67.5        809.8   11.990 <<<
+
+## Operon OP_00369  —  4 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0691                               54.9        378.5    6.891
+MMSYN1_0692                               17.6        587.2   33.394 <<<
+MMSYN1_0693                               30.4       1594.8   52.521 <<<
+MMSYN1_0694                            31412.2       5757.3    0.183
+
+## Operon OP_00382  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0730                               30.0        587.3   19.609 <<<
+MMSYN1_0731                               29.8          nan      nan
+
+## Operon OP_00404  —  3 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0774        secG                 1280.2        955.5    0.746
+MMSYN1_0775                               83.8        845.0   10.082 <<<
+MMSYN1_0776        smpB                   15.1       1820.5  120.451 <<<
+
+## Operon OP_00405  —  3 total genes, 3 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0775                               83.8        845.0   10.082 <<<
+MMSYN1_0776        smpB                   15.1       1820.5  120.451 <<<
+MMSYN1_0777                                9.6       2363.1  245.818 <<<
+
+## Operon OP_00411  —  6 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0792        atpA                 1835.4        697.9    0.380
+MMSYN1_0793        atpH                  532.7       1262.0    2.369
+MMSYN1_0794        atpF                 1036.2       1822.8    1.759
+MMSYN1_0795        atpE                 2399.1       2076.3    0.865
+MMSYN1_0796        atpB                  893.9       3685.6    4.123
+MMSYN1_0797                               24.6       2915.5  118.465 <<<
+
+## Operon OP_00417  —  5 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0805                               42.3        493.7   11.670 <<<
+MMSYN1_0806        rplL                11570.5      16482.2    1.424
+MMSYN1_0807        rplJ                10504.5       6359.9    0.605
+MMSYN1_0809        rplA                 4745.7       5813.9    1.225
+MMSYN1_0810        rplK                 7861.8       3742.1    0.476
+
+## Operon OP_00427  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0826        holA                    1.2        101.6   84.311 <<<
+MMSYN1_0827                              523.3       1459.8    2.789
+
+## Operon OP_00429  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0829                              181.8          nan      nan
+MMSYN1_0830                               15.1        685.5   45.350 <<<
+
+## Operon OP_00431  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0832        pth                    20.8        889.2   42.666 <<<
+
+## Operon OP_00432  —  7 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0833        rplI                  266.7       2338.3    8.767
+MMSYN1_0834        dnaB                  344.5       1148.2    3.333
+MMSYN1_0835                              758.7       1415.1    1.865
+MMSYN1_0836                              382.1        863.9    2.261
+MMSYN1_0837        cysS                  129.2        514.0    3.979
+MMSYN1_0838                               13.2        307.1   23.346 <<<
+MMSYN1_0839        secE                 1273.2       1463.9    1.150
+
+## Operon OP_00439  —  3 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0852                                3.5        276.5   78.653 <<<
+MMSYN1_0853                               53.6        318.2    5.939
+MMSYN1_0854                               15.6          nan      nan
+
+## Operon OP_00451  —  6 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0870                              345.9        668.5    1.933
+MMSYN1_0871                               34.7          nan      nan
+MMSYN1_0872        ychF                  310.2        435.9    1.405
+MMSYN1_0873                              100.6        476.8    4.739
+MMSYN1_0874        gidB                   47.7        506.6   10.610 <<<
+MMSYN1_0875        pgsA                   28.6        782.6   27.323 <<<
+
+## Operon OP_00452  —  1 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0876                              271.4       3510.6   12.936 <<<
+
+## Operon OP_00453  —  2 total genes, 1 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0877                              498.4       5405.4   10.845 <<<
+MMSYN1_0878                              535.9       3644.2    6.800
+
+## Operon OP_00479  —  2 total genes, 2 with extreme FC
+locus_tag          gene_name          TPM_syn1    TPM_syn3a       FC
+----------------------------------------------------------------------
+MMSYN1_0906                                3.7       1069.6  289.512 <<<
+MMSYN1_0907                                3.2        660.1  206.452 <<<
