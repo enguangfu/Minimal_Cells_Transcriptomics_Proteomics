@@ -22,7 +22,7 @@
 [iPM FC_lt0.1] operon_summary written, 8 plot(s) copied to protein_downgrade/
 
 Saved: syn1_vs_syn3a_RNA_protein.csv  (873 coding genes)
-Saved: syn1_vs_syn3A_noncoding_RNA.csv  (41 non-coding genes)
+Saved: syn1_vs_syn3a_noncoding_RNA.csv  (41 non-coding genes)
 
 === TPM extreme FC (both ONT & Illumina agree) — UP (n=26) ===
  locus_syn1    locus_syn3a    gene_name                                                                     gene_product  TPM_mean_syn1  TPM_mean_syn3A_ONT  TPM_fold_change_ONT  TPM_mean_syn3a_Illumina  TPM_fold_change_Illumina

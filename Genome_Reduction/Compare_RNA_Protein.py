@@ -30,7 +30,7 @@ SYN3A_TPM_COL  = "ONT_sense_TPM"
 SYN3A_ILLUMINA_TPM_COL = "Illumina_TPM"
 
 OUT_CODING     = "syn1_vs_syn3a_RNA_protein.csv"
-OUT_NONCODING  = "syn1_vs_syn3A_noncoding_RNA.csv"
+OUT_NONCODING  = "syn1_vs_syn3a_noncoding_RNA.csv"
 
 CODING_RNA_TYPES    = {"mRNA", "pseudo"}
 NONCODING_RNA_TYPES = {"rRNA", "tRNA", "ncRNA", "tmRNA"}
