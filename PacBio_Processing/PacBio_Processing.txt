@@ -1,0 +1,120 @@
+[orient] total=2,949,889  h1_flips=1,346,816  bc_flips=191,441  filtered_out=255,417  written=2,694,472
+[trim]  in=2,694,472  out=2,623,086  h2_trim=2,694,472  bc_trim=2,623,086  dropped=71,386
+count    2.623086e+06
+mean     3.016291e+01
+std      3.866886e+00
+min      1.000000e+01
+1%       2.600000e+01
+5%       2.700000e+01
+10%      2.800000e+01
+25%      2.900000e+01
+50%      3.000000e+01
+75%      3.100000e+01
+90%      3.200000e+01
+95%      3.300000e+01
+99%      3.400000e+01
+max      1.148000e+03
+Name: nA, dtype: float64
+
+==========================================================================================
+[PAUSE] FLNC ready: ../PacBio_Processing/intermediate_files/all.FLNC.fastq.gz
+[PAUSE] Now run `bash 01_map_sort.sh` to produce syn1.PacBio.FLNC.sorted.bam.
+[PAUSE] Press ENTER once mapping is done to continue with QC, or Ctrl-C to stop.
+==========================================================================================
+Wrote read-level QC table: syn1.PacBio.FLNC.read_qc.tsv
+Wrote structural exclude list: syn1.PacBio.FLNC.exclude_concatemer_qnames.txt  (n=12,459)
+
+Final label counts:
+final_label
+PASS_STRICT                     2602425
+FAIL_QLEN_REFSPAN_DELTA           12447
+FAIL_ALN_FRAC                      4084
+FAIL_MAPQ                          1469
+FAIL_TERMINAL_CLIP_STRUCTURE         12
+Name: count, dtype: int64
++ samtools flagstat -@ 8 syn1.PacBio.FLNC.sorted.bam
+==========================================================================================
+QC BEFORE FILTERING
+==========================================================================================
+BAM: syn1.PacBio.FLNC.sorted.bam
+Total alignments    : 2,624,313
+Mapped alignments   : 2,623,751
+Unmapped alignments : 562
+Primary mapped      : 2,620,437
+Secondary           : 0
+Supplementary       : 3,314
+Sample used         : 2,620,437 (from primary mapped)
+mapq              : min=0  p05=60  p50=60  p95=60  max=60  mean=59.97
+aligned_fraction  : min=0.1451  p05=0.9947  p50=1  p95=1  max=1  mean=0.9976
+softclip_fraction : min=0  p05=0  p50=0  p95=0.005282  max=0.8549  mean=0.002379
+[INFO] Running: samtools view | awk | samtools sort
++ samtools index -@ 8 ../syn1.PacBio.FLNC.sorted.HQ.bam
+[DONE] Wrote: ../syn1.PacBio.FLNC.sorted.HQ.bam
++ samtools flagstat -@ 8 ../syn1.PacBio.FLNC.sorted.HQ.bam
+==========================================================================================
+QC AFTER FILTERING
+==========================================================================================
+BAM: ../syn1.PacBio.FLNC.sorted.HQ.bam
+Total alignments    : 2,602,425
+Mapped alignments   : 2,602,425
+Unmapped alignments : 0
+Primary mapped      : 2,602,425
+Secondary           : 0
+Supplementary       : 0
+Sample used         : 200,000 (from primary mapped)
+mapq              : min=20  p05=60  p50=60  p95=60  max=60  mean=60
+aligned_fraction  : min=0.7556  p05=0.996  p50=1  p95=1  max=1  mean=0.9988
+softclip_fraction : min=0  p05=0  p50=0  p95=0.004042  max=0.2444  mean=0.001185
+
+Retention (primary mapped): 99.31%
+Input BAM: syn1.PacBio.FLNC.sorted.bam
+Output BAM: ../syn1.PacBio.FLNC.sorted.HQ.bam
+
+Thresholds:
+  MIN_MAPQ=20
+  MIN_ALN_FRAC=0.7
+  MAX_CLIP_FRAC=0.3
+  MISMATCH_BP_MIN=100
+  MISMATCH_FRAC_MIN=0.15
+  HIGH_QUERY_COVERAGE_FRAC=0.8
+  MULTI_SEG_MIN=2
+  REPEAT_LOCUS_RATIO=1.5
+  DISTANT_GAP_BP=200
+  MAX_QLEN_REFSPAN_DELTA=100
+
+Total reads in read-level QC table: 2,620,437
+
+FAIL_ALN_FRAC                  :      4,084  ( 0.156%)
+FAIL_MAPQ                      :      1,469  ( 0.056%)
+FAIL_QLEN_REFSPAN_DELTA        :     12,447  ( 0.475%)
+FAIL_TERMINAL_CLIP_STRUCTURE   :         12  ( 0.000%)
+PASS_STRICT                    :  2,602,425  (99.313%)
+
+Structural/QC-fail qnames excluded from HQ BAM: 12,459
+HQ BAM retention among primary mapped alignments: 99.3126%
+
+Wrote summary: syn1.PacBio.FLNC.qc_summary.txt
+
+Total reads: 2,620,437
+PASS_STRICT reads: 2,602,425 (99.3126%)
+
+=== Read length (qlen) ===
+{'min': 204.0, 'p01': 676.0, 'p05': 882.0, 'p50': 1560.0, 'p95': 3058.0, 'p99': 3922.7599999997765, 'max': 10872.0, 'mean': 1736.488480167536}
+
+=== Primary mapped span ===
+{'min': 202.0, 'p01': 675.0, 'p05': 881.0, 'p50': 1558.0, 'p95': 3056.0, 'p99': 3917.0, 'max': 10869.0, 'mean': 1734.6803796459071}
+
+=== qlen - ref_span (bp) ===
+{'min': -100.0, 'p01': -2.0, 'p05': -1.0, 'p50': 0.0, 'p95': 8.0, 'p99': 47.0, 'max': 100.0, 'mean': 1.8081005216288655}
+
+=== (qlen - ref_span) / qlen ===
+{'min': -0.12083847102342787, 'p01': -0.0013519603424966202, 'p05': -0.0005561735261401557, 'p50': 0.0, 'p95': 0.005012531328320802, 'p99': 0.03242147922998987, 'max': 0.2978723404255319, 'mean': 0.0012859140985831514}
+
+=== Primary alignment fraction ===
+{'min': 0.7021276595744681, 'p01': 0.967741935483871, 'p05': 0.9958819492107068, 'p50': 1.0, 'p95': 1.0, 'p99': 1.0, 'max': 1.0, 'mean': 0.9988138954679868}
+
+=== Primary clip fraction ===
+{'min': 0.0, 'p01': 0.0, 'p05': 0.0, 'p50': 0.0, 'p95': 0.004118050789293, 'p99': 0.032258064516129, 'max': 0.2978723404255319, 'mean': 0.0011861045320137344}
+|qlen - ref_span| <=  10 bp : 95.89%
+|qlen - ref_span| <=  50 bp : 99.14%
+|qlen - ref_span| <= 100 bp : 100.00%

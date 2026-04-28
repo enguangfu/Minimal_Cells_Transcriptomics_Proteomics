@@ -1,85 +1,99 @@
-Primary reads used       : 2,616,593
+Primary reads used       : 2,602,425
 Reads skipped            : 0
-Unique raw isoforms      : 724,453
-  singletons (n_reads=1) : 574,941  (79.4%)
-  multi-read (n_reads>=2): 149,512
+Unique raw isoforms      : 621,475
+  singletons (n_reads=1) : 480,389  (77.3%)
+  multi-read (n_reads>=2): 141,086
 
-Wrote ../isoform_annotation/raw_isoforms_precluster.tsv  (rows=724,453)
+Wrote ../Isoform_Cluster/raw_isoforms_precluster.tsv  (rows=621,475)
 
 Read-count distribution across raw isoforms:
-count    724453.000000
-mean          3.611819
-std          95.323702
+count    621475.000000
+mean          4.187497
+std         152.813250
 min           1.000000
 50%           1.000000
 90%           3.000000
-99%          23.000000
-max       46562.000000
+99%          25.000000
+max       81974.000000
 
 --- Threshold sweep (no binning, no merging) ---
 min_reads   n_unique_isoforms   frac_of_raw
-        1             724,453        1.0000
-        2             149,512        0.2064
-        3              78,530        0.1084
-        5              39,541        0.0546
-       10              17,291        0.0239
-       20               8,449        0.0117
-       50               3,736        0.0052
-      100               2,123        0.0029
+        1             621,475        1.0000
+        2             141,086        0.2270
+        3              75,977        0.1223
+        5              38,741        0.0623
+       10              16,987        0.0273
+       20               7,853        0.0126
+       50               3,284        0.0053
+      100               1,844        0.0030
 
 --- Reads kept vs discarded at each threshold ---
-Total primary reads: 2,616,593
+Total primary reads: 2,602,425
 min_reads    n_isoforms      reads_kept   reads_discarded  frac_discarded
-        1       724,453       2,616,593                 0          0.0000
-        2       149,512       2,041,652           574,941          0.2197
-        3        78,530       1,899,688           716,905          0.2740
-        5        39,541       1,769,585           847,008          0.3237
-       10        17,291       1,628,002           988,591          0.3778
-       20         8,449       1,510,821         1,105,772          0.4226
-       50         3,736       1,369,437         1,247,156          0.4766
-      100         2,123       1,257,662         1,358,931          0.5194
+        1       621,475       2,602,425                 0          0.0000
+        2       141,086       2,122,036           480,389          0.1846
+        3        75,977       1,991,818           610,607          0.2346
+        5        38,741       1,867,454           734,971          0.2824
+       10        16,987       1,728,627           873,798          0.3358
+       20         7,853       1,607,431           994,994          0.3823
+       50         3,284       1,471,941         1,130,484          0.4344
+      100         1,844       1,373,662         1,228,763          0.4722
 
---- Single-linkage clustering of n>=10 tuples (n=17,291) ---
+--- Single-linkage clustering of n>=10 tuples (n=16,987) ---
 tol_bp   n_clusters
-     0       17,291
-     5        4,947
-    10        4,002
-    15        3,558
-    20        3,307
-    30        2,969
-    50        2,503
+     0       16,987
+     5        6,958
+    10        5,375
+    15        4,714
+    20        4,329
+    30        3,846
+    50        3,191
 
---- Single-linkage clustering of n>=50 tuples (n=3,736) ---
+--- Single-linkage clustering of n>=50 tuples (n=3,284) ---
 tol_bp   n_clusters
-     0        3,736
-     5        1,148
-    10        1,041
-    15          993
-    20          965
-    30          918
-    50          842
+     0        3,284
+     5        1,682
+    10        1,462
+    15        1,366
+    20        1,317
+    30        1,245
+    50        1,124
 
-=== Loading existing ../isoform_annotation/isoform_clusters_annotated_v2.tsv (skipping clustering) ===
-Loaded 271,846 clusters
+=== Complete-linkage clustering of 621,475 tuples at eps=10 bp ===
+Total clusters: 267,258
+Clusters retained (n_reads >= 1): 267,258
+Loaded gene annotations: n=911
+
+Isoform class counts:
+class_main
+sense         190423
+mixed          70226
+antisense       6538
+intergenic        71
+Name: count, dtype: int64
+
+wrote ../Isoform_Cluster/isoform_clusters_annotated.tsv
+wrote ../Isoform_Cluster/isoform_clusters_annotated.xlsx
+wrote ../Isoform_Cluster/isoform_membership.tsv  (rows=2,602,425)
    isoform_id  cluster_id  ... nearest_right_gene_name nearest_right_dist_bp
-0  ISO_000001           0  ...                    dnaN                1265.0
+0  ISO_000001           0  ...                    dnaN                1266.0
 1  ISO_000002           1  ...                    dnaN                1201.0
 2  ISO_000003           2  ...                    dnaN                 939.0
 3  ISO_000004           3  ...                    dnaN                 928.0
 4  ISO_000005           4  ...                    dnaN                 905.0
 5  ISO_000006           5  ...                    dnaN                 882.0
 6  ISO_000007           6  ...                    dnaN                 854.0
-7  ISO_000008           7  ...                    dnaN                 849.0
+7  ISO_000008           7  ...                    dnaN                 850.0
 8  ISO_000009           8  ...                    dnaN                 801.0
 9  ISO_000010           9  ...                    dnaN                 785.0
 
 [10 rows x 33 columns]
-wrote ../isoform_annotation/cluster_mad_distributions.pdf
+wrote ../Isoform_Cluster/cluster_mad_distributions.pdf
 
 5' MAD summary (bp):
-count    271846.000000
-mean          0.517775
-std           1.114970
+count    267258.000000
+mean          0.514396
+std           1.110384
 min           0.000000
 50%           0.000000
 90%           2.000000
@@ -87,46 +101,46 @@ min           0.000000
 max           5.000000
 
 3' MAD summary (bp):
-count    271846.000000
-mean          0.447590
-std           0.951552
+count    267258.000000
+mean          0.323109
+std           0.905316
 min           0.000000
 50%           0.000000
-90%           1.500000
+90%           1.000000
 99%           4.500000
 max           5.000000
 
-wrote ../isoform_annotation/readcount_distribution_cluster_vs_raw.csv
+wrote ../Isoform_Cluster/readcount_distribution_cluster_vs_raw.csv
  min_reads  raw_tuples_n  clusters_n  raw_reads_kept  cluster_reads_kept
-         1        724453      271846         2616593             2616593
-         2        149512      112292         2041652             2457039
-         3         78530       73734         1899688             2379923
-         5         39541       44040         1769585             2279633
-        10         17291       21398         1628002             2133211
-        20          8449       10393         1510821             1986112
-        50          3736        4141         1369437             1799261
-       100          2123        2126         1257662             1660493
-       500           516         447          917927             1329541
-      1000           247         244          730281             1187376
+         1        621475      267258         2602425             2602425
+         2        141086      109515         2122036             2444682
+         3         75977       71963         1991818             2369578
+         5         38741       43032         1867454             2271849
+        10         16987       20885         1728627             2128621
+        20          7853       10149         1607431             1985136
+        50          3284        4048         1471941             1803306
+       100          1844        2107         1373662             1669741
+       500           493         434         1090083             1341422
+      1000           259         238          926384             1203839
 
 Raw-tuple  n_reads summary:
-count    724453.000000
-mean          3.611819
-std          95.323702
+count    621475.000000
+mean          4.187497
+std         152.813250
 min           1.000000
 50%           1.000000
 90%           3.000000
-99%          23.000000
-max       46562.000000
+99%          25.000000
+max       81974.000000
 
 Cluster    n_reads summary:
-count    271846.000000
-mean          9.625277
-std         274.198858
+count    267258.000000
+mean          9.737501
+std         325.461868
 min           1.000000
 50%           1.000000
 90%           7.000000
 99%          77.000000
-max       69910.000000
+max      116145.000000
 
-wrote ../isoform_annotation/readcount_distribution_cluster_vs_raw.pdf
+wrote ../Isoform_Cluster/readcount_distribution_cluster_vs_raw.pdf

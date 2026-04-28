@@ -2,6 +2,7 @@
 # Cluster_Isoform_New.py
 #
 # Re-implementation of isoform clustering for PacBio FLNC reads.
+# It takes ~10 minutes to run through.
 #
 # -------------------------------------------------------------
 # Part 1 — WHY we need clustering (kept for the record)
@@ -121,7 +122,7 @@ MOTHER_FOLDER = ".."
 BAM_PATH = MOTHER_FOLDER + "/syn1.PacBio.FLNC.sorted.HQ.bam"
 GFF_PATH = MOTHER_FOLDER + "/Genomes_Input/syn1.genes.gff3"
 
-OUT_FOLDER = MOTHER_FOLDER + "/isoform_annotation"
+OUT_FOLDER = MOTHER_FOLDER + "/Isoform_Cluster"
 Path(OUT_FOLDER).mkdir(parents=True, exist_ok=True)
 
 OUT_RAW_TSV        = OUT_FOLDER + "/raw_isoforms_precluster.tsv"
@@ -136,7 +137,7 @@ REQUIRE_PRIMARY    = True
 EPS_BP             = 10         # single clustering tolerance (see Part 2)
 MIN_CLUSTER_READS  = 1          # keep ALL clusters; filter downstream
 RUN_ANALYSIS       = True       # emit the Part-1/Part-2 sweeps (can be disabled)
-SKIP_IF_EXISTS     = True       # skip clustering+annotation if output CSV exists
+SKIP_IF_EXISTS     = False       # skip clustering+annotation if output CSV exists
 
 # Annotation thresholds (reused from Cluster_Isoform.py)
 GENE_FEATURE_TYPES = {"gene", "CDS"}

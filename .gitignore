@@ -22,7 +22,6 @@ PacBio_Processing/depth_bedgraph/
 PacBio_Processing/*.bam
 PacBio_Processing/*.bam.csi
 PacBio_Processing/*.log
-PacBio_Processing/*.txt
 PacBio_Processing/*.tsv
 syn1.PacBio.FLNC.sorted.HQ.bam
 syn1.PacBio.FLNC.sorted.HQ.bam.bai
@@ -42,7 +41,3 @@ novel_orf_discovery/novel_orfs_*.tsv
 novel_orf_discovery/novel_orfs_*.xlsx
 novel_orf_discovery/*.png
 novel_orf_discovery/trypsin_digest/
-#bad_alignment/
-#bad_transcriptome_assembly/
-#Later/
-#old/
