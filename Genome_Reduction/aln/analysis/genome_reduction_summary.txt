@@ -1,0 +1,190 @@
+================================================================
+GENOME REDUCTION ANALYSIS - JCVI-Syn1.0  ->  JCVI-Syn3A
+Generated: Mon May 04 02:59:49 PM  2026
+Source:    aln/raw/  (nucmer + dnadiff)
+================================================================
+
+OVERVIEW
+--------
+syn1  total length      : 1078809 bp
+syn3A total length      : 543379 bp
+syn1  bases aligned     : 547804(50.78%)
+syn3A bases aligned     : 542055(99.76%)
+1-to-1 alignment blocks : NA
+Average identity        : 99.90 %
+Total SNPs              : 36
+Total indels            : 12
+Inversions              : 0
+Translocations          : 0
+Relocations (ref / qry) : 3 / 14
+
+INTERPRETATION
+--------------
+Syn3A is essentially a SUBSET of syn1: ~half of syn1 was excised in ~118
+discrete deletion events while the retained sequence stays at 99.90% identity
+with negligible novel content on the syn3A side. There are no inversions or
+translocations - minimization preserved gene order.
+
+================================================================
+PART A.  DELETIONS  (syn1 -> syn3A)
+================================================================
+dnadiff REF "Insertions"  (= syn1 deletion events)  : 118  events, 536818 bp
+Filtered deletion intervals (>= 50 bp from BED): 95
+Total deleted syn1 bp                               : 536543
+Mean deletion size                                  : 5647 bp
+Largest single deletion                             : CP002027.1:657178-728756 (71578 bp)
+syn1 genes overlapped by a deletion                 : 414
+
+Top 10 deletions by size:
+   1. CP002027.1:657178-728756          71578 bp
+   2. CP002027.1:222394-256770          34376 bp
+   3. CP002027.1:879068-907483          28415 bp
+   4. CP002027.1:1048869-1074325        25456 bp
+   5. CP002027.1:561556-581943          20387 bp
+   6. CP002027.1:987121-1003970         16849 bp
+   7. CP002027.1:111508-126973          15465 bp
+   8. CP002027.1:308606-323314          14708 bp
+   9. CP002027.1:345422-359429          14007 bp
+  10. CP002027.1:865971-878161          12190 bp
+
+Files:
+  - aln/analysis/genome_reduction_summary.xlsx  sheet `events` (deleted rows + Syn1_genes column)
+  - aln/raw/syn1_deleted_regions.bed                            (raw interval table)
+  - aln/raw/syn1_deleted_genes.tsv                              (raw per-deletion gene overlap)
+  - aln/raw/dnadiff_out.rdiff                                   (per-event reference-side diffs)
+
+================================================================
+PART B.  INSERTIONS  (syn3A bases NOT in syn1)
+================================================================
+dnadiff QRY "Insertions"  (event count, total bp)   : 6 events, 1324 bp
+syn3A intervals NOT covered by any syn1 alignment   : 6  (>= 10 bp)
+Total syn3A-only bp                                 : 1324
+
+Top 10 syn3A-only intervals by size:
+   1. CP016816.2:360097-361216           1119 bp
+   2. CP016816.2:25990-26080               90 bp
+   3. CP016816.2:22335-22374               39 bp
+   4. CP016816.2:165036-165075             39 bp
+   5. CP016816.2:150577-150603             26 bp
+   6. CP016816.2:202715-202726             11 bp
+
+Per-event view from dnadiff_out.qdiff (rows with q_extra > 0):
+  JMP  CP016816.2:22336-22374   q_extra=39 bp
+  JMP  CP016816.2:25991-26080   q_extra=90 bp
+  JMP  CP016816.2:104638-104637   q_extra=0 bp
+  JMP  CP016816.2:118297-118295   q_extra=-1 bp
+  JMP  CP016816.2:165037-165075   q_extra=39 bp
+  JMP  CP016816.2:202716-202726   q_extra=11 bp
+  JMP  CP016816.2:300518-300517   q_extra=0 bp
+  JMP  CP016816.2:306995-306994   q_extra=0 bp
+  JMP  CP016816.2:311665-311663   q_extra=-1 bp
+  JMP  CP016816.2:313263-313262   q_extra=0 bp
+  JMP  CP016816.2:451713-451708   q_extra=-4 bp
+  JMP  CP016816.2:462784-462779   q_extra=-4 bp
+  JMP  CP016816.2:487343-487342   q_extra=0 bp
+  JMP  CP016816.2:516609-516608   q_extra=0 bp
+
+Annotation of the 6 dnadiff insertions:
+  - 1119 bp at CP016816.2:360098-361216  -->  contains a NEW GENE,
+       JCVISYN3A_0931 (met14p, CDS 360403-361011, 609 bp).
+       This is the only insertion that introduces novel coding sequence.
+  - The other 5 events (11, 26, 39, 39, 90 bp) are intergenic junction /
+       scar sequences left behind by the deletion-cassette assembly. See
+       the `short_insertions` sheet of genome_reduction_summary.xlsx for
+       nearest-gene neighbours on each strand.
+
+Note on counts: the `inserted` rows in the events sheet reflect regions not
+covered by the strict 1-to-1 alignment (delta-filter -1 -i 95 -l 100), so they
+may over-count true insertions because the strict filter drops short / lower-
+identity alignments that dnadiff still recognises. For the biological
+insertion count, trust dnadiff: 6 events, 1324 bp.
+
+Files:
+  - aln/analysis/genome_reduction_summary.xlsx   sheet `events`           (canonical insertion rows)
+  - aln/analysis/genome_reduction_summary.xlsx   sheet `short_insertions` (nearest-gene context)
+  - aln/raw/dnadiff_out.qdiff                                              (per-event qry diffs, raw)
+  - aln/raw/syn1_vs_syn3A.snps.tsv                                         (single-bp insertions, raw)
+
+================================================================
+PART C.  RELOCATIONS  (syn1 -> syn3A)
+================================================================
+dnadiff Relocations (ref / qry)                     : 3 / 14
+JMP rows in dnadiff_out.rdiff (ref-side anchors)    : 3
+JMP rows in dnadiff_out.qdiff (qry-side anchors)    : 14
+Out-of-order alignment blocks (LIS-based)           : 1
+
+Definition reminder
+  - Translocation = segment moved between DIFFERENT sequences (chromosomes /
+    contigs). Both syn1 and syn3A are single circular chromosomes, so this
+    count is forced to 0.
+  - Relocation    = segment moved to a different position WITHIN the same
+    chromosome (no strand flip).
+  - Inversion     = same position but on the opposite strand (count is 0).
+
+Reference-side JMP events (dnadiff_out.rdiff):
+  JMP  CP002027.1:193471-197590   r_extra=4120 bp
+  JMP  CP002027.1:199190-203734   r_extra=4545 bp
+  JMP  CP002027.1:590638-601785   r_extra=11148 bp
+
+Query-side JMP events (dnadiff_out.qdiff):
+  JMP  CP016816.2:22336-22374   q_extra=39 bp
+  JMP  CP016816.2:25991-26080   q_extra=90 bp
+  JMP  CP016816.2:104638-104637   q_extra=0 bp
+  JMP  CP016816.2:118297-118295   q_extra=-1 bp
+  JMP  CP016816.2:165037-165075   q_extra=39 bp
+  JMP  CP016816.2:202716-202726   q_extra=11 bp
+  JMP  CP016816.2:300518-300517   q_extra=0 bp
+  JMP  CP016816.2:306995-306994   q_extra=0 bp
+  JMP  CP016816.2:311665-311663   q_extra=-1 bp
+  JMP  CP016816.2:313263-313262   q_extra=0 bp
+  JMP  CP016816.2:451713-451708   q_extra=-4 bp
+  JMP  CP016816.2:462784-462779   q_extra=-4 bp
+  JMP  CP016816.2:487343-487342   q_extra=0 bp
+  JMP  CP016816.2:516609-516608   q_extra=0 bp
+
+Out-of-order alignment blocks detected from coords.tsv:
+  block  24  syn1:197590-199189 (1599 bp)  -->  syn3A:311663-313262  genes: 0154/lap
+
+Reading
+  - The dnadiff JMP counts (3 / 14) are per-anchor breakpoint counts: each
+    relocation produces multiple JMP rows (one before and one after the
+    relocated block, on each side of the alignment). Most of the 14 qry-
+    side JMPs are tiny (0-4 bp) chain seams, not biological relocations.
+  - LIS-based detection on the alignment blocks gives the canonical answer:
+    exactly ONE block is truly out of order.
+        syn1: 197,590-199,189  (1599 bp, gene: lap / MMSYN1_0154)
+            -->  syn3A: 311,663-313,262  (~110 kb downstream in syn3A)
+  - The 3 ref-side JMPs flank this single relocation event: two on the syn1
+    origin side (~197.6 / ~199.2 kb) and one on the syn3A landing side
+    (~590.6 kb in syn1's frame, which is where the corresponding syn3A
+    coordinate jumps).
+  - See the events sheet of genome_reduction_summary.xlsx, filtered to
+    `Change Case == retained_relocated`, for the per-block table.
+
+Files:
+  - aln/analysis/genome_reduction_summary.xlsx  events sheet (block-level table)
+  - aln/raw/dnadiff_out.rdiff / .qdiff                          (per-event diffs)
+
+================================================================
+PART D.  WHAT THIS MEANS BIOLOGICALLY
+================================================================
+- The minimization was a deletion campaign, not a redesign: ~536543 bp of
+  syn1 was removed in 95 discrete cuts while only 1324 bp of new
+  sequence appears in syn3A (and most of that is a single 1.1 kb segment).
+- The largest single excision is CP002027.1:657178-728756 (71578 bp). On the
+  syn3A side, a 1119 bp segment introduced near that junction encodes a new
+  gene: JCVISYN3A_0931 (met14p) - the only true gene addition. The other
+  five qdiff insertion events (11-90 bp) are intergenic junction/scar
+  sequences from the cassette-based deletion process.
+- With 36 SNPs and 12 indels in retained DNA, point-level
+  divergence is essentially zero. Any expression differences at retained
+  genes are NOT explained by sequence changes.
+- Architecture is preserved: 0 inversions, 0 translocations, and only a
+  single block-level relocation - the ~1.6 kb syn1 region carrying the
+  gene lap (syn1:~197.6 kb) was reinserted at syn3A:~311.7 kb (~110 kb
+  downstream). Otherwise the minimization respected gene order.
+- For the gene-loss table feeding into the proteomics/transcriptomics
+  comparison, filter the events sheet of genome_reduction_summary.xlsx to
+  `Change Case == deleted` (the Syn1_genes column lists the lost loci).
+
+================================================================

@@ -1,0 +1,180 @@
+[Mon May  4 10:33:16 AM CDT 2026] starting alignment pipeline
+../syn1.fa: grep: ../syn1.fa: No such file or directory
+0
+[Mon May  4 10:34:19 AM CDT 2026] starting alignment pipeline
+../Genomes_Input/syn1_genome.fasta: grep: ../Genomes_Input/syn1_genome.fasta: No such file or directory
+0
+[Mon May  4 10:35:32 AM CDT 2026] starting alignment pipeline
+../Genomes_Input/syn1_genome.fasta: grep: ../Genomes_Input/syn1_genome.fasta: No such file or directory
+0
+[Mon May  4 10:36:29 AM CDT 2026] starting alignment pipeline
+../Genomes_Input/syn1_genome.fasta: grep: ../Genomes_Input/syn1_genome.fasta: No such file or directory
+0
+[Mon May  4 10:38:07 AM CDT 2026] starting alignment pipeline
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta: 1078809
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta: 543379
+Unknown option: t
+
+  USAGE: nucmer  [options]  <Reference>  <Query>
+    
+Try '/home/enguang/anaconda3/envs/RNAseq/bin/nucmer -h' for more information.
+[Mon May  4 10:38:34 AM CDT 2026] starting alignment pipeline
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta: 1078809
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta: 543379
+1: PREPARING DATA
+2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "nucmer/syn1_vs_syn3A.ntref" of length 1078810
+# construct suffix tree for sequence of length 1078810
+# (maximum reference length is 2305843009213693948)
+# (maximum query length is 18446744073709551615)
+# process 10788 characters per dot
+#....................................................................................................
+# CONSTRUCTIONTIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.21
+# reading input file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta" of length 543379
+# matching query-file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta"
+# against subject-file "nucmer/syn1_vs_syn3A.ntref"
+# COMPLETETIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.45
+# SPACE /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 1.57
+4: FINISHING DATA
+nucmer 1-to-1 blocks: 87
+Filtering alignments
+Extracting alignment coordinates
+Analyzing SNPs
+Extracting alignment breakpoints
+Generating report file
+[M::mm_idx_gen::0.023*1.12] collected minimizers
+[M::mm_idx_gen::0.034*2.87] sorted minimizers
+[M::main::0.034*2.87] loaded/built the index for 1 target sequence(s)
+[M::mm_mapopt_update::0.036*2.77] mid_occ = 50
+[M::mm_idx_stat] kmer size: 19; skip: 19; is_hpc: 0; #seq: 1
+[M::mm_idx_stat::0.037*2.70] distinct minimizers: 105720 (98.46% are singletons); average occurrences: 1.022; average spacing: 9.983; total length: 1078809
+[M::worker_pipeline::0.528*1.12] mapped 1 sequences
+[M::main] Version: 2.30-r1287
+[M::main] CMD: /home/enguang/anaconda3/envs/RNAseq/bin/minimap2 -cx asm10 --cs -N 50 --secondary=yes -t 8 /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta
+[M::main] Real time: 0.533 sec; CPU: 0.596 sec; Peak RSS: 0.277 GB
+[M::mm_idx_gen::0.022*1.11] collected minimizers
+[M::mm_idx_gen::0.033*2.88] sorted minimizers
+[M::main::0.033*2.88] loaded/built the index for 1 target sequence(s)
+[M::mm_mapopt_update::0.036*2.72] mid_occ = 50
+[M::mm_idx_stat] kmer size: 19; skip: 19; is_hpc: 0; #seq: 1
+[M::mm_idx_stat::0.037*2.65] distinct minimizers: 105720 (98.46% are singletons); average occurrences: 1.022; average spacing: 9.983; total length: 1078809
+[M::worker_pipeline::0.535*1.11] mapped 1 sequences
+[M::main] Version: 2.30-r1287
+[M::main] CMD: /home/enguang/anaconda3/envs/RNAseq/bin/minimap2 -ax asm10 --cs -t 8 /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta
+[M::main] Real time: 0.538 sec; CPU: 0.598 sec; Peak RSS: 0.278 GB
+Number of deletion intervals (≥50 bp): 86
+Total syn1 bp deleted in syn3A: 538849
+Deleted intervals overlapping a syn1 gene: 86
+[Mon May  4 10:38:36 AM CDT 2026] pipeline complete
+[Mon May  4 11:50:31 AM CDT 2026] starting alignment pipeline
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta: 1078809
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta: 543379
+1: PREPARING DATA
+2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "nucmer/syn1_vs_syn3A.ntref" of length 1078810
+# construct suffix tree for sequence of length 1078810
+# (maximum reference length is 2305843009213693948)
+# (maximum query length is 18446744073709551615)
+# process 10788 characters per dot
+#....................................................................................................
+# CONSTRUCTIONTIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.21
+# reading input file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta" of length 543379
+# matching query-file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta"
+# against subject-file "nucmer/syn1_vs_syn3A.ntref"
+# COMPLETETIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.42
+# SPACE /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 1.57
+4: FINISHING DATA
+nucmer 1-to-1 blocks: 87
+Filtering alignments
+Extracting alignment coordinates
+Analyzing SNPs
+Extracting alignment breakpoints
+Generating report file
+Number of deletion intervals (≥50 bp): 86
+Total syn1 bp deleted in syn3A: 538849
+Deleted intervals overlapping a syn1 gene: 86
+[Mon May  4 11:50:31 AM CDT 2026] pipeline complete
+[Mon May  4 11:55:06 AM CDT 2026] starting alignment pipeline
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta: 1078809
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta: 543379
+1: PREPARING DATA
+2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "nucmer/syn1_vs_syn3A.ntref" of length 1078810
+# construct suffix tree for sequence of length 1078810
+# (maximum reference length is 2305843009213693948)
+# (maximum query length is 18446744073709551615)
+# process 10788 characters per dot
+#....................................................................................................
+# CONSTRUCTIONTIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.20
+# reading input file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta" of length 543379
+# matching query-file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta"
+# against subject-file "nucmer/syn1_vs_syn3A.ntref"
+# COMPLETETIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.39
+# SPACE /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 1.57
+4: FINISHING DATA
+nucmer 1-to-1 blocks: 87
+Filtering alignments
+Extracting alignment coordinates
+Analyzing SNPs
+Extracting alignment breakpoints
+Generating report file
+Number of deletion intervals (≥50 bp): 86
+Total syn1 bp deleted in syn3A: 538849
+Deleted intervals overlapping a syn1 gene: 86
+[Mon May  4 11:55:07 AM CDT 2026] pipeline complete
+[Mon May  4 01:40:04 PM CDT 2026] starting alignment pipeline
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta: 1078809
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta: 543379
+1: PREPARING DATA
+2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "nucmer/syn1_vs_syn3A.ntref" of length 1078810
+# construct suffix tree for sequence of length 1078810
+# (maximum reference length is 2305843009213693948)
+# (maximum query length is 18446744073709551615)
+# process 10788 characters per dot
+#....................................................................................................
+# CONSTRUCTIONTIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.21
+# reading input file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta" of length 543379
+# matching query-file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta"
+# against subject-file "nucmer/syn1_vs_syn3A.ntref"
+# COMPLETETIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 0.42
+# SPACE /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer nucmer/syn1_vs_syn3A.ntref 1.57
+4: FINISHING DATA
+nucmer 1-to-1 blocks: 96
+Filtering alignments
+Extracting alignment coordinates
+Analyzing SNPs
+Extracting alignment breakpoints
+Generating report file
+Number of deletion intervals (≥50 bp): 95
+Total syn1 bp deleted in syn3A: 536543
+Deleted intervals overlapping a syn1 gene: 95
+[Mon May  4 01:40:05 PM CDT 2026] pipeline complete
+[Mon May  4 02:59:39 PM CDT 2026] starting alignment pipeline
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn1_genome.fasta: 1078809
+/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta: 543379
+1: PREPARING DATA
+2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "raw/syn1_vs_syn3A.ntref" of length 1078810
+# construct suffix tree for sequence of length 1078810
+# (maximum reference length is 2305843009213693948)
+# (maximum query length is 18446744073709551615)
+# process 10788 characters per dot
+#....................................................................................................
+# CONSTRUCTIONTIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer raw/syn1_vs_syn3A.ntref 0.20
+# reading input file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta" of length 543379
+# matching query-file "/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta"
+# against subject-file "raw/syn1_vs_syn3A.ntref"
+# COMPLETETIME /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer raw/syn1_vs_syn3A.ntref 0.42
+# SPACE /home/enguang/anaconda3/envs/RNAseq/opt/mummer-3.23/mummer raw/syn1_vs_syn3A.ntref 1.57
+4: FINISHING DATA
+nucmer 1-to-1 blocks: 96
+Filtering alignments
+Extracting alignment coordinates
+Analyzing SNPs
+Extracting alignment breakpoints
+Generating report file
+Number of deletion intervals (≥50 bp): 95
+Total syn1 bp deleted in syn3A: 536543
+Deleted intervals overlapping a syn1 gene: 95
+[Mon May  4 02:59:40 PM CDT 2026] pipeline complete

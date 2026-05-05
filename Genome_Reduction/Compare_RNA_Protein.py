@@ -411,9 +411,24 @@ print(f"Saved: {OUT_NONCODING}  ({len(noncoding)} non-coding genes)")
 # ─────────────────────────────────────────────────────────────────────────────
 TPM_PRINT_COLS = ["locus_syn1", "locus_syn3a", "gene_name", "gene_product",
                   "TPM_mean_syn1", "TPM_mean_syn3A_ONT", "TPM_fold_change_ONT",
-                  "TPM_mean_syn3a_Illumina", "TPM_fold_change_Illumina"]
-IPM_PRINT_COLS = ["locus_syn1", "locus_syn3a", "gene_name", "gene_product",
+                  "TPM_mean_syn3a_Illumina", "TPM_fold_change_Illumina",
                   "iPM_mean_syn1", "iPM_mean_syn3a", "iPM_fold_change"]
+IPM_PRINT_COLS = ["locus_syn1", "locus_syn3a", "gene_name", "gene_product",
+                  "TPM_mean_syn1", "TPM_mean_syn3A_ONT", "TPM_fold_change_ONT",
+                  "TPM_mean_syn3a_Illumina", "TPM_fold_change_Illumina",
+                  "iPM_mean_syn1", "iPM_mean_syn3a", "iPM_fold_change"]
+
+
+def _fc_summary(df: pd.DataFrame, cols: list[str]) -> None:
+    """Print median / mean / min / max for the listed FC columns (NaN-skipped)."""
+    for c in cols:
+        s = df[c].dropna()
+        if s.empty:
+            print(f"  {c}: n=0")
+        else:
+            print(f"  {c}: n={len(s)}  median={s.median():.3f}  mean={s.mean():.3f}  "
+                  f"min={s.min():.3f}  max={s.max():.3f}")
+
 
 fc_ont = coding["TPM_fold_change_ONT"]
 fc_ill = coding["TPM_fold_change_Illumina"]
@@ -422,8 +437,13 @@ tpm_down = coding[(fc_ont < 0.1) & (fc_ill < 0.1)].sort_values("TPM_fold_change_
 
 print(f"\n=== TPM extreme FC (both ONT & Illumina agree) — UP (n={len(tpm_up)}) ===")
 print(tpm_up[TPM_PRINT_COLS].to_string(index=False))
+print("  [statistics]")
+_fc_summary(tpm_up, ["TPM_fold_change_ONT", "TPM_fold_change_Illumina", "iPM_fold_change"])
+
 print(f"\n=== TPM extreme FC (both ONT & Illumina agree) — DOWN (n={len(tpm_down)}) ===")
 print(tpm_down[TPM_PRINT_COLS].to_string(index=False))
+print("  [statistics]")
+_fc_summary(tpm_down, ["TPM_fold_change_ONT", "TPM_fold_change_Illumina", "iPM_fold_change"])
 
 fc_ipm = coding["iPM_fold_change"]
 ipm_up   = coding[fc_ipm > 10].sort_values("iPM_fold_change", ascending=False)
@@ -431,5 +451,10 @@ ipm_down = coding[fc_ipm < 0.1].sort_values("iPM_fold_change")
 
 print(f"\n=== iPM extreme FC — UP (n={len(ipm_up)}) ===")
 print(ipm_up[IPM_PRINT_COLS].to_string(index=False))
+print("  [statistics]")
+_fc_summary(ipm_up, ["TPM_fold_change_ONT", "TPM_fold_change_Illumina", "iPM_fold_change"])
+
 print(f"\n=== iPM extreme FC — DOWN (n={len(ipm_down)}) ===")
 print(ipm_down[IPM_PRINT_COLS].to_string(index=False))
+print("  [statistics]")
+_fc_summary(ipm_down, ["TPM_fold_change_ONT", "TPM_fold_change_Illumina", "iPM_fold_change"])

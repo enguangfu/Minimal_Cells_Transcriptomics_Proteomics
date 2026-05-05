@@ -1,0 +1,39 @@
+Operons classified: 480
+
+Aggregate deletion_class:
+  intact                                             180
+  fully_deleted                                      179
+  3'_truncation_gene                                  40
+  5'_truncation_gene                                  30
+  intra_truncated                                     18
+  3'_truncation_UTR                                   15
+  5'_truncation_UTR                                    6
+  multi:3'_truncation_UTR+intra_truncated              3
+  multi:5'_truncation_UTR+intra_truncated              2
+  multi:5'_truncation_gene+intra_truncated             2
+  multi:3'_truncation_UTR+5'_truncation_gene           2
+  multi:3'_truncation_gene+intra_truncated             1
+  multi:3'_truncation_gene+5'_truncation_UTR           1
+  multi:intra_truncated                                1
+
+Per-hit case totals (across all hits):
+  fully_deleted                      179
+  3'_truncation_gene                  42
+  5'_truncation_gene                  34
+  intra_truncated                     28
+  3'_truncation_UTR                   20
+  5'_truncation_UTR                    9
+
+Wrote: /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion_classification.tsv
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__5p_trunc_gene.pdf  (30 panels)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__5p_trunc_gene_wdepth.pdf  (30 panels + wdepth)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__5p_trunc_UTR.pdf  (6 panels)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__5p_trunc_UTR_wdepth.pdf  (6 panels + wdepth)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__3p_trunc_gene.pdf  (40 panels)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__3p_trunc_gene_wdepth.pdf  (40 panels + wdepth)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__3p_trunc_UTR.pdf  (15 panels)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__3p_trunc_UTR_wdepth.pdf  (15 panels + wdepth)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__intra_truncated.pdf  (18 panels)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__intra_truncated_wdepth.pdf  (18 panels + wdepth)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__multi_hit.pdf  (12 panels)
+  /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/aln/analysis/operon_deletion__multi_hit_wdepth.pdf  (12 panels + wdepth)
