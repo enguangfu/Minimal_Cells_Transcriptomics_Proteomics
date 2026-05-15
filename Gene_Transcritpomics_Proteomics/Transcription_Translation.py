@@ -31,7 +31,7 @@ from adjustText import adjust_text
 
 HOME_DIR = ".."
 PROTEOME_FOLDER   = HOME_DIR + "/Proteomics"
-TRANSCRIPTOME_CSV = "./syn1_Illumina_PacBio_TPM_profiles.csv"
+TRANSCRIPTOME_CSV = HOME_DIR + "/Transcriptomics_Quantification/syn1_Illumina_PacBio_TPM_profiles.csv"
 PROTEOME_CSV      = PROTEOME_FOLDER + "/syn1_proteomics_localization_2026.csv"
 PROTEOME_SYN3A_CSV = PROTEOME_FOLDER + "/syn3a_proteomics_summary_2026.csv"
 

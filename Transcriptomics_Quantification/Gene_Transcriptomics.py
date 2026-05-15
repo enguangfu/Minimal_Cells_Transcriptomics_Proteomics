@@ -504,6 +504,22 @@ syn3a_genes["start0"]   = syn3a_genes["start0"].astype(int)
 syn3a_genes["end0"]     = syn3a_genes["end0"].astype(int)
 syn3a_genes["gene_len"] = syn3a_genes["end0"] - syn3a_genes["start0"]
 
+# In syn3a.gff3 the `product=` attribute lives on CDS rows, not gene rows.
+# Build a locus_tag -> product map from CDS lines and merge it in.
+_cds_product = {}
+with open(SYN3A_GFF, "r") as _fh:
+    for _line in _fh:
+        if not _line or _line.startswith("#"):
+            continue
+        _parts = _line.rstrip("\n").split("\t")
+        if len(_parts) < 9 or _parts[2] != "CDS":
+            continue
+        _attrs = parse_gff_attributes(_parts[8])
+        _lt = _attrs.get("locus_tag", "")
+        if _lt and _lt not in _cds_product:
+            _cds_product[_lt] = _attrs.get("product", "")
+syn3a_genes["gene_product"] = syn3a_genes["locus_tag"].map(_cds_product).fillna(syn3a_genes["gene_product"])
+
 plus_file  = SYN3A_DEPTH_FOLDER + f"/{SYN3A_PREFIX}.plus.bedGraph"
 minus_file = SYN3A_DEPTH_FOLDER + f"/{SYN3A_PREFIX}.minus.bedGraph"
 
@@ -543,7 +559,7 @@ else:
 
 OUTPUT_SYN3A_TSV = HOME_DIR + "/Transcriptomics_Quantification/syn3a_ONT_TPM_profiles.tsv"
 export_cols = [
-    "locus_tag", "chrom", "start0", "end0", "strand", "gene_len",
+    "locus_tag", "gene_name", "gene_product", "chrom", "start0", "end0", "strand", "gene_len",
     "ONT_sense_avg_depth", "ONT_antisense_avg_depth",
     "ONT_sense_TPM", "ONT_antisense_TPM",
 ]

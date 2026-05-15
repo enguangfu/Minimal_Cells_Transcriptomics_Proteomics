@@ -1,3 +1,14 @@
+*.pdf
+*.fastq
+*.fastq.gz
+*.bam
+*.bam.*
+*.png
+__pycache__/
+*.pyc
+OLD/
+.~lock.*#
+
 # ----------------------------
 # Raw FASTQ files
 # ----------------------------
