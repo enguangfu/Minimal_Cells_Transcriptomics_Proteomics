@@ -1,0 +1,111 @@
+==========================================
+ONT Direct RNA Mapping QC Report
+BAM: ./syn3A.ONT.rep1.sorted.bam
+Date: Wed May 13 10:41:11 AM CDT 2026
+==========================================
+
+[1] OVERALL MAPPING STATISTICS
+----------------------------------------
+761572 + 0 in total (QC-passed reads + QC-failed reads)
+734075 + 0 primary
+20225 + 0 secondary
+7272 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+586484 + 0 mapped (77.01% : N/A)
+558987 + 0 primary mapped (76.15% : N/A)
+0 + 0 paired in sequencing
+0 + 0 read1
+0 + 0 read2
+0 + 0 properly paired (N/A : N/A)
+0 + 0 with itself and mate mapped
+0 + 0 singletons (N/A : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+
+Summary numbers:
+  Total alignment records:      761572
+  Primary reads (input reads):  734075
+  Primary mapped:               558987
+  Unmapped:                     175088
+  Secondary alignments:         20225
+  Supplementary alignments:     7272
+  Mapping rate:                 76.15%
+  Unmapped rate:                23.85%
+
+[2] PRIMARY MAPPED READS - Length and Quality Features
+----------------------------------------
+  Total primary mapped reads: 558987
+  Length:    mean=383  min=49  max=2858
+  Mean qual: mean=31.22
+
+  Length distribution:
+    <100                168    0.03%
+    100-300          187904   33.62%
+    300-500          271229   48.52%
+    500-1000          95610   17.10%
+    1000-2000          4030    0.72%
+    >2000                46    0.01%
+
+  Mean per-read quality distribution (Phred):
+    <7                0    0.00%
+    7-10             10    0.00%
+    10-15           556    0.10%
+    15-20          9409    1.68%
+    >=20         549012   98.22%
+
+[3] UNMAPPED READS - Length and Quality Features
+----------------------------------------
+  Total unmapped reads:  175088
+  Length:    mean=436
+  Mean qual: mean=20.73
+
+  Length distribution:
+    <100              24364   13.92%
+    100-300           82431   47.08%
+    300-500           22118   12.63%
+    500-1000          18367   10.49%
+    1000-2000         27421   15.66%
+    >2000               387    0.22%
+
+  Mean per-read quality distribution (Phred):
+    <7            22005   12.57%
+    7-10          18936   10.82%
+    10-15         32657   18.65%
+    15-20         27379   15.64%
+    >=20          74111   42.33%
+
+[4] SECONDARY ALIGNMENTS - Contribution and Locations
+----------------------------------------
+  Secondary alignments: 20225
+  As fraction of primary mapped reads: 3.62%
+
+  How many primary mapped reads have at least one secondary alignment?
+    20151 unique reads have >=1 secondary alignment
+    (3.60% of primary mapped reads)
+
+  Top 20 secondary alignment positions (chrom, start) — likely repeated/duplicated loci:
+        1028  CP016816.2:55463
+        1021  CP016816.2:343268
+        1014  CP016816.2:55464
+         967  CP016816.2:343267
+         880  CP016816.2:343266
+         843  CP016816.2:55462
+         648  CP016816.2:343264
+         616  CP016816.2:55460
+         585  CP016816.2:55465
+         562  CP016816.2:343269
+         395  CP016816.2:57228
+         375  CP016816.2:345032
+         325  CP016816.2:341585
+         315  CP016816.2:53781
+         303  CP016816.2:56575
+         280  CP016816.2:344379
+         212  CP016816.2:53783
+         210  CP016816.2:55449
+         205  CP016816.2:343253
+         203  CP016816.2:341587
+
+==========================================
+Report written to: ./syn3A.ONT.rep1.sorted.bam.qc_report.txt
+==========================================

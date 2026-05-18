@@ -3,7 +3,7 @@ mkdir -p depth_bedgraph
 
 # Define threads
 THREADS=16
-BAM="../syn1.PacBio.FLNC.sorted.HQ.bam"
+BAM="./syn1.PacBio.FLNC.sorted.HQ.bam"   # BAM lives next to this script after the reorg
 
 # 1) Total Genome-scale bedGraph
 # Uses -a (all positions) and -d 0 (no depth cap)

@@ -8,39 +8,10 @@ __pycache__/
 *.pyc
 OLD/
 .~lock.*#
+REDUNDANT/
+homology_*/
+USELESS/
 
-# ----------------------------
-# Raw FASTQ files
-# ----------------------------
-Illumina_Raw/*.fastq
-Illumina_Raw/*.fastq.gz
-PacBio_Raw/*.fastq
-PacBio_Raw/*.fastq.gz
-
-# ----------------------------
-# Illumina processing outputs
-# ----------------------------
-Illumina_Processing/bam/
-Illumina_Processing/depth_bedgraph/
-Illumina_Processing/logs/
-Illumina_Processing/qc/
-
-# ----------------------------
-# PacBio processing outputs
-# ----------------------------
-PacBio_Processing/intermediate_files/
-PacBio_Processing/depth_bedgraph/
-PacBio_Processing/*.bam
-PacBio_Processing/*.bam.csi
-PacBio_Processing/*.log
-PacBio_Processing/*.tsv
-syn1.PacBio.FLNC.sorted.HQ.bam
-syn1.PacBio.FLNC.sorted.HQ.bam.bai
-
-# ----------------------------
-# Isoform annotation outputs
-# ----------------------------
-Isoform_Cluster/isoform*
 
 # ----------------------------
 # Novel ORF discovery outputs

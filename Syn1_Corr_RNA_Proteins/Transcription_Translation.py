@@ -29,9 +29,9 @@ from adjustText import adjust_text
 # 2. Paths
 # =============================================================================
 
-HOME_DIR = ".."
-PROTEOME_FOLDER   = HOME_DIR + "/Proteomics"
-TRANSCRIPTOME_CSV = HOME_DIR + "/Transcriptomics_Quantification/syn1_Illumina_PacBio_TPM_profiles.csv"
+HOME_DIR = ".."   # project root; this script lives at Syn1_Corr_RNA_Proteins/
+PROTEOME_FOLDER   = HOME_DIR + "/Syn1_Syn3A_Proteomics"
+TRANSCRIPTOME_CSV = HOME_DIR + "/Syn1_Transcriptomics/Gene_TPM/syn1_Illumina_PacBio_TPM_profiles.csv"
 PROTEOME_CSV      = PROTEOME_FOLDER + "/syn1_proteomics_localization_2026.csv"
 PROTEOME_SYN3A_CSV = PROTEOME_FOLDER + "/syn3a_proteomics_summary_2026.csv"
 

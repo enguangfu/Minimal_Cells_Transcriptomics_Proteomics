@@ -118,11 +118,11 @@ from scipy.spatial.distance import pdist
 # ----------------------------
 # Inputs / outputs
 # ----------------------------
-MOTHER_FOLDER = ".."
-BAM_PATH = MOTHER_FOLDER + "/syn1.PacBio.FLNC.sorted.HQ.bam"
+MOTHER_FOLDER = "../.."   # project root; this script lives at Syn1_Transcriptomics/Isoforms_PacBio/
+BAM_PATH = MOTHER_FOLDER + "/Syn1_Transcriptomics/PacBio/PacBio_Processing/syn1.PacBio.FLNC.sorted.HQ.bam"
 GFF_PATH = MOTHER_FOLDER + "/Genomes_Input/syn1.genes.gff3"
 
-OUT_FOLDER = MOTHER_FOLDER + "/Isoform_Cluster"
+OUT_FOLDER = "."   # write outputs alongside this script (Syn1_Transcriptomics/Isoforms_PacBio/)
 Path(OUT_FOLDER).mkdir(parents=True, exist_ok=True)
 
 OUT_RAW_TSV        = OUT_FOLDER + "/raw_isoforms_precluster.tsv"

@@ -41,9 +41,14 @@ from matplotlib.ticker import FuncFormatter, FixedLocator
 # REQUIRED globals (you provided earlier):
 # MOTHER_FOLDER, OPERONS_TSV, GFF3_FILE, GENOME_FOLDER
 
-# Isoform clusters file — script lives at Syn1_Operon/, project root is ..
+# Inputs (this script is run from inside Syn3A_Operon/)
 MOTHER_FOLDER = ".."
-ISOFORMS_TSV  = MOTHER_FOLDER + "/Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv"
+ISOFORMS_TSV  = MOTHER_FOLDER + "/Syn3A_Transcriptomics/Isoform_Cluster/isoform_clusters_annotated.tsv"
+OPERONS_TSV   = "./operons.candidate_blocks.tsv"
+
+# Outputs
+OUT_PLOT_DIR        = "./operon_plots"
+OUT_PLOT_DIR_DEPTH  = OUT_PLOT_DIR  # depth + non-depth share the dir; suffix on filename
 
 
 # ----------------------------
@@ -62,29 +67,6 @@ ISOFORM_THICKNESS_MODE = "sqrt"  # "sqrt" | "linear" | "log1p"
 GENE_LABEL_FONTSIZE  = 18
 
 LABEL_FONTSIZE = 18
-# --- NEW: Syn3A GenBank file path ---
-SYN3A_GB_FILE = MOTHER_FOLDER + "/Genomes_Input/syn3a.gb"  # <-- CHANGE to your real path
-
-def syn3a_locus_nums_from_genbank(gb_path: str) -> set[str]:
-	"""
-	Return locus_tag set from a Syn3A GenBank file.
-	Requires: biopython installed (from Bio import SeqIO)
-	"""
-	from Bio import SeqIO
-
-	tags: set[str] = set()
-	for rec in SeqIO.parse(gb_path, "genbank"):
-		for feat in rec.features:
-			q = feat.qualifiers
-			if "locus_tag" in q and len(q["locus_tag"]) > 0:
-				locus_tag = str(q["locus_tag"][0])
-				locus_num = locus_tag.split('_')[1]
-				tags.add(locus_num)
-	return tags
-
-# Load Syn3A locus tags
-syn3a_locus_nums = syn3a_locus_nums_from_genbank(SYN3A_GB_FILE)
-print("Syn3A locus nums loaded:", len(syn3a_locus_nums))
 
 # ----------------------------
 # Utilities: coordinate transforms
@@ -122,10 +104,10 @@ isoforms_all = pd.read_csv(ISOFORMS_TSV, sep="\t")
 
 
 
-def read_genes_from_gff3(gff3_path: str, syn3a_locus_nums: set[str]) -> pd.DataFrame:
+def read_genes_from_gff3(gff3_path: str) -> pd.DataFrame:
 	"""
-	Parse GFF3 (Syn1) and mark whether each gene exists in Syn3A.
-	Keeps only 'gene' features.
+	Parse the Syn3A GFF3. Keeps both 'gene' and 'pseudogene' features so the
+	3 syn3A pseudogenes (0051, 0546, 0602) are included.
 	"""
 	rows = []
 	with open(gff3_path, "r") as f:
@@ -136,7 +118,7 @@ def read_genes_from_gff3(gff3_path: str, syn3a_locus_nums: set[str]) -> pd.DataF
 			if len(parts) != 9:
 				continue
 			chrom, source, ftype, start1, end1, score, strand, phase, attrs = parts
-			if ftype != "gene":
+			if ftype not in ("gene", "pseudogene"):
 				continue
 
 			s1 = int(start1)
@@ -153,7 +135,8 @@ def read_genes_from_gff3(gff3_path: str, syn3a_locus_nums: set[str]) -> pd.DataF
 
 			locus = ad.get("locus_tag", "") or ""
 			gene_name = ad.get("Name", "") or ""
-
+			if gene_name.startswith("JCVISYN3A_"):
+				gene_name = ""  # hide redundant prefix
 			rows.append({
 				"chrom": chrom,
 				"start0": start0,
@@ -161,25 +144,23 @@ def read_genes_from_gff3(gff3_path: str, syn3a_locus_nums: set[str]) -> pd.DataF
 				"strand": strand,
 				"locus_tag": locus,
 				"gene_name": gene_name,
-				"in_syn3a": (locus.split('_')[1] in syn3a_locus_nums) if locus else False,
 			})
 
 	return pd.DataFrame(rows)
 
-# Reload genes with Syn3A existence flag
-GFF3_FILE = MOTHER_FOLDER + "/Genomes_Input/syn1.genes.gff3"
-genes = read_genes_from_gff3(GFF3_FILE, syn3a_locus_nums)
-print("Syn1 genes parsed:", len(genes))
-print("Syn1 genes present in Syn3A:", int(genes["in_syn3a"].sum()))
+# Load syn3A genes
+GFF3_FILE = MOTHER_FOLDER + "/Genomes_Input/syn3a_genome.gff3"
+genes = read_genes_from_gff3(GFF3_FILE)
+print("Syn3A loci parsed:", len(genes))
 
 
 # ----------------------------
 # Depth reader
 # ----------------------------
-DEPTH_BEDGRAPH_FOLDER = MOTHER_FOLDER + "/Syn1_Transcriptomics/PacBio/PacBio_Processing/depth_bedgraph"
+DEPTH_BEDGRAPH_FOLDER = MOTHER_FOLDER + "/Syn3A_Transcriptomics/ONT/ONT_Processing/depth_bedgraph"
 DEPTH_BEDGRAPH_FILES = {
-	"plus":  DEPTH_BEDGRAPH_FOLDER + "/syn1.PacBio.FLNC.HQ.plus.bedGraph",
-	"minus": DEPTH_BEDGRAPH_FOLDER + "/syn1.PacBio.FLNC.HQ.minus.bedGraph",
+	"plus":  DEPTH_BEDGRAPH_FOLDER + "/syn3A.ONT.rep1.plus.bedGraph",
+	"minus": DEPTH_BEDGRAPH_FOLDER + "/syn3A.ONT.rep1.minus.bedGraph",
 }
 
 def read_depth_bedfile(path: str) -> pd.DataFrame:
@@ -304,7 +285,6 @@ def draw_gene_arrows(ax, oc: OperonCoord, genes_df: pd.DataFrame):
 			g0 = int(r["start0"])
 			g1 = int(r["end0"])
 			gstrand = str(r["strand"])
-			in_syn3a = bool(r.get("in_syn3a", False))
 
 			x0 = oc.tx_of_genome_pos0(g0)
 			x1 = oc.tx_of_genome_pos0(g1)
@@ -352,13 +332,18 @@ def draw_gene_arrows(ax, oc: OperonCoord, genes_df: pd.DataFrame):
 
 			label = make_gene_label(str(r.get("locus_tag", "")), str(r.get("gene_name", "")))
 			if label:
-				ax.text(xcen, Y_BASE + TRI_H / 2 + 0.06, label,
+				# Place the label at the center of the *visible* portion of the
+				# gene. The operon plot window may clip part of the ORF, so the
+				# geometric ORF center can land outside the axes and clip the
+				# label. Using the visible center keeps the label on-panel even
+				# when the gene extends past the operon boundary.
+				view_lo, view_hi = ax.get_xlim()
+				vis_left  = max(xleft,  view_lo)
+				vis_right = min(xright, view_hi)
+				label_x = (vis_left + vis_right) / 2 if vis_right > vis_left else xcen
+				ax.text(label_x, Y_BASE + TRI_H / 2 + 0.06, label,
 						ha="center", va="bottom",
 						fontsize=GENE_LABEL_FONTSIZE, color=color, clip_on=True)
-			if not in_syn3a and label:
-				ax.text(xcen, Y_BASE - TRI_H / 2 - 0.06, "×",
-						ha="center", va="top",
-						fontsize=GENE_LABEL_FONTSIZE, color="grey", clip_on=True)
 
 	ax.set_ylim(0, 1)
 	ax.set_yticks([])
@@ -455,7 +440,10 @@ def _pack_intervals_min_rows(intervals: List[Tuple[int,int]]) -> List[int]:
 
 def layout_isoform_tracks(iso_df: pd.DataFrame, oc: OperonCoord, plot_s0: int, plot_e0: int) -> pd.DataFrame:
 	"""
-	- Take top MAX_ISOFORMS_TO_PLOT by n_reads
+	- Take top MAX_ISOFORMS_TO_PLOT by genomic span length (end0 - start0).
+	  ONT cDNA reads are heavily degraded, so the longest isoforms — not the
+	  most-read-abundant — are the ones that best reveal the true operon
+	  boundary. Ties broken by n_reads.
 	- Clip to plotting window and convert to TX coordinates
 	- Sort by tx_left ascending (correct spatial order for both strands)
 	- Global interval packing across all isoforms so non-overlapping isoforms
@@ -466,8 +454,12 @@ def layout_isoform_tracks(iso_df: pd.DataFrame, oc: OperonCoord, plot_s0: int, p
 	if iso_df.empty:
 		return iso_df
 
-	# Step 1: keep top N by abundance
-	iso = iso_df.sort_values("n_reads", ascending=False).head(MAX_ISOFORMS_TO_PLOT).copy()
+	# Step 1: keep top N by isoform span length (tie-break by n_reads)
+	iso = iso_df.assign(_span=iso_df["end0"] - iso_df["start0"]) \
+				.sort_values(["_span", "n_reads"], ascending=[False, False]) \
+				.head(MAX_ISOFORMS_TO_PLOT) \
+				.drop(columns="_span") \
+				.copy()
 
 	# Step 2: clip in genome space and convert to TX coordinates
 	tx_lefts, tx_rights = [], []
@@ -744,3 +736,21 @@ def plot_one_operon(
 
 
 
+
+
+
+# ----------------------------
+# Driver: render every operon in operons.candidate_blocks.tsv
+# ----------------------------
+if __name__ == "__main__":
+	os.makedirs(OUT_PLOT_DIR, exist_ok=True)
+	operons = pd.read_csv(OPERONS_TSV, sep="\t")
+	print(f"Operons to plot: {len(operons)}")
+
+	for _, op in operons.iterrows():
+		opid = str(op["operon_id"])
+		out_plain  = os.path.join(OUT_PLOT_DIR, f"{opid}.pdf")
+		out_wdepth = os.path.join(OUT_PLOT_DIR, f"{opid}_wdepth.pdf")
+		plot_one_operon(op, out_plain, dpi=300, PLOT_DEPTH=False, isoform_reads_threshold=1)
+		plot_one_operon(op, out_wdepth, dpi=300, PLOT_DEPTH=True, isoform_reads_threshold=1)
+	print(f"Wrote per-operon PDFs into {OUT_PLOT_DIR}")

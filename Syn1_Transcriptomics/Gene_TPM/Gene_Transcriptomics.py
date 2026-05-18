@@ -42,7 +42,7 @@ from typing import Dict, List, Tuple, Optional
 # In[2]:
 
 
-GENES_GFF    = "../Genomes_Input/syn1.genes.gff3"
+GENES_GFF    = "../../Genomes_Input/syn1.genes.gff3"
 
 # Gene annotation parsing
 PRIMARY_FEATURES = {"gene"}
@@ -101,8 +101,8 @@ import numpy as np
 from pathlib import Path
 
 
-HOME_DIR = ".."
-SEQDEPTH_FOLDER = HOME_DIR + "/Illumina_Processing/depth_bedgraph"
+HOME_DIR = "../.."   # project root; this script lives at Syn1_Transcriptomics/Gene_TPM/
+SEQDEPTH_FOLDER = HOME_DIR + "/Syn1_Transcriptomics/Illumina/Illumina_Processing/depth_bedgraph"
 
 SAMPLES = ["SRR35996296", "SRR35996297", "SRR35996298"]
 
@@ -239,7 +239,7 @@ SAMPLE_TO_BIO = {
     "SRR35996298": "sample_enr",
 }
 
-OUTPUT_TSV = HOME_DIR + "/Transcriptomics_Quantification/syn1_illumina_TPM_profiles.tsv"
+OUTPUT_TSV = "./syn1_illumina_TPM_profiles.tsv"
 
  #---------------------------------------------------------------------------
 # Two-step averaging: tech reps within bio sample first, then bio samples
@@ -294,7 +294,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-PACBIO_DEPTH_FOLDER = HOME_DIR + "/PacBio_Processing/depth_bedgraph"
+PACBIO_DEPTH_FOLDER = HOME_DIR + "/Syn1_Transcriptomics/PacBio/PacBio_Processing/depth_bedgraph"
 PACBIO_PREFIX = "syn1.PacBio.FLNC.HQ"
 
 pacbio_genes = GENES.copy().reset_index(drop=True)
@@ -340,7 +340,7 @@ else:
     pacbio_genes["PacBio_sense_TPM"]     = sense_vals     / denom * 1e6
     pacbio_genes["PacBio_antisense_TPM"] = antisense_vals / denom * 1e6
 
-OUTPUT_PACBIO_TSV = HOME_DIR + "/Transcriptomics_Quantification/syn1_pacbio_TPM_profiles.tsv"
+OUTPUT_PACBIO_TSV = "./syn1_pacbio_TPM_profiles.tsv"
 
 export_cols = [
     "locus_tag", "chrom", "start0", "end0", "strand", "gene_len",
@@ -496,7 +496,7 @@ print("Positive slope → longer genes enriched in PacBio (consistent with Iso-S
 
 
 SYN3A_GFF              = HOME_DIR + "/Genomes_Input/syn3a_genome.gff3"
-SYN3A_DEPTH_FOLDER     = HOME_DIR + "/ONT_Processing/depth_bedgraph"
+SYN3A_DEPTH_FOLDER     = HOME_DIR + "/Syn3A_Transcriptomics/ONT/ONT_Processing/depth_bedgraph"
 SYN3A_PREFIX           = "syn3A.ONT.rep1"
 
 syn3a_genes = read_genes_gff(SYN3A_GFF).reset_index(drop=True)
@@ -557,7 +557,7 @@ else:
     syn3a_genes["ONT_sense_TPM"]     = sense_vals     / denom * 1e6
     syn3a_genes["ONT_antisense_TPM"] = antisense_vals / denom * 1e6
 
-OUTPUT_SYN3A_TSV = HOME_DIR + "/Transcriptomics_Quantification/syn3a_ONT_TPM_profiles.tsv"
+OUTPUT_SYN3A_TSV = HOME_DIR + "/Syn3A_Transcriptomics/Gene_TPM/syn3a_ONT_TPM_profiles.tsv"
 export_cols = [
     "locus_tag", "gene_name", "gene_product", "chrom", "start0", "end0", "strand", "gene_len",
     "ONT_sense_avg_depth", "ONT_antisense_avg_depth",

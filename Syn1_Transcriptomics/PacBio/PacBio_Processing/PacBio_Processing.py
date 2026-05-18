@@ -46,13 +46,13 @@ from pacbio_io import pigz_reader, pigz_writer, Progress, revcomp
 # ============================================================================
 # Paths
 # ============================================================================
-HOME_DIR = "../"
-WORK_DIR = os.path.join(HOME_DIR, "PacBio_Processing")
+HOME_DIR = "../../../"   # project root; this script lives at Syn1_Transcriptomics/PacBio/PacBio_Processing/
+WORK_DIR = "."           # outputs land alongside this script
 INTERMEDIATE_DIR = os.path.join(WORK_DIR, "intermediate_files")
 os.makedirs(INTERMEDIATE_DIR, exist_ok=True)
 
 # Raw input: merged demultiplexed HiFi reads
-MERGED_RAW_FASTQ = os.path.join(HOME_DIR, "PacBio_Raw/merged.hifi_reads.fastq.gz")
+MERGED_RAW_FASTQ = os.path.join(HOME_DIR, "Syn1_Transcriptomics/PacBio/PacBio_Raw/merged.hifi_reads.fastq.gz")
 
 # Per-stage outputs
 ORIENTED_FASTQ = os.path.join(INTERMEDIATE_DIR, "all.oriented.fastq.gz")
@@ -1023,7 +1023,7 @@ if __name__ == "__main__":
             _time.sleep(30)
 
     # ------- Stage 05: per-read QC + HQ BAM filter -------
-    OUT_BAM = Path(HOME_DIR, "syn1.PacBio.FLNC.sorted.HQ.bam")
+    OUT_BAM = Path("./syn1.PacBio.FLNC.sorted.HQ.bam")   # alongside this script after the reorg
     READ_QC_TSV       = Path("syn1.PacBio.FLNC.read_qc.tsv")
     EXCLUDE_QNAME_TXT = Path("syn1.PacBio.FLNC.exclude_concatemer_qnames.txt")
     SUMMARY_TXT       = Path("syn1.PacBio.FLNC.qc_summary.txt")

@@ -44,14 +44,14 @@ from matplotlib.ticker import FuncFormatter, FixedLocator
 # Paths — this script lives in Genome_Reduction/, so ".." is the project root.
 MOTHER_FOLDER = ".."
 
-SYN1_ISOFORMS_TSV  = MOTHER_FOLDER + "/Isoform_Cluster/isoform_clusters_annotated.tsv"
-SYN3A_ISOFORMS_TSV = MOTHER_FOLDER + "/Operon_Syn3A/Isoform_Cluster/isoform_clusters_annotated.tsv"
+SYN1_ISOFORMS_TSV  = MOTHER_FOLDER + "/Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv"
+SYN3A_ISOFORMS_TSV = MOTHER_FOLDER + "/Syn3A_Transcriptomics/Isoform_Cluster/isoform_clusters_annotated.tsv"
 
 SYN1_GFF3_FILE  = MOTHER_FOLDER + "/Genomes_Input/syn1.genes.gff3"
 SYN3A_GFF3_FILE = MOTHER_FOLDER + "/Genomes_Input/syn3a_genome.gff3"
 
-SYN1_DEPTH_BEDGRAPH_FOLDER  = MOTHER_FOLDER + "/PacBio_Processing/depth_bedgraph"
-SYN3A_DEPTH_BEDGRAPH_FOLDER = MOTHER_FOLDER + "/ONT_Processing/depth_bedgraph"
+SYN1_DEPTH_BEDGRAPH_FOLDER  = MOTHER_FOLDER + "/Syn1_Transcriptomics/PacBio/PacBio_Processing/depth_bedgraph"
+SYN3A_DEPTH_BEDGRAPH_FOLDER = MOTHER_FOLDER + "/Syn3A_Transcriptomics/ONT/ONT_Processing/depth_bedgraph"
 
 SYN1_DEPTH_FILES  = {
 	"plus":  SYN1_DEPTH_BEDGRAPH_FOLDER  + "/syn1.PacBio.FLNC.HQ.plus.bedGraph",

@@ -91,7 +91,7 @@ from scipy.stats import pearsonr, spearmanr
 
 HOME_DIR   = ".."
 OMICS_CSV  = "./syn1_genes_transcriptomics_proteomics.csv"
-OPERON_TSV = HOME_DIR + "/Operon_Annotation_Visualization/operons.candidate_blocks.tsv"
+OPERON_TSV = HOME_DIR + "/Syn1_Operon/operons.candidate_blocks.tsv"
 OUT_DIR    = "./residual_analysis"
 
 GENOME_LEN = 1_078_809   # JCVI-Syn1.0 (CP002027.1), circular

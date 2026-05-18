@@ -8,7 +8,7 @@ ONT reads that fully span a given (gene_a, gene_b) pair on the operon strand.
 
 Because ONT direct-RNA reads on syn3A are heavily fragmented (read length
 distribution: 49-2858 nt, mean 383 nt) the de-novo operon segmentation in
-`Operon_Syn3A/` over-splits real polycistrons into RNase-cleavage products
+`Syn3A_Operon/` over-splits real polycistrons into RNase-cleavage products
 (525 syn3A "operons" covering 496 genes at MIN_READS=5). Rather than
 trying to recover operon boundaries, this script uses the syn1 operon set
 as the hypothesis library and tests each hypothesis directly against the
@@ -56,7 +56,7 @@ SYN1_GFF       = ROOT / "Genomes_Input" / "syn1.genes.gff3"
 SYN3A_GFF      = ROOT / "Genomes_Input" / "syn3a_genome.gff3"
 ONT_BAM        = ROOT / "ONT_Processing" / "syn3A.ONT.rep1.sorted.bam"
 OPERON_TSV     = HERE / "aln" / "analysis" / "operon_deletion_classification.tsv"
-SYN1_OPERONS_TSV = ROOT / "Operon_Annotation_Visualization" / "operons.candidate_blocks.tsv"
+SYN1_OPERONS_TSV = ROOT / "Syn1_Operon" / "operons.candidate_blocks.tsv"
 
 OUT_DIR        = HERE / "operon_change"
 OUT_Q1Q2_PAIRS = OUT_DIR / "Q1Q2_pair_preservation.tsv"

@@ -17,8 +17,8 @@ fi
 THREADS=16
 
 # Required: reference genome FASTA and HQ isoform FASTA
-Mother_dir="$(cd "$(dirname "$0")/.." && pwd)"
-working_dir=${Mother_dir}/PacBio_Processing/
+Mother_dir="$(cd "$(dirname "$0")/../../.." && pwd)"   # project root
+working_dir=${Mother_dir}/Syn1_Transcriptomics/PacBio/PacBio_Processing
 
 Ref_file=${Mother_dir}/Genomes_Input/syn1_genome.fasta
 # Isoform_file=${Isoform_dir}2-hq_transcripts.fasta

@@ -1,0 +1,22 @@
+[M::mm_idx_gen::0.014*1.11] collected minimizers
+[M::mm_idx_gen::0.025*6.43] sorted minimizers
+[M::main::0.025*6.43] loaded/built the index for 1 target sequence(s)
+[M::mm_mapopt_update::0.027*6.00] mid_occ = 10
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 1
+[M::mm_idx_stat::0.029*5.75] distinct minimizers: 98047 (96.45% are singletons); average occurrences: 1.039; average spacing: 5.336; total length: 543379
+[M::worker_pipeline::7.998*7.02] mapped 734075 sequences
+[M::main] Version: 2.30-r1287
+[M::main] CMD: /home/enguang/anaconda3/envs/RNAseq/bin/minimap2 -t 16 -ax map-ont -p 0.99 --MD /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genomes_Input/syn3A_genome.fasta /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/ONT_Raw/ONT.syn3A.rep1.fastq.gz
+[M::main] Real time: 8.003 sec; CPU: 56.119 sec; Peak RSS: 0.836 GB
+761572 + 0 in total (QC-passed reads + QC-failed reads)
+734075 + 0 primary
+20225 + 0 secondary
+7272 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+586484 + 0 mapped (77.01% : N/A)
+558987 + 0 primary mapped (76.15% : N/A)
+0 + 0 paired in sequencing
+0 + 0 read1
+0 + 0 read2
+0 + 0 properly paired (N/A : N/A)

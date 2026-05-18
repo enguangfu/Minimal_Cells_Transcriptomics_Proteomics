@@ -17,13 +17,13 @@ import matplotlib.pyplot as plt
 from scipy import stats
 
 # ── Inputs ───────────────────────────────────────────────────────────────────
-SYN1_TPM_CSV          = "../Transcriptomics_Quantification/syn1_Illumina_PacBio_TPM_profiles.csv"
-SYN3A_TPM_TSV         = "../Transcriptomics_Quantification/syn3a_ONT_TPM_profiles.tsv"
-SYN3A_ILLUMINA_TPM_CSV = "../Syn3A_Illumina/Processed_TPM_Palsson/GSM6204176_3A.csv"
-SYN1_PTN_CSV   = "../Proteomics_Quantification/syn1_proteomics_localization_2026.csv"
-SYN3A_PTN_CSV  = "../Proteomics_Quantification/syn3a_proteomics_summary_2026.csv"
-OPERON_COV     = "../Operon_Annotation_Visualization/gene_operon_coverage.tsv"
-OPERON_PLOTS   = "../Operon_Annotation_Visualization/operon_plots"
+SYN1_TPM_CSV          = "../Syn1_Transcriptomics/Gene_TPM/syn1_Illumina_PacBio_TPM_profiles.csv"
+SYN3A_TPM_TSV         = "../Syn3A_Transcriptomics/Gene_TPM/syn3a_ONT_TPM_profiles.tsv"
+SYN3A_ILLUMINA_TPM_CSV = "../Syn3A_Transcriptomics/Gene_TPM/Processed_TPM_Palsson/GSM6204176_3A.csv"
+SYN1_PTN_CSV   = "../Syn1_Syn3A_Proteomics/syn1_proteomics_localization_2026.csv"
+SYN3A_PTN_CSV  = "../Syn1_Syn3A_Proteomics/syn3a_proteomics_summary_2026.csv"
+OPERON_COV     = "../Syn1_Operon/gene_operon_coverage.tsv"
+OPERON_PLOTS   = "../Syn1_Operon/operon_plots"
 
 SYN1_TPM_COL   = "avg_sense_TPM"   # Illumina merged across bio samples
 SYN3A_TPM_COL  = "ONT_sense_TPM"

@@ -36,13 +36,13 @@ import pandas as pd
 from PyPDF2 import PdfReader, PdfWriter
 
 ROOT     = Path(__file__).resolve().parent.parent
-OPERONS  = ROOT / "Operon_Annotation_Visualization" / "operons.candidate_blocks.tsv"
+OPERONS  = ROOT / "Syn1_Operon" / "operons.candidate_blocks.tsv"
 GFF      = ROOT / "Genomes_Input" / "syn1.genes.gff3"
 DEL_BED  = Path(__file__).resolve().parent / "aln" / "raw" / "syn1_deleted_regions.bed"
 OUT_DIR  = Path(__file__).resolve().parent / "aln" / "analysis"
 OUT_TSV  = OUT_DIR / "operon_deletion_classification.tsv"
 OUT_PARTIAL_TSV = OUT_DIR / "partial_gene_deletions_gt10bp.tsv"
-OPERON_PLOTS_DIR = ROOT / "Operon_Annotation_Visualization" / "operon_plots"
+OPERON_PLOTS_DIR = ROOT / "Syn1_Operon" / "operon_plots"
 
 
 # ---------------------------------------------------------------- loaders
