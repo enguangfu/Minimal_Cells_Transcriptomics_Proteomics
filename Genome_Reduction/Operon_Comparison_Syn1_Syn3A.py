@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import os
 import math
+from pathlib import Path
 from dataclasses import dataclass
 from typing import Dict, Tuple, Optional, List
 
@@ -41,8 +42,10 @@ from matplotlib.ticker import FuncFormatter, FixedLocator
 # REQUIRED globals (you provided earlier):
 # MOTHER_FOLDER, OPERONS_TSV, GFF3_FILE, GENOME_FOLDER
 
-# Paths — this script lives in Genome_Reduction/, so ".." is the project root.
-MOTHER_FOLDER = ".."
+# Paths — absolute, relative to this module's location (Genome_Reduction/),
+# so the module imports correctly regardless of the caller's working directory.
+_HERE = Path(__file__).resolve().parent          # Genome_Reduction/
+MOTHER_FOLDER = str(_HERE.parent)                # project root
 
 SYN1_ISOFORMS_TSV  = MOTHER_FOLDER + "/Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv"
 SYN3A_ISOFORMS_TSV = MOTHER_FOLDER + "/Syn3A_Transcriptomics/Isoform_Cluster/isoform_clusters_annotated.tsv"
@@ -63,7 +66,7 @@ SYN3A_DEPTH_FILES = {
 }
 
 # Authoritative syn1 deletion intervals (95 intervals, ≥50 bp; produced by 02_analyze.py).
-SYN1_DELETIONS_BED = "./aln/raw/syn1_deleted_regions.bed"
+SYN1_DELETIONS_BED = str(_HERE / "aln" / "raw" / "syn1_deleted_regions.bed")
 DELETION_SHADE_COLOR = "#ff6b6b"  # translucent red overlay for deletion regions
 DELETION_SHADE_ALPHA = 0.18
 
@@ -695,13 +698,15 @@ def _draw_genome_block(fig, gs, row_offset: int, n_panels: int,
                        depth_sub: pd.DataFrame,
                        plot_s0: int, plot_e0: int,
                        plot_depth: bool,
-                       shade_deletions: bool = False):
+                       shade_deletions: bool = False,
+                       col=0):
 	"""Render one 2- or 3-panel block (genes, isoforms, optional depth) into
-	rows [row_offset .. row_offset+n_panels) of the supplied GridSpec.
-	Returns the bottom axis of the block (for x-tick formatting)."""
-	ax_genes    = fig.add_subplot(gs[row_offset,     0])
-	ax_isoforms = fig.add_subplot(gs[row_offset + 1, 0], sharex=ax_genes)
-	ax_depth    = (fig.add_subplot(gs[row_offset + 2, 0], sharex=ax_genes)
+	rows [row_offset .. row_offset+n_panels) and column `col` of the supplied
+	GridSpec. `col` may be an int (single column) or a slice (span columns) to
+	support broken-axis / spanning layouts. Returns the bottom axis."""
+	ax_genes    = fig.add_subplot(gs[row_offset,     col])
+	ax_isoforms = fig.add_subplot(gs[row_offset + 1, col], sharex=ax_genes)
+	ax_depth    = (fig.add_subplot(gs[row_offset + 2, col], sharex=ax_genes)
 	               if plot_depth else None)
 
 	# x-limits (always increasing in TX space)
@@ -753,6 +758,9 @@ def plot_one_operon_comparison(
 	PLOT_DEPTH: bool = True,
 	syn1_isoform_reads_threshold:  int = 10,
 	syn3a_isoform_reads_threshold: int = 1,
+	annotation: str | None = None,
+	syn1_label:  str | None = None,
+	syn3a_label: str | None = None,
 ):
 	"""Side-by-side (top: syn1, bottom: syn3A) comparison plot for one syn1
 	operon. The syn3A panels show only the retained genes; the syn3A span
@@ -832,7 +840,8 @@ def plot_one_operon_comparison(
 
 	# syn1 block (top) — shade deletion intervals across all syn1 panels
 	_draw_genome_block(fig, gs, row_offset=0, n_panels=rows_per_block,
-	                   label=f"Syn1   Operon {opid}",
+	                   label=(syn1_label if syn1_label is not None
+	                          else f"Syn1   Operon {opid}"),
 	                   oc=s1_oc, genes_sub=s1_genes_sub,
 	                   iso_sub=s1_iso_sub, depth_sub=s1_depth_sub,
 	                   plot_s0=s1_plot_s0, plot_e0=s1_plot_e0,
@@ -840,13 +849,120 @@ def plot_one_operon_comparison(
 	                   shade_deletions=True)
 	# syn3A block (bottom)
 	_draw_genome_block(fig, gs, row_offset=rows_per_block, n_panels=rows_per_block,
-	                   label=f"Syn3A  (retained gene window for {opid})",
+	                   label=(syn3a_label if syn3a_label is not None
+	                          else f"Syn3A  (retained gene window for {opid})"),
 	                   oc=s3_oc, genes_sub=s3_genes_sub,
 	                   iso_sub=s3_iso_sub, depth_sub=s3_depth_sub,
 	                   plot_s0=s3_plot_s0, plot_e0=s3_plot_e0,
 	                   plot_depth=PLOT_DEPTH,
 	                   shade_deletions=False)
 
+	if annotation:
+		fig.suptitle(annotation, fontsize=16, fontweight="bold", y=0.995)
+	fig.savefig(save_path, dpi=dpi, bbox_inches="tight")
+	plt.close(fig)
+	return True
+
+
+def _parse_loci_field(val) -> set:
+	if val is None or (isinstance(val, float) and pd.isna(val)) or str(val).strip() == "":
+		return set()
+	return {x.strip() for x in str(val).split(",") if x.strip()}
+
+
+def _syn1_block_data(op: dict, iso_thr: int):
+	"""Build (OperonCoord, genes_sub, iso_sub, depth_sub, plot_s0, plot_e0, loci)
+	for one operon in the syn1 frame."""
+	chrom = str(op["chrom"]); strand = str(op["strand"])
+	s0 = int(op["start0"]); e0 = int(op["end0"])
+	loci = _parse_loci_field(op.get("sense_gene_loci", "")) | _parse_loci_field(op.get("antisense_gene_loci", ""))
+	pad = int(PAD_BP_FRAC * (e0 - s0)) + PAD_BP
+	ps0, pe0 = s0 - pad, e0 + pad
+	oc = OperonCoord(chrom=chrom, strand=strand, opid=str(op["operon_id"]), start0=s0, end0=e0)
+	genes_sub = (syn1_genes[syn1_genes["locus_tag"].astype(str).isin(loci)].copy()
+	             if loci else pd.DataFrame())
+	depth_df = syn1_depth_plus if strand == "+" else syn1_depth_minus
+	depth_sub = subset_intervals(depth_df, chrom, ps0, pe0)
+	iso_sub = syn1_isoforms[
+		(syn1_isoforms["chrom"].astype(str)  == chrom) &
+		(syn1_isoforms["strand"].astype(str) == strand) &
+		(syn1_isoforms["start0"] < e0) & (syn1_isoforms["end0"] > s0) &
+		(syn1_isoforms["n_reads"] >= iso_thr)
+	].copy()
+	return oc, genes_sub, iso_sub, depth_sub, ps0, pe0, loci
+
+
+def plot_operon_pair_comparison(
+	opL: dict, opR: dict,
+	save_path: str,
+	dpi: int = 300,
+	PLOT_DEPTH: bool = True,
+	syn1_isoform_reads_threshold:  int = 10,
+	syn3a_isoform_reads_threshold: int = 1,
+	annotation: str | None = None,
+):
+	"""Cross-junction operon-pair comparison for 07 (tandem junctions).
+
+	Top row = BROKEN AXIS: operon_L (col 0) and operon_R (col 1) in their
+	original, far-apart syn1 positions, each with genes + isoforms + depth and
+	deletion shading. Bottom = the JOINED syn3A locus (operon_L | scar |
+	operon_R, now adjacent) spanning both columns, with genes + isoforms + depth.
+
+	opL / opR: operon dicts (chrom, strand, start0, end0, operon_id,
+	sense_gene_loci, antisense_gene_loci). Returns False if neither operon has a
+	syn3A representation."""
+	ocL, gL, iL, dL, psL, peL, lociL = _syn1_block_data(opL, syn1_isoform_reads_threshold)
+	ocR, gR, iR, dR, psR, peR, lociR = _syn1_block_data(opR, syn1_isoform_reads_threshold)
+
+	# ---------- joined syn3A side ----------
+	def _to_syn3a(lt: str) -> str:
+		return f"JCVISYN3A_{lt.split('_', 1)[-1]}"
+	s3_cand = {_to_syn3a(lt) for lt in (lociL | lociR)}
+	s3_genes = syn3a_genes[syn3a_genes["locus_tag"].astype(str).isin(s3_cand)].copy()
+	if s3_genes.empty:
+		return False
+	s3_chrom  = str(s3_genes["chrom"].iloc[0])
+	s3_strand = str(opL["strand"])   # tandem -> both operons same strand
+	s3_s0 = int(s3_genes["start0"].min()); s3_e0 = int(s3_genes["end0"].max())
+	pad3 = int(PAD_BP_FRAC * (s3_e0 - s3_s0)) + PAD_BP
+	ps3, pe3 = s3_s0 - pad3, s3_e0 + pad3
+	oc3 = OperonCoord(chrom=s3_chrom, strand=s3_strand, opid="pair@syn3A",
+	                  start0=s3_s0, end0=s3_e0)
+	d3df = syn3a_depth_plus if s3_strand == "+" else syn3a_depth_minus
+	d3 = subset_intervals(d3df, s3_chrom, ps3, pe3)
+	i3 = syn3a_isoforms[
+		(syn3a_isoforms["chrom"].astype(str)  == s3_chrom) &
+		(syn3a_isoforms["strand"].astype(str) == s3_strand) &
+		(syn3a_isoforms["start0"] < s3_e0) & (syn3a_isoforms["end0"] > s3_s0) &
+		(syn3a_isoforms["n_reads"] >= syn3a_isoform_reads_threshold)
+	].copy()
+
+	# ---------- figure: 2 columns (broken syn1) + spanning syn3A ----------
+	rows_per_block = 3 if PLOT_DEPTH else 2
+	n_rows = rows_per_block * 2
+	height_ratios = ([1.8, 2.5, 1.5] * 2) if PLOT_DEPTH else ([1.8, 2.5] * 2)
+	fig = plt.figure(figsize=(24, 3.5 * n_rows + 1))
+	gs  = fig.add_gridspec(n_rows, 2, height_ratios=height_ratios,
+	                       hspace=0.55, wspace=0.12)
+
+	_draw_genome_block(fig, gs, row_offset=0, n_panels=rows_per_block,
+	                   label=f"Syn1  {opL['operon_id']} (left)",
+	                   oc=ocL, genes_sub=gL, iso_sub=iL, depth_sub=dL,
+	                   plot_s0=psL, plot_e0=peL, plot_depth=PLOT_DEPTH,
+	                   shade_deletions=True, col=0)
+	_draw_genome_block(fig, gs, row_offset=0, n_panels=rows_per_block,
+	                   label=f"Syn1  {opR['operon_id']} (right)",
+	                   oc=ocR, genes_sub=gR, iso_sub=iR, depth_sub=dR,
+	                   plot_s0=psR, plot_e0=peR, plot_depth=PLOT_DEPTH,
+	                   shade_deletions=True, col=1)
+	_draw_genome_block(fig, gs, row_offset=rows_per_block, n_panels=rows_per_block,
+	                   label=f"Syn3A joined  {opL['operon_id']} | {opR['operon_id']}",
+	                   oc=oc3, genes_sub=s3_genes, iso_sub=i3, depth_sub=d3,
+	                   plot_s0=ps3, plot_e0=pe3, plot_depth=PLOT_DEPTH,
+	                   shade_deletions=False, col=slice(None))
+
+	if annotation:
+		fig.suptitle(annotation, fontsize=16, fontweight="bold", y=0.995)
 	fig.savefig(save_path, dpi=dpi, bbox_inches="tight")
 	plt.close(fig)
 	return True

@@ -1,0 +1,55 @@
+================================================================
+RETAINED-GENE CONTEXT SUMMARY
+================================================================
+syn1 genes total              :   911
+syn1 genes retained (no dele) :   497
+syn3A annotated genes         :   496
+
+Cross-check: syn1 retained <-> syn3A annotation (match by locus_tag suffix)
+  matched   : 493
+  unmatched : 4
+  syn3A loci with no syn1 retained mate : 3
+
+----------------------------------------------------------------
+ABNORMAL CASES (retained syn1 not matched, or syn3A without syn1 mate)
+----------------------------------------------------------------
+
+[MMSYN1_0135]
+  syn1 : CP002027.1	syn1_summary	gene	176449	176562	.	-	.	ID=gene:MMSYN1_0135;Name=;locus_tag=MMSYN1_0135;product=hypothetical protein;rna_type=mRNA;gbkey=mRNA
+  syn3A: <no syn3A record>
+
+[MMSYN1_0547]
+  syn1 : CP002027.1	syn1_summary	gene	655176	655817	.	-	.	ID=gene:MMSYN1_0547;Name=;locus_tag=MMSYN1_0547;product=PSEUDOGENE - putative hydrolase of the HAD family;rna_type=pseudo;gbkey=pseudo
+  syn3A: <no syn3A record>
+
+[MMSYN1_0603]
+  syn1 : CP002027.1	syn1_summary	gene	746854	746941	.	+	.	ID=gene:MMSYN1_0603;Name=;locus_tag=MMSYN1_0603;product=Small nucleolar RNA snR69;rna_type=ncRNA;gbkey=ncRNA
+  syn3A: <no syn3A record>
+
+[MMSYN1_0815]
+  syn1 : CP002027.1	syn1_summary	gene	958511	958648	.	+	.	ID=gene:MMSYN1_0815;Name=;locus_tag=MMSYN1_0815;product=conserved hypothetical protein;rna_type=mRNA;gbkey=mRNA
+  syn3A: <no syn3A record>
+
+[JCVISYN3A_0930]
+  syn1 : <no syn1 record>
+  syn3A: CP016816.2	Genbank	gene	319048	319191	.	-	.	ID=gene-JCVISYN3A_0930;Name=rpmG;gbkey=Gene;gene=rpmG;locus_tag=JCVISYN3A_0930
+
+[JCVISYN3A_0931]
+  syn1 : <no syn1 record>
+  syn3A: CP016816.2	Genbank	gene	360403	361011	.	+	.	ID=gene-JCVISYN3A_0931;Name=met14p;gbkey=Gene;gene=met14p;locus_tag=JCVISYN3A_0931
+
+[JCVISYN3A_0932]
+  syn1 : <no syn1 record>
+  syn3A: CP016816.2	Genbank	gene	515027	515188	.	+	.	ID=gene-JCVISYN3A_0932;Name=rpmG;gbkey=Gene;gene=rpmG;locus_tag=JCVISYN3A_0932
+
+cw  neighbor changed in syn3A : 91 retained genes
+ccw neighbor changed in syn3A : 91 retained genes
+
+gene_impact_class (promoter-source change, retained genes):
+  promoter_lost                   35
+  promoter_disconnected            8
+  new_promoter_fusion              3
+  readthrough_exposed             14
+  promoter_proximity_changed      17
+  context_only                    43
+  unaffected                     377
