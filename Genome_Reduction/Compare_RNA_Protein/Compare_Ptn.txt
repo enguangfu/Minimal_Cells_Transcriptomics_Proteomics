@@ -1,0 +1,242 @@
+##############################################################################
+# PROTEIN (iPM) FOLD-CHANGE AND ABSOLUTE-CHANGE OUTLIERS (coding genes)
+##############################################################################
+# iPM = proteomics; rel* = mean-normalized. Source: Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv
+
+==============================================================================
+## iPM fold change
+   Tukey fences (log10 1.5*IQR): low < 0.183, high > 5.18
+
+-- HIGH outliers (n=15) --
+ locus_syn1  gene_name   essentiality                             gene_product_disp  relIPM_syn1  relIPM_syn3a  iPM_fold_change  iPM_abs_change
+MMSYN1_0620       perR   Nonessential                       ferric uptake regulator     0.000853      0.166341       194.911791        0.165488
+MMSYN1_0526       rpmF      Essential                         ribosomal protein L32     0.005766      0.208787        36.208687        0.203021
+MMSYN1_0060        NaN Quasiessential                     putative membrane protein     0.003136      0.078885        25.156024        0.075749
+MMSYN1_0730        NaN Quasiessential                conserved hypothetical protein     0.000801      0.017674        22.073787        0.016873
+MMSYN1_0813       galE      Essential                       UDP-glucose 4-epimerase     0.055975      0.922391        16.478693        0.866416
+MMSYN1_0876        NaN   Nonessential                           amino acid permease     0.009118      0.144016        15.794764        0.134899
+MMSYN1_0530        NaN Quasiessential                conserved hypothetical protein     0.146585      1.397560         9.534147        1.250975
+MMSYN1_0609       dnaB      Essential chromosome replication initiation/membrane at     0.001203      0.010750         8.938254        0.009548
+MMSYN1_0906        NaN      Essential         choline/ethanolamine kinase_ putative     0.033906      0.243969         7.195458        0.210063
+MMSYN1_0115 galU; gtaB      Essential utp--glucose-1-phosphate uridylyltransferase      0.265920      1.670593         6.282305        1.404672
+MMSYN1_0814        glf      Essential                    UDP-galactopyranose mutase     0.069687      0.427188         6.130098        0.357501
+MMSYN1_0878     -/gabP Quasiessential                           amino acid permease     0.034831      0.200623         5.759949        0.165792
+MMSYN1_0881        NaN      Essential            hexose phosphate transport protein     0.089455      0.513265         5.737678        0.423810
+MMSYN1_0235        NaN Quasiessential                conserved hypothetical protein     0.012658      0.069548         5.494227        0.056890
+MMSYN1_0616       fakB      Essential     EDD domain protein_ DegV family_ putative     0.737623      3.868838         5.245009        3.131215
+
+-- LOW outliers (n=13) --
+ locus_syn1   gene_name   essentiality                         gene_product_disp  relIPM_syn1  relIPM_syn3a  iPM_fold_change  iPM_abs_change
+MMSYN1_0350        hupA      Essential                    DNA-binding protein HU     6.483416      0.092023         0.014194       -6.391393
+MMSYN1_0264  prkC; stkP Quasiessential           serine/threonine protein kinase     0.063746      0.000912         0.014307       -0.062834
+MMSYN1_0416         NaN Quasiessential            conserved hypothetical protein     0.067907      0.003013         0.044375       -0.064894
+MMSYN1_0109         nfo Quasiessential                apurinic endonuclease Apn1     0.553620      0.034433         0.062196       -0.519187
+MMSYN1_0105        xseB   Nonessential                  conserved domain protein     1.751316      0.132579         0.075702       -1.618737
+MMSYN1_0447         dut      Essential                       dUTPase superfamily     0.992055      0.104957         0.105797       -0.887098
+MMSYN1_0352 -/dnaD-like      Essential            conserved hypothetical protein     0.143574      0.017514         0.121988       -0.126060
+MMSYN1_0106        xseA   Nonessential   exodeoxyribonuclease VII_ large subunit     0.142644      0.018138         0.127154       -0.124506
+MMSYN1_0592         NaN Quasiessential                                      cdsf     0.729557      0.103653         0.142077       -0.625904
+MMSYN1_0034         NaN   Nonessential  efflux ABC transporter_ permease protein     0.117785      0.018074         0.153449       -0.099711
+MMSYN1_0495        nanK   Nonessential                        ROK family protein     0.090566      0.014303         0.157930       -0.076263
+MMSYN1_0080         NaN   Nonessential            conserved hypothetical protein     1.358612      0.225015         0.165621       -1.133597
+MMSYN1_0107        nusB Quasiessential transcription antitermination factor NusB     0.456990      0.080816         0.176844       -0.376174
+
+==============================================================================
+## iPM absolute change (relIPM delta)
+   Tukey fences (1.5*IQR): low < -0.543, high > 0.448
+
+-- HIGH outliers (n=34) --
+ locus_syn1  gene_name   essentiality                             gene_product_disp  relIPM_syn1  relIPM_syn3a  iPM_fold_change  iPM_abs_change
+MMSYN1_0542       dnaK      Essential                        chaperone protein DnaK     3.152613      6.820457         2.163430        3.667844
+MMSYN1_0616       fakB      Essential     EDD domain protein_ DegV family_ putative     0.737623      3.868838         5.245009        3.131215
+MMSYN1_0798        upp      Essential              uracil phosphoribosyltransferase     0.732874      3.556508         4.852825        2.823634
+MMSYN1_0543       grpE      Essential                             co-chaperone GrpE     0.715078      2.807321         3.925893        2.092243
+MMSYN1_0066       dumP Quasiessential          putative hydrolase of the HAD family     0.615694      2.446612         3.973748        1.830918
+MMSYN1_0149       rpsG      Essential                          ribosomal protein S7     5.368676      6.988422         1.301703        1.619746
+MMSYN1_0394        lon Quasiessential                     ATP-dependent protease La     0.729839      2.304380         3.157380        1.574541
+MMSYN1_0668       rplB      Essential                          ribosomal protein L2     4.016234      5.582149         1.389896        1.565915
+MMSYN1_0638       rplM      Essential                         ribosomal protein L13     1.535729      3.100554         2.018947        1.564826
+MMSYN1_0545       clpB      Essential ATPase family associated with various cellula     0.536610      2.039400         3.800524        1.502790
+MMSYN1_0647       rpsM      Essential                     30S ribosomal protein S13    10.328276     11.811098         1.143569        1.482822
+MMSYN1_0540       rpsB      Essential                          ribosomal protein S2     3.084536      4.561640         1.478874        1.477103
+MMSYN1_0115 galU; gtaB      Essential utp--glucose-1-phosphate uridylyltransferase      0.265920      1.670593         6.282305        1.404672
+MMSYN1_0530        NaN Quasiessential                conserved hypothetical protein     0.146585      1.397560         9.534147        1.250975
+MMSYN1_0338        NaN      Essential                           putative liporotein     0.623498      1.677339         2.690208        1.053841
+MMSYN1_0747       punA Quasiessential               purine nucleoside phosphorylase     0.995663      2.036893         2.045766        1.041231
+MMSYN1_0645       rpoA      Essential    DNA-directed RNA polymerase_ alpha subunit     4.118839      5.154819         1.251522        1.035980
+MMSYN1_0779       ptsG      Essential               PTS system_ eiic domain protein     2.133931      3.160108         1.480886        1.026177
+MMSYN1_0095       secA      Essential          preprotein translocase_ SecA subunit     0.707494      1.598180         2.258929        0.890685
+MMSYN1_0813       galE      Essential                       UDP-glucose 4-epimerase     0.055975      0.922391        16.478693        0.866416
+MMSYN1_0529       pheS      Essential   phenylalanyl-tRNA synthetase_ alpha subunit     0.570797      1.431751         2.508335        0.860954
+MMSYN1_0528      pheRS      Essential    phenylalanyl-tRNA synthetase_ beta subunit     0.849265      1.679819         1.977969        0.830555
+MMSYN1_0216       hptA Quasiessential        hypoxanthine phosphoribosyltransferase     0.753321      1.520140         2.017918        0.766819
+MMSYN1_0505        NaN   Nonessential                           putative liporotein     1.277874      2.036929         1.593998        0.759055
+MMSYN1_0642       ecfA      Essential      cobalt import ATP-binding protein CbiO 1     1.020778      1.744163         1.708659        0.723384
+MMSYN1_0831        prs      Essential ribose-Phosphate pyrophosphokinase (rppk) (ph     2.259399      2.953762         1.307322        0.694364
+MMSYN1_0617       fakB Quasiessential                           DegV family protein     0.496897      1.152024         2.318434        0.655126
+MMSYN1_0643       ecfA      Essential      cobalt import ATP-binding protein CbiO 2     0.490759      1.129886         2.302326        0.639128
+MMSYN1_0644       rplQ      Essential                         ribosomal protein L17     0.641641      1.248781         1.946230        0.607140
+MMSYN1_0129       pyrG      Essential                                  CTP synthase     0.929194      1.474763         1.587142        0.545569
+MMSYN1_0437       yhaM      Essential                            cmp-binding-factor     0.671491      1.203815         1.792749        0.532324
+MMSYN1_0042        NaN Quasiessential transcriptional regulator_ RpiR family protei     0.512491      1.040816         2.030897        0.528325
+MMSYN1_0539        tsf      Essential              translation elongation factor Ts     4.644582      5.151493         1.109140        0.506910
+MMSYN1_0659       rplE      Essential                50S ribosomal protein L5 (BL6)     7.110416      7.586548         1.066963        0.476131
+
+-- LOW outliers (n=65) --
+ locus_syn1      gene_name   essentiality                             gene_product_disp  relIPM_syn1  relIPM_syn3a  iPM_fold_change  iPM_abs_change
+MMSYN1_0151            tuf      Essential              translation elongation factor Tu    40.456456     22.621756         0.559163      -17.834700
+MMSYN1_0475            ldh      Essential                       L-lactate dehydrogenase    26.044209     18.339516         0.704169       -7.704692
+MMSYN1_0350           hupA      Essential                        DNA-binding protein HU     6.483416      0.092023         0.014194       -6.391393
+MMSYN1_0607          gapDH      Essential glyceraldehyde-3-phosphate dehydrogenase_ typ    16.141336     10.120880         0.627016       -6.020456
+MMSYN1_0213            eno      Essential                     phosphopyruvate hydratase     9.343211      3.522386         0.376999       -5.820825
+MMSYN1_0227           pdhC   Nonessential dihydrolipoamide acetyltransferase component      8.819498      3.005104         0.340734       -5.814394
+MMSYN1_0667           rpsS      Essential                         ribosomal protein S19    13.907510      8.870827         0.637844       -5.036683
+MMSYN1_0154     pepA; CARP Quasiessential                         leucyl aminopeptidase     9.235552      4.570170         0.494845       -4.665382
+MMSYN1_0344            ppa      Essential                       inorganic diphosphatase     8.287944      4.000028         0.482632       -4.287916
+MMSYN1_0658           rpsN      Essential                   ribosomal protein S14p/S29e    10.828859      6.856662         0.633184       -3.972198
+MMSYN1_0228           lpdA   Nonessential                   dihydrolipoyl dehydrogenase     5.693450      1.937736         0.340345       -3.755714
+MMSYN1_0806           rplG      Essential                      ribosomal protein L7/L12    12.572412      8.823447         0.701810       -3.748965
+MMSYN1_0669           rplW      Essential                         ribosomal protein L23     8.527568      5.134582         0.602116       -3.392986
+MMSYN1_0501           rplU      Essential                         ribosomal protein L21     5.478067      2.132445         0.389270       -3.345622
+MMSYN1_0606            pgk      Essential                       phosphoglycerate kinase     5.578117      2.436274         0.436756       -3.141844
+MMSYN1_0218           glpK      Essential                               glycerol kinase     5.417506      2.456389         0.453417       -2.961117
+MMSYN1_0536            frr      Essential                     ribosome recycling factor     5.130561      2.314571         0.451134       -2.815990
+MMSYN1_0365           rplS      Essential                         ribosomal protein L19     8.552008      5.779441         0.675799       -2.772567
+MMSYN1_0131           fbaA      Essential  fructose-1_6-bisphosphate aldolase_ class II     3.605471      0.947301         0.262740       -2.658171
+MMSYN1_0810           rplK Quasiessential                         ribosomal protein L11     6.583425      4.012131         0.609429       -2.571293
+MMSYN1_0672           rpsJ      Essential                         ribosomal protein S10     5.992326      3.527456         0.588662       -2.464870
+MMSYN1_0499           rpmA      Essential                         ribosomal protein L27     4.294422      1.833810         0.427021       -2.460612
+MMSYN1_0198           rplT      Essential                         ribosomal protein L20     5.228533      2.822171         0.539763       -2.406362
+MMSYN1_0773           nrdF Quasiessential ribonucleoside-diphosphate reductase_ beta su     4.433799      2.041595         0.460462       -2.392203
+MMSYN1_0604 lemA/lemA-gacS   Nonessential                                   LemA family     3.844390      1.614192         0.419882       -2.230199
+MMSYN1_0637           rpsI      Essential                          ribosomal protein S9     6.230377      4.030215         0.646865       -2.200163
+MMSYN1_0230           ackA      Essential                                acetate kinase     3.760489      1.655543         0.440247       -2.104946
+MMSYN1_0522           ftsZ   Nonessential                    cell division protein FtsZ     6.006285      4.070896         0.677773       -1.935390
+MMSYN1_0289           rbfA Quasiessential                     ribosome-binding factor A     3.576866      1.696628         0.474334       -1.880238
+MMSYN1_0221            pyk      Essential                               pyruvate kinase     2.780779      0.945533         0.340024       -1.835246
+MMSYN1_0229            pta      Essential                   phosphate acetyltransferase     2.472519      0.654618         0.264758       -1.817901
+MMSYN1_0105           xseB   Nonessential                      conserved domain protein     1.751316      0.132579         0.075702       -1.618737
+MMSYN1_0664           rplP      Essential                         ribosomal protein L16     2.783122      1.186174         0.426203       -1.596948
+MMSYN1_0771           nrdE Quasiessential ribonucleoside-diphosphate reductase_ alpha s     2.573391      1.017633         0.395444       -1.555758
+MMSYN1_0305           pepP Quasiessential                         peptidase_ M24 family     4.700220      3.171654         0.674788       -1.528567
+MMSYN1_0666           rplV      Essential                         ribosomal protein L22     4.829845      3.355267         0.694695       -1.474578
+MMSYN1_0809           rplA Quasiessential                          ribosomal protein L1     5.597933      4.155287         0.742289       -1.442646
+MMSYN1_0653           rplO Quasiessential                         ribosomal protein L15     2.610274      1.167656         0.447331       -1.442618
+MMSYN1_0238           rpsD      Essential                          ribosomal protein S4     6.560022      5.341114         0.814191       -1.218908
+MMSYN1_0807           rplJ      Essential                     50S ribosomal protein L10     4.084914      2.884245         0.706072       -1.200669
+MMSYN1_0655           rplR      Essential                         ribosomal protein L18     2.596859      1.441527         0.555104       -1.155332
+MMSYN1_0080            NaN   Nonessential                conserved hypothetical protein     1.358612      0.225015         0.165621       -1.133597
+MMSYN1_0651            adk      Essential                              adenylate kinase     1.935336      0.828927         0.428311       -1.106410
+MMSYN1_0428           phoU      Essential phosphate transport system regulatory protein     1.497223      0.424251         0.283359       -1.072972
+MMSYN1_0413            apt      Essential             adenine phosphoribosyltransferase     2.914927      1.883901         0.646294       -1.031026
+MMSYN1_0148           rpsL      Essential                         ribosomal protein S12     2.638283      1.673452         0.634296       -0.964831
+MMSYN1_0220           pfkA      Essential                         6-phosphofructokinase     1.813249      0.917773         0.506148       -0.895476
+MMSYN1_0447            dut      Essential                           dUTPase superfamily     0.992055      0.104957         0.105797       -0.887098
+MMSYN1_0772           nrdI      Essential                                  NrdI protein     1.170472      0.304563         0.260205       -0.865909
+MMSYN1_0799           glyA Quasiessential              glycine hydroxymethyltransferase     1.535980      0.702193         0.457163       -0.833787
+MMSYN1_0145            NaN      Essential                conserved hypothetical protein     1.386196      0.607997         0.438608       -0.778199
+MMSYN1_0065           trxA      Essential                                   thioredoxin     1.408056      0.677605         0.481235       -0.730451
+MMSYN1_0076          asnRS      Essential                       asparagine--tRNA ligase     1.839406      1.150720         0.625593       -0.688686
+MMSYN1_0234            crr      Essential PTS system glucose-specific eiicba component      1.362041      0.674101         0.494920       -0.687940
+MMSYN1_0233           ptsI      Essential phosphoenolpyruvate-protein phosphotransferas     1.713444      1.031254         0.601860       -0.682190
+MMSYN1_0661           rplN      Essential                         ribosomal protein L14     3.281563      2.604259         0.793603       -0.677304
+MMSYN1_0451          gapdh      Essential NADP-dependent glyceraldehyde-3-phosphate deh     2.000617      1.346365         0.672975       -0.654252
+MMSYN1_0592            NaN Quasiessential                                          cdsf     0.729557      0.103653         0.142077       -0.625904
+MMSYN1_0694           ptsH      Essential                    phosphocarrier_ HPr family     2.236424      1.616643         0.722870       -0.619781
+MMSYN1_0445            pgi      Essential                 glucose-6-phosphate isomerase     1.110167      0.490565         0.441884       -0.619601
+MMSYN1_0521           sepF   Nonessential                conserved hypothetical protein     2.086766      1.472728         0.705747       -0.614038
+MMSYN1_0064          lysRS      Essential                           lysine--tRNA ligase     0.975386      0.392355         0.402256       -0.583031
+MMSYN1_0029     acpD; azoR      Essential fmn-dependent NADH-azoreductase (fmn-dependen     4.626169      4.054478         0.876422       -0.571691
+MMSYN1_0800           rpiB Quasiessential                ribose 5-phosphate isomerase B     0.858193      0.311508         0.362982       -0.546684
+MMSYN1_0448           spoU      Essential                                rRNA methylase     0.796179      0.251690         0.316122       -0.544489
+
+==============================================================================
+## PTR fold change = iPM_FC / TPM_FC  (r-proteins excluded)
+   Tukey fences (log10 1.5*IQR): low < 0.103, high > 17.8
+
+-- HIGH outliers (n=6) --
+ locus_syn1 gene_name func_category   essentiality                             gene_product_disp  TPM_fold_change  iPM_fold_change  PTR_fold_change
+MMSYN1_0620      perR         other   Nonessential                       ferric uptake regulator         1.098087       194.911791       177.501296
+MMSYN1_0813      galE         other      Essential                       UDP-glucose 4-epimerase         0.213563        16.478693        77.160770
+MMSYN1_0060       NaN         other Quasiessential                     putative membrane protein         0.365726        25.156024        68.783867
+MMSYN1_0730       NaN         other Quasiessential                conserved hypothetical protein         0.331500        22.073787        66.587685
+MMSYN1_0707      thiQ         other Quasiessential alkylphosphonate ABC transporter_ ATP-binding         0.079656         2.773425        34.817416
+MMSYN1_0814       glf         other      Essential                    UDP-galactopyranose mutase         0.188603         6.130098        32.502656
+
+-- LOW outliers (n=16) --
+ locus_syn1      gene_name func_category   essentiality                     gene_product_disp  TPM_fold_change  iPM_fold_change  PTR_fold_change
+MMSYN1_0443           yggN         other      Essential 5-formyltetrahydrofolate cyclo-ligase        72.791741         0.350154         0.004810
+MMSYN1_0447            dut         other      Essential                   dUTPase superfamily        13.951580         0.105797         0.007583
+MMSYN1_0416            NaN         other Quasiessential        conserved hypothetical protein         4.230494         0.044375         0.010489
+MMSYN1_0442           iscU         other      Essential        nitrogen fixation protein nifu        30.755662         0.541349         0.017602
+MMSYN1_0592            NaN         other Quasiessential                                  cdsf         6.140520         0.142077         0.023138
+MMSYN1_0250            NaN         other   Nonessential        conserved hypothetical protein        51.453951         1.409221         0.027388
+MMSYN1_0264     prkC; stkP         other Quasiessential       serine/threonine protein kinase         0.447250         0.014307         0.031988
+MMSYN1_0332            NaN         other Quasiessential        conserved hypothetical protein        17.566020         0.726062         0.041333
+MMSYN1_0409 folE/yqfO-like         other Quasiessential                   NIF3 family protein        37.552425         1.974377         0.052577
+MMSYN1_0907            NaN         other Quasiessential        conserved hypothetical protein        12.066067         0.706295         0.058536
+MMSYN1_0144           tsaC         other      Essential        conserved hypothetical protein         5.388126         0.316888         0.058812
+MMSYN1_0143            NaN         other      Essential             putative membrane protein         7.835817         0.517166         0.066000
+MMSYN1_0381           mtnN         other   Nonessential                  MTA/SAH nucleosidase         9.725071         0.724827         0.074532
+MMSYN1_0608           dnaI         other      Essential                    primosomal protein        10.842963         0.966086         0.089098
+MMSYN1_0290           truB         other Quasiessential         tRNA pseudouridine synthase B         4.519651         0.414705         0.091756
+MMSYN1_0398            NaN         other Quasiessential                   putative liporotein         5.550142         0.519526         0.093606
+
+
+##############################################################################
+# RIBOSOMAL PROTEIN GENES (n=53) -- TPM + iPM, ascending locus
+##############################################################################
+ locus_syn1 gene_name   essentiality              gene_product_disp  relTPM_syn1  relTPM_syn3a  TPM_fold_change  TPM_abs_change  relIPM_syn1  relIPM_syn3a  iPM_fold_change  iPM_abs_change
+MMSYN1_0025      rpsR      Essential          ribosomal protein S18     1.931447      1.066185         0.552014       -0.865262     1.978667      1.502885         0.759544       -0.475782
+MMSYN1_0027      rpsF      Essential       30S ribosomal protein S6     2.518754      0.901470         0.357903       -1.617284     2.125766      2.318087         1.090471        0.192321
+MMSYN1_0082      rpsT Quasiessential          ribosomal protein S20     1.494660      0.110946         0.074228       -1.383714     0.256301      0.486418         1.897835        0.230116
+MMSYN1_0137      rpmE      Essential          ribosomal protein L31    27.833259      0.272150         0.009778      -27.561109     0.529702      0.727945         1.374253        0.198243
+MMSYN1_0148      rpsL      Essential          ribosomal protein S12     6.210957      7.604716         1.224403        1.393759     2.638283      1.673452         0.634296       -0.964831
+MMSYN1_0149      rpsG      Essential           ribosomal protein S7     2.232316      2.680541         1.200789        0.448225     5.368676      6.988422         1.301703        1.619746
+MMSYN1_0198      rplT      Essential          ribosomal protein L20     3.022177      0.642060         0.212449       -2.380117     5.228533      2.822171         0.539763       -2.406362
+MMSYN1_0199      rpmI      Essential          ribosomal protein L35     4.228956      1.708417         0.403981       -2.520538          NaN           NaN              NaN             NaN
+MMSYN1_0238      rpsD      Essential           ribosomal protein S4     2.671974      1.271899         0.476015       -1.400075     6.560022      5.341114         0.814191       -1.218908
+MMSYN1_0294      rpsO Quasiessential          ribosomal protein S15     3.047054      0.439071         0.144097       -2.607983     0.139627      0.176089         1.261137        0.036462
+MMSYN1_0298    -/ylxR Quasiessential   ribosomal protein L7A family     0.324035      0.110730         0.341721       -0.213305     0.109850      0.123160         1.121174        0.013311
+MMSYN1_0362      rpsP      Essential          ribosomal protein S16     1.733560      1.790845         1.033045        0.057285     0.240987      0.334217         1.386871        0.093231
+MMSYN1_0365      rplS      Essential          ribosomal protein L19     1.642248      1.614481         0.983092       -0.027767     8.552008      5.779441         0.675799       -2.772567
+MMSYN1_0422      rpmB Quasiessential          ribosomal protein L28     6.043045      1.718577         0.284389       -4.324468     1.400615      1.606581         1.147054        0.205966
+MMSYN1_0482      rpsU      Essential          ribosomal protein S21    12.875497      0.568664         0.044166      -12.306833     0.422334      0.835470         1.978221        0.413136
+MMSYN1_0499      rpmA      Essential          ribosomal protein L27     6.075598      3.104277         0.510942       -2.971321     4.294422      1.833810         0.427021       -2.460612
+MMSYN1_0501      rplU      Essential          ribosomal protein L21     7.033243      3.456422         0.491441       -3.576821     5.478067      2.132445         0.389270       -3.345622
+MMSYN1_0526      rpmF      Essential          ribosomal protein L32    31.775782      3.995716         0.125747      -27.780067     0.005766      0.208787        36.208687        0.203021
+MMSYN1_0540      rpsB      Essential           ribosomal protein S2     3.460627      1.670596         0.482744       -1.790031     3.084536      4.561640         1.478874        1.477103
+MMSYN1_0637      rpsI      Essential           ribosomal protein S9    10.181894      9.912712         0.973563       -0.269183     6.230377      4.030215         0.646865       -2.200163
+MMSYN1_0638      rplM      Essential          ribosomal protein L13    17.139874     12.886438         0.751840       -4.253436     1.535729      3.100554         2.018947        1.564826
+MMSYN1_0644      rplQ      Essential          ribosomal protein L17     4.384786      3.171154         0.723217       -1.213632     0.641641      1.248781         1.946230        0.607140
+MMSYN1_0646      rpsK      Essential      30S ribosomal protein S11     1.963543      8.003504         4.076053        6.039962     2.805005      2.281757         0.813459       -0.523248
+MMSYN1_0647      rpsM      Essential      30S ribosomal protein S13     2.269665      5.774059         2.544013        3.504394    10.328276     11.811098         1.143569        1.482822
+MMSYN1_0648      rpmJ      Essential          ribosomal protein L36     3.024508      5.480895         1.812161        2.456387     1.362005      1.011087         0.742352       -0.350918
+MMSYN1_0653      rplO Quasiessential          ribosomal protein L15     5.266951     10.302254         1.956019        5.035303     2.610274      1.167656         0.447331       -1.442618
+MMSYN1_0654      rpsE      Essential       30S ribosomal protein S5     4.627073      7.322495         1.582533        2.695422     4.581975      4.172207         0.910570       -0.409768
+MMSYN1_0655      rplR      Essential          ribosomal protein L18     3.525933      3.690638         1.046712        0.164705     2.596859      1.441527         0.555104       -1.155332
+MMSYN1_0656      rplF      Essential           ribosomal protein L6     5.142566      8.488210         1.650579        3.345644     3.568787      3.721094         1.042678        0.152307
+MMSYN1_0657      rpsH      Essential           ribosomal protein S8     4.446748      6.970438         1.567536        2.523690     4.267382      4.037180         0.946055       -0.230203
+MMSYN1_0658      rpsN      Essential    ribosomal protein S14p/S29e     5.371046      6.263741         1.166205        0.892695    10.828859      6.856662         0.633184       -3.972198
+MMSYN1_0659      rplE      Essential 50S ribosomal protein L5 (BL6)     4.044025      5.509188         1.362303        1.465162     7.110416      7.586548         1.066963        0.476131
+MMSYN1_0660      rplX      Essential          ribosomal protein L24     4.382799      9.212536         2.101976        4.829737     5.360161      5.205090         0.971070       -0.155072
+MMSYN1_0661      rplN      Essential          ribosomal protein L14     4.828943      9.160702         1.897041        4.331759     3.281563      2.604259         0.793603       -0.677304
+MMSYN1_0662      rpsQ      Essential      30S ribosomal protein S17     3.844784      6.770128         1.760860        2.925344     2.204827      2.326681         1.055267        0.121855
+MMSYN1_0663      rpmC      Essential      50S ribosomal protein L29     4.377160      7.202794         1.645540        2.825633     2.888828      2.611736         0.904081       -0.277092
+MMSYN1_0664      rplP      Essential          ribosomal protein L16     4.576791      8.724238         1.906191        4.147446     2.783122      1.186174         0.426203       -1.596948
+MMSYN1_0665      rpsC      Essential           ribosomal protein S3     3.685776      6.937536         1.882246        3.251760    12.834846     12.699029         0.989418       -0.135816
+MMSYN1_0666      rplV      Essential          ribosomal protein L22     4.685206      7.043523         1.503354        2.358317     4.829845      3.355267         0.694695       -1.474578
+MMSYN1_0667      rpsS      Essential          ribosomal protein S19     6.368406      8.509392         1.336189        2.140985    13.907510      8.870827         0.637844       -5.036683
+MMSYN1_0668      rplB      Essential           ribosomal protein L2     6.057012     10.158697         1.677180        4.101685     4.016234      5.582149         1.389896        1.565915
+MMSYN1_0669      rplW      Essential          ribosomal protein L23     3.609489      2.572921         0.712821       -1.036568     8.527568      5.134582         0.602116       -3.392986
+MMSYN1_0670      rplD      Essential ribosomal protein L4/L1 family     4.323903      5.806259         1.342828        1.482357     3.897868      3.906989         1.002340        0.009121
+MMSYN1_0671      rplC      Essential       50S ribosomal protein L3     7.504286      9.799894         1.305906        2.295608     2.276274      2.595398         1.140196        0.319124
+MMSYN1_0672      rpsJ      Essential          ribosomal protein S10     9.857543      9.659458         0.979905       -0.198086     5.992326      3.527456         0.588662       -2.464870
+MMSYN1_0806      rplG      Essential       ribosomal protein L7/L12     9.985366      3.240452         0.324520       -6.744913    12.572412      8.823447         0.701810       -3.748965
+MMSYN1_0807      rplJ      Essential      50S ribosomal protein L10     9.065366      2.526768         0.278728       -6.538598     4.084914      2.884245         0.706072       -1.200669
+MMSYN1_0809      rplA Quasiessential           ribosomal protein L1     4.095528      3.325397         0.811958       -0.770131     5.597933      4.155287         0.742289       -1.442646
+MMSYN1_0810      rplK Quasiessential          ribosomal protein L11     6.784691      3.180985         0.468848       -3.603706     6.583425      4.012131         0.609429       -2.571293
+MMSYN1_0833      rplI Quasiessential           ribosomal protein L9     0.230174      0.057278         0.248848       -0.172896     0.952444      0.743305         0.780419       -0.209139
+MMSYN1_0910      rpmH Quasiessential          ribosomal protein L34     2.100457      0.710321         0.338175       -1.390136          NaN      0.004820              NaN             NaN
+        NaN      rpmG            NaN                                         NaN           NaN              NaN             NaN          NaN      0.012683              NaN             NaN
+        NaN      rpmG            NaN                                         NaN           NaN              NaN             NaN          NaN      0.342815              NaN             NaN
