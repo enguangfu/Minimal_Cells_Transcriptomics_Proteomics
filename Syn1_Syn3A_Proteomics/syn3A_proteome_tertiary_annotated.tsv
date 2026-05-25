@@ -1,0 +1,456 @@
+Locus Tag	Gene Name	Gene Product	Protein Length	Exp. Ptn Cnt	Essentiality	Primary Function	Secondary Function	Tertiary Function	Localization	Sim. Initial Ptn Cnt	Review Flag
+JCVISYN3A_0001	dnaA	Chromosomal replication initiator protein	450.0	148	Essential	Genetic Information Processing			cytoplasm	148	
+JCVISYN3A_0002	dnaN	DNA polymerase III subunit beta	375.0	213	Essential	Genetic Information Processing			cytoplasm	213	
+JCVISYN3A_0003	rnmV	Ribonuclease M5	180.0	65	Quasiessential	Genetic Information Processing			cytoplasm	65	
+JCVISYN3A_0004	ksgA	16S rRNA (adenine(1518)-N(6)/adenine(1519)-N(6))- dimethyltransferase	266.0	40	Nonessential	Genetic Information Processing			cytoplasm	40	
+JCVISYN3A_0005		Uncharacterized protein	363.0	72	Nonessential	Unclear			trans-membrane	72	
+JCVISYN3A_0006	gyrB	DNA gyrase subunit B	634.0	244	Essential	Genetic Information Processing	DNA Maintenance	Chromosome-related	cytoplasm	244	
+JCVISYN3A_0007	gyrA	DNA gyrase subunit A	834.0	298	Essential	Genetic Information Processing	DNA Maintenance	Chromosome-related	cytoplasm	298	
+JCVISYN3A_0008	rnsD; uptD	Nucleoside ABC transporter permease	325.0	5	Essential	Metabolism	Membrane Transport	Nucleic acids	trans-membrane	10	
+JCVISYN3A_0009	rnsC; uptD	Nucleoside ABC transporter permease	855.0	175	Essential	Metabolism	Membrane Transport	Nucleic acids	trans-membrane	175	
+JCVISYN3A_0010	rnsA; uptA	Nucleoside ABC transporter ATP-binding protein	538.0	145	Essential	Metabolism	Membrane Transport	Nucleic acids	peripheral membrane	145	
+JCVISYN3A_0011	rnsB; uptB	Nucleoside ABC transporter substrate-binding protein	548.0	81	Essential	Metabolism	Membrane Transport	Nucleic acids	lipoprotein	81	
+JCVISYN3A_0012	metRS	Methionine--tRNA ligase	509.0	248	Essential	Metabolism	Translation	tRNA loading	cytoplasm	251	PRIMARY_MISMATCH
+JCVISYN3A_0918	hisB	Imidazoleglycerol-phosphate dehydratase	220.0	-	Nonessential	Metabolism			cytoplasm	10	
+JCVISYN3A_0913	tetM	Tetracycline resistance ribosomal protection protein	639.0	-	Nonessential	Human Diseases			cytoplasm	10	
+JCVISYN3A_0025	rpsR	30S ribosomal protein S18	75.0	209	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	209	
+JCVISYN3A_0026	priB	Single-stranded DNA-binding protein	146.0	107	Essential	Genetic Information Processing			cytoplasm	107	
+JCVISYN3A_0027	rpsF	30S ribosomal protein S6	137.0	-	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	10	
+JCVISYN3A_0029	acpD; azoR	FMN reductase/NADH-azoreductase	199.0	281	Essential	Metabolism			cytoplasm	281	
+JCVISYN3A_0030		Uncharacterized ABC transporter ATP-binding protein	344.0	377	Essential	Metabolism			peripheral membrane	377	
+JCVISYN3A_0033		Uncharacterized protein	1052.0	61	Essential	Unclear			unidentified	61	
+JCVISYN3A_0034		Uncharacterized efflux ABC transporter permease	1795.0	9	Nonessential	Metabolism			trans-membrane	10	
+JCVISYN3A_0039	ftsH	Membrane anchored AAA+ protease	648.0	148	Essential	Cellular Processes			trans-membrane	148	
+JCVISYN3A_0040	tilS	tRNA lysidine(34) synthetase	401.0	39	Essential	Genetic Information Processing			cytoplasm	39	
+JCVISYN3A_0042		Uncharacterized transcriptional regulator	275.0	121	Quasiessential	Genetic Information Processing			cytoplasm	121	
+JCVISYN3A_0043	yabD	Uncharacterized methyltransferase	240.0	22	Nonessential	Unclear			cytoplasm	22	
+JCVISYN3A_0044	holA	DNA polymerase III subunit delta	246.0	32	Essential	Genetic Information Processing			cytoplasm	32	
+JCVISYN3A_0045	tmk	dTMP kinase	213.0	92	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	92	
+JCVISYN3A_0046	recR	Recombination protein	196.0	33	Quasiessential	Genetic Information Processing			cytoplasm	33	
+JCVISYN3A_0047	dnaX	DNA polymerase III subunit gamma and tau	668.0	113	Essential	Genetic Information Processing			cytoplasm	113	
+JCVISYN3A_0054	ahpC	Uncharacterized peroxiredoxin	149.0	157	Nonessential	Metabolism			cytoplasm	157	
+JCVISYN3A_0060		Uncharacterized protein	274.0	10	Quasiessential	Unclear			trans-membrane	10	
+JCVISYN3A_0061	serRS	Serine--tRNA ligase	422.0	246	Essential	Metabolism	Translation	tRNA loading	cytoplasm	249	PRIMARY_MISMATCH
+JCVISYN3A_0063	dusB	Uncharacterized tRNA dihydrouridine synthase	324.0	71	Nonessential	Genetic Information Processing			cytoplasm	71	
+JCVISYN3A_0064	lysRS	Lysine--tRNA ligase	500.0	214	Essential	Metabolism	Translation	tRNA loading	cytoplasm	217	PRIMARY_MISMATCH
+JCVISYN3A_0065	trxA	Thioredoxin	102.0	426	Essential	Metabolism			cytoplasm	445	
+JCVISYN3A_0066	dumP	dUMP phosphatase 	280.0	371	Quasiessential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	371	
+JCVISYN3A_0076	asnRS	Asparagine--tRNA ligase	454.0	736	Essential	Metabolism	Translation	tRNA loading	cytoplasm	739	PRIMARY_MISMATCH
+JCVISYN3A_0077		Low specificity hydrolase 	279.0	-	Quasiessential	Unclear			cytoplasm	10	
+JCVISYN3A_0079	tsaD	tRNA (adenosine(37)-N6)-threonylcarbamoyltransferase complex transferase subunit D	318.0	38	Essential	Genetic Information Processing			cytoplasm	38	
+JCVISYN3A_0080		Uncharacterized protein	73.0	26	Nonessential	Unclear			cytoplasm	26	
+JCVISYN3A_0081	mnmE; trmE	tRNA uridine(34) 5-carboxymethylaminomethyl synthesis GTPase	452.0	152	Quasiessential	Genetic Information Processing			cytoplasm	152	
+JCVISYN3A_0082	rpsT	30S ribosomal protein S20	81.0	190	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	190	
+JCVISYN3A_0094		Uncharacterized protein	238.0	-	Nonessential	Unclear			trans-membrane	10	
+JCVISYN3A_0095	secA	Preprotein translocase subunit A	944.0	573	Essential	Genetic Information Processing			peripheral membrane	573	
+JCVISYN3A_0097	yycJ	Flap endonuclease and 5' exonuclease 	303.0	71	Quasiessential	Genetic Information Processing			cytoplasm	71	
+JCVISYN3A_0105	xseB	Exodeoxyribonuclease VII small subunit	71.0	7	Nonessential	Genetic Information Processing	DNA Maintenance	DNA repair and recombination proteins	cytoplasm	10	
+JCVISYN3A_0106	xseA	Exodeoxyribonuclease VII large subunit	469.0	15	Nonessential	Genetic Information Processing	DNA Maintenance	DNA repair and recombination proteins	cytoplasm	15	
+JCVISYN3A_0107	nusB	Transcription antitermination factor	132.0	18	Quasiessential	Genetic Information Processing			cytoplasm	18	
+JCVISYN3A_0108		Uncharacterized lipoprotein	370.0	69	Quasiessential	Unclear			lipoprotein	69	
+JCVISYN3A_0109	nfo	Deoxyribonuclease IV	289.0	22	Quasiessential	Genetic Information Processing			cytoplasm	22	
+JCVISYN3A_0113	bcsA	Glycolipid synthase A	449.0	79	Essential	Metabolism			trans-membrane	79	
+JCVISYN3A_0114	bcsB; cps	Glycolipid synthase B	306.0	43	Essential	Metabolism	Biosynthesis	Lipid metabolism	peripheral membrane	43	
+JCVISYN3A_0115	galU; gtaB	UTP--glucose-1-phosphate uridylyltransferase	290.0	336	Essential	Metabolism	Biosynthesis	Lipid metabolism	cytoplasm	336	
+JCVISYN3A_0116		Uncharacterized protein	146.0	62	Quasiessential	Unclear			trans-membrane	62	
+JCVISYN3A_0117	plsY	Acyl-phosphate glycerol 3-phosphate acyltransferase	253.0	1	Essential	Metabolism	Biosynthesis	Lipid metabolism	trans-membrane	100	
+JCVISYN3A_0126	gluRS	Glutamate--tRNA ligase	483.0	138	Essential	Metabolism	Translation	tRNA loading	cytoplasm	142	PRIMARY_MISMATCH
+JCVISYN3A_0127		Uncharacterized phosphohydrolase	404.0	52	Nonessential	Unclear			cytoplasm	52	
+JCVISYN3A_0128	rpoE	DNA-directed RNA polymerase subunit delta	142.0	22	Quasiessential	Genetic Information Processing			cytoplasm	22	
+JCVISYN3A_0129	pyrG	CTP synthase	532.0	306	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	306	
+JCVISYN3A_0131	fbaA	Fructose-1,6-bisphosphate aldolase	297.0	227	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	775	
+JCVISYN3A_0132	ietA	Toxin-antitoxin AAA ATPase	353.0	93	Essential	Cellular Processes			peripheral membrane	93	
+JCVISYN3A_0133	ietS	Toxin-antitoxin serine protease	757.0	88	Nonessential	Cellular Processes			peripheral membrane	88	
+JCVISYN3A_0137	rpmE	50S ribosomal protein L31	92.0	44	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	44	
+JCVISYN3A_0138		Uncharacterized protein	632.0	108	Quasiessential	Unclear			cytoplasm	108	
+JCVISYN3A_0139	ytqI; orn	NanoRNAse	316.0	187	Quasiessential	Metabolism	Biosynthesis	Lipid metabolism	cytoplasm	187	
+JCVISYN3A_0140	tdk	Thymidine kinase	209.0	202	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	202	
+JCVISYN3A_0141	prfA	Peptide chain release factor 1	364.0	330	Essential	Genetic Information Processing			cytoplasm	330	
+JCVISYN3A_0142	prmC	Protein-(glutamine-N5) methyltransferase, release factor-specific	282.0	17	Quasiessential	Genetic Information Processing			cytoplasm	17	
+JCVISYN3A_0143		Uncharacterized protein	490.0	40	Essential	Unclear			trans-membrane	40	
+JCVISYN3A_0144	tsaC	tRNA (adenosine(37)-N6)-threonylcarbamoyltransferase complex transferase subunit	166.0	55	Essential	Genetic Information Processing			cytoplasm	55	
+JCVISYN3A_0145		Uncharacterized acetyltransferase	304.0	165	Essential	Unclear			cytoplasm	165	
+JCVISYN3A_0146	ywnG-like	Uncharacterized protein	235.0	28	Essential	Unclear			cytoplasm	28	
+JCVISYN3A_0147	clsA	Cardiolipin synthase	509.0	15	Essential	Metabolism	Biosynthesis	Lipid metabolism	trans-membrane	15	
+JCVISYN3A_0148	rpsL	30S ribosomal protein S12	139.0	122	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	122	
+JCVISYN3A_0149	rpsG	30S ribosomal protein S7	155.0	498	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	498	
+JCVISYN3A_0150	fusA	Translation elongation factor G	689.0	672	Essential	Genetic Information Processing			cytoplasm	672	
+JCVISYN3A_0151	tuf	Translation elongation factor Tu	395.0	542	Essential	Genetic Information Processing			cytoplasm	542	
+JCVISYN3A_0163	alaRS	Alanine--tRNA ligase	896.0	431	Essential	Metabolism	Translation	tRNA loading	cytoplasm	434	PRIMARY_MISMATCH
+JCVISYN3A_0164		Uncharacterized protein	164.0	9	Quasiessential	Unclear			trans-membrane	10	
+JCVISYN3A_0165	amiC	Oligopeptide ABC transporter permease	414.0	59	Quasiessential	Metabolism	Membrane Transport	Amino acid and peptides	trans-membrane	59	
+JCVISYN3A_0166	oppC	Oligopeptide ABC transporter permease	336.0	64	Quasiessential	Metabolism	Membrane Transport	Amino acid and peptides	trans-membrane	64	
+JCVISYN3A_0167	amiE	Oligopeptide ABC transporter ATP-binding protein	566.0	242	Quasiessential	Metabolism	Membrane Transport	Amino acid and peptides	peripheral membrane	242	
+JCVISYN3A_0168	amiF	Oligopeptide ABC transporter ATP-binding protein	622.0	241	Quasiessential	Metabolism	Membrane Transport	Amino acid and peptides	peripheral membrane	241	
+JCVISYN3A_0169	amiA	Oligopeptide ABC transporter substrate-binding protein	1033.0	314	Quasiessential	Metabolism	Membrane Transport	Amino acid and peptides	lipoprotein	314	
+JCVISYN3A_0195	potC	Spermidine/putrescine ABC transporter permease	1036.0	182	Quasiessential	Metabolism	Membrane Transport	Polyamines	trans-membrane	182	
+JCVISYN3A_0196	potB	Spermidine/putrescine ABC transporter permease	330.0	19	Quasiessential	Metabolism	Membrane Transport	Polyamines	trans-membrane	19	
+JCVISYN3A_0197	potA	Spermidine/putrescine ABC transporter ATP-binding protein	351.0	208	Quasiessential	Metabolism	Membrane Transport	Polyamines	peripheral membrane	208	
+JCVISYN3A_0198	rplT	50S ribosomal protein L20	119.0	325	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	325	
+JCVISYN3A_0199	rpmI	50S ribosomal protein L35	63.0	-	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	10	
+JCVISYN3A_0200	infC	Translation initiation factor IF-3	181.0	154	Essential	Genetic Information Processing			cytoplasm	154	
+JCVISYN3A_0201	def	Peptide deformylase	200.0	156	Essential	Genetic Information Processing			cytoplasm	156	
+JCVISYN3A_0202	rsmD	16S rRNA (guanine(966)-N(2))-methyltransferase	185.0	125	Quasiessential	Genetic Information Processing			cytoplasm	125	
+JCVISYN3A_0203	gmk	Guanylate kinase	297.0	186	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	186	
+JCVISYN3A_0213	eno	Phosphopyruvate hydratase	451.0	998	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	998	
+JCVISYN3A_0214	pgpA	Phosphatidylglycerophosphatase	273.0	-	Quasiessential	Metabolism	Biosynthesis	Lipid metabolism	trans-membrane	10	
+JCVISYN3A_0215	yrrK; yqgF	Pre-16S rRNA nuclease 	143.0	49	Essential	Genetic Information Processing			cytoplasm	49	
+JCVISYN3A_0216	hptA	Hypoxanthine phosphoribosyltransferase	190.0	439	Quasiessential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	439	
+JCVISYN3A_0218	glpK	Glycerol kinase	505.0	396	Essential	Metabolism	Biosynthesis	Lipid metabolism	cytoplasm	396	
+JCVISYN3A_0220	pfkA	6-Phosphofructokinase	326.0	458	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	458	
+JCVISYN3A_0221	pyk	Pyruvate kinase	478.0	551	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	551	CONFLICT(also:Nucleotide)
+JCVISYN3A_0222	thrRS	Threonine--tRNA ligase	639.0	303	Essential	Metabolism	Translation	tRNA loading	cytoplasm	306	PRIMARY_MISMATCH
+JCVISYN3A_0227	pdhC	Branched-chain alpha-keto acid dehydrogenase subunit E2	441.0	182	Nonessential	Metabolism	Central Carbon Metabolism	Pyruvate metabolism	cytoplasm	182	
+JCVISYN3A_0228	lpdA	Dihydrolipoyl dehydrogenase	629.0	182	Nonessential	Metabolism	Central Carbon Metabolism	Pyruvate metabolism	cytoplasm	182	
+JCVISYN3A_0229	pta	Phosphate acetyltransferase	322.0	301	Essential	Metabolism	Central Carbon Metabolism	Pyruvate metabolism	cytoplasm	301	
+JCVISYN3A_0230	ackA	Acetate kinase	393.0	-	Essential	Metabolism	Central Carbon Metabolism	Pyruvate metabolism	cytoplasm	10	
+JCVISYN3A_0233	ptsI	ptsI: Phosphoenolpyruvate--protein phosphotransferase	573.0	353	Essential	Metabolism			cytoplasm	352	
+JCVISYN3A_0234	crr	PTS glucose transporter subunit IIA	154.0	314	Essential	Metabolism			cytoplasm	313	
+JCVISYN3A_0235		Uncharacterized protein	60.0	-	Quasiessential	Unclear			trans-membrane	10	
+JCVISYN3A_0238	rpsD	30S ribosomal protein S4	208.0	172	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	172	
+JCVISYN3A_0239	-/ezrA	Uncharacterized protein/FtsZ filament regulator	595.0	55	Nonessential	Unclear			trans-membrane	55	
+JCVISYN3A_0240	thiI	tRNA 4-thiouridine(8) synthase	395.0	96	Quasiessential	Genetic Information Processing			cytoplasm	96	
+JCVISYN3A_0247	ysxC; yihA	Ribosome biogenesis GTP-binding protein	196.0	63	Essential	Genetic Information Processing			cytoplasm	63	
+JCVISYN3A_0248		Uncharacterized protein	186.0	14	Nonessential	Unclear			trans-membrane	14	
+JCVISYN3A_0249		Uncharacterized protein	192.0	53	Essential	Unclear			trans-membrane	53	
+JCVISYN3A_0250		Uncharacterized protein	229.0	262	Nonessential	Unclear			cytoplasm	262	
+JCVISYN3A_0253	greA	Transcription elongation factor	157.0	396	Essential	Genetic Information Processing			cytoplasm	396	
+JCVISYN3A_0254	uvrC	Excinuclease ABC subunit C	584.0	58	Quasiessential	Genetic Information Processing			cytoplasm	58	
+JCVISYN3A_0257	rnjB	RNase J family beta-CASP ribonuclease	583.0	335	Essential	Genetic Information Processing	Folding, Sorting and Degradation	RNA degradation	peripheral membrane	335	
+JCVISYN3A_0259	nadK	NAD(+) kinase	265.0	-	Essential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	10	
+JCVISYN3A_0260	valRS	Valine--tRNA ligase	872.0	225	Essential	Metabolism	Translation	tRNA loading	cytoplasm	228	PRIMARY_MISMATCH
+JCVISYN3A_0262	rpe	Ribulose-phosphate 3-epimerase	225.0	209	Quasiessential	Metabolism	Central Carbon Metabolism	Pentose phosphate metabolism	cytoplasm	209	
+JCVISYN3A_0263	rsgA; engC	Ribosome small subunit-dependent GTPase A	300.0	-	Quasiessential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0264	prkC; stkP	Uncharacterized serine/threonine protein kinase	371.0	1	Quasiessential	Metabolism			trans-membrane	10	
+JCVISYN3A_0270	tsaE; yjeE	tRNA (N6-adenosine(37)-N6)-threonylcarbamoyltransferase complex ATPase	138.0	10	Essential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0271	tsaB; yeaZ	tRNA N6-adenosine(37)-N6-threonylcarbamoyltransferase complex dimerization subunit	187.0	67	Essential	Genetic Information Processing			cytoplasm	67	
+JCVISYN3A_0281		Uncharacterized protein	226.0	20	Essential	Unclear			cytoplasm	20	
+JCVISYN3A_0282	proRS	Proline--tRNA ligase	474.0	218	Essential	Metabolism	Translation	tRNA loading	cytoplasm	221	PRIMARY_MISMATCH
+JCVISYN3A_0283	rnhA	Double-stranded RNA binding RNase HI	205.0	38	Essential	Genetic Information Processing			cytoplasm	38	
+JCVISYN3A_0285	lepA; EF4	Elongation factor 4	600.0	147	Quasiessential	Genetic Information Processing			cytoplasm	147	
+JCVISYN3A_0286		Uncharacterized protein	268.0	13	Essential	Unclear			cytoplasm	13	
+JCVISYN3A_0287	aspRS	Aspartate--tRNA ligase	574.0	188	Essential	Metabolism	Translation	tRNA loading	cytoplasm	191	PRIMARY_MISMATCH
+JCVISYN3A_0288	hisRS	Histidine--tRNA ligase	414.0	252	Essential	Metabolism	Translation	tRNA loading	cytoplasm	255	PRIMARY_MISMATCH
+JCVISYN3A_0289	rbfA	Ribosome-binding factor A	117.0	194	Quasiessential	Genetic Information Processing			cytoplasm	194	
+JCVISYN3A_0290	truB	tRNA pseudouridine(55) synthase	292.0	5	Quasiessential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0291	ribF	FAD synthetase	184.0	68	Essential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	68	
+JCVISYN3A_0294	rpsO	30S ribosomal protein S15	88.0	96	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	96	
+JCVISYN3A_0296		Uncharacterized protein	214.0	10	Essential	Unclear			trans-membrane	10	
+JCVISYN3A_0297	infB	Translation initiation factor IF-2	620.0	460	Essential	Genetic Information Processing			cytoplasm	460	
+JCVISYN3A_0298	-/ylxR	Uncharacterized L7Ae family protein/Transcription Termination Nucleic Acid Binding	99.0	12	Quasiessential	Unclear			cytoplasm	12	
+JCVISYN3A_0299	ylxR/ylxQ	Uncharacterized protein	93.0	53	Quasiessential	Unclear			cytoplasm	53	
+JCVISYN3A_0300	nusA	Transcription termination/antitermination protein NusA	584.0	464	Essential	Genetic Information Processing			cytoplasm	464	
+JCVISYN3A_0301	rimP	Ribosome assembly cofactor	164.0	140	Quasiessential	Genetic Information Processing			cytoplasm	140	
+JCVISYN3A_0302	fre	Flavin reductase	216.0	160	Essential	Metabolism			cytoplasm	160	
+JCVISYN3A_0303	polC	PolC-type DNA polymerase III	1482.0	104	Essential	Genetic Information Processing			cytoplasm	104	
+JCVISYN3A_0304	cdsA	Phosphatidate cytidylyltransferase	342.0	1	Essential	Metabolism	Biosynthesis	Lipid metabolism	trans-membrane	40	
+JCVISYN3A_0305	pepP	Prolidase 	358.0	413	Quasiessential	Genetic Information Processing			cytoplasm	413	
+JCVISYN3A_0308	trpRS	Tryptophan--tRNA ligase	336.0	27	Essential	Metabolism	Translation	tRNA loading	cytoplasm	30	PRIMARY_MISMATCH
+JCVISYN3A_0314	ecfS	Uncharacterized ECF transporter S component	244.0	150	Essential	Metabolism	Membrane Transport	Cofactor	trans-membrane	150	
+JCVISYN3A_0315	-/ynzC-like	Uncharacterized protein/DNA Damage Control	50.0	6	Quasiessential	Unclear			cytoplasm	10	
+JCVISYN3A_0316	tkt	Transketolase	656.0	148	Quasiessential	Metabolism	Central Carbon Metabolism	Pentose phosphate metabolism	cytoplasm	148	
+JCVISYN3A_0317		Uncharacterized protein	81.0	19	Essential	Unclear			trans-membrane	19	
+JCVISYN3A_0325		Uncharacterized protein	499.0	10	Essential	Unclear			trans-membrane	10	
+JCVISYN3A_0326		Uncharacterized protein	253.0	35	Nonessential	Unclear			cytoplasm	35	
+JCVISYN3A_0327	scpA	Chromosome segregation protein A	278.0	1	Essential	Genetic Information Processing	DNA Maintenance	Chromosome-related	cytoplasm	10	
+JCVISYN3A_0328	scpB	Chromosome segregation protein B	209.0	31	Essential	Genetic Information Processing	DNA Maintenance	Chromosome-related	cytoplasm	31	
+JCVISYN3A_0329	rluB	Uncharacterized pseudouridine synthase	252.0	109	Quasiessential	Genetic Information Processing			cytoplasm	109	
+JCVISYN3A_0330	dgk	Deoxyguanosine kinase	205.0	63	Nonessential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	63	
+JCVISYN3A_0332		Uncharacterized protein	275.0	31	Quasiessential	Unclear			trans-membrane	31	
+JCVISYN3A_0338		Uncharacterized lipoprotein	239.0	109	Essential	Unclear			lipoprotein	109	
+JCVISYN3A_0344	ppa	Inorganic diphosphatase	186.0	190	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	190	
+JCVISYN3A_0345	ecfS	Uncharacterized ECF transporter S component	296.0	10	Essential	Metabolism	Membrane Transport	Cofactor	trans-membrane	10	
+JCVISYN3A_0346		Uncharacterized protein	231.0	34	Nonessential	Unclear			trans-membrane	34	
+JCVISYN3A_0347	cmk	Cytidylate kinase	220.0	66	Quasiessential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	66	
+JCVISYN3A_0348	engA	Ribosome biogenesis GTPase	435.0	34	Essential	Genetic Information Processing			cytoplasm	34	
+JCVISYN3A_0350	hupA	DNA-binding protein	90.0	28	Essential	Genetic Information Processing			cytoplasm	28	
+JCVISYN3A_0352	-/dnaD-like	Uncharacterized protein/DNA Replication Machinery	182.0	11	Essential	Unclear			cytoplasm	11	
+JCVISYN3A_0353	gpsB	Cell division DivIVA/GpsB protein 	125.0	69	Quasiessential	Cellular Processes			cytoplasm	69	
+JCVISYN3A_0359	rny	Ribonuclease Y	509.0	206	Essential	Genetic Information Processing	Folding, Sorting and Degradation	RNA degradation	trans-membrane	206	
+JCVISYN3A_0360	ffh	Signal recognition particle protein	447.0	365	Essential	Genetic Information Processing			peripheral membrane	365	
+JCVISYN3A_0361	rlmH	23S rRNA (pseudouridine(1915)-N3)-methyltransferase	155.0	123	Nonessential	Genetic Information Processing			cytoplasm	123	
+JCVISYN3A_0362	rpsP	30S ribosomal protein S16	92.0	225	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	225	
+JCVISYN3A_0363	rimM	16S rRNA processing protein	164.0	5	Essential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0364	trmD	tRNA (guanosine(37)-N1)-methyltransferase	240.0	25	Essential	Genetic Information Processing			cytoplasm	25	
+JCVISYN3A_0365	rplS	50S ribosomal protein L19	127.0	204	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	204	
+JCVISYN3A_0366	ylqF; rbgA	L16-binding dependent 50S subunit-maturation GTPase	316.0	146	Essential	Genetic Information Processing			cytoplasm	146	
+JCVISYN3A_0371	ywjA	Flippase A	623.0	175	Essential	Metabolism			trans-membrane	175	
+JCVISYN3A_0372	ywjA	Flippase B	617.0	65	Essential	Metabolism			trans-membrane	65	
+JCVISYN3A_0373		Uncharacterized protein	535.0	48	Essential	Unclear			cytoplasm	48	
+JCVISYN3A_0375		Uncharacterized protein	246.0	53	Nonessential	Unclear			cytoplasm	53	
+JCVISYN3A_0376		Uncharacterized protein	114.0	8	Quasiessential	Unclear			cytoplasm	10	
+JCVISYN3A_0377	obgE	Ribosome GTPase	433.0	150	Essential	Genetic Information Processing			cytoplasm	150	
+JCVISYN3A_0378	nadE	NAD(+) synthase	245.0	251	Essential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	251	
+JCVISYN3A_0379		Uncharacterized protein	92.0	-	Essential	Unclear			trans-membrane	10	
+JCVISYN3A_0380	nadD	Nicotinate (nicotinamide) nucleotide adenylyltransferase	365.0	65	Essential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	65	
+JCVISYN3A_0381	mtnN	5'-Methylthioadenosine nucleosidase	219.0	15	Nonessential	Metabolism			cytoplasm	15	
+JCVISYN3A_0382	dnk	Deoxynucleoside kinase	212.0	23	Nonessential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	23	
+JCVISYN3A_0387	mnmA	tRNA 2-thiouridine(34) synthase	375.0	72	Essential	Genetic Information Processing			cytoplasm	72	
+JCVISYN3A_0388		Uncharacterized protein	205.0	86	Essential	Unclear			trans-membrane	86	
+JCVISYN3A_0389		Uncharacterized protein	714.0	74	Quasiessential	Unclear			cytoplasm	74	
+JCVISYN3A_0390	fmt	Methionyl-tRNA formyltransferase	317.0	128	Quasiessential	Genetic Information Processing	Biosynthesis	Cofactor biosynthesis	cytoplasm	128	PRIMARY_MISMATCH
+JCVISYN3A_0391	efp	Elongation factor P	184.0	115	Quasiessential	Genetic Information Processing			cytoplasm	115	
+JCVISYN3A_0392		Uncharacterized protein	100.0	98	Quasiessential	Unclear			unidentified	98	
+JCVISYN3A_0394	lon	Endopeptidase La	786.0	757	Quasiessential	Genetic Information Processing			cytoplasm	757	
+JCVISYN3A_0398		Uncharacterized lipoprotein	820.0	-	Quasiessential	Unclear			lipoprotein	10	
+JCVISYN3A_0399		Uncharacterized efflux ABC transporter permease	1753.0	59	Quasiessential	Metabolism			trans-membrane	59	
+JCVISYN3A_0400	thiJ/thiJ-like	Uncharacterized protease/Protein deglycase	183.0	40	Quasiessential	Genetic Information Processing			cytoplasm	40	
+JCVISYN3A_0401		Uncharacterized peptidase	615.0	-	Nonessential	Metabolism			trans-membrane	10	
+JCVISYN3A_0402	ybeY	rRNA maturation RNase	164.0	64	Essential	Genetic Information Processing			cytoplasm	64	
+JCVISYN3A_0403	era	Ribosome GTPase	301.0	46	Essential	Genetic Information Processing			cytoplasm	46	
+JCVISYN3A_0404	recO	DNA repair protein	249.0	9	Nonessential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0405	glyRS	Glycine--tRNA ligase	456.0	104	Essential	Metabolism	Translation	tRNA loading	cytoplasm	107	PRIMARY_MISMATCH
+JCVISYN3A_0406	dnaG	DNA primase	612.0	60	Essential	Genetic Information Processing			cytoplasm	60	
+JCVISYN3A_0407	rpoD	RNA polymerase subunit sigma	506.0	227	Essential	Genetic Information Processing	Transcription	Transcription machinery	cytoplasm	227	
+JCVISYN3A_0408	trmK; yqfN	tRNA (m1A22) methyltransferase 	225.0	19	Quasiessential	Genetic Information Processing			cytoplasm	19	
+JCVISYN3A_0409	folE/yqfO-like	Uncharacterized protein/GTP cyclohydrolase	258.0	88	Quasiessential	Unclear			cytoplasm	88	
+JCVISYN3A_0410	cshB	Degradosome RNA helicase 	453.0	120	Quasiessential	Genetic Information Processing			peripheral membrane	120	
+JCVISYN3A_0411		Uncharacterized protein	504.0	83	Nonessential	Unclear			trans-membrane	83	
+JCVISYN3A_0412	secDF	Preprotein translocase subunit DF	1384.0	215	Essential	Genetic Information Processing	Folding, Sorting and Degradation	Protein export	trans-membrane	215	
+JCVISYN3A_0413	apt	Adenine phosphoribosyltransferase	170.0	363	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	363	
+JCVISYN3A_0414	relA	Guanosine-3',5'-bis(diphosphate) 3'-pyrophosphohydrolase	754.0	122	Quasiessential	Metabolism			cytoplasm	122	
+JCVISYN3A_0415	smc	Chromosome segregation protein	988.0	202	Essential	Genetic Information Processing	DNA Maintenance	Chromosome-related	cytoplasm	202	
+JCVISYN3A_0416		Uncharacterized protein	129.0	0	Quasiessential	Unclear			cytoplasm	10	
+JCVISYN3A_0418	rnc	Ribonuclease III	232.0	59	Essential	Genetic Information Processing			cytoplasm	59	
+JCVISYN3A_0419	plsX	Phosphate acyltransferase	334.0	140	Essential	Metabolism	Biosynthesis	Lipid metabolism	peripheral membrane	140	
+JCVISYN3A_0420	fakA	Fatty acid kinase subunit A	547.0	205	Essential	Metabolism	Biosynthesis	Lipid metabolism	peripheral membrane	205	
+JCVISYN3A_0421	-/yloU	Uncharacterized protein/lipid synthesis regulation	103.0	81	Quasiessential	Unclear			cytoplasm	81	
+JCVISYN3A_0422	rpmB	50S ribosomal protein L28	65.0	118	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	118	
+JCVISYN3A_0424	-/yqgC-like	Uncharacterized protein/Unknown - B. subtilis ortholog	147.0	7	Essential	Unclear			cytoplasm	10	
+JCVISYN3A_0425	pstS	Phosphate ABC transporter substrate-binding protein	376.0	56	Essential	Metabolism	Membrane Transport	Inorganic	trans-membrane	56	
+JCVISYN3A_0426	pstA	Phosphate ABC transporter permease	696.0	26	Essential	Metabolism	Membrane Transport	Inorganic	trans-membrane	26	
+JCVISYN3A_0427	pstB	Phosphate ABC transporter ATP-binding protein	269.0	123	Essential	Metabolism	Membrane Transport	Inorganic	peripheral membrane	123	
+JCVISYN3A_0428	phoU	Phosphate transport system regulatory protein	224.0	133	Essential	Metabolism			peripheral membrane	133	
+JCVISYN3A_0429	ftsY	Signal recognition particle-docking protein	409.0	88	Essential	Genetic Information Processing			peripheral membrane	88	
+JCVISYN3A_0430	-/ylxM	Uncharacterized DNA-binding protein/effector of translocation SRP	113.0	41	Essential	Unclear			cytoplasm	41	
+JCVISYN3A_0431	ymdB/ymdB	Uncharacterized metallophosphoesterase/Damage Control phosphoesterase	257.0	36	Essential	Unclear			cytoplasm	36	
+JCVISYN3A_0432	metK	Methionine adenosyltransferase	387.0	56	Essential	Metabolism			cytoplasm	56	
+JCVISYN3A_0433	cutC/cutC-like	Uncharacterized protein/Copper Homeostasis Regulator	227.0	30	Nonessential	Metabolism			cytoplasm	30	
+JCVISYN3A_0434	rlmFO	23S rRNA (uridine(1939)-m5)-methyltransferase	438.0	70	Nonessential	Genetic Information Processing			cytoplasm	70	
+JCVISYN3A_0435	manA	Mannose-6-phosphate isomerase	309.0	44	Nonessential	Metabolism			cytoplasm	44	
+JCVISYN3A_0437	yhaM	Putative 3'-5' exoribonuclease	326.0	517	Essential	Genetic Information Processing	Folding, Sorting and Degradation	RNA degradation	peripheral membrane	517	
+JCVISYN3A_0438	hinT	Uncharacterized protein	132.0	197	Nonessential	Metabolism			cytoplasm	197	
+JCVISYN3A_0439		Uncharacterized lipoprotein	718.0	374	Essential	Unclear			lipoprotein	374	
+JCVISYN3A_0440		Uncharacterized lipoprotein	978.0	408	Essential	Unclear			lipoprotein	408	
+JCVISYN3A_0441	iscS	Cysteine desulfurase	412.0	51	Essential	Metabolism			cytoplasm	51	
+JCVISYN3A_0442	iscU	Iron-sulfur cluster assembly scaffold protein	145.0	19	Essential	Metabolism			cytoplasm	19	
+JCVISYN3A_0443	yggN	5-Formyltetrahydrofolate cyclo-ligase	187.0	38	Essential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	38	
+JCVISYN3A_0444	pepO	Oligopeptidase 	631.0	235	Quasiessential	Genetic Information Processing			cytoplasm	235	
+JCVISYN3A_0445	pgi	Glucose-6-phosphate isomerase	427.0	266	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	266	
+JCVISYN3A_0447	dut	dUTP diphosphatase	167.0	10	Essential	Genetic Information Processing	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	10	PRIMARY_MISMATCH
+JCVISYN3A_0448	spoU	Uncharacterized rRNA methyltransferase	255.0	317	Essential	Genetic Information Processing			cytoplasm	317	
+JCVISYN3A_0451	gapdh	Glyceraldehyde-3-phosphate dehydrogenase	471.0	248	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	248	
+JCVISYN3A_0452	parE	DNA topoisomerase IV subunit B	643.0	157	Essential	Genetic Information Processing	DNA Maintenance	Chromosome-related	cytoplasm	157	
+JCVISYN3A_0453	parC	DNA topoisomerase IV subunit A	898.0	156	Essential	Genetic Information Processing	DNA Maintenance	Chromosome-related	cytoplasm	156	
+JCVISYN3A_0475	ldh	L-lactate dehydrogenase	318.0	1100	Essential	Metabolism	Central Carbon Metabolism	Pyruvate metabolism	cytoplasm	1100	
+JCVISYN3A_0478		Uncharacterized protein	194.0	8	Essential	Unclear			trans-membrane	10	
+JCVISYN3A_0479		Uncharacterized peptidase	548.0	66	Quasiessential	Genetic Information Processing			trans-membrane	66	
+JCVISYN3A_0481		Uncharacterized lipoprotein	145.0	8	Nonessential	Unclear			lipoprotein	10	
+JCVISYN3A_0482	rpsU	30S ribosomal protein S21	54.0	0	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	10	
+JCVISYN3A_0154	pepA; CARP	Uncharacterized peptidase	451.0	-	Quasiessential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0493	dapE	Low specificity dipeptidase 	449.0	573	Quasiessential	Unclear			peripheral membrane	573	
+JCVISYN3A_0494	nanE	N-acetylmannosamine-6-phosphate 2-epimerase	226.0	30	Nonessential	Metabolism			cytoplasm	30	
+JCVISYN3A_0495	nanK	Uncharacterized kinase	291.0	7	Nonessential	Metabolism			cytoplasm	10	
+JCVISYN3A_0499	rpmA	50S ribosomal protein L27	93.0	134	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	134	
+JCVISYN3A_0500	prp;ysxB	Maturation protease for ribosomal protein L27	104.0	42	Essential	Genetic Information Processing			cytoplasm	42	
+JCVISYN3A_0501	rplU	50S ribosomal protein L21	100.0	246	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	246	
+JCVISYN3A_0503		Uncharacterized protein	133.0	-	Quasiessential	Unclear			extracellular	10	
+JCVISYN3A_0504	rsmI	16S rRNA (cytidine(1402)-2'-O)-methyltransferase	295.0	38	Nonessential	Genetic Information Processing			cytoplasm	38	
+JCVISYN3A_0930	rpmG	50S ribosomal protein L33	47.0	-	Nonessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	10	
+JCVISYN3A_0505		Uncharacterized lipoprotein	357.0	251	Nonessential	Unclear			extracellular	251	
+JCVISYN3A_0511		Uncharacterized protein	207.0	201	Essential	Unclear			cytoplasm	201	
+JCVISYN3A_0512	plsC	Acyl-phosphate glycerol 3-phosphate acyltransferase	315.0	170	Essential	Metabolism	Biosynthesis	Lipid metabolism	peripheral membrane	170	
+JCVISYN3A_0513	acpS	ACP synthase	110.0	1	Essential	Metabolism	Biosynthesis	Lipid metabolism	cytoplasm	50	
+JCVISYN3A_0515	dctD	Cytidine deaminase	160.0	128	Quasiessential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	128	
+JCVISYN3A_0516	-/yqgP-gplG	Uncharacterized protein/membrane protease	433.0	63	Quasiessential	Unclear			trans-membrane	63	
+JCVISYN3A_0517	rluD	Uncharacterized RNA pseudouridine synthase	310.0	97	Nonessential	Genetic Information Processing			cytoplasm	97	
+JCVISYN3A_0518	lspA	Lipoprotein signal peptidase	202.0	3	Essential	Genetic Information Processing			trans-membrane	10	
+JCVISYN3A_0519	ileRS	Isoleucine--tRNA ligase	915.0	216	Essential	Metabolism	Translation	tRNA loading	cytoplasm	219	PRIMARY_MISMATCH
+JCVISYN3A_0520		Uncharacterized hydrolase	329.0	30	Nonessential	Unclear			cytoplasm	30	
+JCVISYN3A_0521	sepF	Cell division protein	138.0	50	Nonessential	Cellular Processes			peripheral membrane	50	
+JCVISYN3A_0522	ftsZ	Cell division protein	385.0	541	Nonessential	Cellular Processes			peripheral membrane	541	
+JCVISYN3A_0523	ftsA	Cell division protein	386.0	51	Nonessential	Cellular Processes			peripheral membrane	51	
+JCVISYN3A_0524	rsmH; mraW	16S rRNA (cytosine(1402)-N(4))-methyltransferase	308.0	33	Nonessential	Genetic Information Processing			cytoplasm	33	
+JCVISYN3A_0525	mraZ	Cell division/cell wall cluster transcriptional repressor	133.0	-	Nonessential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0526	rpmF	50S ribosomal protein L32	59.0	21	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	21	
+JCVISYN3A_0527	-/ylbN	Uncharacterized protein/23S rRNA regulator	172.0	331	Nonessential	Unclear			cytoplasm	331	
+JCVISYN3A_0528	pheRS	Phenylalanine--tRNA ligase subunit beta	794.0	778	Essential	Metabolism			cytoplasm	778	
+JCVISYN3A_0529	pheS	Phenylalanine--tRNA ligase subunit alpha	350.0	290	Essential	Metabolism	Translation	tRNA loading	cytoplasm	293	PRIMARY_MISMATCH
+JCVISYN3A_0530		Uncharacterized protein	202.0	196	Quasiessential	Unclear			cytoplasm	196	
+JCVISYN3A_0535	argRS	Arginine--tRNA ligase	554.0	191	Essential	Metabolism	Translation	tRNA loading	cytoplasm	194	PRIMARY_MISMATCH
+JCVISYN3A_0536	frr	Ribosome recycling factor	182.0	631	Essential	Genetic Information Processing			cytoplasm	631	
+JCVISYN3A_0537	pyrH	UMP kinase	237.0	144	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	144	
+JCVISYN3A_0538		Uncharacterized protein	201.0	407	Nonessential	Unclear			trans-membrane	407	
+JCVISYN3A_0539	tsf	Translation elongation factor Ts	295.0	514	Essential	Genetic Information Processing			cytoplasm	514	
+JCVISYN3A_0540	rpsB	30S ribosomal protein S2	292.0	597	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	597	
+JCVISYN3A_0541	dnaJ	Molecular chaperone	372.0	208	Essential	Genetic Information Processing			cytoplasm	208	
+JCVISYN3A_0542	dnaK	Molecular chaperone	591.0	1328	Essential	Genetic Information Processing			cytoplasm	1328	
+JCVISYN3A_0543	grpE	Nucleotide exchange factor	200.0	406	Essential	Genetic Information Processing			cytoplasm	406	
+JCVISYN3A_0544	hrcA	Heat-inducible transcription repressor	340.0	220	Essential	Genetic Information Processing			cytoplasm	220	
+JCVISYN3A_0545	clpB	ATP-dependent Clp protease subunit B	713.0	610	Essential	Genetic Information Processing			cytoplasm	610	
+JCVISYN3A_0548	trmL; cspR	tRNA (cytidine(34)-2'-O)-methyltransferase	181.0	186	Nonessential	Genetic Information Processing			cytoplasm	186	
+JCVISYN3A_0549	rgdB	Non-canonical purine NTP pyrophosphatase	200.0	129	Nonessential	Metabolism			cytoplasm	129	
+JCVISYN3A_0931	met14p	Adenylyl-sulfate kinase	202.0	-	Nonessential	Metabolism			cytoplasm	10	
+JCVISYN3A_0592		Uncharacterized protein	399.0	79	Quasiessential	Unclear			cytoplasm	79	
+JCVISYN3A_0593		Uncharacterized protein	92.0	-	Nonessential	Unclear			cytoplasm	10	
+JCVISYN3A_0599		Uncharacterized protein	46.0	2	Nonessential	Unclear			cytoplasm	10	
+JCVISYN3A_0600	rnjA	Ribonuclease J	610.0	120	Essential	Genetic Information Processing	Folding, Sorting and Degradation	RNA degradation	peripheral membrane	120	
+JCVISYN3A_0601		Uncharacterized protein	314.0	72	Nonessential	Unclear			trans-membrane	72	
+JCVISYN3A_0604	lemA/lemA-gacS	Uncharacterized protein/two component sensor, membrane	222.0	345	Nonessential	Unclear			trans-membrane	345	
+JCVISYN3A_0605		Uncharacterized protein	102.0	68	Nonessential	Unclear			lipoprotein	68	
+JCVISYN3A_0606	pgk	Phosphoglycerate kinase	404.0	411	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	411	CONFLICT(also:Nucleotide)
+JCVISYN3A_0607	gapDH	Type I glyceraldehyde-3-phosphate dehydrogenase	338.0	1355	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	1355	
+JCVISYN3A_0608	dnaI	Primosomal protein	312.0	41	Essential	Genetic Information Processing			cytoplasm	41	
+JCVISYN3A_0609	dnaB	Chromosome replication initiation protein	394.0	15	Essential	Genetic Information Processing			cytoplasm	15	
+JCVISYN3A_0610	mutM	DNA-formamidopyrimidine glycosylase	274.0	121	Nonessential	Genetic Information Processing			cytoplasm	121	
+JCVISYN3A_0611	polA	DNA polymerase I	911.0	101	Essential	Genetic Information Processing			cytoplasm	101	
+JCVISYN3A_0612	dnaE	DNA polymerase III subunit alpha	987.0	36	Essential	Genetic Information Processing			cytoplasm	36	
+JCVISYN3A_0613	tyrRS	Tyrosine--tRNA ligase	414.0	98	Essential	Metabolism	Translation	tRNA loading	cytoplasm	101	PRIMARY_MISMATCH
+JCVISYN3A_0614	pncB	Nicotinate phosphoribosyltransferase	353.0	165	Essential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	165	
+JCVISYN3A_0615		Uncharacterized protein	202.0	233	Quasiessential	Unclear			cytoplasm	233	
+JCVISYN3A_0616	fakB	Fatty acid binding protein	279.0	366	Essential	Metabolism	Biosynthesis	Lipid metabolism	peripheral membrane	366	
+JCVISYN3A_0617	fakB	Fatty acid binding protein	283.0	205	Quasiessential	Metabolism	Biosynthesis	Lipid metabolism	peripheral membrane	205	
+JCVISYN3A_0620	perR	Uncharacterized transcriptional regulator	154.0	18	Nonessential	Genetic Information Processing			cytoplasm	18	
+JCVISYN3A_0621	acpA	Acyl carrier protein	73.0	138	Essential	Metabolism			peripheral membrane	652	
+JCVISYN3A_0622		Uncharacterized lipoprotein	120.0	-	Nonessential	Unclear			trans-membrane	10	
+JCVISYN3A_0623		Uncharacterized protein	356.0	-	Nonessential	Unclear			unidentified	10	
+JCVISYN3A_0634	leuRS	Leucine--tRNA ligase	804.0	208	Essential	Metabolism	Translation	tRNA loading	cytoplasm	211	PRIMARY_MISMATCH
+JCVISYN3A_0636		Uncharacterized lipoprotein	929.0	111	Essential	Unclear			lipoprotein	111	
+JCVISYN3A_0637	rpsI	30S ribosomal protein S9	132.0	426	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	426	
+JCVISYN3A_0638	rplM	50S ribosomal protein L13	151.0	632	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	632	
+JCVISYN3A_0639		Uncharacterized efflux ABC transporter permease	1381.0	95	Essential	Metabolism			trans-membrane	95	
+JCVISYN3A_0640	truA	tRNA pseudouridine(38-40) synthase	251.0	14	Quasiessential	Genetic Information Processing			cytoplasm	14	
+JCVISYN3A_0641	ecfT	ECF transporter T component	336.0	25	Essential	Metabolism	Membrane Transport	Cofactor	trans-membrane	25	
+JCVISYN3A_0642	ecfA	ECF transporter ATPase	303.0	274	Essential	Metabolism	Membrane Transport	Cofactor	peripheral membrane	274	
+JCVISYN3A_0643	ecfA	ECF transporter ATPase	408.0	-	Essential	Metabolism	Membrane Transport	Cofactor	peripheral membrane	10	
+JCVISYN3A_0644	rplQ	50S ribosomal protein L17	119.0	117	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	117	
+JCVISYN3A_0645	rpoA	DNA-directed RNA polymerase subunit alpha	317.0	187	Essential	Genetic Information Processing	Transcription	Transcription machinery	cytoplasm	187	
+JCVISYN3A_0646	rpsK	30S ribosomal protein S11	129.0	228	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	228	
+JCVISYN3A_0647	rpsM	30S ribosomal protein S13	121.0	665	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	665	
+JCVISYN3A_0648	rpmJ	50S ribosomal protein L36	37.0	-	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	10	
+JCVISYN3A_0649	infA	Translation initiation factor IF-1	74.0	-	Essential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0650	map	Type I methionyl aminopeptidase	251.0	69	Essential	Genetic Information Processing			cytoplasm	69	
+JCVISYN3A_0651	adk	Adenylate kinase	213.0	213	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	213	
+JCVISYN3A_0652	secY	Preprotein translocase subunit	482.0	66	Essential	Genetic Information Processing	Folding, Sorting and Degradation	Protein export	trans-membrane	66	
+JCVISYN3A_0653	rplO	50S ribosomal protein L15	145.0	285	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	285	
+JCVISYN3A_0654	rpsE	30S ribosomal protein S5	254.0	395	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	395	
+JCVISYN3A_0655	rplR	50S ribosomal protein L18	116.0	274	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	274	
+JCVISYN3A_0656	rplF	50S ribosomal protein L6	180.0	716	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	716	
+JCVISYN3A_0657	rpsH	30S ribosomal protein S8	129.0	217	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	217	
+JCVISYN3A_0658	rpsN	30S ribosomal protein S14	61.0	331	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	331	
+JCVISYN3A_0659	rplE	50S ribosomal protein L5	180.0	703	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	703	
+JCVISYN3A_0660	rplX	50S ribosomal protein L24	108.0	305	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	305	
+JCVISYN3A_0661	rplN	50S ribosomal protein L14	122.0	100	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	100	
+JCVISYN3A_0662	rpsQ	30S ribosomal protein S17	86.0	530	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	530	
+JCVISYN3A_0663	rpmC	50S ribosomal protein L29	138.0	533	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	533	
+JCVISYN3A_0664	rplP	50S ribosomal protein L16	137.0	168	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	168	
+JCVISYN3A_0665	rpsC	30S ribosomal protein S3	233.0	1001	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	1001	
+JCVISYN3A_0666	rplV	50S ribosomal protein L22	111.0	373	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	373	
+JCVISYN3A_0667	rpsS	30S ribosomal protein S19	88.0	630	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	630	
+JCVISYN3A_0668	rplB	50S ribosomal protein L2	282.0	184	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	184	
+JCVISYN3A_0669	rplW	50S ribosomal protein L23	94.0	349	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	349	
+JCVISYN3A_0670	rplD	50S ribosomal protein L4	208.0	258	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	258	
+JCVISYN3A_0671	rplC	50S ribosomal protein L3	223.0	434	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	434	
+JCVISYN3A_0672	rpsJ	30S ribosomal protein S10	102.0	725	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	725	
+JCVISYN3A_0684	folD	Bifunctional 5,10-methylene-tetrahydrofolate dehydrogenase/5,10-methylene-tetrahydrofolate cyclohydrolase	288.0	76	Quasiessential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	76	
+JCVISYN3A_0685	ktrD	Sodium transporter	533.0	17	Essential	Metabolism	Membrane Transport	Inorganic	trans-membrane	17	
+JCVISYN3A_0686	ktrC	Potassium transporter	242.0	305	Essential	Metabolism	Membrane Transport	Inorganic	peripheral membrane	305	
+JCVISYN3A_0687	gatB	Glutamyl-tRNA amidotransferase subunit B	479.0	212	Essential	Genetic Information Processing			cytoplasm	212	
+JCVISYN3A_0688	gatA	Glutamyl-tRNA amidotransferase subunit A	485.0	144	Essential	Genetic Information Processing			cytoplasm	144	
+JCVISYN3A_0689	gatC	Glutamyl-tRNA amidotransferase subunit C	98.0	87	Essential	Genetic Information Processing	Translation	tRNA loading	cytoplasm	91	
+JCVISYN3A_0690	ligA	DNA ligase (NAD(+))	668.0	48	Essential	Genetic Information Processing			cytoplasm	48	
+JCVISYN3A_0691		Uncharacterized protein	673.0	11	Essential	Unclear			trans-membrane	11	
+JCVISYN3A_0692	rluC	Uncharacterized pseudouridine synthase	302.0	36	Nonessential	Genetic Information Processing			cytoplasm	36	
+JCVISYN3A_0693		Uncharacterized protease	322.0	21	Essential	Genetic Information Processing			trans-membrane	21	
+JCVISYN3A_0694	ptsH	ptsH: Phosphocarrier protein	89.0	290	Essential	Metabolism			cytoplasm	289	
+JCVISYN3A_0695	pcrA	ATP-dependent DNA helicase	722.0	218	Quasiessential	Genetic Information Processing			cytoplasm	218	
+JCVISYN3A_0696		Uncharacterized transporter	251.0	4	Essential	Metabolism			trans-membrane	10	
+JCVISYN3A_0697		Uncharacterized glycosyl transferase	318.0	119	Quasiessential	Metabolism	Biosynthesis	Lipid metabolism	peripheral membrane	119	
+JCVISYN3A_0706	thiP	Thiamine ABC transporter permease	582.0	2	Quasiessential	Metabolism	Membrane Transport	Cofactor	trans-membrane	10	
+JCVISYN3A_0707	thiQ	Thiamine ABC transporter ATP-binding protein	249.0	41	Quasiessential	Metabolism	Membrane Transport	Cofactor	peripheral membrane	41	
+JCVISYN3A_0708	thiB	Thiamine ABC transporter substrate-binding protein	487.0	210	Quasiessential	Metabolism	Membrane Transport	Cofactor	lipoprotein	210	
+JCVISYN3A_0710		Low specificity hydrolase 	287.0	81	Quasiessential	Unclear			cytoplasm	81	
+JCVISYN3A_0726	nagB	Glucosamine-6-phosphate deaminase	244.0	142	Nonessential	Metabolism			cytoplasm	142	
+JCVISYN3A_0727	tpiA	Triose-phosphate isomerase	248.0	410	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	410	
+JCVISYN3A_0728	ycsE; YitU; ywtE	Low specificity hydrolase 	278.0	105	Nonessential	Unclear			cytoplasm	105	
+JCVISYN3A_0729	pgm	Phosphoglycerate mutase (2,3-diphosphoglycerate-independent)	531.0	322	Essential	Metabolism	Central Carbon Metabolism	Glycolysis	cytoplasm	322	
+JCVISYN3A_0730		Uncharacterized protein	199.0	16	Quasiessential	Unclear			cytoplasm	16	
+JCVISYN3A_0732	deoC	Deoxyribose-phosphate aldolase	222.0	171	Nonessential	Metabolism	Central Carbon Metabolism	Pentose phosphate metabolism	cytoplasm	171	
+JCVISYN3A_0733	deoB	Phosphopentomutase	558.0	274	Essential	Metabolism	Central Carbon Metabolism	Pentose phosphate metabolism	cytoplasm	274	CONFLICT(also:Lipid)
+JCVISYN3A_0747	punA	Purine-nucleoside phosphorylase	217.0	629	Quasiessential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	629	
+JCVISYN3A_0771	nrdE	Ribonucleotide-diphosphate reductase subunit alpha	720.0	382	Quasiessential	Genetic Information Processing	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	382	PRIMARY_MISMATCH
+JCVISYN3A_0772	nrdI	Ribonucleotide reductase assembly protein	157.0	50	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	50	
+JCVISYN3A_0773	nrdF	Ribonucleoside-diphosphate reductase subunit beta	339.0	297	Quasiessential	Genetic Information Processing	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	297	PRIMARY_MISMATCH
+JCVISYN3A_0774	secG	Preprotein translocase subunit	94.0	4	Quasiessential	Genetic Information Processing	Folding, Sorting and Degradation	Protein export	trans-membrane	10	
+JCVISYN3A_0775	rnr	Ribonuclease R	704.0	140	Essential	Genetic Information Processing			peripheral membrane	140	
+JCVISYN3A_0776	smpB	SsrA-binding protein	148.0	93	Essential	Genetic Information Processing			cytoplasm	93	
+JCVISYN3A_0777		Uncharacterized protein	161.0	10	Quasiessential	Unclear			trans-membrane	10	
+JCVISYN3A_0778		Uncharacterized protein	83.0	5	Essential	Unclear			trans-membrane	10	
+JCVISYN3A_0779	ptsG	PTS sugar transporter	745.0	831	Essential	Metabolism			trans-membrane	830	
+JCVISYN3A_0787	mgtA	Magnesium-translocating P-type ATPase	942.0	65	Essential	Metabolism	Membrane Transport	Inorganic	trans-membrane	65	
+JCVISYN3A_0789	atpC	F1 ATP synthase subunit epsilon	99.0	108	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	peripheral membrane	108	
+JCVISYN3A_0790	atpD	F1 ATP synthase subunit beta	475.0	347	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	peripheral membrane	347	
+JCVISYN3A_0791	atpG	F1 ATP synthase subunit gamma	280.0	136	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	peripheral membrane	136	
+JCVISYN3A_0792	atpA	F1 ATP synthase subunit alpha	525.0	327	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	peripheral membrane	327	
+JCVISYN3A_0793	atpH	F1 ATP synthase subunit delta	181.0	32	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	peripheral membrane	32	
+JCVISYN3A_0794	atpF	F0 ATP synthase subunit B	181.0	181	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	trans-membrane	181	
+JCVISYN3A_0795	atpE	F0 ATP synthase subunit C	101.0	-	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	trans-membrane	10	
+JCVISYN3A_0796	atpB	F0 ATP synthase subunit A	287.0	8	Essential	Metabolism	Energy Metabolism	Oxidative phosphorylation	trans-membrane	10	
+JCVISYN3A_0797	atpI	Uncharacterized protein/Chaperon for ATP Synthase C-ring formation	132.0	9	Essential	Unclear			trans-membrane	10	
+JCVISYN3A_0798	upp	Uracil phosphoribosyltransferase	207.0	362	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	362	
+JCVISYN3A_0799	glyA	Serine hydroxymethyltransferase	413.0	178	Quasiessential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	178	
+JCVISYN3A_0800	rpiB	Ribose 5-phosphate isomerase B	147.0	207	Quasiessential	Metabolism	Central Carbon Metabolism	Pentose phosphate metabolism	cytoplasm	207	
+JCVISYN3A_0803	rpoC	DNA-directed RNA polymerase subunit beta'	1255.0	546	Essential	Genetic Information Processing	Transcription	Transcription machinery	cytoplasm	546	
+JCVISYN3A_0804	rpoB	DNA-directed RNA polymerase subunit beta	1291.0	529	Essential	Genetic Information Processing	Transcription	Transcription machinery	cytoplasm	529	
+JCVISYN3A_0805	-/fic	Uncharacterized protein/Filamentation, Protein Adenylation	391.0	27	Essential	Unclear			cytoplasm	27	
+JCVISYN3A_0806	rplG	50S ribosomal protein L7/L12	122.0	765	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	765	
+JCVISYN3A_0807	rplJ	50S ribosomal protein L10	165.0	283	Essential	Genetic Information Processing	Translation	Ribosome	cytoplasm	283	
+JCVISYN3A_0809	rplA	50S ribosomal protein L1	226.0	658	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	658	
+JCVISYN3A_0810	rplK	50S ribosomal protein L11	142.0	946	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	946	
+JCVISYN3A_0813	galE	UDP-glucose 4-epimerase GalE	332.0	86	Essential	Metabolism	Biosynthesis	Lipid metabolism	cytoplasm	86	
+JCVISYN3A_0814	glf	UDP-galactopyranose mutase	395.0	78	Essential	Metabolism	Biosynthesis	Lipid metabolism	cytoplasm	78	
+JCVISYN3A_0817	whiA/whiA	Uncharacterized DNA-binding protein/Cell Division, Chromosome Segregation Regulation	309.0	26	Quasiessential	Genetic Information Processing			cytoplasm	26	
+JCVISYN3A_0818	lgt	Diacylglyceryl transferase	476.0	55	Essential	Metabolism			trans-membrane	55	
+JCVISYN3A_0819	trx	Thioredoxin-disulfide reductase	310.0	100	Essential	Metabolism	Central Carbon Metabolism	Nucleotide metabolism	cytoplasm	100	
+JCVISYN3A_0820	lgt	Diacylglyceryl transferase	526.0	13	Essential	Metabolism			trans-membrane	13	
+JCVISYN3A_0821	hpr; ptsH	HPr(Ser) kinase/phosphatase	313.0	131	Nonessential	Metabolism			cytoplasm	131	
+JCVISYN3A_0822	ecfS	ecsF / folate 	224.0	0	Quasiessential	Metabolism	Membrane Transport	Cofactor	trans-membrane	10	
+JCVISYN3A_0823	folC	Dihydrofolate synthase	371.0	35	Quasiessential	Metabolism	Biosynthesis	Cofactor biosynthesis	cytoplasm	35	
+JCVISYN3A_0824	uvrA	Excinuclease ABC subunit A	946.0	144	Quasiessential	Genetic Information Processing			cytoplasm	144	
+JCVISYN3A_0825	uvrB	Excinuclease ABC subunit B	665.0	49	Quasiessential	Genetic Information Processing			cytoplasm	49	
+JCVISYN3A_0826	yqeN	DNA polymerase III subunit delta	316.0	8	Essential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0827		Uncharacterized protein	488.0	212	Quasiessential	Unclear			trans-membrane	212	
+JCVISYN3A_0830	-/yqxA-like	Uncharacterized protein/Growth factor	86.0	8	Nonessential	Unclear			trans-membrane	10	
+JCVISYN3A_0831	prs	Phosphoribosylpyrophosphate synthetase	344.0	315	Essential	Metabolism	Central Carbon Metabolism	Pentose phosphate metabolism	cytoplasm	315	
+JCVISYN3A_0832	pth	Aminoacyl-tRNA hydrolase	186.0	152	Essential	Genetic Information Processing			cytoplasm	152	
+JCVISYN3A_0833	rplI	50S ribosomal protein L9	147.0	122	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	122	
+JCVISYN3A_0834	dnaC	Replicative DNA helicase	438.0	118	Essential	Genetic Information Processing			cytoplasm	118	
+JCVISYN3A_0835		Uncharacterized lipoprotein	435.0	297	Essential	Unclear			lipoprotein	297	
+JCVISYN3A_0836	ecfS	Uncharacterized ECF transporter S component	308.0	1	Essential	Metabolism	Membrane Transport	Cofactor	trans-membrane	10	
+JCVISYN3A_0837	cysRS	Cysteine--tRNA ligase	441.0	111	Essential	Metabolism	Translation	tRNA loading	cytoplasm	114	PRIMARY_MISMATCH
+JCVISYN3A_0838	rlmB	23S rRNA (guanosine(2251)-2'-O)-methyltransferase	244.0	135	Nonessential	Genetic Information Processing			cytoplasm	135	
+JCVISYN3A_0932	rpmG	50S ribosomal protein L33	53.0	-	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	10	
+JCVISYN3A_0839	secE	Preprotein translocase subunit	107.0	8	Essential	Genetic Information Processing	Folding, Sorting and Degradation	Protein export	trans-membrane	10	
+JCVISYN3A_0840	nusG	Antitermination protein	213.0	238	Quasiessential	Genetic Information Processing			cytoplasm	238	
+JCVISYN3A_0851		Uncharacterized lipoprotein	60.0	-	Nonessential	Unclear			lipoprotein	10	
+JCVISYN3A_0852		Uncharacterized protein	76.0	-	Nonessential	Unclear			trans-membrane	10	
+JCVISYN3A_0853		Uncharacterized protein	239.0	7	Nonessential	Unclear			cytoplasm	10	
+JCVISYN3A_0859	topA	DNA topoisomerase I	653.0	175	Essential	Genetic Information Processing			cytoplasm	175	
+JCVISYN3A_0870		Uncharacterized C4-dicarboxylate ABC transporter	588.0	24	Quasiessential	Metabolism			trans-membrane	24	
+JCVISYN3A_0872	ychF/ychF	Uncharacterized ATPase/Ribosome Binding Factor ATPase	364.0	168	Quasiessential	Genetic Information Processing			cytoplasm	168	
+JCVISYN3A_0873		Uncharacterized protein	66.0	-	Quasiessential	Unclear			cytoplasm	10	
+JCVISYN3A_0874	rsmG	16S rRNA (guanine(527)-N(7))-methyltransferase	231.0	131	Nonessential	Genetic Information Processing			cytoplasm	131	
+JCVISYN3A_0875	pgsA	CDP-diacylglycerol--glycerol-3-phosphate 3-phosphatidyltransferase	198.0	36	Essential	Metabolism	Biosynthesis	Lipid metabolism	trans-membrane	36	
+JCVISYN3A_0876		Uncharacterized amino acid permease	526.0	46	Nonessential	Metabolism	Membrane Transport	Amino acid and peptides	trans-membrane	46	
+JCVISYN3A_0877	fmnP; ribU	Riboflavin ECF transporter S component 	226.0	9	Essential	Metabolism	Membrane Transport	Cofactor	trans-membrane	10	
+JCVISYN3A_0878	-/gabP	Uncharacterized amino acid permease/amino acid transporter	512.0	7	Quasiessential	Metabolism	Membrane Transport	Amino acid and peptides	trans-membrane	10	
+JCVISYN3A_0879	corA	magnesium-importing ATPase 	885.0	80	Essential	Metabolism	Membrane Transport	Inorganic	trans-membrane	80	
+JCVISYN3A_0881		Uncharacterized MFS transporter	475.0	33	Essential	Metabolism			trans-membrane	33	
+JCVISYN3A_0885	mnmG; gidA	tRNA uridine(34) 5-carboxymethylaminomethyl synthesis enzyme	629.0	141	Quasiessential	Genetic Information Processing			cytoplasm	141	
+JCVISYN3A_0886	gltP	Proton-glutamate symporter	525.0	44	Quasiessential	Metabolism	Membrane Transport	Amino acid and peptides	trans-membrane	44	
+JCVISYN3A_0887	cdr	Coenzyme A Disulfide Reductase	447.0	127	Quasiessential	Metabolism			cytoplasm	127	
+JCVISYN3A_0906		Uncharacterized protein	238.0	75	Essential	Unclear			cytoplasm	75	
+JCVISYN3A_0907		Low specificity hydrolase 	264.0	30	Quasiessential	Unclear			cytoplasm	30	
+JCVISYN3A_0908	yidC	Membrane protein insertase	396.0	120	Essential	Genetic Information Processing			trans-membrane	120	
+JCVISYN3A_0909	rnpA	Ribonuclease P protein component	109.0	6	Essential	Genetic Information Processing			cytoplasm	10	
+JCVISYN3A_0910	rpmH	50S ribosomal protein L34	44.0	-	Quasiessential	Genetic Information Processing	Translation	Ribosome	cytoplasm	10	
