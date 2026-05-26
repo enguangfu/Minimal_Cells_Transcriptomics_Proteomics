@@ -415,13 +415,28 @@ def write_html(path):
   th.asc::after {{ content:" \\25B2"; font-size:9px; color:#888; }}
   th.desc::after {{ content:" \\25BC"; font-size:9px; color:#888; }}
   tr:nth-child(even) td {{ background:#fafafa; }}
+  /* freeze the first three columns (Locus Tag, Gene Name, Gene Product) when
+     the table is scrolled horizontally. Widths are fixed so the cumulative left
+     offsets line up. Overflow truncates with an ellipsis; the title attribute
+     on each cell reveals the full text on hover. */
+  th:nth-child(1), td:nth-child(1) {{ position:sticky; left:0;
+       min-width:140px; max-width:140px; overflow:hidden; text-overflow:ellipsis; }}
+  th:nth-child(2), td:nth-child(2) {{ position:sticky; left:140px;
+       min-width:90px;  max-width:90px;  overflow:hidden; text-overflow:ellipsis; }}
+  th:nth-child(3), td:nth-child(3) {{ position:sticky; left:230px;
+       min-width:320px; max-width:320px; overflow:hidden; text-overflow:ellipsis;
+       border-right:2px solid #ccc; }}
+  td:nth-child(1), td:nth-child(2), td:nth-child(3) {{ background:white; z-index:1; }}
+  tr:nth-child(even) td:nth-child(1), tr:nth-child(even) td:nth-child(2),
+  tr:nth-child(even) td:nth-child(3) {{ background:#fafafa; }}
+  th:nth-child(1), th:nth-child(2), th:nth-child(3) {{ background:#f5f5f5; z-index:3; }}
   td.seq {{ font-family: ui-monospace, Menlo, Consolas, monospace; max-width:150px;
             overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:zoom-in; }}
   td.seq.exp {{ white-space:normal; word-break:break-all; max-width:340px; cursor:zoom-out; }}
 </style></head>
 <body>
 <h1>syn3A proteome — tertiary function composition <small>(n = {N} proteins)</small></h1>
-<div class="hint">Click any Primary / Secondary / tertiary function to list its proteins below. Click a column header to sort; click a sequence cell to expand it.</div>
+<div class="hint">Click any Primary / Secondary / Tertiary function to list its proteins below. Click a column header to sort; click a sequence cell to expand it.</div>
 <div class="chart">{chart_html}</div>
 
 <div id="panel">
@@ -447,7 +462,9 @@ function escHTML(v) {{ return (v===null||v===undefined) ? "" :
     String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }}
 function cellHTML(col, v) {{
   const e = escHTML(v);
-  return col===SEQCOL ? '<td class="seq" title="'+e+'">'+e+'</td>' : "<td>"+e+"</td>";
+  const tt = e.replace(/"/g, '&quot;');         // hover tooltip = full value
+  return col===SEQCOL ? '<td class="seq" title="'+tt+'">'+e+'</td>'
+                      : '<td title="'+tt+'">'+e+'</td>';
 }}
 function draw() {{
   cap.innerHTML = curCaption + ' <small>(' + currentRows.length + ' proteins)</small>';
