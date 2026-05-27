@@ -88,6 +88,26 @@ from matplotlib.patches import Patch
 from adjustText import adjust_text
 from scipy import stats
 
+# Nature print-ready rcParams (per OUTPUT.md). Used as a local rc_context wrapper
+# around figures we've explicitly retrofitted to Nature spec; the other figures
+# in this script keep their original styling (forward-only retrofit).
+NATURE_RC = {
+    "font.size": 7,
+    "font.family": "sans-serif",
+    # Arial first (Mac/Win); Liberation Sans (Arial-metric-clone) is the Linux
+    # fallback. With pdf.fonttype=42 the PDF embeds whichever font was actually
+    # used — install ttf-mscorefonts-installer to get true Arial on Linux.
+    "font.sans-serif": ["Arial", "Liberation Sans", "Nimbus Sans", "Helvetica", "DejaVu Sans"],
+    "axes.titlesize": 7,
+    "axes.labelsize": 7,
+    "xtick.labelsize": 6,
+    "ytick.labelsize": 6,
+    "legend.fontsize": 6,
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
+}
+
+
 # ── Inputs ───────────────────────────────────────────────────────────────────
 SYN1_TPM_CSV          = "../Syn1_Transcriptomics/Gene_TPM/syn1_Illumina_PacBio_TPM_profiles.csv"
 SYN3A_TPM_TSV         = "../Syn3A_Transcriptomics/Gene_TPM/syn3a_ONT_TPM_profiles.tsv"
@@ -1030,54 +1050,64 @@ def _pool_composition_secondary_bar() -> None:
             block_color[b] = _shade(base, 0 if n == 1 else (i / (n - 1)) * 0.5)
     roman = {b: _roman(i + 1) for i, b in enumerate(blocks)}
 
+    # Nature print-ready (OUTPUT.md): 3.5x7 in, Arial, 5-7pt, pdf.fonttype=42,
+    # dpi=300, manual subplots_adjust (no bbox_inches='tight').
     W, MIN_INSIDE = 0.84, 2.0
-    fig, ax = plt.subplots(figsize=(4.5, 9))
-    side = {0: [], 1: []}
-    for xi, (g, deleted) in enumerate([(g1, deleted1), (g3, 0.0)]):
-        bottom = 0.0
-        for b in blocks:
-            h = float(g.get(b, 0))
-            if h <= 0:
-                continue
-            ax.bar(xi, h, W, bottom=bottom, color=block_color[b], edgecolor="white", linewidth=0.5)
-            if h >= MIN_INSIDE:
-                ax.text(xi, bottom + h / 2, f"{roman[b]} {h:.0f}%", ha="center", va="center",
-                        fontsize=8, color=_text_color(block_color[b]))
-            else:
-                side[xi].append((bottom + h / 2, f"{roman[b]} {h:.1f}%"))
-            bottom += h
-        if deleted > 0:
-            ax.bar(xi, deleted, W, bottom=bottom, color=(0.84, 0.19, 0.15),
-                   hatch="///", edgecolor="white", linewidth=0)
-            ax.text(xi, bottom + deleted / 2, f"deleted {deleted:.0f}%", ha="center",
-                    va="center", color="white", fontweight="bold", fontsize=8)
+    with plt.rc_context(NATURE_RC):
+        fig, ax = plt.subplots(figsize=(7 / 3, 7 / 2))
+        side = {0: [], 1: []}
+        for xi, (g, deleted) in enumerate([(g1, deleted1), (g3, 0.0)]):
+            bottom = 0.0
+            for b in blocks:
+                h = float(g.get(b, 0))
+                if h <= 0:
+                    continue
+                ax.bar(xi, h, W, bottom=bottom, color=block_color[b], edgecolor="white", linewidth=0.4)
+                if h >= MIN_INSIDE:
+                    ax.text(xi, bottom + h / 2, f"{roman[b]} {h:.0f}%", ha="center", va="center",
+                            fontsize=5, color=_text_color(block_color[b]))
+                else:
+                    side[xi].append((bottom + h / 2, f"{roman[b]} {h:.1f}%"))
+                bottom += h
+            if deleted > 0:
+                ax.bar(xi, deleted, W, bottom=bottom, color=(0.84, 0.19, 0.15),
+                       hatch="///", edgecolor="white", linewidth=0)
+                ax.text(xi, bottom + deleted / 2, f"deleted {deleted:.0f}%", ha="center",
+                        va="center", color="white", fontweight="bold", fontsize=5)
 
-    def _place(items, x_text, ha, x_edge):
-        items = sorted(items)
-        ys = [y for y, _ in items]
-        for i in range(1, len(ys)):
-            ys[i] = max(ys[i], ys[i - 1] + 2.8)
-        for (y0, txt), y in zip(items, ys):
-            ax.annotate(txt, xy=(x_edge, y0), xytext=(x_text, y), ha=ha, va="center",
-                        fontsize=7, color="#333", arrowprops=dict(arrowstyle="-", color="gray", lw=0.4))
-    _place(side[0], -0.72, "right", -W / 2)
-    _place(side[1],  1.72, "left",   1 + W / 2)
+        def _place(items, x_text, ha, x_edge):
+            items = sorted(items)
+            ys = [y for y, _ in items]
+            for i in range(1, len(ys)):                           # push up to maintain gap
+                ys[i] = max(ys[i], ys[i - 1] + 2.4)
+            if ys and ys[-1] > 99:                                # cap inside axes; propagate down
+                ys[-1] = 99
+                for i in range(len(ys) - 2, -1, -1):
+                    ys[i] = min(ys[i], ys[i + 1] - 2.4)
+            for (y0, txt), y in zip(items, ys):
+                ax.annotate(txt, xy=(x_edge, y0), xytext=(x_text, y), ha=ha, va="center",
+                            fontsize=5, color="#333",
+                            arrowprops=dict(arrowstyle="-", color="gray", lw=0.3))
+        _place(side[0], -0.60, "right", -W / 2)        # tighter for the narrow canvas
+        _place(side[1],  1.60, "left",   1 + W / 2)
 
-    ax.set_xticks([0, 1]); ax.set_xticklabels(["syn1", "syn3A"], fontsize=13)
-    ax.set_ylim(0, 100); ax.set_xlim(-1.35, 2.1)
-    ax.set_yticks([])
-    for sp in ax.spines.values():
-        sp.set_visible(False)
-    ax.tick_params(length=0)
+        ax.set_xticks([0, 1]); ax.set_xticklabels(["syn1", "syn3A"])   # xtick.labelsize=6
+        ax.set_ylim(0, 100); ax.set_xlim(-1.35, 2.1)
+        ax.set_yticks([])
+        for sp in ax.spines.values():
+            sp.set_visible(False)
+        ax.tick_params(length=0)
 
-    handles = [Patch(facecolor=block_color[b], edgecolor="white", label=f"{roman[b]} — {b}")
-               for b in blocks]
-    handles.append(Patch(facecolor=(0.84, 0.19, 0.15), hatch="///", edgecolor="white",
-                         label="deleted (syn1 only)"))
-    ax.legend(handles=handles, fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.02),
-              ncol=2, frameon=False)
-    fig.savefig(f"{OUTDIR}/mRNA_pool_composition_by_secondary.pdf", bbox_inches="tight")
-    plt.close(fig)
+        handles = [Patch(facecolor=block_color[b], edgecolor="white", label=f"{roman[b]} — {b}")
+                   for b in blocks]
+        handles.append(Patch(facecolor=(0.84, 0.19, 0.15), hatch="///", edgecolor="white",
+                             label="deleted (syn1 only)"))
+        ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.02),
+                  ncol=2, frameon=False, fontsize=5,         # shrunk to fit the narrow canvas
+                  handlelength=0.9, handletextpad=0.3, columnspacing=0.5)
+        plt.subplots_adjust(left=0.10, right=0.95, top=0.97, bottom=0.24)
+        fig.savefig(f"{OUTDIR}/mRNA_pool_composition_by_secondary.pdf", dpi=300)
+        plt.close(fig)
     print(f"Saved: {OUTDIR}/mRNA_pool_composition_by_secondary.pdf "
           f"(deleted={deleted1:.1f}%, Translation {g1.get('Translation',0):.0f}->{g3.get('Translation',0):.0f}%)")
 
@@ -1141,63 +1171,71 @@ def _tertiary_share_dumbbell(min_change: float = 0.5) -> None:
     hi_xlim = (math.floor(hi_min) - 2, math.ceil(hi_max) + 2)
     dlo_w, dhi_w = lo_xlim[1] - lo_xlim[0], hi_xlim[1] - hi_xlim[0]
 
-    fig = plt.figure(figsize=(4.5, 9))
-    gs = fig.add_gridspec(1, 2, width_ratios=[dlo_w, dhi_w], wspace=0.06)
-    # full-width background axis: draws the y-grid continuously across the x break
-    axbg = fig.add_subplot(gs[0, :])
-    axbg.set_xlim(0, 1); axbg.set_ylim(-0.6, n - 0.4)
-    for i in range(n):
-        axbg.axhline(i, color="0.9", lw=0.8, zorder=0)
-    axbg.set_xticks([]); axbg.set_yticks([])
-    for sp in axbg.spines.values():
-        sp.set_visible(False)
-    axbg.patch.set_visible(False)
-    axl = fig.add_subplot(gs[0]); axr = fig.add_subplot(gs[1], sharey=axl)
-    axl.patch.set_visible(False); axr.patch.set_visible(False)
-    axl.set_yticks(range(n))
-    for i, (name, row) in enumerate(d.iterrows()):
-        ax = axr if max(row["syn1"], row["syn3a"]) > lo_xlim[1] else axl
-        col = _color(name)
-        ax.plot([row["syn1"], row["syn3a"]], [i, i], color="lightgray", lw=1.8, zorder=2)
-        ax.scatter(row["syn1"], i, s=52, facecolor="white", edgecolor="gray", linewidth=1.2, zorder=3)
-        ax.scatter(row["syn3a"], i, s=66, color=col, edgecolor="white", linewidth=0.6, zorder=4)
-        ax.text(row["syn3a"], i + 0.28, f"{row['syn3a']:.1f}", ha="center", va="center", fontsize=8, color="#333")
-        ax.text(row["syn1"], i - 0.28, f"{row['syn1']:.1f}", ha="center", va="center", fontsize=8, color="#333")
+    # Nature print-ready (OUTPUT.md): 3.5x7 in, Arial, 5-7pt, pdf.fonttype=42,
+    # dpi=300, manual subplots_adjust (no bbox_inches='tight').
+    with plt.rc_context(NATURE_RC):
+        import textwrap
+        fig = plt.figure(figsize=(7 / 3, 7 / 2))
+        gs = fig.add_gridspec(1, 2, width_ratios=[dlo_w, dhi_w], wspace=0.06)
+        # full-width background axis: draws the y-grid continuously across the x break
+        axbg = fig.add_subplot(gs[0, :])
+        axbg.set_xlim(0, 1); axbg.set_ylim(-0.6, n - 0.4)
+        for i in range(n):
+            axbg.axhline(i, color="0.9", lw=0.5, zorder=0)
+        axbg.set_xticks([]); axbg.set_yticks([])
+        for sp in axbg.spines.values():
+            sp.set_visible(False)
+        axbg.patch.set_visible(False)
+        axl = fig.add_subplot(gs[0]); axr = fig.add_subplot(gs[1], sharey=axl)
+        axl.patch.set_visible(False); axr.patch.set_visible(False)
+        axl.set_yticks(range(n))
+        for i, (name, row) in enumerate(d.iterrows()):
+            ax = axr if max(row["syn1"], row["syn3a"]) > lo_xlim[1] else axl
+            col = _color(name)
+            ax.plot([row["syn1"], row["syn3a"]], [i, i], color="lightgray", lw=0.8, zorder=2)
+            ax.scatter(row["syn1"], i, s=22, facecolor="white", edgecolor="gray", linewidth=0.5, zorder=3)
+            ax.scatter(row["syn3a"], i, s=30, color=col, edgecolor="white", linewidth=0.3, zorder=4)
+            ax.text(row["syn3a"], i + 0.30, f"{row['syn3a']:.1f}", ha="center", va="center", fontsize=5, color="#333")
+            ax.text(row["syn1"], i - 0.30, f"{row['syn1']:.1f}", ha="center", va="center", fontsize=5, color="#333")
 
-    axl.set_xlim(*lo_xlim); axr.set_xlim(*hi_xlim)
-    axl.set_ylim(-0.6, n - 0.4)
+        axl.set_xlim(*lo_xlim); axr.set_xlim(*hi_xlim)
+        axl.set_ylim(-0.6, n - 0.4)
 
-    # y labels (Secondary small italic over Tertiary), colored like the left blocks
-    axl.set_yticklabels([])
-    tr = axl.get_yaxis_transform()
-    for i, name in enumerate(d.index):
-        c = _color(name)
-        axl.text(-0.04, i + 0.22, ter_sec.get(name, ""), transform=tr, ha="right", va="center",
-                 fontsize=8, color=c, style="italic")
-        axl.text(-0.04, i - 0.18, name, transform=tr, ha="right", va="center",
-                 fontsize=10, color=c)
+        # y labels (Secondary small italic over Tertiary), colored like the left blocks
+        axl.set_yticklabels([])
+        tr = axl.get_yaxis_transform()
+        WRAP_W = 20            # wrap long Secondary/Tertiary names to fit the narrow panel
+        for i, name in enumerate(d.index):
+            c = _color(name)
+            sec_txt = textwrap.fill(ter_sec.get(name, ""), WRAP_W)
+            ter_txt = textwrap.fill(name, WRAP_W)
+            axl.text(-0.04, i + 0.24, sec_txt, transform=tr, ha="right", va="center",
+                     fontsize=5, color=c, style="italic", linespacing=0.9)
+            axl.text(-0.04, i - 0.20, ter_txt, transform=tr, ha="right", va="center",
+                     fontsize=5, color=c, linespacing=0.9)
 
-    for sp in ("top", "left", "right"):
-        axl.spines[sp].set_visible(False); axr.spines[sp].set_visible(False)
-    axl.tick_params(left=False, labelsize=10)
-    axr.tick_params(left=False, labelsize=10)
-    plt.setp(axr.get_yticklabels(), visible=False)
+        for sp in ("top", "left", "right"):
+            axl.spines[sp].set_visible(False); axr.spines[sp].set_visible(False)
+        axl.tick_params(left=False)        # xtick.labelsize=6 from rcParams
+        axr.tick_params(left=False)
+        plt.setp(axr.get_yticklabels(), visible=False)
 
-    dd = 0.012                                   # break marks at the x-axis only (bottom)
-    kw = dict(transform=axl.transAxes, color="k", clip_on=False, lw=0.9)
-    axl.plot((1 - dd, 1 + dd), (-dd, dd), **kw)
-    kw.update(transform=axr.transAxes)
-    axr.plot((-dd, dd), (-dd, dd), **kw)
+        dd = 0.012                         # break marks at the x-axis only (bottom)
+        kw = dict(transform=axl.transAxes, color="k", clip_on=False, lw=0.6)
+        axl.plot((1 - dd, 1 + dd), (-dd, dd), **kw)
+        kw.update(transform=axr.transAxes)
+        axr.plot((-dd, dd), (-dd, dd), **kw)
 
-    dumb_mid = (axl.get_position().x0 + axr.get_position().x1) / 2
-    fig.text(dumb_mid, 0.05, "mRNA Pool Share Change (%)", ha="center", fontsize=12)
-    mk = [Line2D([0], [0], marker="o", linestyle="", markersize=9, markerfacecolor="white",
-                 markeredgecolor="gray", label="syn1"),
-          Line2D([0], [0], marker="o", linestyle="", markersize=9, markerfacecolor="#555",
-                 markeredgecolor="white", label="syn3A")]
-    axr.legend(handles=mk, fontsize=10, loc="lower right", frameon=False)
-    fig.savefig(f"{OUTDIR}/tertiary_share_change_dumbbell.pdf", bbox_inches="tight")
-    plt.close(fig)
+        plt.subplots_adjust(left=0.32, right=0.97, top=0.97, bottom=0.14)
+        dumb_mid = (axl.get_position().x0 + axr.get_position().x1) / 2
+        fig.text(dumb_mid, 0.02, "mRNA Pool Share Change (%)", ha="center", fontsize=7)
+        mk = [Line2D([0], [0], marker="o", linestyle="", markersize=5, markerfacecolor="white",
+                     markeredgecolor="gray", label="syn1"),
+              Line2D([0], [0], marker="o", linestyle="", markersize=5, markerfacecolor="#555",
+                     markeredgecolor="white", label="syn3A")]
+        axr.legend(handles=mk, loc="lower right", frameon=False)        # legend.fontsize=6
+        fig.savefig(f"{OUTDIR}/tertiary_share_change_dumbbell.pdf", dpi=300)
+        plt.close(fig)
     print(f"Saved: {OUTDIR}/tertiary_share_change_dumbbell.pdf "
           f"({n} tertiary, |Δ|>{min_change}pp; x-break {lo_xlim[1]:.0f}-{hi_xlim[0]:.0f}% hidden)")
 

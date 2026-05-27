@@ -11,7 +11,7 @@ OLD/
 REDUNDANT/
 homology_*/
 USELESS/
-
+*.csv.gz
 
 # ----------------------------
 # Novel ORF discovery outputs

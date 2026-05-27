@@ -155,32 +155,32 @@ MMSYN1_0448           spoU      Essential                                rRNA me
    Tukey fences (log10 1.5*IQR): low < 0.103, high > 17.8
 
 -- HIGH outliers (n=6) --
- locus_syn1 gene_name func_category   essentiality                             gene_product_disp  TPM_fold_change  iPM_fold_change  PTR_fold_change
-MMSYN1_0620      perR         other   Nonessential                       ferric uptake regulator         1.098087       194.911791       177.501296
-MMSYN1_0813      galE         other      Essential                       UDP-glucose 4-epimerase         0.213563        16.478693        77.160770
-MMSYN1_0060       NaN         other Quasiessential                     putative membrane protein         0.365726        25.156024        68.783867
-MMSYN1_0730       NaN         other Quasiessential                conserved hypothetical protein         0.331500        22.073787        66.587685
-MMSYN1_0707      thiQ         other Quasiessential alkylphosphonate ABC transporter_ ATP-binding         0.079656         2.773425        34.817416
-MMSYN1_0814       glf         other      Essential                    UDP-galactopyranose mutase         0.188603         6.130098        32.502656
+ locus_syn1 gene_name               Primary Function Secondary Function     Tertiary Function   essentiality                             gene_product_disp  TPM_fold_change  iPM_fold_change  PTR_fold_change
+MMSYN1_0620      perR Genetic Information Processing      Transcription Transcription factors   Nonessential                       ferric uptake regulator         1.098087       194.911791       177.501296
+MMSYN1_0813      galE                     Metabolism       Biosynthesis      Lipid metabolism      Essential                       UDP-glucose 4-epimerase         0.213563        16.478693        77.160770
+MMSYN1_0060       NaN                        Unclear   No Kegg ortholog      Function unknown Quasiessential                     putative membrane protein         0.365726        25.156024        68.783867
+MMSYN1_0730       NaN                        Unclear   No Kegg ortholog      Function unknown Quasiessential                conserved hypothetical protein         0.331500        22.073787        66.587685
+MMSYN1_0707      thiQ                     Metabolism Membrane Transport              Cofactor Quasiessential alkylphosphonate ABC transporter_ ATP-binding         0.079656         2.773425        34.817416
+MMSYN1_0814       glf                     Metabolism       Biosynthesis      Lipid metabolism      Essential                    UDP-galactopyranose mutase         0.188603         6.130098        32.502656
 
 -- LOW outliers (n=16) --
- locus_syn1      gene_name func_category   essentiality                     gene_product_disp  TPM_fold_change  iPM_fold_change  PTR_fold_change
-MMSYN1_0443           yggN         other      Essential 5-formyltetrahydrofolate cyclo-ligase        72.791741         0.350154         0.004810
-MMSYN1_0447            dut         other      Essential                   dUTPase superfamily        13.951580         0.105797         0.007583
-MMSYN1_0416            NaN         other Quasiessential        conserved hypothetical protein         4.230494         0.044375         0.010489
-MMSYN1_0442           iscU         other      Essential        nitrogen fixation protein nifu        30.755662         0.541349         0.017602
-MMSYN1_0592            NaN         other Quasiessential                                  cdsf         6.140520         0.142077         0.023138
-MMSYN1_0250            NaN         other   Nonessential        conserved hypothetical protein        51.453951         1.409221         0.027388
-MMSYN1_0264     prkC; stkP         other Quasiessential       serine/threonine protein kinase         0.447250         0.014307         0.031988
-MMSYN1_0332            NaN         other Quasiessential        conserved hypothetical protein        17.566020         0.726062         0.041333
-MMSYN1_0409 folE/yqfO-like         other Quasiessential                   NIF3 family protein        37.552425         1.974377         0.052577
-MMSYN1_0907            NaN         other Quasiessential        conserved hypothetical protein        12.066067         0.706295         0.058536
-MMSYN1_0144           tsaC         other      Essential        conserved hypothetical protein         5.388126         0.316888         0.058812
-MMSYN1_0143            NaN         other      Essential             putative membrane protein         7.835817         0.517166         0.066000
-MMSYN1_0381           mtnN         other   Nonessential                  MTA/SAH nucleosidase         9.725071         0.724827         0.074532
-MMSYN1_0608           dnaI         other      Essential                    primosomal protein        10.842963         0.966086         0.089098
-MMSYN1_0290           truB         other Quasiessential         tRNA pseudouridine synthase B         4.519651         0.414705         0.091756
-MMSYN1_0398            NaN         other Quasiessential                   putative liporotein         5.550142         0.519526         0.093606
+ locus_syn1      gene_name               Primary Function        Secondary Function                Tertiary Function   essentiality                     gene_product_disp  TPM_fold_change  iPM_fold_change  PTR_fold_change
+MMSYN1_0443           yggN                     Metabolism              Biosynthesis            Cofactor biosynthesis      Essential 5-formyltetrahydrofolate cyclo-ligase        72.791741         0.350154         0.004810
+MMSYN1_0447            dut                     Metabolism Central Carbon Metabolism            Nucleotide metabolism      Essential                   dUTPase superfamily        13.951580         0.105797         0.007583
+MMSYN1_0416            NaN                        Unclear          No Kegg ortholog                 Function unknown Quasiessential        conserved hypothetical protein         4.230494         0.044375         0.010489
+MMSYN1_0442           iscU                     Metabolism              Biosynthesis            Cofactor biosynthesis      Essential        nitrogen fixation protein nifu        30.755662         0.541349         0.017602
+MMSYN1_0592            NaN                        Unclear          No Kegg ortholog                 Function unknown Quasiessential                                  cdsf         6.140520         0.142077         0.023138
+MMSYN1_0250            NaN                        Unclear          No Kegg ortholog                 Function unknown   Nonessential        conserved hypothetical protein        51.453951         1.409221         0.027388
+MMSYN1_0264     prkC; stkP                     Metabolism             Other Enzymes                  Protein kinases Quasiessential       serine/threonine protein kinase         0.447250         0.014307         0.031988
+MMSYN1_0332            NaN                        Unclear          No Kegg ortholog                 Function unknown Quasiessential        conserved hypothetical protein        17.566020         0.726062         0.041333
+MMSYN1_0409 folE/yqfO-like                     Metabolism             Other Enzymes                    Other enzymes Quasiessential                   NIF3 family protein        37.552425         1.974377         0.052577
+MMSYN1_0907            NaN                     Metabolism             Other Enzymes                    Other enzymes Quasiessential        conserved hypothetical protein        12.066067         0.706295         0.058536
+MMSYN1_0144           tsaC Genetic Information Processing               Translation                  tRNA biogenesis      Essential        conserved hypothetical protein         5.388126         0.316888         0.058812
+MMSYN1_0143            NaN                        Unclear          No Kegg ortholog                 Function unknown      Essential             putative membrane protein         7.835817         0.517166         0.066000
+MMSYN1_0381           mtnN                     Metabolism Central Carbon Metabolism            Nucleotide metabolism   Nonessential                  MTA/SAH nucleosidase         9.725071         0.724827         0.074532
+MMSYN1_0608           dnaI Genetic Information Processing           DNA Maintenance          DNA replication control      Essential                    primosomal protein        10.842963         0.966086         0.089098
+MMSYN1_0290           truB Genetic Information Processing               Translation                  tRNA biogenesis Quasiessential         tRNA pseudouridine synthase B         4.519651         0.414705         0.091756
+MMSYN1_0398            NaN                        Unclear     Kegg ortholog defined General function prediction only Quasiessential                   putative liporotein         5.550142         0.519526         0.093606
 
 
 ##############################################################################

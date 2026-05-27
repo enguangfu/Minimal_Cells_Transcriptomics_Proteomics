@@ -44,6 +44,26 @@ from matplotlib.patches import Patch
 from adjustText import adjust_text
 from scipy import stats
 
+# Nature print-ready rcParams (per OUTPUT.md). Used as a local rc_context wrapper
+# around figures we've explicitly retrofitted to Nature spec; the other figures
+# in this script keep their original styling (forward-only retrofit).
+NATURE_RC = {
+    "font.size": 7,
+    "font.family": "sans-serif",
+    # Arial first (Mac/Win); Liberation Sans (Arial-metric-clone) is the Linux
+    # fallback. With pdf.fonttype=42 the PDF embeds whichever font was actually
+    # used — install ttf-mscorefonts-installer to get true Arial on Linux.
+    "font.sans-serif": ["Arial", "Liberation Sans", "Nimbus Sans", "Helvetica", "DejaVu Sans"],
+    "axes.titlesize": 7,
+    "axes.labelsize": 7,
+    "xtick.labelsize": 6,
+    "ytick.labelsize": 6,
+    "legend.fontsize": 6,
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
+}
+
+
 # ── Inputs / outputs ─────────────────────────────────────────────────────────
 IN_CSV       = "Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv"   # written by 09
 SYN3A_PTN_CSV = "../Syn1_Syn3A_Proteomics/syn3a_proteomics_summary_2026.csv"
@@ -292,31 +312,23 @@ _ess["locus_num"] = _extract_locus_num(_ess["locus_tag"]).astype("Int64")
 coding = coding.merge(_ess[["locus_num", "essentiality"]], on="locus_num", how="left")
 coding["gene_product_disp"] = coding["gene_product"].fillna("").astype(str).str.slice(0, 45)
 
-# Functional category (keyword on product). Priority: ribosomal > glycolysis >
-# chaperone > protease > other (apply lowest priority first, override upward).
-GLYCOLYSIS_KW = ["phosphofructokinase", "fructose-bisphosphate aldolase",
-                 "triosephosphate isomerase", "glyceraldehyde-3-phosphate dehydrogenase",
-                 "phosphoglycerate kinase", "phosphoglycerate mutase", "enolase",
-                 "pyruvate kinase", "glucose-6-phosphate isomerase",
-                 "phosphoglucose isomerase", "lactate dehydrogenase"]
-CHAPERONE_KW = ["chaperone", "chaperonin", "trigger factor", "heat shock"]
-PROTEASE_KW = ["protease", "peptidase"]
-_PROD = coding["gene_product"].fillna("").astype(str).str.lower()
-
-
-def _has(kws):
-    m = pd.Series(False, index=coding.index)
-    for k in kws:
-        m |= _PROD.str.contains(k, regex=False)
-    return m
-
-
-_cat = pd.Series("other", index=coding.index)
-_cat = _cat.mask(_has(PROTEASE_KW), "protease")
-_cat = _cat.mask(_has(CHAPERONE_KW), "chaperone")
-_cat = _cat.mask(_has(GLYCOLYSIS_KW), "glycolysis")
-_cat = _cat.mask(coding["is_rprotein"].fillna(False), "ribosomal")
-coding["func_category"] = _cat
+# Curated function annotation (Primary / Secondary / Tertiary) from the manually
+# reviewed syn3A_proteome_annotated.xlsx — replaces the earlier crude keyword-
+# based func_category. PTR analysis groups dots by Primary (scatter) and Secondary
+# (boxplot); both exclude ribosomal proteins (digestion-biased iPM).
+SYN3A_FUNC_XLSX = "../Syn1_Syn3A_Proteomics/syn3A_proteome_annotated.xlsx"
+PRIM_COLORS = {
+    "Genetic Information Processing":       "#3b6db3",
+    "Metabolism":                          "#3f9e5a",
+    "Unclear":                             "#9aa0a6",
+    "Cellular Processes":                  "#8e6bb1",
+    "Environmental Information Processing": "#2aa6a0",
+    "Exogenous":                           "#c0654e",
+}
+_fa = pd.read_excel(SYN3A_FUNC_XLSX, sheet_name=0)
+_fa["locus_num"] = _extract_locus_num(_fa["Locus Tag"]).astype("Int64")
+coding = coding.merge(_fa[["locus_num", "Primary Function", "Secondary Function",
+                           "Tertiary Function"]], on="locus_num", how="left")
 
 ptn = coding.rename(columns={"relIPM_syn1": "iPM_mean_syn1",
                              "relIPM_syn3a": "iPM_mean_syn3a"}).copy()
@@ -342,73 +354,110 @@ _operon_group_report(ptn[ptn["iPM_fold_change"] < 0.1].sort_values("iPM_fold_cha
 
 # ── PTR (protein-to-transcript ratio) = iPM_FC / TPM_FC ──────────────────────
 # PTR > baseline => protein rose more than its mRNA (post-transcriptional gain).
-CAT_COLORS = {"glycolysis": "#1f77b4", "chaperone": "#d62728", "protease": "#ff7f0e",
-              "ribosomal": "#2ca02c", "other": "lightgray"}
-CAT_ORDER = ["glycolysis", "other", "chaperone", "protease", "ribosomal"]
+# Categories driven by the curated function annotation (replaces the old keyword
+# scheme). Ribosomal proteins are excluded throughout — their iPM is digestion-
+# biased and would distort PTR estimates for the Translation/Ribosome group.
+from matplotlib.patches import Patch as _Patch
 
 
 def _ptr_scatter():
     d = coding[coding["TPM_fold_change"].notna() & (coding["TPM_fold_change"] > 0) &
-               coding["iPM_fold_change"].notna() & (coding["iPM_fold_change"] > 0)].copy()
+               coding["iPM_fold_change"].notna() & (coding["iPM_fold_change"] > 0) &
+               ~coding["is_rprotein"].fillna(False)].copy()
     fig, ax = plt.subplots(figsize=(7.5, 6.5))
-    texts = []
-    for c in ["other", "ribosomal", "glycolysis", "chaperone", "protease"]:
-        sub = d[d["func_category"] == c]
+    prim_order = list(PRIM_COLORS)
+    for prim in prim_order:
+        sub = d[d["Primary Function"] == prim]
+        if sub.empty:
+            continue
         ax.scatter(sub["TPM_fold_change"], sub["iPM_fold_change"],
-                   s=(14 if c == "other" else 34), alpha=(0.4 if c in ("other", "ribosomal") else 0.9),
-                   color=CAT_COLORS[c], edgecolors="none", label=f"{c} (n={len(sub)})")
-        if c in ("glycolysis", "chaperone", "protease"):
-            for _, r in sub.iterrows():
-                texts.append(ax.text(r["TPM_fold_change"], r["iPM_fold_change"],
-                                     f"{int(r['locus_num']):04d}", fontsize=6))
+                   s=22, alpha=0.7, color=PRIM_COLORS[prim], edgecolors="none",
+                   label=f"{prim} (n={len(sub)})")
+    unann = d[d["Primary Function"].isna()]
+    if not unann.empty:
+        ax.scatter(unann["TPM_fold_change"], unann["iPM_fold_change"],
+                   s=14, alpha=0.5, color="lightgray", edgecolors="none",
+                   label=f"unannotated (n={len(unann)})")
+    # annotate top |log10(PTR)| outliers (any category)
+    d["_dev"] = (np.log10(d["iPM_fold_change"]) - np.log10(d["TPM_fold_change"])).abs()
+    top = d.nlargest(15, "_dev")
+    texts = []
+    for _, r in top.iterrows():
+        lab = str(r.get("gene_name")) if pd.notna(r.get("gene_name")) and r.get("gene_name") else f"{int(r['locus_num']):04d}"
+        texts.append(ax.text(r["TPM_fold_change"], r["iPM_fold_change"], lab, fontsize=6))
     lims = [min(d["TPM_fold_change"].min(), d["iPM_fold_change"].min()) * 0.5,
             max(d["TPM_fold_change"].max(), d["iPM_fold_change"].max()) * 2]
     ax.plot(lims, lims, "k--", lw=0.9, label="y = x (PTR unchanged)")
     ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlim(lims); ax.set_ylim(lims)
     ax.set_xlabel(r"TPM fold change  ($\mathrm{rel}_{\mathrm{syn3A}}/\mathrm{rel}_{\mathrm{syn1}}$)", fontsize=12)
     ax.set_ylabel(r"iPM fold change  ($\mathrm{rel}_{\mathrm{syn3A}}/\mathrm{rel}_{\mathrm{syn1}}$)", fontsize=12)
-    ax.set_title("Transcript vs protein fold change (PTR; above y=x = protein-favored)", fontsize=11)
+    ax.set_title("Transcript vs protein fold change (PTR; r-proteins excluded; color = Primary)", fontsize=11)
     if texts:
         adjust_text(texts, ax=ax, arrowprops=dict(arrowstyle="-", color="gray", lw=0.4))
     ax.legend(fontsize=8, loc="lower right")
     plt.tight_layout()
     fig.savefig(f"{OUTDIR}/PTR_TPMfc_vs_iPMfc.pdf")
     plt.close(fig)
-    print(f"[PTR scatter] n={len(d)}")
+    print(f"[PTR scatter] n={len(d)} (r-proteins excluded)")
 
 
-def _ptr_boxplot():
-    d = coding[coding["PTR_fold_change"].notna() & (coding["PTR_fold_change"] > 0)].copy()
+def _ptr_boxplot(min_n: int = 3):
+    """Boxplot of log10 PTR-FC per Secondary function (curated annotation).
+    r-proteins excluded; only Secondaries with >= min_n proteins shown;
+    boxes colored by Primary family. Mann-Whitney p tests each category vs the
+    overall (non-r-protein) baseline."""
+    d = coding[coding["PTR_fold_change"].notna() & (coding["PTR_fold_change"] > 0)
+               & ~coding["is_rprotein"].fillna(False)
+               & coding["Secondary Function"].notna()].copy()
     d["log10PTR"] = np.log10(d["PTR_fold_change"])
-    cats = [c for c in CAT_ORDER if (d["func_category"] == c).sum() >= 1]
-    data = [d.loc[d["func_category"] == c, "log10PTR"].values for c in cats]
-    base = d.loc[d["func_category"] == "other", "log10PTR"].values
-    other_med = float(np.median(base)) if len(base) else 0.0
+    base = d["log10PTR"].values
+    base_med = float(np.median(base)) if len(base) else 0.0
 
-    fig, ax = plt.subplots(figsize=(8, 5.5))
-    bp = ax.boxplot(data, positions=range(len(cats)), widths=0.6, showfliers=False, patch_artist=True,
-                    medianprops=dict(color="black"))
-    for patch, c in zip(bp["boxes"], cats):
-        patch.set_facecolor(CAT_COLORS[c]); patch.set_alpha(0.5)
+    sec_prim = d.groupby("Secondary Function")["Primary Function"].first().to_dict()
+    counts = d.groupby("Secondary Function").size()
+    prim_order = list(PRIM_COLORS)
+    secs = sorted([s for s, n in counts.items() if n >= min_n],
+                  key=lambda s: (prim_order.index(sec_prim.get(s, "Unclear"))
+                                 if sec_prim.get(s) in prim_order else 99, s))
+    data = [d.loc[d["Secondary Function"] == s, "log10PTR"].values for s in secs]
+
+    fig, ax = plt.subplots(figsize=(9.5, 5.5))
+    bp = ax.boxplot(data, positions=range(len(secs)), widths=0.65, showfliers=False,
+                    patch_artist=True, medianprops=dict(color="black"))
+    for patch, s in zip(bp["boxes"], secs):
+        col = PRIM_COLORS.get(sec_prim.get(s, "Unclear"), "#777")
+        patch.set_facecolor(col); patch.set_alpha(0.55)
     rng = np.random.default_rng(0)
     for i, dd in enumerate(data):
-        ax.scatter(i + rng.uniform(-0.18, 0.18, size=len(dd)), dd, s=10, color="black", alpha=0.4, edgecolors="none")
-    ax.axhline(other_med, color="red", linestyle="--", linewidth=1, label="'other' median (baseline)")
+        ax.scatter(i + rng.uniform(-0.20, 0.20, size=len(dd)), dd,
+                   s=10, color="black", alpha=0.45, edgecolors="none", zorder=3)
+    ax.axhline(base_med, color="red", linestyle="--", linewidth=1,
+               label=f"all-genes median ({base_med:+.2f})")
+    ax.axhline(0, color="black", linestyle=":", linewidth=0.7, alpha=0.6)
 
     labels = []
-    print("\n[PTR by functional category]")
-    for c, dd in zip(cats, data):
-        if c == "other" or len(dd) < 2 or len(base) < 2:
-            p, sig = np.nan, "baseline" if c == "other" else "n/a"
+    print(f"\n[PTR by Secondary function (r-proteins excluded, n>={min_n})]")
+    for s, dd in zip(secs, data):
+        if len(dd) < 2 or len(base) < 2:
+            p, sig = np.nan, "n/a"
         else:
             p = stats.mannwhitneyu(dd, base, alternative="two-sided").pvalue
-            sig = f"p={p:.1e} ({'sig' if p < 0.05 else 'n.s.'})"
-        labels.append(f"{c}\nn={len(dd)}\n{sig}")
-        print(f"  {c:<12} n={len(dd):3d}  median log10PTR={np.median(dd):+.3f}  p(vs other)={p:.2e}")
-    ax.set_xticks(range(len(cats))); ax.set_xticklabels(labels, fontsize=8)
+            sig = "***" if p < 1e-3 else "**" if p < 1e-2 else "*" if p < 0.05 else "n.s."
+        labels.append(f"{s}\nn={len(dd)}  {sig}")
+        med = float(np.median(dd))
+        print(f"  {s:<35} n={len(dd):3d}  median log10PTR={med:+.3f}  p(vs all)={p:.2e}")
+    ax.set_xticks(range(len(secs)))
+    ax.set_xticklabels(labels, fontsize=7, rotation=30, ha="right")
     ax.set_ylabel("log10 PTR fold change  (iPM_FC / TPM_FC)", fontsize=12)
-    ax.set_title("Protein-to-transcript ratio change by functional category", fontsize=11)
-    ax.legend(fontsize=8, loc="upper right")
+    ax.set_title("Protein-to-transcript ratio change by Secondary function "
+                 "(r-proteins excluded; color = Primary)", fontsize=11)
+    used = []
+    for p in prim_order:
+        if any(sec_prim.get(s) == p for s in secs):
+            used.append(p)
+    handles = [_Patch(facecolor=PRIM_COLORS[p], alpha=0.55, label=p) for p in used]
+    handles.append(plt.Line2D([0], [0], color="red", linestyle="--", label="all-genes median"))
+    ax.legend(handles=handles, fontsize=8, loc="upper right", frameon=False)
     plt.tight_layout()
     fig.savefig(f"{OUTDIR}/PTR_by_category_boxplot.pdf")
     plt.close(fig)
@@ -478,9 +527,11 @@ def _load_gff_locus_nums(path):
 
 
 def _load_function_for_plots():
-    fa = pd.read_excel(SYN3A_FUNC_XLSX, sheet_name=0)
-    fa["locus_num"] = _extract_locus_num(fa["Locus Tag"]).astype("Int64")
-    cm = coding.merge(fa[["locus_num", "Primary Function", "Secondary Function",
+    cm = coding.copy()
+    if "Primary Function" not in cm.columns:                # already merged at top now
+        fa = pd.read_excel(SYN3A_FUNC_XLSX, sheet_name=0)
+        fa["locus_num"] = _extract_locus_num(fa["Locus Tag"]).astype("Int64")
+        cm = cm.merge(fa[["locus_num", "Primary Function", "Secondary Function",
                           "Tertiary Function"]], on="locus_num", how="left")
     cm["is_deleted"] = ~cm["locus_num"].isin(_load_gff_locus_nums(SYN3A_GFF))
     return cm
@@ -529,53 +580,63 @@ def _ipm_composition_secondary_bar():
     g3 = s_sec3 / s_sec3.sum() * 100
     roman = {b: _roman(i + 1) for i, b in enumerate(blocks)}
 
+    # Nature print-ready (OUTPUT.md): 3.5x7 in, Arial, 5-7pt, pdf.fonttype=42,
+    # dpi=300, manual subplots_adjust (no bbox_inches='tight').
     W, MIN_INSIDE = 0.84, 2.0
-    fig, ax = plt.subplots(figsize=(4.5, 9))
-    side = {0: [], 1: []}
-    for xi, (g, deleted) in enumerate([(g1, deleted1), (g3, 0.0)]):
-        bottom = 0.0
-        for b in blocks:
-            h = float(g.get(b, 0))
-            if h <= 0:
-                continue
-            ax.bar(xi, h, W, bottom=bottom, color=block_color[b], edgecolor="white", linewidth=0.5)
-            if h >= MIN_INSIDE:
-                ax.text(xi, bottom + h / 2, f"{roman[b]} {h:.0f}%", ha="center", va="center",
-                        fontsize=8, color=_text_color(block_color[b]))
-            else:
-                side[xi].append((bottom + h / 2, f"{roman[b]} {h:.1f}%"))
-            bottom += h
-        if deleted > 0:
-            ax.bar(xi, deleted, W, bottom=bottom, color=(0.84, 0.19, 0.15),
-                   hatch="///", edgecolor="white", linewidth=0)
-            ax.text(xi, bottom + deleted / 2, f"deleted {deleted:.0f}%", ha="center",
-                    va="center", color="white", fontweight="bold", fontsize=8)
+    with plt.rc_context(NATURE_RC):
+        fig, ax = plt.subplots(figsize=(7 / 3, 7 / 2))
+        side = {0: [], 1: []}
+        for xi, (g, deleted) in enumerate([(g1, deleted1), (g3, 0.0)]):
+            bottom = 0.0
+            for b in blocks:
+                h = float(g.get(b, 0))
+                if h <= 0:
+                    continue
+                ax.bar(xi, h, W, bottom=bottom, color=block_color[b], edgecolor="white", linewidth=0.4)
+                if h >= MIN_INSIDE:
+                    ax.text(xi, bottom + h / 2, f"{roman[b]} {h:.0f}%", ha="center", va="center",
+                            fontsize=5, color=_text_color(block_color[b]))
+                else:
+                    side[xi].append((bottom + h / 2, f"{roman[b]} {h:.1f}%"))
+                bottom += h
+            if deleted > 0:
+                ax.bar(xi, deleted, W, bottom=bottom, color=(0.84, 0.19, 0.15),
+                       hatch="///", edgecolor="white", linewidth=0)
+                ax.text(xi, bottom + deleted / 2, f"deleted {deleted:.0f}%", ha="center",
+                        va="center", color="white", fontweight="bold", fontsize=5)
 
-    def _place(items, x_text, ha, x_edge):
-        items = sorted(items)
-        ys = [y for y, _ in items]
-        for i in range(1, len(ys)):
-            ys[i] = max(ys[i], ys[i - 1] + 2.8)
-        for (y0, txt), y in zip(items, ys):
-            ax.annotate(txt, xy=(x_edge, y0), xytext=(x_text, y), ha=ha, va="center",
-                        fontsize=7, color="#333", arrowprops=dict(arrowstyle="-", color="gray", lw=0.4))
-    _place(side[0], -0.72, "right", -W / 2)
-    _place(side[1], 1.72, "left", 1 + W / 2)
+        def _place(items, x_text, ha, x_edge):
+            items = sorted(items)
+            ys = [y for y, _ in items]
+            for i in range(1, len(ys)):                           # push up to maintain gap
+                ys[i] = max(ys[i], ys[i - 1] + 2.4)
+            if ys and ys[-1] > 99:                                # cap inside axes; propagate down
+                ys[-1] = 99
+                for i in range(len(ys) - 2, -1, -1):
+                    ys[i] = min(ys[i], ys[i + 1] - 2.4)
+            for (y0, txt), y in zip(items, ys):
+                ax.annotate(txt, xy=(x_edge, y0), xytext=(x_text, y), ha=ha, va="center",
+                            fontsize=5, color="#333",
+                            arrowprops=dict(arrowstyle="-", color="gray", lw=0.3))
+        _place(side[0], -0.60, "right", -W / 2)       # tighter for the narrow canvas
+        _place(side[1],  1.60, "left",  1 + W / 2)
 
-    ax.set_xticks([0, 1]); ax.set_xticklabels(["syn1", "syn3A"], fontsize=13)
-    ax.set_ylim(0, 100); ax.set_xlim(-1.35, 2.1)
-    ax.set_yticks([])
-    for sp in ax.spines.values():
-        sp.set_visible(False)
-    ax.tick_params(length=0)
-    handles = [Patch(facecolor=block_color[b], edgecolor="white", label=f"{roman[b]} — {b}")
-               for b in blocks]
-    handles.append(Patch(facecolor=(0.84, 0.19, 0.15), hatch="///", edgecolor="white",
-                         label="deleted (syn1 only)"))
-    ax.legend(handles=handles, fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.02),
-              ncol=2, frameon=False)
-    fig.savefig(f"{OUTDIR}/iPM_pool_composition_by_secondary.pdf", bbox_inches="tight")
-    plt.close(fig)
+        ax.set_xticks([0, 1]); ax.set_xticklabels(["syn1", "syn3A"])   # xtick.labelsize=6
+        ax.set_ylim(0, 100); ax.set_xlim(-1.35, 2.1)
+        ax.set_yticks([])
+        for sp in ax.spines.values():
+            sp.set_visible(False)
+        ax.tick_params(length=0)
+        handles = [Patch(facecolor=block_color[b], edgecolor="white", label=f"{roman[b]} — {b}")
+                   for b in blocks]
+        handles.append(Patch(facecolor=(0.84, 0.19, 0.15), hatch="///", edgecolor="white",
+                             label="deleted (syn1 only)"))
+        ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.02),
+                  ncol=2, frameon=False, fontsize=5,         # shrunk to fit the narrow canvas
+                  handlelength=0.9, handletextpad=0.3, columnspacing=0.5)
+        plt.subplots_adjust(left=0.10, right=0.95, top=0.97, bottom=0.24)
+        fig.savefig(f"{OUTDIR}/iPM_pool_composition_by_secondary.pdf", dpi=300)
+        plt.close(fig)
     print(f"Saved: {OUTDIR}/iPM_pool_composition_by_secondary.pdf "
           f"(deleted={deleted1:.1f}%, Translation {g1.get('Translation',0):.0f}->{g3.get('Translation',0):.0f}%)")
 
@@ -612,65 +673,189 @@ def _ipm_tertiary_share_dumbbell(min_change=0.5):
     hi_xlim = (math.floor(hi_min) - 2, math.ceil(hi_max) + 2)
     dlo_w, dhi_w = lo_xlim[1] - lo_xlim[0], hi_xlim[1] - hi_xlim[0]
 
-    fig = plt.figure(figsize=(4.5, 9))
-    gs = fig.add_gridspec(1, 2, width_ratios=[dlo_w, dhi_w], wspace=0.06)
-    axbg = fig.add_subplot(gs[0, :])
-    axbg.set_xlim(0, 1); axbg.set_ylim(-0.6, n - 0.4)
-    for i in range(n):
-        axbg.axhline(i, color="0.9", lw=0.8, zorder=0)
-    axbg.set_xticks([]); axbg.set_yticks([])
-    for sp in axbg.spines.values():
-        sp.set_visible(False)
-    axbg.patch.set_visible(False)
-    axl = fig.add_subplot(gs[0]); axr = fig.add_subplot(gs[1], sharey=axl)
-    axl.patch.set_visible(False); axr.patch.set_visible(False)
-    axl.set_yticks(range(n))
-    for i, (name, row) in enumerate(d.iterrows()):
-        ax = axr if max(row["syn1"], row["syn3a"]) > lo_xlim[1] else axl
-        col = _color(name)
-        ax.plot([row["syn1"], row["syn3a"]], [i, i], color="lightgray", lw=1.8, zorder=2)
-        ax.scatter(row["syn1"], i, s=52, facecolor="white", edgecolor="gray", linewidth=1.2, zorder=3)
-        ax.scatter(row["syn3a"], i, s=66, color=col, edgecolor="white", linewidth=0.6, zorder=4)
-        ax.text(row["syn3a"], i + 0.28, f"{row['syn3a']:.1f}", ha="center", va="center", fontsize=8, color="#333")
-        ax.text(row["syn1"], i - 0.28, f"{row['syn1']:.1f}", ha="center", va="center", fontsize=8, color="#333")
+    # Nature print-ready (OUTPUT.md): 3.5x7 in, Arial, 5-7pt, pdf.fonttype=42,
+    # dpi=300, manual subplots_adjust (no bbox_inches='tight').
+    with plt.rc_context(NATURE_RC):
+        import textwrap
+        fig = plt.figure(figsize=(7 / 3, 7 / 2))
+        gs = fig.add_gridspec(1, 2, width_ratios=[dlo_w, dhi_w], wspace=0.06)
+        axbg = fig.add_subplot(gs[0, :])
+        axbg.set_xlim(0, 1); axbg.set_ylim(-0.6, n - 0.4)
+        for i in range(n):
+            axbg.axhline(i, color="0.9", lw=0.5, zorder=0)
+        axbg.set_xticks([]); axbg.set_yticks([])
+        for sp in axbg.spines.values():
+            sp.set_visible(False)
+        axbg.patch.set_visible(False)
+        axl = fig.add_subplot(gs[0]); axr = fig.add_subplot(gs[1], sharey=axl)
+        axl.patch.set_visible(False); axr.patch.set_visible(False)
+        axl.set_yticks(range(n))
+        for i, (name, row) in enumerate(d.iterrows()):
+            ax = axr if max(row["syn1"], row["syn3a"]) > lo_xlim[1] else axl
+            col = _color(name)
+            ax.plot([row["syn1"], row["syn3a"]], [i, i], color="lightgray", lw=0.8, zorder=2)
+            ax.scatter(row["syn1"], i, s=22, facecolor="white", edgecolor="gray", linewidth=0.5, zorder=3)
+            ax.scatter(row["syn3a"], i, s=30, color=col, edgecolor="white", linewidth=0.3, zorder=4)
+            ax.text(row["syn3a"], i + 0.30, f"{row['syn3a']:.1f}", ha="center", va="center", fontsize=5, color="#333")
+            ax.text(row["syn1"], i - 0.30, f"{row['syn1']:.1f}", ha="center", va="center", fontsize=5, color="#333")
 
-    axl.set_xlim(*lo_xlim); axr.set_xlim(*hi_xlim)
-    axl.set_ylim(-0.6, n - 0.4)
-    axl.set_yticklabels([])
-    tr = axl.get_yaxis_transform()
-    for i, name in enumerate(d.index):
-        c = _color(name)
-        axl.text(-0.04, i + 0.22, ter_sec.get(name, ""), transform=tr, ha="right", va="center",
-                 fontsize=8, color=c, style="italic")
-        axl.text(-0.04, i - 0.18, name, transform=tr, ha="right", va="center",
-                 fontsize=10, color=c)
-    for sp in ("top", "left", "right"):
-        axl.spines[sp].set_visible(False); axr.spines[sp].set_visible(False)
-    axl.tick_params(left=False, labelsize=10)
-    axr.tick_params(left=False, labelsize=10)
-    plt.setp(axr.get_yticklabels(), visible=False)
+        axl.set_xlim(*lo_xlim); axr.set_xlim(*hi_xlim)
+        axl.set_ylim(-0.6, n - 0.4)
+        axl.set_yticklabels([])
+        tr = axl.get_yaxis_transform()
+        WRAP_W = 20            # wrap long Secondary/Tertiary names to fit the narrow panel
+        for i, name in enumerate(d.index):
+            c = _color(name)
+            sec_txt = textwrap.fill(ter_sec.get(name, ""), WRAP_W)
+            ter_txt = textwrap.fill(name, WRAP_W)
+            axl.text(-0.04, i + 0.24, sec_txt, transform=tr, ha="right", va="center",
+                     fontsize=5, color=c, style="italic", linespacing=0.9)
+            axl.text(-0.04, i - 0.20, ter_txt, transform=tr, ha="right", va="center",
+                     fontsize=5, color=c, linespacing=0.9)
+        for sp in ("top", "left", "right"):
+            axl.spines[sp].set_visible(False); axr.spines[sp].set_visible(False)
+        axl.tick_params(left=False)        # xtick.labelsize=6 from rcParams
+        axr.tick_params(left=False)
+        plt.setp(axr.get_yticklabels(), visible=False)
 
-    dd = 0.012
-    kw = dict(transform=axl.transAxes, color="k", clip_on=False, lw=0.9)
-    axl.plot((1 - dd, 1 + dd), (-dd, dd), **kw)
-    kw.update(transform=axr.transAxes)
-    axr.plot((-dd, dd), (-dd, dd), **kw)
+        dd = 0.012
+        kw = dict(transform=axl.transAxes, color="k", clip_on=False, lw=0.6)
+        axl.plot((1 - dd, 1 + dd), (-dd, dd), **kw)
+        kw.update(transform=axr.transAxes)
+        axr.plot((-dd, dd), (-dd, dd), **kw)
 
-    dumb_mid = (axl.get_position().x0 + axr.get_position().x1) / 2
-    fig.text(dumb_mid, 0.05, "Proteome Pool Share Change (%)", ha="center", fontsize=12)
-    mk = [Line2D([0], [0], marker="o", linestyle="", markersize=9, markerfacecolor="white",
-                 markeredgecolor="gray", label="syn1"),
-          Line2D([0], [0], marker="o", linestyle="", markersize=9, markerfacecolor="#555",
-                 markeredgecolor="white", label="syn3A")]
-    axr.legend(handles=mk, fontsize=10, loc="lower right", frameon=False)
-    fig.savefig(f"{OUTDIR}/iPM_tertiary_share_change_dumbbell.pdf", bbox_inches="tight")
-    plt.close(fig)
+        plt.subplots_adjust(left=0.32, right=0.97, top=0.97, bottom=0.14)
+        dumb_mid = (axl.get_position().x0 + axr.get_position().x1) / 2
+        fig.text(dumb_mid, 0.02, "Proteome Pool Share Change (%)", ha="center", fontsize=7)
+        mk = [Line2D([0], [0], marker="o", linestyle="", markersize=5, markerfacecolor="white",
+                     markeredgecolor="gray", label="syn1"),
+              Line2D([0], [0], marker="o", linestyle="", markersize=5, markerfacecolor="#555",
+                     markeredgecolor="white", label="syn3A")]
+        axr.legend(handles=mk, loc="lower right", frameon=False)        # legend.fontsize=6
+        fig.savefig(f"{OUTDIR}/iPM_tertiary_share_change_dumbbell.pdf", dpi=300)
+        plt.close(fig)
     print(f"Saved: {OUTDIR}/iPM_tertiary_share_change_dumbbell.pdf "
           f"({n} tertiary, |Δ|>{min_change}pp; x-break {lo_xlim[1]:.0f}-{hi_xlim[0]:.0f}% hidden)")
 
 
 _ipm_composition_secondary_bar()
 _ipm_tertiary_share_dumbbell()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Macromolecule complex abundance — limiting-subunit (stoichiometry-adjusted MIN)
+# estimate for the transcription engine and the RNA-turnover machinery.
+#
+# Motivation: relate the syn1->syn3A change to syn3A's longer cell cycle
+# (105 vs 60 min). Ribosomes can't be estimated here (no rRNA quantification),
+# so we probe RNA polymerase (transcription engine) and the degradosome (RNA
+# turnover) — both have only protein-coding subunits measured. Excess subunits
+# get degraded, so the assembled complex copy number is set by the lowest
+# stoichiometry-adjusted subunit (MIN). We compute it for relTPM and relIPM in
+# syn1 and syn3A. rel values are per-organism mean-normalized; the syn3A/syn1
+# ratio is the interpretable cross-organism quantity.
+#
+# Subunit identities (curated):
+#   RNAP core α2ββ': rpoA=0645 (x2 per complex), rpoC=0803, rpoB=0804.
+#   Degradosome: rny=0359, rnjA=0600, plus a 3'->5' exoribonuclease pair summed
+#                (yhaM=0437 + rnr=0775).
+# σ factors are not included (this is core RNAP, not holoenzyme).
+# ─────────────────────────────────────────────────────────────────────────────
+COMPLEXES = [
+    # (name, printable formula, [ [ (locus, divisor, gene), ... ], ... ])
+    ("RNA polymerase", "MIN(rpoA/2, rpoC, rpoB)",
+     [[(645, 2, "rpoA")], [(803, 1, "rpoC")], [(804, 1, "rpoB")]]),
+    ("Degradosome", "MIN(rny, rnjA, yhaM+rnr)",
+     [[(359, 1, "rny")], [(600, 1, "rnjA")], [(437, 1, "yhaM"), (775, 1, "rnr")]]),
+]
+OUT_COMPLEX = f"{OUTDIR}/macromolecule_complex_abundance.tsv"
+_LAYERS = ("relTPM_syn1", "relTPM_syn3a", "relIPM_syn1", "relIPM_syn3a")
+
+
+def _gene_value(locus, col):
+    row = coding[coding["locus_num"] == locus]
+    if row.empty:
+        return None
+    v = row[col].iloc[0]
+    return float(v) if pd.notna(v) else None
+
+
+def _term_label(term):
+    return "+".join(f"{gn}/{div}" if div > 1 else gn for _, div, gn in term)
+
+
+def _complex_min(terms, col):
+    vals = []
+    for term in terms:
+        s = 0.0
+        for locus, div, _ in term:
+            v = _gene_value(locus, col)
+            if v is None:
+                s = None; break
+            s += v / div
+        vals.append(s)
+    if any(v is None for v in vals):
+        return None, None
+    i = min(range(len(vals)), key=lambda k: vals[k])
+    return vals[i], _term_label(terms[i])
+
+
+_cx_rows, _cx_detail = [], []
+for cx_name, formula, terms in COMPLEXES:
+    rec = {"complex": cx_name, "formula": formula}
+    for col in _LAYERS:
+        v, lab = _complex_min(terms, col)
+        rec[col] = v
+        rec[f"limiter_{col}"] = lab
+    rec["TPM_fold_change"] = (rec["relTPM_syn3a"] / rec["relTPM_syn1"]
+                              if rec["relTPM_syn1"] and rec["relTPM_syn3a"] else None)
+    rec["iPM_fold_change"] = (rec["relIPM_syn3a"] / rec["relIPM_syn1"]
+                              if rec["relIPM_syn1"] and rec["relIPM_syn3a"] else None)
+    _cx_rows.append(rec)
+    _cx_detail.append(f"\n  {cx_name}   [{formula}]")
+    for term in terms:
+        for locus, div, gn in term:
+            vals = {col: _gene_value(locus, col) for col in _LAYERS}
+            f = lambda v: f"{v:.3f}" if v is not None else "  N/A"
+            _cx_detail.append(
+                f"    {gn:<6} JCVISYN3A_{locus:04d} (/{div}) | "
+                f"relTPM syn1={f(vals['relTPM_syn1'])} syn3A={f(vals['relTPM_syn3a'])} | "
+                f"relIPM syn1={f(vals['relIPM_syn1'])} syn3A={f(vals['relIPM_syn3a'])}"
+            )
+
+complex_tbl = pd.DataFrame(_cx_rows)
+_CX_COLS = ["complex", "formula",
+            "relTPM_syn1", "relTPM_syn3a", "TPM_fold_change",
+            "relIPM_syn1", "relIPM_syn3a", "iPM_fold_change",
+            "limiter_relTPM_syn1", "limiter_relTPM_syn3a",
+            "limiter_relIPM_syn1", "limiter_relIPM_syn3a"]
+complex_tbl[_CX_COLS].to_csv(OUT_COMPLEX, sep="\t", index=False, float_format="%.4f")
+print(f"\nSaved: {OUT_COMPLEX}")
+
+print("\n[macromolecule complex abundance — limiting-subunit MIN]")
+for rec in _cx_rows:
+    f = lambda v: f"{v:.3f}" if v is not None else "N/A"
+    fc = lambda v: f"{v:.2f}" if v is not None else "N/A"
+    print(f"  {rec['complex']:<16} {rec['formula']}")
+    print(f"    relTPM: syn1={f(rec['relTPM_syn1'])} (limiter:{rec['limiter_relTPM_syn1']})  "
+          f"syn3A={f(rec['relTPM_syn3a'])} (limiter:{rec['limiter_relTPM_syn3a']})  "
+          f"FC={fc(rec['TPM_fold_change'])}")
+    print(f"    relIPM: syn1={f(rec['relIPM_syn1'])} (limiter:{rec['limiter_relIPM_syn1']})  "
+          f"syn3A={f(rec['relIPM_syn3a'])} (limiter:{rec['limiter_relIPM_syn3a']})  "
+          f"FC={fc(rec['iPM_fold_change'])}")
+
+# Text section appended to Compare_Ptn.txt (joined into the report list below).
+COMPLEX_REPORT_TEXT = ("\n\n" + "#" * 78
+    + "\n# MACROMOLECULE COMPLEX ABUNDANCE (limiting-subunit estimate)\n"
+    + "#" * 78
+    + "\n# Each complex's assembled copy number is set by its lowest stoichiometry-"
+    + "\n# adjusted subunit (excess subunits are degraded). rel* are per-organism"
+    + "\n# mean-normalized; the syn3A/syn1 ratio is the cross-organism comparison."
+    + "\n# RNAP is core (no sigma factors). Linked to syn3A's longer cell cycle"
+    + "\n# (105 vs 60 min): RNAP = transcription engine, degradosome = RNA turnover.\n\n"
+    + complex_tbl[_CX_COLS].to_string(index=False, float_format=lambda v: f"{v:.4f}")
+    + "\n\n  Per-subunit values (transparency):"
+    + "\n".join(_cx_detail) + "\n")
 
 
 # ── Outlier report (Compare_Ptn.txt) ─────────────────────────────────────────
@@ -683,7 +868,8 @@ report.append(_outlier_section(coding, "iPM fold change", "iPM_fold_change", Tru
 report.append(_outlier_section(coding, "iPM absolute change (relIPM delta)", "iPM_abs_change", False, IPM_SHOW))
 
 # PTR (protein-to-transcript ratio) outliers — r-proteins excluded (unreliable iPM).
-PTR_SHOW = ["locus_syn1", "gene_name", "func_category", "essentiality", "gene_product_disp",
+PTR_SHOW = ["locus_syn1", "gene_name", "Primary Function", "Secondary Function",
+            "Tertiary Function", "essentiality", "gene_product_disp",
             "TPM_fold_change", "iPM_fold_change", "PTR_fold_change"]
 report.append(_outlier_section(coding[~coding["is_rprotein"].fillna(False)],
                                "PTR fold change = iPM_FC / TPM_FC  (r-proteins excluded)",
@@ -698,6 +884,7 @@ report += ["\n\n", "#" * 78,
            "#" * 78, "\n",
            rprot_tbl[RPROT_COLS].to_string(index=False) + "\n"]
 
+report.append(COMPLEX_REPORT_TEXT)
 with open(OUT_REPORT, "w") as fh:
     fh.write("".join(report))
 print(f"\nSaved: {OUT_REPORT}")
