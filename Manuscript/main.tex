@@ -1,0 +1,94 @@
+\documentclass{article}
+
+%%%%%%%% Packages and Macros %%%%%%%%
+% Authorships
+\usepackage{authblk}
+\newcommand{\equalcontrib}{\thanks{These authors contributed equally to this work.}}
+\newcommand{\corrauth}{\thanks{Corresponding author: zan@illinois.edu}}
+
+% Images
+\usepackage{graphicx} % Required for inserting images
+
+% Page
+\usepackage[a4paper, portrait, margin=1in]{geometry}
+
+% Numbers
+\usepackage{float}
+\DeclareUnicodeCharacter{03B4}{$\delta$}
+\usepackage{xfrac}
+
+% Tables
+\usepackage{booktabs} % For prettier tables
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}  % to put text in the middle of each cell
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\renewcommand{\thetable}{S\arabic{table}}
+
+% Referencing
+\usepackage{hyperref}
+\usepackage{natbib}
+
+% Macros
+\input{sections/macros}
+
+\begin{document}
+
+%%%%%%%% Title and Authorship %%%%%%%%
+
+\title{Transcriptomics and Proteomics of the Minimal Synthetic Bacteria}
+% \title{Unraveling the Transcriptional Landscape within a Minimized Bacterium via Comparative Analysis}%; Deciphering the Influence of the genome sequence architecture in a Minimized Bacterial Genome}
+
+\author[1,10]{Enguang Fu \equalcontrib}
+\author[1]{Troy A. Brier \equalcontrib}
+\author[1]{Jay E. Cournoyer}
+\author[1]{Benjamin R. Gilbert}
+\author[2]{Sage A. Glass}
+\author[1]{Yang-le Gao}
+\author[3]{Yanbao Yu}
+\author[1,4,5]{Zane R. Thornburg}
+\author[2]{Karrie Goglin}
+\author[2]{Gavin John}
+\author[2]{Tiana Mamaghani}
+\author[2]{Sujata Shivakumar}
+\author[5,10]{Abner T. Apsley}
+\author[7]{Christopher J. Fields}
+\author[2,10]{John I. Glass}
+\author[1,8,10]{Angad P. Mehta}
+\author[1,4,5,8,9,10]{Zaida Luthey-Schulten \corrauth}
+
+\affil[1]{Department of Chemistry, University of Illinois Urbana-Champaign, Urbana, IL 61801, USA}
+\affil[2]{J. Craig Venter Institute, La Jolla, CA 92037, USA}
+\affil[3]{Department of Chemistry and Biochemistry, Univeristy of Delaware, Newark, DE 19716, USA}
+\affil[4]{Cancer Center at Illinois, University of Illinois at Urbana–Champaign, Urbana, IL 61801, USA}
+\affil[5]{Beckman Institute for Advanced Science and Technology, University of Illinois at Urbana–Champaign, Urbana, IL 61801, USA}
+% \affil[6]{\textit{Current Affiliation:} Genomatica, San Diego, CA 92121, USA}
+%\affil[B]{J. Craig Venter Institute, Rockville, MD 20850, USA}
+\affil[7]{Roy J. Carver Biotechnology Center, Urbana, IL 61801, USA}
+\affil[8]{Carl R. Woese Institute for Genomic Biology, Urbana, IL 61801, USA}
+%\affil[]{NSF Center for the Physics of Living Cells, Urbana, IL 61801, USA}
+\affil[9]{Department of Physics, University of Illinois Urbana-Champaign, IL 61801, USA}
+\affil[10]{NSF Science and Technology Center for Quantitative Cell Biology, Beckman Institute, Urbana, IL 61801, USA}
+
+\date{}
+
+\maketitle
+
+\newpage
+
+%%%%%%%% Main Content %%%%%%%%
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/methods}
+\input{sections/acknowledgements}
+% \input{sections/SI}
+
+%%%%%%%% References %%%%%%%%
+
+\bibliographystyle{inorder}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,74 @@
+\usepackage{soul}
+\usepackage{color}
+\usepackage{ifthen}
+
+\newcommand{\Eco}{{\it Escherichia coli}}
+\newcommand{\eco}{{\it E. coli}}
+
+\newcommand{\Bsub}{{\it Bacillus subtilis}}
+\newcommand{\bsub}{{\it B. subtilis}}
+
+\newcommand{\Mpn}{{\it Mycoplasma pneumoniae}}
+\newcommand{\mpn}{{\it M. pneumoniae}}
+
+\newcommand{\Mmy}{{\it Mycoplasma mycoides} subsp. {\it capri}}
+\newcommand{\mmy}{{\it M. mycoides} subsp. {\it capri}}
+
+\newcommand{\Mflorum}{\textit{Mesoplasma florum}}
+\newcommand{\mflorum}{{\it M. florum}}
+
+\newcommand{\Taq}{{\it Thermus aquaticus}}
+\newcommand{\taq}{{\it T. aquaticus}}
+\newcommand{\Tth}{{\it Thermus thermophilus}}
+\newcommand{\tth}{{\it T. thermophilus}}
+\newcommand{\Hvo}{{\it Haloferax volcanii}}
+\newcommand{\hvo}{{\it H. volcanii}}
+\newcommand{\Sce}{{\it Saccharomyces cerevisiae}}
+\newcommand{\sce}{{\it S. cerevisiae}}
+
+\newcommand{\Myc}{{\textit{Mycoplasma}}}
+\newcommand{\Mycs}{{\textit{Mycoplasmas}}}
+\newcommand{\ivo}{{\it in vivo}}
+\newcommand{\ivt}{{\it in vitro}}
+\newcommand{\denovo}{{\it de novo}}
+\newcommand{\etal}{{\it et al.}}
+
+% MinCell Related Macros
+\newcommand{\jsyna}{JCVI-syn3A}
+\newcommand{\syna}{Syn3A}
+\newcommand{\jsyn}{JCVI-syn1.0}
+\newcommand{\syn}{Syn1.0}
+\newcommand{\dna}[1]{$5^{\prime}$-\textit{#1}-$3^{\prime}$}
+\newcommand{\threeprime}{$3^{\prime}$}
+\newcommand{\fiveprime}{$5^{\prime}$}
+\newcommand{\gene}[2]{\textit{#1}/#2}
+%\newcommand{\locus}[1]{MMSYN1\_#1}
+\newcommand{\locus}[1]{\textsc{MMSYN1\_#1}}
+\newcommand{\locusA}[1]{\textsc{MMSYN3A\_#1}}
+\newcommand{\mA}{m$^{6}$A}
+
+\newcommand{\sd}{Shine-Dalgarno}
+\newcommand{\sdseq}{\dna{AGAAAGGAGG}}
+\newcommand{\pseq}{\dna{TANAAT}}
+\newcommand{\lpseq}{\dna{TGNTANAAT}}
+
+\newcommand*{\everymodeprime}{\ensuremath{\prime}}
+
+\newcommand{\water}{\ensuremath{H_2O}}
+
+%label ing commands
+\newcommand{\lfig}[1]{\label{fig:#1}}
+%\newcommand{\fig}[2][]{\textcolor{magenta}{\textbf{Fig.}}~\ref{fig:#2}#1}
+\newcommand{\fig}[2][]{\textbf{Fig.}~\ref{fig:#2}#1}
+%\newcommand{\figs}[3][]{\textcolor{magenta}{\textbf{Figs.}}~\ref{fig:#2}-\ref{fig:#3}#1}
+\newcommand{\figs}[3][]{\textbf{Figs.}~\ref{fig:#2}-\ref{fig:#3}#1}
+
+\newcommand{\ltbl}[1]{\label{tbl:#1}}
+%\newcommand{\tbl}[1]{\textcolor{magenta}{\textbf{Table}}~\ref{tbl:#1}}
+\newcommand{\tbl}[1]{\textbf{Table}~\ref{tbl:#1}}
+
+
+%\newcommand{\eqn}[1]{\textcolor{magenta}{\textbf{Eqn.}}~\ref{eqn:#1}}
+\newcommand{\eqn}[1]{\textbf{Eqn.}~\ref{eqn:#1}}
+%\newcommand{\refsec}[1]{\textcolor{magenta}{\textbf{Section}}~\ref{sec:#1}}
+\newcommand{\refsec}[1]{\textbf{Section}~\ref{sec:#1}}
