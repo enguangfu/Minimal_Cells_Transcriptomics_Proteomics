@@ -240,3 +240,29 @@ MMSYN1_0833      rplI Quasiessential           ribosomal protein L9     0.230174
 MMSYN1_0910      rpmH Quasiessential          ribosomal protein L34     2.100457      0.710321         0.338175       -1.390136          NaN      0.004820              NaN             NaN
         NaN      rpmG            NaN                                         NaN           NaN              NaN             NaN          NaN      0.012683              NaN             NaN
         NaN      rpmG            NaN                                         NaN           NaN              NaN             NaN          NaN      0.342815              NaN             NaN
+
+
+##############################################################################
+# MACROMOLECULE COMPLEX ABUNDANCE (limiting-subunit estimate)
+##############################################################################
+# Each complex's assembled copy number is set by its lowest stoichiometry-
+# adjusted subunit (excess subunits are degraded). rel* are per-organism
+# mean-normalized; the syn3A/syn1 ratio is the cross-organism comparison.
+# RNAP is core (no sigma factors). Linked to syn3A's longer cell cycle
+# (105 vs 60 min): RNAP = transcription engine, degradosome = RNA turnover.
+
+       complex                  formula  relTPM_syn1  relTPM_syn3a  TPM_fold_change  relIPM_syn1  relIPM_syn3a  iPM_fold_change limiter_relTPM_syn1 limiter_relTPM_syn3a limiter_relIPM_syn1 limiter_relIPM_syn3a
+RNA polymerase  MIN(rpoA/2, rpoC, rpoB)       1.2302        0.8008           0.6509       1.5926        1.2543           0.7876              rpoA/2                 rpoB                rpoB                 rpoC
+   Degradosome MIN(rny, rnjA, yhaM+rnr)       0.5630        0.9463           1.6810       0.2950        0.4005           1.3578                 rny             yhaM+rnr                 rny                  rny
+
+  Per-subunit values (transparency):
+  RNA polymerase   [MIN(rpoA/2, rpoC, rpoB)]
+    rpoA   JCVISYN3A_0645 (/2) | relTPM syn1=2.460 syn3A=5.146 | relIPM syn1=4.119 syn3A=5.155
+    rpoC   JCVISYN3A_0803 (/1) | relTPM syn1=1.758 syn3A=1.730 | relIPM syn1=1.718 syn3A=1.254
+    rpoB   JCVISYN3A_0804 (/1) | relTPM syn1=1.282 syn3A=0.801 | relIPM syn1=1.593 syn3A=1.376
+
+  Degradosome   [MIN(rny, rnjA, yhaM+rnr)]
+    rny    JCVISYN3A_0359 (/1) | relTPM syn1=0.563 syn3A=1.012 | relIPM syn1=0.295 syn3A=0.401
+    rnjA   JCVISYN3A_0600 (/1) | relTPM syn1=0.991 syn3A=0.967 | relIPM syn1=0.533 syn3A=0.446
+    yhaM   JCVISYN3A_0437 (/1) | relTPM syn1=0.626 syn3A=0.913 | relIPM syn1=0.671 syn3A=1.204
+    rnr    JCVISYN3A_0775 (/1) | relTPM syn1=0.072 syn3A=0.034 | relIPM syn1=0.223 syn3A=0.224
