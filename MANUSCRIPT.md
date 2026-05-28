@@ -300,7 +300,7 @@ single panel / paragraph.
 **Analysis:** `Syn3A_Transcriptomics/ONT/ONT_Processing/` (ONT) + `Syn3A_Transcriptomics/Illumina/Illumina_Processing/` (Illumina)  
 **Key params:** ONT direct-RNA, `minimap2 -ax map-ont` (NOT splice, bacteria are intron-less), per-strand depth; Illumina syn3A paired-end bowtie2 (dUTP / fr-firststrand), per-strand bedGraph.  
 **Inputs:** ONT raw `Syn3A_Transcriptomics/ONT/ONT_Raw/`; Illumina syn3A SRA accessions (SRR19432056/57 mate pair) via `Syn3A_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh`.  
-**Notes for LLM:** file now covers BOTH ONT and Illumina-syn3A mapping (two subsubsections); rRNA operons at ~55,460 and ~343,267 bp drive the multi-mapping fraction.  
+**Notes for LLM:** This session mostly polished. file now covers BOTH ONT and Illumina-syn3A mapping (two subsubsections); rRNA operons at ~55,460 and ~343,267 bp drive the multi-mapping fraction.  
 
 ---
 
