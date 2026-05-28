@@ -35,3 +35,10 @@ novel_orf_discovery/novel_orfs_*.tsv
 novel_orf_discovery/novel_orfs_*.xlsx
 novel_orf_discovery/*.png
 novel_orf_discovery/trypsin_digest/
+
+# ----------------------------
+# Redundant Genome Inputs
+# ----------------------------
+
+Genomes_Input/Motif_Identifications.xlsx
+Genomes_Input/syn1.genes.saf
