@@ -4,17 +4,26 @@
 
 \subsubsection{Isoform-based operon segmentation}
 
-Of the 267~k clustered RNA isoforms, 4~k supported by $\geq$50 reads were retained to suppress noise from sequencing artifacts and RNase degradation fragments. These isoforms were grouped into candidate operons by containment clustering: two isoforms were placed in the same cluster if one was fully contained within the other (within a 10~bp boundary tolerance), implemented via a union-find algorithm with a coordinate sweep line. This produced 316 initial operons (148 on the plus strand, 168 on the minus strand; median length 2{,}100~bp), which were then annotated against the 911 canonical \textit{Syn1} genes, of which 307 operons contained at least one sense gene (108 single-gene, 90 two-gene, and 109 with three or more genes).
+Of the 267~k clustered RNA isoforms, 4~k supported by $\geq$50 reads were retained to suppress noise from sequencing artifacts and RNase degradation fragments.
+These isoforms were grouped into candidate operons by containment clustering: two isoforms were placed in the same cluster if one was fully contained within the other (within a 10~bp boundary tolerance), implemented via a union-find algorithm with a coordinate sweep line.
+This produced 316 initial operons (148 on the plus strand, 168 on the minus strand; median length 2{,}100~bp), which were then annotated against the 911 canonical \textit{Syn1} genes, of which 307 operons contained at least one sense gene (108 single-gene, 90 two-gene, and 109 with three or more genes).
 
-Same-strand operon overlaps (30 pairs, 26 of which shared at least one gene) were resolved in two steps. First, each overlapping pair was evaluated by a transcription-direction rule: if the downstream operon's TSS fell in an intergenic region or within 10~nt upstream of the nearest gene start (i.e.\ a plausible 5\textquotesingle\ UTR), the pair was kept separate as genuine independent promoters (15 pairs); otherwise they were merged as RNase processing artifacts (15 pairs), reducing the operon count from 316 to 301. Second, two additional same-strand operon pairs sharing identical sense gene loci were merged via a transitive union-find procedure, yielding 299 isoform-derived operons.
+Same-strand operon overlaps (30 pairs, 26 of which shared at least one gene) were resolved in two steps.
+First, each overlapping pair was evaluated by a transcription-direction rule: if the downstream operon's TSS fell in an intergenic region or within 10~nt upstream of the nearest gene start (i.e.\ a plausible 5\textquotesingle\ UTR), the pair was kept separate as genuine independent promoters (15 pairs); otherwise they were merged as RNase processing artifacts (15 pairs), reducing the operon count from 316 to 301.
+Second, two additional same-strand operon pairs sharing identical sense gene loci were merged via a transitive union-find procedure, yielding 299 isoform-derived operons.
 
-After the initial segmentation, 200 of 911 genes (22.0\%) remained uncovered by any isoform-derived operon. These were rescued through three complementary strategies: (i)~13 groups of consecutive uncovered genes (gap $\leq$500~bp) were recovered by identifying spanning isoforms in the BAM file, (ii)~the two rRNA operons (16S--23S--5S) were added manually, as their extreme secondary structure precludes faithful long-read capture, and (iii)~the remaining 166 uncovered genes with non-zero spanning reads were added as single-gene transcription units. The final operon map comprised 480 operons (283 from isoform clustering, 14 merged, 2 gene-combined, 15 multi-gene rescue, and 166 single-gene rescue) and achieved complete sense-strand coverage of all 911 annotated \textit{Syn1} genes (91.4\% sense-only, 5.8\% both sense and antisense, 2.7\% antisense-only, 0\% uncovered).
+After the initial segmentation, 200 of 911 genes (22.0\%) remained uncovered by any isoform-derived operon.
+These were rescued through three complementary strategies: (i)~13 groups of consecutive uncovered genes (gap $\leq$500~bp) were recovered by identifying spanning isoforms in the BAM file, (ii)~the two rRNA operons (16S--23S--5S) were added manually, as their extreme secondary structure precludes faithful long-read capture, and (iii)~the remaining 166 uncovered genes with non-zero spanning reads were added as single-gene transcription units.
+The final operon map comprised 480 operons (283 from isoform clustering, 14 merged, 2 gene-combined, 15 multi-gene rescue, and 166 single-gene rescue) and achieved complete sense-strand coverage of all 911 annotated \textit{Syn1} genes (91.4\% sense-only, 5.8\% both sense and antisense, 2.7\% antisense-only, 0\% uncovered).
 
 \subsubsection{Locate TSS, TTS, and RNA Cleavage Sites from PacBio RNASeq}
 
 Questions here: can FLNC faithfully represent the ends of native transcripts?
 
-the start and end locations of each read, which are then used to determine the covered genes for this each. We define the likely TUs by the consecutive covered genes. For each TU, we define the TSSs and TTSs by locating the possible motifs at the 5' and 3' of the covered genes that identified by bioinformatic predictions. The truncated RNA reads tell the possible cleavage sites by ribonucleases.
+the start and end locations of each read, which are then used to determine the covered genes for this each.
+We define the likely TUs by the consecutive covered genes.
+For each TU, we define the TSSs and TTSs by locating the possible motifs at the 5' and 3' of the covered genes that identified by bioinformatic predictions.
+The truncated RNA reads tell the possible cleavage sites by ribonucleases.
 
 We differentiate the endo RNA cleavage sites from the internal promoter based on the predicted and inferred locations of internal promoters. 
 

@@ -1,0 +1,54 @@
+\subsubsection{RNA Sample Preparation} \label{sec:methods-ill-prep}
+
+Sample preparation was conducted following~\cite{Grnberger2019b}~%Grunberger et al., 2019. %\textit{\Strains}: 
+A frozen stock of~\syn~strain was provided by the JCVI.
+The frozen cells stock was scraped and inoculated in 10 mL of SP4+KnockOut media (media components listed in~\tbl{media}) under BSL2 conditions and incubated in a horizontal rotating shaker at 37\textdegree C for about 24 hours until the culture turned to media orange.
+The SP4 media is made from a two part formulation: part \textbf{\textit{I}}--3.5 g Mycoplasma Broth Base, 10 g Bacto Tryptone, 5.3 g Bacto Peptone, and 600 mL distilled water mixed to suspend well, adjusted to pH 7.5, and then autoclaved 15 min at 121\textdegree C and part \textbf{\textit{II}}--25 mL Glucose 20\% w/v stock, 50 mL CMRL 1066 (10X stock w/o phenol red, w/o bicarb, w/o Gln), 14.6 mL sodium bicarbonate 7.5\% w/v stock, 5 mL L-glutamine 200 mM stock, 35 mL Yeast extract solution, 100 mL TC Yeastolate 2\% w/v stock, 170 mL Serum (heat inactivated FBS, HS) or substitute (KO), 2.5 ml Penicillin G (400,000 U/mL stock), and 1.5 mL Phenol red (1\% w/v) filtered and sterilized (0.2 $\mu$m) then stored at 4\textdegree C.
+To complete the SP4 medium, combine 1.5 volume of part \textbf{\textit{I}} with 1 volume of part \textbf{\textit{II}}.
+
+RNA purification and depletion steps were conducted using sterile, RNase-free pipette tips (Thomas Scientific 1145N16, VWR 76322-134) and microcentrifuge tubes (Posi-Click 1149K01) on a countertop or biosafety cabinet treated with RNase decontamination solution (Invitrogen AM9780).
+Solutions apart from those provided with the kits were prepared using DEPC-treated water (Invitrogen 46-2224).
+RNA was extracted from~\jsyn~cells using the PureLink RNA Mini Kit (Invitrogen 12183018A) according to the manufacturer’s protocol.
+Briefly, $\le1\times10^{9}$ cells (2 mL of exponential phase culture) were harvested (4000$\times$g, 5 min, 4\textdegree C) and resuspended in lysozyme solution (100 $\mu$L; 10 mM Tris-HCl, pH 8.0, 0.1 mM EDTA, and 20 \sfrac{mg}{mL} lysozyme Egg white (L-040-25, Goldbio).
+SDS solution (500 $\mu$L; 10\% w/v) was added and the cells were incubated for 5 min at room temperature (rt).
+Lysis buffer containing $\beta$-mercaptoethanol (350 $\mu$L) was added and the sample was vortexed and passed six times through an 18-gauge needle.
+The resulting homogenate was centrifuged (12,000$\times$g, 2 min, rt) and 100\% ethanol (250 $\mu$L) was mixed with supernatant separated from the precipitate.
+The sample was purified through a spin cartridge provided with the kit and eluted with 2$\times$100 $\mu$L DEPC-treated water.
+To remove DNA, 1/9 volume of 10X DNase I Buffer (NEB, B0303S) and DNase I (NEB M0303S; 4 U total) were added and the mixture was incubated for 10 min at rt.
+EDTA (5 mM final concentration) was then added, and the reaction was heat-inactivated for 10 min at 75\textdegree C.
+Quantification with a NanoDrop Lite Spectrophotometer (Thermo Fisher ND-LITE-PR) typically showed yields of 40-60 $\mu$g of RNA.
+
+Ribosomal RNA was removed from the DNase-treated RNA samples using the RiboMinus Bacteria 2.0 Transcriptome Isolation Kit (Invitrogen A47335) according to the manufacturer’s protocol.
+Briefly, $\le$5 $\mu$g of DNase-treated RNA was mixed with 2X Hybridization Buffer (50 $\mu$L) and RiboMinus Pan-Prokaryote Probe Mix (3 $\mu$L) to a final volume of 100 $\mu$L.
+The RNA/probe mix was denatured for 10 min at 70\textdegree C, followed by hybridization of the rRNA and probes for 20 min at 37\textdegree C.
+The RNA/probe mix was added to a microcentrifuge tube containing a 200 $\mu$L suspension of RiboMinus Magnetic Beads in 1X Hybridization Buffer and incubated for 15 min at 37\textdegree C.
+The tube was placed on DynaMag-2 Magnet stand (Thermo Fisher 12321D) for 1 min.
+The supernatant (300 $\mu$L) containing the rRNA-depleted RNA was carefully aspirated and mixed with Nucleic Acid Binding Beads (10 $\mu$L), Binding Solution Concentrate (400 $\mu$L), and 100\% ethanol (1 mL).
+The mixture was incubated for 5 min at rt and placed on the magnetic stand for 5 min.
+The supernatant was discarded, the beads were washed with Wash Solution (300 $\mu$L) and placed on the magnetic stand again.
+The supernatant was discarded, the beads were air-dried for 5 min, and the RNA was eluted with DEPC-treated water heated to 70\textdegree C.
+The Nucleic Acid Binding Beads were removed using the magnetic stand, and the supernatant was transferred to a fresh microcentrifuge tube.
+
+\subsubsection{RNA Sample Quality Control Analysis} \label{sec:methods-ill-qc}
+
+Quantification of RNA was conducted using the Qubit RNA High Sensitivity assay (Invitrogen Q32852) and measured on a Qubit fluorometer (Invitrogen).
+Within-range samples treated with the RiboMinus kit were monitored with an AATI 5200 Fragment Analyzer (Agilent) showing depletion of rRNA-associated peaks.
+Method name: DNF-472T22 - HS Total RNA 15nt.mthds; Gel prime: No; Full conditioning: Yes; Gel prime to buffer: Yes; Gel selection: Gel 2; Perform prerun: 7.0 kV, 30 sec.; Rinse: No; Marker 1: No; Rinse: Tray: 3, Row: A, Dip count: 2; Sample injection: 6.0 kV, 150 sec.; Separation: 7.0 kV, 31.0 min.; Tray name: Tray-3; Analysis mode: RNA (Eukaryotic).%[Detailed method information was provided with ERML QC reports]
+~Quality controls plots of RNA libraries have been included in~\nameref{SI}, \fig{qc-ill}.
+
+\subsubsection{\textcolor{red}{Illumina Library Preparation and Sequencing}}
+
+\textbf{New section that added from Excel file sent from sequencing lab}
+
+The RNAseq libraries were prepared with the Kapa Hyper Stranded mRNA library kit (Roche).
+The library pool was quantitated by qPCR and sequenced on one MiSeq Nano flowcell for 251 cycles from each end of the fragments using a MiSeq 500-cycle sequencing kit version 2.
+
+\subsubsection{Illumina MiSeq Read Processing, Mapping to the Genome}
+
+% \subsubsection{Analysis of the Illumina RNA Sequencing}
+% %~\newline
+% %\cmt{Chris Fields confirm text, taken from your analysis pipline}\\
+% Processing of the~\syn~Illumina data was carried out using a custom NextFlow pipeline. Raw FASTQ reads were assessed for quality using FastQC (v0.11.9)~\citep{fastQC}. Adapter trimming and quality filtering were performed using Fastp (v0.20.0) with default parameters~\citep{Chen2018}. An additional quality assessment with FastQC was performed on the trimmed reads. The trimmed reads were then aligned to the~\syn~reference genome with using BWA-MEM (v0.7.17) \citep{Heng2013}. Post-alignment, the resulting BAM files were sorted and indexed using Samtools (v1.17) \citep{Li2009}. %Post-alignment, the resulting BAM files were sorted and indexed using Samtools (v1.17), followed by insert size metrics collection using Picard (v2.27.5). Read coverage was calculated using bamCoverage from the deepTools suite (v3.5.2). To ensure comprehensive quality control, MultiQC (v1.14) was employed to aggregate the results from FastQC, Fastp, and alignment statistics.
+% In addition to the NextFlow pipeline, the BAM files were converted to SAM files, and sequencing depth across the genome was extracted with SAMtools (v1.14) \citep{Li2009}. Reads (total and mapped) counts as well as sequencing coverage for the three~\syn~experiments are reported in \tbl{omic-summ}. Coverage was calculated using~\eqn{cov}. All scripts to run analysis as performed in this study are available at \github.
+
+\subsubsection{Quantification of TPM from Sequencing Depth}

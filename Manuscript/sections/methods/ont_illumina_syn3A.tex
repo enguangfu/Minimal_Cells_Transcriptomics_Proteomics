@@ -1,0 +1,50 @@
+\subsubsection{ONT RNA Sample Preparation}
+
+rRNA depletion
+
+\subsubsection{ONT Library Preparation and Direct Sequencing}
+
+polyA; adapter
+
+\subsubsection{Processing of Raw ONT Reads}
+
+Gubby: convert electric signal to ATCG
+base-calling of 99.99\%
+
+\subsubsection{Mapping ONT Reads to Syn3A Genome}
+
+● Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li2018minimap2} with the long-read Oxford Nanopore preset for non-spliced alignment: \texttt{-ax map-ont -p 0.99 --MD}.
+The \texttt{map-ont} preset was selected in preference to the splice-aware preset commonly used for ONT direct RNA because JCVI-syn3A, like its parent \emph{Mycoplasma mycoides}, is intron-less; allowing N-skip (spliced) CIGAR operations would yield single-read alignments that bridge tens to hundreds of kilobases of unrelated reference.
+Strandedness of direct-RNA reads is preserved through the BAM flag bits.
+Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.x~\cite{li2009samtools}.
+
+Of 734~k input reads, 559~k (76.2\%) mapped as primary alignments to the syn3A genome, with a mean read length of 383~nt (range 49--2{,}858~nt) and mean per-read Phred quality of 31.2; 98.2\% of primary mapped reads exceeded a mean quality of Q20.
+The 175~k unmapped reads (23.9\%) were of substantially lower quality (mean Q20.7), with 42.0\% falling below Q15 and 61.0\% shorter than 300~nt, consistent with the expected tail of low-quality and truncated molecules characteristic of ONT direct RNA sequencing rather than reference mismatch.
+Secondary alignments accounted for 3.6\% of primary mapped reads (20.2~k alignments) and clustered tightly at two genomic loci ($\sim$55{,}460 and $\sim$343{,}267~bp), corresponding to the two ribosomal RNA operons of syn3A.
+A further 7.3~k supplementary alignments (split-read mappings) were retained.
+  
+% Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li2018minimap2} with the splice-aware preset: \texttt{-ax splice -uf -k14 -p 0.99 --MD}. The \texttt{-uf} flag enforces forward-strand alignment, exploiting the inherent strandedness of direct RNA reads. Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.x~\cite{li2009samtools}.
+ 
+% Of 734~k input reads, 541~k (73.7\%) mapped as primary alignments
+% to the syn3A genome, with a mean read length of 390~nt and mean per-read
+% Phred quality of 31.5; 98.4\% of primary mapped reads exceeded a mean
+% quality of Q20. The 193~k unmapped reads (26.3\%) were of substantially
+% lower quality (mean Q21.0), with 38.2\% falling below Q15 and 65.3\% shorter
+% than 300~nt, consistent with the expected tail of low-quality and truncated
+% molecules characteristic of ONT direct RNA sequencing rather than reference
+% mismatch. Secondary alignments accounted for only 2.7\% of primary mapped
+% reads (14.6~k alignments) and clustered tightly
+% at two genomic loci ($\sim$55{,}460 and $\sim$343{,}267~bp), corresponding
+% to the two ribosomal RNA operons of syn3A.
+
+\subsubsection{Mapping Illumina Reads to Syn3A Genome}
+
+Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase in \ref{iScience} were retrieved from NCBI SRA database and assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels2016multiqc}.
+Per-base and per-read quality scores passed all checks and no Illumina adapters were detected, so no trimming was applied.
+
+% The FastQC \emph{sequence duplication} and \emph{per-base sequence content} flags failed in both mates as expected for RNA-seq on a 543~kb bacterial genome (the same transcript fragment is sequenced many times, and the first $\sim$10~nt show the canonical random-hexamer priming bias); neither was treated as a quality issue. A small fraction of overrepresented sequences mapped to the 16S/23S/5S ribosomal operons, indicating residual rRNA after Ribo-Zero depletion, but these were retained for downstream strand-split depth analysis.
+
+Reads were aligned to the JCVI-syn3A reference (NCBI accession CP016816.2) with \texttt{bowtie2} v2.5~\cite{langmead2012bowtie2} in default paired-end mode.
+The overall alignment rate was 98.88\%: 83.55\% of pairs mapped  concordantly exactly once, 10.43\% concordantly with $>$1 hit (corresponding to the two ribosomal RNA operons of syn3A), and 6.02\% of pairs were discordant or unpaired.
+SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22~\cite{li2009samtools}.
+Strand-specific BAMs were generated using the dUTP / fr-firststrand flag convention (read 2 forward on $+$ strand and read 1 reverse on $+$ strand define plus-strand reads; their reverse complements define minus-strand reads), matching the Kapa Stranded RNA-Seq Kit library preparation, and per-strand sequencing-depth bedGraph tracks were computed with \texttt{samtools depth}.
