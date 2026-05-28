@@ -18,7 +18,7 @@ Quality controls plots of RNA libraries have been included in~\nameref{SI}, \fig
 \subsubsection{PacBio IsoSeq Read Processing, Mapping to the Genome and Quanlity Control}
 
 Three technical replicates were repeated for one biological sample of the synthetic bacterium JCVI-Syn1.0.
-We decided to pool three replicates into one read file of 2.95~M entries since the high consistence among them.
+Three replicates were pooled into one read file of 2.95~M entries given their high consistency.
 Demultiplexed PacBio HiFi cDNA reads were preprocessed with a custom streaming pipeline before isoform clustering.
 The pipeline comprises four sequential steps: strand orientation, primer removal, 3$'$ poly(A) trimming, and post-mapping quality control.
 Each step operates on FASTQ file; no third-party Iso-Seq tool (e.g.\ \texttt{lima}, \texttt{isoseq3 refine}) was used, giving explicit control over filter thresholds in this bacterial, non-natively-polyadenylated context.
@@ -52,23 +52,23 @@ The primary aligned fraction is essentially saturated (median 1.00, mean 0.998, 
 \subsubsection{RNA Isoform Clustering}
 
 Isoform clustering of PacBio FLNC reads.
-2.6~M primary FLNC alignments yielded 621k unique (chrom, strand, pos5p0, pos3p0) tuples at single-bp resolution, with 77.3\% supported by a single read — far exceeding the 911 annotated Syn1 genes and reflecting a combination of biological TSS/TTS micro-heterogeneity, alignment noise, and low-count degradation products.                                 
+2.6~M primary FLNC alignments yielded 621~k unique (chrom, strand, pos5p0, pos3p0) tuples at single-bp resolution, with 77.3\% supported by a single read — far exceeding the 911 annotated Syn1 genes and reflecting a combination of biological TSS/TTS micro-heterogeneity, alignment noise, and low-count degradation products.                                 
 
-A bare read-count threshold is unacceptably lossy: requiring n $\geq$ 10 reads per single-bp tuple discards $\approx$990k reads ($\approx$38\% of all primary reads), most of which sit on tuples directly adjacent to high-count tuples and represent biological wobble around a single underlying TSS/TTS rather than independent transcripts.
+A bare read-count threshold is unacceptably lossy: requiring n $\geq$ 10 reads per single-bp tuple discards $\approx$990~k reads ($\approx$38\% of all primary reads), most of which sit on tuples directly adjacent to high-count tuples and represent biological wobble around a single underlying TSS/TTS rather than independent transcripts.
 Clustering is required to recover this signal for quantification and to deduplicate near-identical end positions for downstream analyses.
 
-To choose a bp-tolerance (eps), we swept cluster counts over a range of tolerances on informative subsets (tuples with n $\geq$ 10 and n $\geq$ 50 reads).
+To choose a bp-tolerance (eps), cluster counts were swept over a range of tolerances on informative subsets (tuples with n $\geq$ 10 and n $\geq$ 50 reads).
 The cluster count decreased smoothly with increasing tolerance and showed an inflection between 10 and 15 bp before flattening beyond 20 bp.
-We chose eps = 10 bp, consistent with the typical end-position accuracy of PacBio CCS reads and the 10-bp deduplication tolerance used in our operon segmentation, and yielding biologically sensible counts ($\approx$1k distinct transcription units among $\approx$900 genes organized in operons).
+An eps of 10 bp was chosen, consistent with the typical end-position accuracy of PacBio CCS reads and the 10-bp deduplication tolerance used in the operon segmentation, and yielding biologically sensible counts ($\approx$1~k distinct transcription units among $\approx$900 genes organized in operons).
 
 Tuples were clustered per (chromosome, strand) by complete-linkage under Chebyshev distance with a cutoff of eps = 10~bp.
 Complete linkage (rather than single linkage) was required to prevent chain-like merging through the dense carpet of low-count degradation-product tuples in highly expressed operons, which would otherwise fuse multiple real TSSs into a single giant cluster.
 No minimum-read filter was applied at cluster construction, so the isoform catalog is complete and downstream analyses select their own thresholds.
-For each cluster we reported the read-count-weighted median 5'/3' end positions, the median absolute deviation (MAD) of member positions on each axis, and the total number of supporting reads.
+For each cluster, the read-count-weighted median 5'/3' end positions, the median absolute deviation (MAD) of member positions on each axis, and the total number of supporting reads were reported.
 
-Complete-linkage clustering collapsed 612~k single-bp tuples into 267k isoform clusters.
+Complete-linkage clustering collapsed 612~k single-bp tuples into 267~k isoform clusters.
 The diameter guarantee was reflected in the empirical distributions: median MAD was 0 bp on both 5' and 3' ends, the 99th percentile was 5.0 bp (5') and 4.5 bp (3'), and the maximum was bounded at 5 bp (= eps/2).
-Applying minimum-read thresholds to clusters rather than raw tuples substantially increased the quantified signal: at n $\geq$ 10, clustering retained $\approx$21k isoforms covering $\approx$2.1M reads (vs. $\approx$17k tuples covering $\approx$1.7M reads, +24\%); at n $\geq$ 50, clustering retained $\approx$4~k isoforms covering $\approx$1.8M reads (vs. $\approx$3.3k tuples covering $\approx$1.4M reads, +29\%).
-We used the n $\geq$ 50 set for operon segmentation and the n $\geq$ 10 set for transcript visualization in subsequent figures.
+Applying minimum-read thresholds to clusters rather than raw tuples substantially increased the quantified signal: at n $\geq$ 10, clustering retained $\approx$21~k isoforms covering $\approx$2.1~M reads (vs. $\approx$17~k tuples covering $\approx$1.7~M reads, +24\%); at n $\geq$ 50, clustering retained $\approx$4~k isoforms covering $\approx$1.8~M reads (vs. $\approx$3.3~k tuples covering $\approx$1.4~M reads, +29\%).
+The n $\geq$ 50 set was used for operon segmentation and the n $\geq$ 10 set for transcript visualization in subsequent figures.
 
 Each cluster was annotated against the Syn1 gene model (GFF3) as sense, antisense, intergenic, or mixed using 95\%-of-length assignment rules with a 50-bp minimum gene-overlap threshold.

@@ -10,21 +10,25 @@ expand them into prose, quoting numbers verbatim from the files you list.
 ## 0. Style guide (read before drafting any subsection)
 
 **Target journal:** Nature Microbiology  
-**Length budget:** Results ≈ 3000; Methods ≈ unlimited (unlimited); Intro + Discussion ≈ 500 
+**Length budget:** Results ≈ 3000; Methods ≈ unlimited (unlimited); Intro + Discussion ≈ 500  
 **Tense / voice:**  
 - Methods: past tense, passive acceptable ("Reads were aligned with …").
 - Results: past tense for what we did, present for what the data show ("syn3A retains 99.90% identity …").  
 
-**Person:** "we" allowed but limited use  
+**Person:** "we" not allowed in Results and Methods  
 **Abbreviations:** define on first use in each of Abstract / Main / Methods.  
-**Figure references:** Fig. 2b  
+**Figure references:** Fig. 2b   
 **Citations:** numeric, `\cite{key}`; bibfile `Manuscript/references.bib`.  
 **Organism names:** "JCVI-syn1.0" first use then "syn1"; Same for syn3A  
-**Number formatting:** "1.08 Mb"; p-values P = 0.003.    
+**Number formatting:** sizes/coords — bp for exact coordinates (`1,078,809 bp`), kb/Mb for sizes (`536 kb`, `1.08 Mb`); read/feature counts — number + nonbreaking space + `k`/`M` (`2.6~M`, `267~k`), exact counts use `{,}` separators (`82{,}000`); p-values `P = 0.003`.  
+**Software versions:** name + exact version used in the scripts, e.g. minimap2 v2.30, bowtie2 v2.5.5, samtools v1.22.1, FastQC, MultiQC (citation keys TBD).  
+**Species / gene / locus:** species names via macros `\Mmy` / `\mmy` (not raw `\emph{...}`); gene names italic via `\gene{name}{num}` (italic name / plain locus); locus tags (`MMSYN1_NNNN`, `JCVISYN3A_NNNN`) in **plain text** via `\locus` / `\locusA`.  
 **Things to NEVER do:** _<e.g. don't write "novel" without qualification, don't claim causation from correlation, …>_  
-- em-dash: use comma or paranthese
+- em-dash (`---`): use comma or parenthese instead. (en-dash `--` for numeric ranges, e.g. `0.88--3.07~kb`, is correct and retained)
 - bullet points
-- hedging-as-polteness such as "I think", "I feel"
+- hedging-as-polteness such as "I think", "I feel"  
+
+**Line Breaking in Latex:** One sentence per line for easier tracking  
 
 ### Exemplar paragraph (tone we want to match)
 > _<paste one paragraph from a paper whose voice you want to emulate, or one of your own already-good paragraphs>_
@@ -229,22 +233,22 @@ single panel / paragraph.
 
 # METHODS
 
-## M1 — Illumina short-read sequencing of syn1.0 transcriptome
-**Tex file:** `Manuscript/sections/methods/illumina.tex`
-**Analysis:** `Syn1_Transcriptomics/Illumina/Illumina_Processing/`
-**Key params to mention:** FastQC + MultiQC; bowtie2 paired-end; dUTP / fr-firststrand (R2 = transcript strand); per-strand bedGraph.
-**Inputs:** SRA accessions _<fill>_
-**Notes for LLM:**
+## M1 — Illumina short-read sequencing of syn1.0 transcriptome  
+**Tex file:** `Manuscript/sections/methods/illumina_syn1.tex`  
+**Analysis:** `Syn1_Transcriptomics/Illumina/Illumina_Processing/`  
+**Key params to mention:** FastQC + MultiQC; bowtie2 paired-end; dUTP / fr-firststrand (R2 = transcript strand); per-strand bedGraph.  
+**Inputs:** SRA accessions in `Syn1_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh`  
+**Notes for LLM:** Subsubsection **Illumina MiSeq Read Processing, Mapping to the Genome** and **Quantification of TPM from Sequencing Depth** need written. 
 
 ---
 
-## M2 — PacBio long-read sequencing of syn1.0 transcriptome
-**Tex file:** `Manuscript/sections/methods/pacbio.tex`
-**Analysis:** `Syn1_Transcriptomics/PacBio/PacBio_Processing/`
-**Key params:** FLNC recovery (reorientation, primer removal, polyA trimming); `minimap2 -ax map-hifi`; HQ filtering.
-**Outputs:** `syn1.PacBio.FLNC.sorted.HQ.bam`, `depth_bedgraph/…`
-**Inputs:** NCBI accessions _<fill>_
-**Notes for LLM:**
+## M2 — PacBio long-read sequencing of syn1.0 transcriptome  
+**Tex file:** `Manuscript/sections/methods/pacbio_syn1.tex`  
+**Analysis:** `Syn1_Transcriptomics/PacBio/PacBio_Processing/`  
+**Key params:** FLNC recovery (reorientation, primer removal, polyA trimming); `minimap2 -ax map-hifi`; HQ filtering.  
+**Outputs:** `syn1.PacBio.FLNC.sorted.HQ.bam`, `depth_bedgraph/…`  
+**Inputs:** SRA accessions in `Syn1_Transcriptomics/PacBio/PacBio_Raw/00_retrieve_fastq.sh`  
+**Notes for LLM:** This section mostly finished and polished.  
 
 ---
 
@@ -253,7 +257,7 @@ single panel / paragraph.
 **Analysis:** `Syn1_Transcriptomics/Isoforms_PacBio/Cluster_Isoform.py`, `Syn1_Operon/…`
 **Key params:** clustering thresholds, min reads, TSS/TTS calling rule.
 **Outputs:** `isoform_clusters_annotated.tsv`, `operons.candidate_blocks.tsv`
-**Notes for LLM:**
+**Notes for LLM:** Subsubsection **Locate TSS, TTS, and RNA Cleavage Sites from PacBio RNASeq** need changed and written.
 
 ---
 
@@ -261,23 +265,24 @@ single panel / paragraph.
 **Tex file:** `Manuscript/sections/methods/RNA_processing.tex`
 **Analysis:** _<scripts>_
 **Inputs:** `Genomes_Input/Motif_Identifications.xlsx`
-**Notes for LLM:**
+**Notes for LLM:** The whole section needs my further analysis.
 
 ---
 
 ## M5 — Proteomics of syn1 and syn3A
-**Tex file:** `Manuscript/sections/methods/proteomics.tex`
+**Tex file:** `Manuscript/sections/methods/proteomics_syn1_syn3A.tex`
 **Analysis / source:** `Syn1_Syn3A_Proteomics/` — `syn1_proteomics_localization_2026.csv`, `syn3a_proteomics_summary_2026.csv`, `syn3A_proteome_annotated.xlsx`.
 **Key params:** absolute copy numbers vs iPM; 2019 vs 2026 measurements; tertiary function annotation built by `report_annotation_stats_syn3A.py`.
-**Notes for LLM:** distinguish what we measured vs reused from prior work; cite original datasets.
+**Notes for LLM:** distinguish what we measured vs reused from prior work; cite original datasets; subsubsection **Relative Protein Quantification** and **Localization of Proteome** need written.
 
 ---
 
-## M6 — Oxford Nanopore long-read sequencing of syn1.0 and syn3A transcriptomes
-**Tex file:** `Manuscript/sections/methods/ont.tex`
-**Analysis:** `Syn3A_Transcriptomics/ONT/ONT_Processing/`
-**Key params:** direct-RNA; `minimap2 -ax map-ont` (NOT splice — bacteria are intron-less); per-strand depth.
-**Notes for LLM:**
+## M6 — Correlation between transcriptome and proteome
+**Tex file:** `Manuscript/sections/methods/corr_transcriptome_proteome.tex`
+**Analysis:** `Syn1_Corr_RNA_Proteins/Transcription_Translation.py`, `Translation_Residual_L2_elongation.py`
+**Key params:** TPM source (PacBio vs Illumina); relative iPM; residual model covariates (CAI, tAI, TIR, etc.).
+**Outputs:** `syn1_genes_transcriptomics_proteomics.csv`, `residual_analysis/`
+**Notes for LLM:** Entire session needs written.
 
 ---
 
@@ -285,16 +290,16 @@ single panel / paragraph.
 **Tex file:** `Manuscript/sections/methods/novel_orf.tex`
 **Analysis:** `Syn1_Novel_ORF/…`
 **Key params:** Mycoplasma genetic code (UGA = Trp); anti-SD `ACCUCCUUU`; ORF length/SD-distance thresholds.
-**Notes for LLM:**
+**Notes for LLM:** Entire session needs written.
 
 ---
 
-## M8 — Correlation between transcriptome and proteome
-**Tex file:** `Manuscript/sections/methods/corr_transcriptome_proteome.tex`
-**Analysis:** `Syn1_Corr_RNA_Proteins/Transcription_Translation.py`, `Translation_Residual_L2_elongation.py`
-**Key params:** TPM source (PacBio vs Illumina); relative iPM; residual model covariates (CAI, tAI, TIR, etc.).
-**Outputs:** `syn1_genes_transcriptomics_proteomics.csv`, `residual_analysis/`
-**Notes for LLM:**
+## M8 — Oxford Nanopore (ONT) and Illumina sequencing of syn3A transcriptome
+**Tex file:** `Manuscript/sections/methods/ont_illumina_syn3A.tex`
+**Analysis:** `Syn3A_Transcriptomics/ONT/ONT_Processing/` (ONT) + `Syn3A_Transcriptomics/Illumina/Illumina_Processing/` (Illumina)
+**Key params:** ONT direct-RNA, `minimap2 -ax map-ont` (NOT splice, bacteria are intron-less), per-strand depth; Illumina syn3A paired-end bowtie2 (dUTP / fr-firststrand), per-strand bedGraph.
+**Inputs:** ONT raw `Syn3A_Transcriptomics/ONT/ONT_Raw/`; Illumina syn3A SRA accessions (SRR19432056/57 mate pair) via `Syn3A_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh`.
+**Notes for LLM:** file now covers BOTH ONT and Illumina-syn3A mapping (two subsubsections); rRNA operons at ~55,460 and ~343,267 bp drive the multi-mapping fraction.
 
 ---
 
