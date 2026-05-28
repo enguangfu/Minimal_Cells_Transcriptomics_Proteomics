@@ -14,6 +14,18 @@ USELESS/
 *.csv.gz
 
 # ----------------------------
+# PDF Complie Cache
+# ----------------------------
+/Manuscript/*.aux
+/Manuscript/*.bbl
+/Manuscript/*fls
+/Manuscript/*out
+/Manuscript/*fdb*
+/Manuscript/*synctex*
+/Manuscript/*log
+*.DS_Store
+
+# ----------------------------
 # Novel ORF discovery outputs
 # ----------------------------
 novel_orf_discovery/candidate_orfs_*.tsv

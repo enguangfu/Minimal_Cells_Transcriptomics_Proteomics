@@ -51,9 +51,26 @@ The **Numbers to cite** line is the single most important field — if listed, t
 
 # RESULTS
 
-## R1 — Global co-transcriptions in operons
+## R1 — Gene Co-transcriptions as Operons in Syn1 from PacBio Long-read RNA Sequencing
 **Tex file:** `Manuscript/sections/results/operons.tex`
 **Figure:** `Manuscript/figures/operon.pdf`
+
+
+How transcription and further RNA processing can complexity the transcriptome even of the reduced organism
+
+FLNC reads clustered to isoforms: 2.6M by 10 bps to 205k clustered; Use 10 for visual of 50 for operon backbone;  distribution of sharpness 5' and 3' ends
+
+Find the longest RNA isoform for representative of operons; then merge and rescue to get total 480 operons
+
+Statistics on operon size: operon can cover anti-sense genes; longest is rPtn operon; operon length distribution;
+
+Promoter and terminator signatures: -10 box significant; -35 box not; terminator predicted as hairpins + polyU
+
+\textit{Protein complexes in operons}
+
+tRNAs in operons
+
+Put one operon here: DCW operon?
 
 **Claim:**
 **Logic:**
