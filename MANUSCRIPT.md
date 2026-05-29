@@ -5,6 +5,12 @@ Results paragraphs. Each subsection here mirrors a `.tex` file under
 `Manuscript/sections/{results,methods}/`. Fill in the bullets; the LLM will
 expand them into prose, quoting numbers verbatim from the files you list.
 
+TO DO Reminder:
+
+- Fill out the logics in Results and generate the Results.
+- Regenerate and format the figures.
+- Reorganize Operon_Visual for publication.
+- 
 ---
 
 ## 0. Style guide (read before drafting any subsection)
@@ -56,16 +62,81 @@ The **Numbers to cite** line is the single most important field — if listed, t
 
 # RESULTS
 
+## Overview of RESULTS
+
+Five sections and six multi-panel figures; each section will be of 600 words.
+
+Chain of logics for each section; use one or multiple paragraphs for each logic.
+
 ## R1 — Gene Co-transcriptions as Operons in Syn1 from PacBio Long-read RNA Sequencing
-**Tex file:** `Manuscript/sections/results/operons.tex`
+
+**Tex file:** `Manuscript/sections/results/operons.tex`  
+
+### One-sentence Summary
+**480 operons were identified using PacBio long-read RNAseq, with transcription signatures located.**
+
+### Figure
 **Figure:** `Manuscript/figures/operon.pdf`
 
+- Panel a: Two-gene operon co-transcription and the following RNA processing.
+- Panel b: Number of sense genes per operon in syn1.
+- Panel c: Lengths per operon in syn1.
+- Panel d: Transcription promoter and terminator.
+- Panel e: Macromolecular complex ... operonal structure in syn1.
 
-How transcription and further RNA processing can complexity the transcriptome even of the reduced organism
+### Chain of Logics
 
-FLNC reads clustered to isoforms: 2.6M by 10 bps to 205k clustered; Use 10 for visual of 50 for operon backbone;  distribution of sharpness 5' and 3' ends
+#### L1: Co-transcription and further RNA processing complexity the transcriptome even of the reduced bacterium.
 
-Find the longest RNA isoform for representative of operons; then merge and rescue to get total 480 operons
+- **Logic:** Co-transcription with multiple transcription start and terminator sites generates multiple transcription units; RNA processing from endo-or exo ribonucleases can digest the transcripts to even more **RNA isoforms**.
+- **Analysis:** None
+- **Outputs:** None
+- **Numbers to cite:**  None
+- **Figure panels:** a  
+- **Conclusion:** None
+- **Caveats:** None
+- **Notes for LLM:** This is a descriptive part.
+
+#### L2: 2.6 M full-length PacBio RNA seq clusterd into 267k isoform clusters.
+
+- **Logic:** PacBio raw cDNA reads were processed and quality controlled to output 2.6 M RNA reads. Clustering was applied to suppress the noise.
+- **Analysis:** 
+  - Processing: `Syn1_Transcriptomics/PacBio/PacBio_Processing/PacBio_Processing.py`
+  - Clustering: `Syn1_Transcriptomics/PacBio/Isoforms_PacBio/Cluster_Isoform.py`
+- **Outputs:** 
+  - BAM file: `Syn1_Transcriptomics/PacBio/PacBio_Processing/syn1.PacBio.FLNC.sorted.HQ.bam`
+  - Isoform clusters: `Syn1_Transcriptomics/PacBio/Isoforms_PacBio/isoform_clusters_annotated.xlsx`
+- **Numbers to cite:**  cluster eps = 10 bp, low MAD
+- **Figure panels:** None
+- **Conclusion:** 267k isoform clusters with sharp ends serve as solid foundation for operon calling.
+- **Caveats:** None
+- **Notes for LLM:** More details presented in Methods M2.
+
+#### L3: 480 operons were mapped by full-length PacBio RNA seq.
+
+- **Logic:** Unique longest isoform clusters as evidence of gene co-transcription were constructued by containment to cover 316 initial operons. Overlap between operons were solved. Uncovered genes were rescued. Finally, 480 operons for 911 genes in syn1.
+- **Analysis:** 
+  - Operon segmentation: `Syn1_Operon/Operon_Segmentation.ipynb`
+- **Outputs:** 
+  - Operons: `Syn1_Operon/operons.candidate_blocks.tsv`
+- **Numbers to cite:**  MIN_READS threshold = 50
+- **Figure panels:** None
+- **Conclusion:** None
+- **Caveats:** None
+- **Notes for LLM:** More details are in Methods M3; this part includes no statistics on operons.
+
+#### L4: Polycistronic operons in syn1.
+
+- **Logic:** 
+- **Analysis:** 
+  - Operon segmentation: `Syn1_Operon/Operon_Annotation.ipynb`
+- **Outputs:** 
+  - Operons: `Syn1_Operon/operons.candidate_blocks.tsv`
+- **Numbers to cite:** mean and median of length, sense gene count, anti-sense gene count.
+- **Figure panels:** None
+- **Conclusion:** None
+- **Caveats:** None
+- **Notes for LLM:** None
 
 Statistics on operon size: operon can cover anti-sense genes; longest is rPtn operon; operon length distribution;
 
@@ -76,6 +147,8 @@ Promoter and terminator signatures: -10 box significant; -35 box not; terminator
 tRNAs in operons
 
 Put one operon here: DCW operon?
+
+
 
 **Claim:**
 **Logic:**
