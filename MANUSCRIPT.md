@@ -36,6 +36,7 @@ TO DO Reminder:
 - hedging-as-polteness such as "I think", "I feel"  
 
 **Line Breaking in Latex:** One sentence per line for easier tracking  
+**Referring to files:** For now, use files names in the Git repo; replaced with SI file names later.
 
 ### Exemplar paragraph (tone we want to match)
 > _<paste one paragraph from a paper whose voice you want to emulate, or one of your own already-good paragraphs>_
@@ -252,7 +253,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** a
 - **Conclusion:** Poor coverage of membrane proteins because of the protease digestion; 
 - **Caveats:** None
-- **Notes for LLM:** Method **Relative Protein Quantification** and **Localization of Proteome** needs to be finished; **Absolute Intracellular Protein Quantification** needs to be polished.
+- **Notes for LLM:** DONE — Method **Relative Protein Quantification**, **Localization of Proteome** (both written), and **Absolute Intracellular Protein Quantification** (polished) are complete in M5.
 
 #### L3.2: Using Illumina TPM as standard of transcriptome quantification
 
@@ -263,7 +264,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** c
 - **Conclusion:** As convention, Illumina TPMs were used to do correlation.
 - **Caveats:** None
-- **Notes for LLM:** Method **Illumina MiSeq Read Processing, Mapping to the Genome** under M1 and two **Quantification of TPM from Sequencing Depth** under M1 and M2 need finished.
+- **Notes for LLM:** DONE — Method **Illumina MiSeq Read Processing, Mapping to the Genome** (M1) and the **Quantification of TPM from Sequencing Depth** subsubsections (M1 and M2; a third was added under M8 for syn3A) are complete.
 
 #### L3.3: Decent correlation found between transcriptome and proteome for syn1
 
@@ -288,7 +289,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** d
 - **Conclusion:** No improvement on correlations, could be because the prediction itself was inaccurate.
 - **Caveats:** None
-- **Notes for LLM:** Method **Translation Initiation Rate Prediction** needs to be finished.
+- **Notes for LLM:** DONE — Method **Translation Initiation Rate Prediction** is complete in M6.
 
 #### L3.5: Translation elongation factor improved the correlations
 
@@ -301,20 +302,23 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** e,f
 - **Conclusion:** Translation elongation affected the protein biosynthesis.
 - **Caveats:** None
-- **Notes for LLM:** Method **Codon Adaptation Index (CAI)** needs to be finished.
+- **Notes for LLM:** DONE — Method **Codon Adaptation Index (CAI)** is complete in M6.
 
 #### L3.6: Protein degradation had low correlation with residuals.
 
 - **Logic:** Intrinsic protein degradation as a result of protease activities in syn1 was transferred from Mpn by finding the reciprocal homologs; Lowest half-life was 4.7 hours, way longer than the half-life of 1 hour for syn1.
-- **Analysis:** `Syn1_Corr_RNA_Proteins/Translation_Residual_L3_degradation.py`
+- **Analysis:** 
+  - `Syn1_Corr_RNA_Proteins/Translation_Residual_L3_degradation.py`
+  - Homology build: `Genomes_Input/Homology_Build.py`
 - **Outputs:** 
   - Same name Txt file
-  - plots under `Syn1_Corr_RNA_Proteins/residual_analysis`
+  - plots under `Syn1_Corr_RNA_Proteins/residual_analysis/`
+  - Homology under `Genomes_Input/homology_syn1_mpn/`
 - **Numbers to cite:**  half-life distributions; Pearson r's
 - **Figure panels:** g,h
 - **Conclusion:** Intrinsic protein degradation is way slower than protein synthesis and doubling in syn1, thus having a minor effect on proteome abundances.
 - **Caveats:** Only a subset of proteins found reciprocal homologs; the intrinsic half-lives were corrected by protease (Lon or FtsH) abundances.
-- **Notes for LLM:** Method **Protein Degradation Rate Mapping from Mpn** needs to be finished.
+- **Notes for LLM:** DONE — Method **Protein Degradation Rate Mapping from Mpn** is complete in M6.
 
 ---
 
@@ -340,6 +344,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 - **Logic:** 2% of the isoforms have antisense transcription coverage. Two thirds came from the spurious promoters in the AT-rich genome; the transcription read-through can cause anti-sense transcription at the end or embedded inside the operons.
 - **Analysis:** 
+  - `Syn1_Novel_ORF/Novel_translation.ipynb`
   - `Syn1_Novel_ORF/Abnormal_Transcripts.py`
 - **Outputs:** 
   - Same name Txt file
@@ -348,7 +353,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** a,b
 - **Conclusion:** Full-length RNA isoforms reveal new cases of anti-sense transcription as read-throughs.
 - **Caveats:** None
-- **Notes for LLM:** Method **Novel Transcription and Translation** needs to be finished and polished.
+- **Notes for LLM:** DONE — Method **Novel Transcription and Translation** is complete in M7 (written + polished).
 
 #### L4.2: Distribution of 5' and 3' UTR lengths.
 
@@ -563,19 +568,20 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Analysis:** 
 - Illumina mapping: `Syn1_Transcriptomics/Illumina/Illumina_Processing/01_quality_control.sh`, `02_alignment_seqdepth.sh`  
 - Gene TPM: `Syn1_Transcriptomics/Gene_TPM/Gene_Transcriptomics.py`
-**Key params to mention:** FastQC + MultiQC; bowtie2 paired-end; dUTP / fr-firststrand (R2 = transcript strand); per-strand bedGraph.  
+**Key params to mention:** 3 SRA datasets (SRR35996296/297 = technical reps of one RNA sample, SRR35996298 = second biological sample), 2x251 nt MiSeq, Kapa Hyper Stranded mRNA kit (dUTP / fr-firststrand, R2 = transcript strand); FastQC + MultiQC, no trimming; bowtie2 v2.5.5 default paired-end (99.49-99.56% overall alignment); samtools v1.22.1; per-strand bedGraph; depth-based TPM = length-normalized mean depth / (sense+antisense total) x 1e6, two-step replicate averaging (tech reps r=0.98; bio samples r=0.92-0.94).  
 **Inputs:** SRA accessions in `Syn1_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh` 
-**Notes for LLM:** Subsubsection **Illumina MiSeq Read Processing, Mapping to the Genome** and **Quantification of TPM from Sequencing Depth** need to be written. 
+**Outputs:** `Illumina_Processing/depth_bedgraph/SRR3599629{6,7,8}.{plus,minus}.bedGraph`; `Gene_TPM/syn1_illumina_TPM_profiles.tsv`, `syn1_Illumina_PacBio_TPM_profiles.csv`  
+**Notes for LLM:** DONE — both subsubsections written (Illumina MiSeq read processing/mapping; TPM from sequencing depth). Stale commented NextFlow/BWA-MEM block removed (actual pipeline is bowtie2). RNA prep, QC, and library-prep subsubsections were already drafted. 
 
 ---
 
 ## M2 — PacBio long-read sequencing of syn1.0 transcriptome  
 **Tex file:** `Manuscript/sections/methods/pacbio_syn1.tex`  
 **Analysis:** `Syn1_Transcriptomics/PacBio/PacBio_Processing/`  
-**Key params:** FLNC recovery (reorientation, primer removal, polyA trimming); `minimap2 -ax map-hifi`; HQ filtering.  
-**Outputs:** `syn1.PacBio.FLNC.sorted.HQ.bam`, `depth_bedgraph/…`  
+**Key params:** 3 technical reps (SRR36012641/642/643) pooled to 2.95 M HiFi reads; custom FLNC recovery (reorientation via H1/BCRC, primer trim, polyA trim) -> 2.62 M; `minimap2 -ax map-hifi --secondary=no` v2.30 (CP002027.1); pysam per-read HQ filter (MAPQ>=20, aln-frac>=0.7, clip<=0.3, |qlen-refspan|<=100, concatemer flag) -> 99.3% retained (2.60 M HQ); samtools v1.22.1 per-strand bedGraph; clustering (`Cluster_Isoform.py`, complete-linkage Chebyshev eps=10 bp): 621 k tuples -> 267 k clusters; depth-based TPM as in M1 (single pooled library, no replicate averaging).  
+**Outputs:** `PacBio_Processing/syn1.PacBio.FLNC.sorted.HQ.bam`, `depth_bedgraph/syn1.PacBio.FLNC.HQ.{plus,minus,total}.bedGraph`; `Isoforms_PacBio/isoform_clusters_annotated.tsv`; `Gene_TPM/syn1_pacbio_TPM_profiles.tsv`  
 **Inputs:** SRA accessions in `Syn1_Transcriptomics/PacBio/PacBio_Raw/00_retrieve_fastq.sh`  
-**Notes for LLM:** This section is mostly finished and polished.  
+**Notes for LLM:** DONE — polished. Fixed wrong/inconsistent numbers (retention 99.6->99.3%, min MAPQ 36->20, 612->621 k tuples, n>=10 discard 990 k/38%->874 k/34%, n>=50 1.4->1.5 M/+29->+22%), typos (Quanlity, missing space), added minimap2+samtools citations, and wrote the empty TPM subsubsection. Left untouched: sub-percent before/after-filter rounding (aligned-fraction 0.998/0.994, soft-clip 0.2%/0.6%, read length 3.07/3.93 kb) — negligible, flag if you want them aligned to the after-filter log.  
 
 ---
 
@@ -599,25 +605,28 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 ## M5 — Proteomics of syn1 and syn3A  
 **Tex file:** `Manuscript/sections/methods/proteomics_syn1_syn3A.tex`  
 **Analysis / source:** `Syn1_Syn3A_Proteomics/` — `syn1_proteomics_localization_2026.csv`, `syn3a_proteomics_summary_2026.csv`, `syn3A_proteome_annotated.xlsx`.  
-**Key params:** absolute copy numbers vs iPM; 2019 vs 2026 measurements; tertiary function annotation built by `report_annotation_stats_syn3A.py`.  
-**Notes for LLM:** distinguish what we measured vs reused from prior work; cite original datasets; subsubsection **Relative Protein Quantification** and **Localization of Proteome** need to be written.
+**Key params:** Spectronaut iBAQ -> iPM (iPM_i = 1e6 * iBAQ_i / sum iBAQ_j) per rep, mean across 3 reps; absolute copy number = (iPM/1e6) x total proteins/cell (syn1 ~127 k from dry mass 12.8 fg x 58.2% protein / avg MW); localization via DeepTMHMM (TMRs) + SignalP 6, priority signal-peptide > TMR > cytoplasmic; 2019 vs 2026 measurements; tertiary function annotation built by `report_annotation_stats_syn3A.py`.  
+**Numbers to cite:** syn1 detected 721/828 (87.1%); median copy number cytoplasmic 47, lipoprotein 21, membrane 10, extracellular 3 (n = 516/68/126/11).  
+**Notes for LLM:** DONE — wrote **Relative Protein Quantification** (iBAQ->iPM) and **Localization of Proteome** (DeepTMHMM+SignalP, cytoplasmic/membrane/lipoprotein/extracellular), polished **Absolute Intracellular Protein Quantification** (fixed detected 735->721, "weght"->"weight", removed empty "(see )" ref). Added DeepTMHMM (`hallgren_deeptmhmm_2022`) + SignalP (`teufel_signalp_2022`) citations. Sample-prep / LC-MS-MS subsubsections were already drafted. Verified syn3A 2026 detection = 446/455 (the old 449 was wrong); per author, the syn3A 2019-vs-2026 comparison paragraph (measured-vs-reused) was deleted from the tex (not discussed for now).
 
 ---
 
 ## M6 — Correlation between transcriptome and proteome
 **Tex file:** `Manuscript/sections/methods/corr_transcriptome_proteome.tex`  
-**Analysis:** `Syn1_Corr_RNA_Proteins/Transcription_Translation.py`, `Translation_Residual_L2_elongation.py`  
-**Key params:** TPM source (PacBio vs Illumina); relative iPM; residual model covariates (CAI, tAI, TIR, etc.).  
+**Analysis:** `Transcription_Translation.py` (base correlation), `Translation_Residual_L1_initiation.py` (TIR/OSTIR), `Translation_Residual_L2_elongation.py` (CAI), `Translation_Residual_L3_degradation.py` + `Genomes_Input/Homology_Build.py` (degradation).  
+**Key params:** Illumina sense TPM vs iPM, log10 OLS, residual = log10(iPM) − fit; TIR via OSTIR (anti-SD ACCUCCUUU, 30-nt windows, read-weighted); CAI (Sharp & Li, ref set = top 20% by iPM); Mpn half-lives (Burgos 2020) via reciprocal-best-hit blastp, protease-abundance correction (Lon 0.84 / FtsH 2.08, Mpn from Maier 2011).  
 **Outputs:** `syn1_genes_transcriptomics_proteomics.csv`, `residual_analysis/`  
-**Notes for LLM:** Entire section needs to be written.  
+**Numbers to cite:** correlation all r=0.61 (R²=0.38, n=717) / cytoplasmic r=0.70 (R²=0.49, n=512); ΔR²: TIR +0.020 (2%), CAI +0.080 (+21%), degradation ≤0.01; shortest Mpn-mapped half-life 4.7 h (median 32 h) vs ~1 h doubling.  
+**Notes for LLM:** DONE — intro (base correlation + residual definition) + 3 subsubsections written (TIR, CAI, degradation). Per author, **tAI left out** of Methods (sensitivity check only). Citations added: OSTIR `roots_ostir_2021`, CAI `sharp_codon_1987`, Burgos `burgos_protein_2020`, Maier `maier_quantification_2011`. CAI is the one layer that improved the fit; TIR and degradation explained little.  
 
 ---
 
 ## M7 — Novel Transcription and Translation
 **Tex file:** `Manuscript/sections/methods/novel_orf.tex`  
-**Analysis:** `Syn1_Novel_ORF/…`   
-**Key params:** Mycoplasma genetic code (UGA = Trp); anti-SD `ACCUCCUUU`; ORF length/SD-distance thresholds.  
-**Notes for LLM:** Entire section needs to be written.  
+**Analysis:** `Syn1_Novel_ORF/Abnormal_Transcripts.py` (antisense classes), `Syn1_Novel_ORF/Novel_translation.ipynb` (novel ORFs).  
+**Key params:** antisense labeling base-by-base vs gene model, 3 classes (spurious-promoter / read-through / embedded); OSTIR all-start-codon scan (anti-SD ACCUCCUUU, genetic code 4 / UGA=Trp, ORFs >=15 aa); synthesis-rate rank (reads x TIR), top 100, in-silico trypsin (1 missed cleavage, 7-25 aa), Spectronaut re-search of augmented DB.  
+**Numbers to cite:** 2% antisense (345 isoforms -> 90 clusters); spurious-promoter 60 (67%), read-through 30 (33%, incl. 4 embedded); 816 abnormal isoforms -> ~26,000 candidate ORFs -> top 100 -> 44 with proteotypic peptides; 2 ORFs confirmed by MS (near MMSYN1_0592 and the 54-aa N-term extension of MMSYN1_0768), both deleted in syn3A.  
+**Notes for LLM:** DONE (polished). Added antisense subsubsection (L4.1, 3 classes) + polished novel-ORF subsubsection (L4.4). Fixed stale clustering opening (was "82,000 isoforms / 15 bp" -> now references the 816 abnormal isoforms from M2's 267k/10bp clusters), anti-SD ACCTCCTTT->ACCUCCUUU, grammar. VERIFY: ~26,000 candidate ORFs and 44 proteotypic-ORF counts not independently re-checked (notebook outputs cleared); 816 confirmed. The "2 confirmed in MS" is the R4-L4.4 result (kept out of Methods).  
 
 ---
 
@@ -626,7 +635,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Analysis:** `Syn3A_Transcriptomics/ONT/ONT_Processing/` (ONT) + `Syn3A_Transcriptomics/Illumina/Illumina_Processing/` (Illumina)  
 **Key params:** ONT direct-RNA, `minimap2 -ax map-ont` (NOT splice, bacteria are intron-less), per-strand depth; Illumina syn3A paired-end bowtie2 (dUTP / fr-firststrand), per-strand bedGraph.  
 **Inputs:** ONT raw `Syn3A_Transcriptomics/ONT/ONT_Raw/`; Illumina syn3A SRA accessions (SRR19432056/57 mate pair) via `Syn3A_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh`.  
-**Notes for LLM:** This section is mostly polished. The file now covers BOTH ONT and Illumina-syn3A mapping (two subsubsections); rRNA operons at ~55,460 and ~343,267 bp drive the multi-mapping fraction.  
+**Notes for LLM:** DONE (polished). Seven subsubsections: ONT RNA sample prep, RNA QC, ONT library prep + direct sequencing, raw-read processing/base-calling, ONT→syn3A mapping, Illumina→syn3A mapping, and "Quantification of TPM from Sequencing Depth" (added; mirrors M1/M2). TPM subsubsection: depth-based TPM (same definition as M1) computed for both Illumina + ONT per-strand bedGraphs over 496 loci (493 gene + 3 pseudogene, both feature types parsed); single replicate each → no averaging; output `syn3A_TPM_Illumina_ONT.tsv`; Illumina = quantitative track, ONT = orthogonal check; validated vs Sandberg-reported TPM, Pearson r=0.998 on log10 (script: `Syn3A_Transcriptomics/Gene_TPM/Syn3A_TPM.py`). VERIFY: r=0.998 taken from CLAUDE.md's documented value (script's TSV/console output not saved in OneDrive copy); 496 loci re-counted from the GFF3. ONT mapping numbers re-verified against `syn3A.ONT.rep1.sorted.bam.qc_report.txt`: 734.08k reads → 559k (76.2%) primary mapped, mean 383 nt (49--2,858), Q31.2, 98.2% ≥Q20; 175k unmapped (23.9%, mean Q20.7, 42.0% <Q15, 61.0% <300nt); 20.2k secondary (3.6%) at the two rRNA operons (~55,460 & ~343,267 bp); 7.3k supplementary. minimap2 v2.30 `-ax map-ont -p 0.99 --MD` (NOT splice; old splice-preset numbers kept commented). Illumina syn3A: bowtie2 v2.5.5 default paired-end, 98.88% overall (83.55% concordant-once, 10.43% multi = rRNA operons, 6.02% discordant/unpaired), dUTP/fr-firststrand strand split — alignment % not locally re-verifiable (no logs/ in OneDrive copy; trusted from prior run). Polish pass: units → mL/$\mu$L, centrifugal force → `$\times$g` (matches M1), removed a double space. Compiles clean (24 pp).  
 
 ---
 

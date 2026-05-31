@@ -36,19 +36,25 @@ Within-range samples treated with the RiboMinus kit were monitored with an AATI 
 Method name: DNF-472T22 - HS Total RNA 15nt.mthds; Gel prime: No; Full conditioning: Yes; Gel prime to buffer: Yes; Gel selection: Gel 2; Perform prerun: 7.0 kV, 30 sec.; Rinse: No; Marker 1: No; Rinse: Tray: 3, Row: A, Dip count: 2; Sample injection: 6.0 kV, 150 sec.; Separation: 7.0 kV, 31.0 min.; Tray name: Tray-3; Analysis mode: RNA (Eukaryotic).%[Detailed method information was provided with ERML QC reports]
 ~Quality controls plots of RNA libraries have been included in~\nameref{SI}, \fig{qc-ill}.
 
-\subsubsection{\textcolor{red}{Illumina Library Preparation and Sequencing}}
-
-\textbf{New section that added from Excel file sent from sequencing lab}
+\subsubsection{Illumina Library Preparation and Sequencing}
 
 The RNAseq libraries were prepared with the Kapa Hyper Stranded mRNA library kit (Roche).
 The library pool was quantitated by qPCR and sequenced on one MiSeq Nano flowcell for 251 cycles from each end of the fragments using a MiSeq 500-cycle sequencing kit version 2.
 
 \subsubsection{Illumina MiSeq Read Processing, Mapping to the Genome}
 
-% \subsubsection{Analysis of the Illumina RNA Sequencing}
-% %~\newline
-% %\cmt{Chris Fields confirm text, taken from your analysis pipline}\\
-% Processing of the~\syn~Illumina data was carried out using a custom NextFlow pipeline. Raw FASTQ reads were assessed for quality using FastQC (v0.11.9)~\citep{fastQC}. Adapter trimming and quality filtering were performed using Fastp (v0.20.0) with default parameters~\citep{Chen2018}. An additional quality assessment with FastQC was performed on the trimmed reads. The trimmed reads were then aligned to the~\syn~reference genome with using BWA-MEM (v0.7.17) \citep{Heng2013}. Post-alignment, the resulting BAM files were sorted and indexed using Samtools (v1.17) \citep{Li2009}. %Post-alignment, the resulting BAM files were sorted and indexed using Samtools (v1.17), followed by insert size metrics collection using Picard (v2.27.5). Read coverage was calculated using bamCoverage from the deepTools suite (v3.5.2). To ensure comprehensive quality control, MultiQC (v1.14) was employed to aggregate the results from FastQC, Fastp, and alignment statistics.
-% In addition to the NextFlow pipeline, the BAM files were converted to SAM files, and sequencing depth across the genome was extracted with SAMtools (v1.14) \citep{Li2009}. Reads (total and mapped) counts as well as sequencing coverage for the three~\syn~experiments are reported in \tbl{omic-summ}. Coverage was calculated using~\eqn{cov}. All scripts to run analysis as performed in this study are available at \github.
+Three strand-specific RNA-seq datasets of~\syn~were retrieved from the NCBI SRA database (accessions SRR35996296, SRR35996297, and SRR35996298), each comprising paired-end reads of 2$\times$251~nt sequenced on an Illumina MiSeq.
+Datasets SRR35996296 and SRR35996297 are technical replicates of one biological RNA sample, and SRR35996298 is a second biological sample, yielding $\sim$505~k, $\sim$511~k, and $\sim$1.09~M read pairs, respectively.
+Raw reads were assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels2016multiqc}; no adapter or quality trimming was applied prior to alignment.
+Reads were aligned to the~\syn~reference genome (NCBI accession CP002027.1) with \texttt{bowtie2} v2.5.5~\cite{langmead2012bowtie2} in default paired-end mode, against an index built with \texttt{bowtie2-build} from the same reference.
+Overall alignment rates were 99.49--99.56\% across the three datasets, of which 89.4--93.1\% of pairs aligned concordantly exactly once and 5.1--7.8\% aligned concordantly more than once.
+SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22.1~\cite{li2009samtools}.
+Strand-specific BAMs were generated using the dUTP / fr-firststrand flag convention (read 2 forward on the $+$ strand and read 1 reverse on the $+$ strand define plus-strand reads; their reverse complements define minus-strand reads), matching the Kapa Hyper Stranded mRNA library preparation, and per-strand sequencing-depth bedGraph tracks were computed with \texttt{samtools depth}.
 
 \subsubsection{Quantification of TPM from Sequencing Depth}
+
+Per-gene transcript abundances were quantified from the strand-specific depth tracks rather than from read counts.
+For each gene annotated in the~\syn~reference (\texttt{syn1.genes.gff3}, feature type \texttt{gene}), a sense and an antisense mean per-base depth were computed over the gene body from the plus- and minus-strand bedGraph tracks using prefix sums, with the sense strand taken as the gene's annotated strand.
+Dividing the summed depth by the gene length, $\bar{d}_g = L_g^{-1}\sum_{i\in g} d_i$, length-normalizes coverage, and each value was scaled to transcripts per million as $\mathrm{TPM}_g = 10^{6}\,\bar{d}_g / \sum_{g'}(\bar{d}^{\,\mathrm{sense}}_{g'} + \bar{d}^{\,\mathrm{antisense}}_{g'})$, using a single sense-plus-antisense denominator per dataset.
+TPM was computed independently for the three datasets, which agreed well (Pearson $r = 0.98$ between the two technical replicates and $r = 0.92$--$0.94$ between biological samples).
+The datasets were merged by a two-step average, first across the technical replicates within their shared biological sample and then across the two biological samples at equal weight, yielding a representative~\syn~Illumina TPM profile (\texttt{syn1\_illumina\_TPM\_profiles.tsv}).

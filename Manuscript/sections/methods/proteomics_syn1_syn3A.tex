@@ -23,13 +23,17 @@ The MS raw data associated with this study has been deposited onto the MassIVE R
 
 \subsubsection{Relative Protein Quantification}
 
+Protein abundances were quantified from the Spectronaut iBAQ (intensity-based absolute quantification) values, which serve as a within-sample proxy for molar protein amount.
+For each of the three replicates per organism, iBAQ was converted to a relative abundance in parts per million (iPM), $\text{iPM}_i = 10^{6}\,\text{iBAQ}_i / \sum_j \text{iBAQ}_j$, and the per-protein mean iPM across replicates was used for all downstream analyses, with the across-replicate coefficient of variation retained as a quality metric.
+For~\syn, 721 of the 828 annotated protein-coding genes (87.1\%) carried a quantified iPM.
+
 \subsubsection{Absolute Intracellular Protein Quantification}
 
 %Currently in \refsec{methods-ptn-quant}. \cmt{Do we want to move this here?}
 %\subsubsection{Proteome Quantification for \jsyn}
 \label{sec:methods-ptn-quant}
 
-The~\syn~mass spectrometry data provides relative abundances for 735 of the 828 protein coding genes, which can be converted to absolute abundances by scaling the relative amount with the total number of proteins in the cell.
+The~\syn~mass spectrometry data provides relative abundances for 721 of the 828 protein-coding genes, which can be converted to absolute abundances by scaling the relative amount with the total number of proteins in the cell.
 The total number of proteins has not been measured directly within \syn, but can be estimated via an approach similar to that used in \cite{breuer_essential_2019}.
 First the dry mass of the cell and protein mass fraction are needed.
 The protein mass fraction is assumed to be 58.2\%, which was measured in the parent organism, \Mmy~\citep{razin_chemical_1963}.
@@ -39,14 +43,15 @@ Thus, a protein density of $2.87\times 10^{6}$ $proteins/\mu m^{3}$ is estimated
 Finally, absolute protein abundances were calculated using the following formula:
 \begin{equation}
 \label{eqn:abs-formula}
-\text{$Abs~Abundance_{i} = \frac{dry~mass * mass~fraction}{avg~molecular~weght} * Rel~Abundance_{i}$}
+\text{$Abs~Abundance_{i} = \frac{dry~mass * mass~fraction}{avg~molecular~weight} * Rel~Abundance_{i}$}
 \end{equation}
 % The resulting proteomics are reported in \siproteomics.
 
-The newly collected~\syna~proteomics were compared to the data set collected in \cite{breuer_essential_2019}.
-There was a slight increase in the total number of detected protein from 428 \citep{breuer_essential_2019} to 449.
-When calculating the total number of proteins in the cell, the new data predicts $\sim$ 100,000 proteins an increase from the 77,000 proteins previously predicted.
-This change is largely due to an increase in the detection of ribosomal proteins (see ).
-
 \subsubsection{Localization of Proteome}
+
+Subcellular localization was predicted from sequence for every~\syn~protein, since membrane-associated proteins are systematically under-recovered by the trypsin-digestion workflow and are therefore handled separately in the transcriptome--proteome correlation.
+Transmembrane regions (TMRs) were predicted with \texttt{DeepTMHMM}~\cite{hallgren_deeptmhmm_2022} and signal peptides with \texttt{SignalP} 6.0~\cite{teufel_signalp_2022}.
+Each protein was assigned to one of four classes by priority: a SignalP secretory or lipoprotein signal peptide marked it as extracellular or lipoprotein, respectively; otherwise one or more DeepTMHMM TMRs marked it as membrane, and proteins with no TMR were assigned cytoplasmic.
+Of the 721 detected~\syn~proteins, 516 were cytoplasmic, 126 membrane, 68 lipoprotein, and 11 extracellular.
+Median copy number per cell fell steeply with membrane association, from 47 for cytoplasmic proteins to 21 (lipoprotein), 10 (membrane), and 3 (extracellular), consistent with the under-digestion and under-recovery of membrane-embedded proteins rather than a true abundance difference.
 
