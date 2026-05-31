@@ -1,7 +1,30 @@
-Three layers of translation initiation, translatoion elongation, and protein degradations were evalauted to explain the residual between transcriptome and proteome for syn1.
+Gene-level proteome abundance (relative iPM) was correlated against transcriptome abundance (sense TPM) to test how faithfully transcript level predicts protein level in~\syn, and the deviations from this relationship were then attributed to translation and protein-turnover effects.
+The two layers were joined by locus tag (\texttt{Transcription\_Translation.py}, output \texttt{syn1\_genes\_transcriptomics\_proteomics.csv}), and the correlation was restricted to the 717 mRNA genes with non-zero signal in both.
+Illumina sense TPM was used as the transcriptome axis because it correlated more strongly with iPM than PacBio TPM did.
+On a $\log_{10}$ scale, transcript and protein levels were positively correlated across all detected proteins (Pearson $r = 0.61$, $r^{2} = 0.38$, $n = 717$) and more tightly for the cytoplasmic subset (Pearson $r = 0.70$, $r^{2} = 0.49$, $n = 512$), consistent with the under-recovery of membrane, lipoprotein, and extracellular proteins by the digestion workflow.
+For each gene the residual was defined as the offset of $\log_{10}(\text{iPM})$ from the ordinary-least-squares fit on $\log_{10}(\text{TPM})$, so that a positive residual marks more protein than the transcript predicts (efficient translation or a long-lived protein) and a negative residual marks less.
+Three layers, translation initiation, translation elongation, and protein degradation, were evaluated for their ability to explain this residual.
 
 \subsubsection{Translation Initiation Rate Prediction}
 
+Per-gene translation initiation efficiency was predicted from sequence to test whether initiation rate accounts for the transcriptome--proteome residual.
+For each detected mRNA gene, the PacBio isoforms (read count $\geq 10$) whose transcribed span covered the full ORF were identified, and an initiation window spanning 30~nt of 5$'$ UTR (or the available UTR, whichever was shorter) through 30~nt into the coding sequence was extracted from the~\syn~genome with circular wraparound.
+Each window was scored with \texttt{OSTIR}~\cite{roots_ostir_2021} using the~\syn~16S rRNA anti-Shine--Dalgarno tail (\texttt{ACCUCCUUU}), taking the prediction at the annotated start codon, and the translation initiation rate (TIR) together with its thermodynamic sub-terms (Shine--Dalgarno, standby-site, spacing, and 5$'$ mRNA-folding $\Delta G$) was recorded per isoform.
+A read-count-weighted mean TIR was then computed for each gene, yielding a valid TIR for 566 genes.
+The contribution of initiation was quantified by adding $\log_{10}(\text{TIR})$ to the baseline ordinary-least-squares model $\log_{10}(\text{iPM}) \sim \log_{10}(\text{TPM})$ (baseline $r = 0.59$, $R^{2} = 0.35$ on this subset) and by correlating $\log_{10}(\text{TIR})$ against the baseline residual.
+Translation initiation explained little of the residual: it raised the model $R^{2}$ by only 0.020 (2.0\% of the variance), and $\log_{10}(\text{TIR})$ correlated weakly with the residual (Pearson $r = 0.17$, $P = 4 \times 10^{-5}$).
+
 \subsubsection{Codon Adaptation Index (CAI)}
 
+Codon optimality was quantified as a proxy for translation elongation efficiency and tested against the residual.
+A codon adaptation index (CAI)~\cite{sharp_codon_1987} was computed for all 828 frame-valid~\syn~coding sequences under the Mycoplasma genetic code (UGA = Trp), with the reference set of highly expressed genes taken as the top 20\% of protein-coding genes by mean iPM (144 of the 721 detected genes, 91\% of them cytoplasmic).
+CAI was essentially independent of transcript level (CAI vs $\log_{10}(\text{TPM})$, Pearson $r = 0.006$, $P = 0.87$) yet correlated with the proteome residual (Pearson $r = 0.36$, $P = 4 \times 10^{-23}$), carrying information nearly orthogonal to the transcriptome term.
+Adding CAI to the baseline model raised the explained variance from $R^{2} = 0.38$ to $0.46$ ($\Delta R^{2} = +0.080$, a 21\% gain over the baseline; $n = 717$), and the improvement held within the cytoplasmic subset ($R^{2}$ from $0.49$ to $0.54$, $\Delta R^{2} = +0.052$; $n = 512$).
+
 \subsubsection{Protein Degradation Rate Mapping from Mpn}
+
+\syn~protein half-lives have not been measured, so intrinsic degradation rates were transferred from the related minimal bacterium~\Mpn, for which proteome-wide half-lives are available~\cite{burgos_protein_2020}.
+\syn~and~\mpn~proteins were matched by reciprocal-best-hit orthology (reciprocal \texttt{blastp}, retaining pairs with $\geq 25\%$ identity, $\geq 50\%$ coverage on both proteins, and bitscore $\geq 50$), and the~\mpn~half-life was assigned to each of the 245~\syn~proteins (225 cytoplasmic, 19 membrane, 1 lipoprotein) that had a confident ortholog.
+Because turnover is set by the responsible protease, each transferred half-life was scaled by the~\mpn-to-\syn~abundance ratio of that protease, applying Lon to cytoplasmic proteins and FtsH to membrane and lipoproteins, with protease copy numbers and cell volumes taken from this study and from~\mpn~\cite{maier_quantification_2011} (scaling factors 0.84 for Lon and 2.08 for FtsH).
+The shortest~\syn-corrected half-life was 4.7~h and the median was 32~h, all far longer than the $\sim$1~h cell-doubling time, so protein loss is dominated by dilution through growth rather than by active degradation.
+Accordingly, adding $\log_{10}(t_{1/2})$ to the baseline $\log_{10}(\text{iPM}) \sim \log_{10}(\text{TPM})$ model increased $R^{2}$ by at most 0.01, with a half-life coefficient far below the value of 1 expected if abundance scaled with stability, and half-life was uncorrelated with the residual (Pearson $r = -0.12$, $P = 0.06$, $n = 242$).

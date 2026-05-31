@@ -15,15 +15,15 @@ The resulting libraries were pooled at equimolar concentrations, and the pool wa
 QC was conducted in the same manner as in~\refsec{methods-ill-qc}.
 Quality controls plots of RNA libraries have been included in~\nameref{SI}, \fig{qc-pacbio}.%\cmt{Add QC Plots?}
 
-\subsubsection{PacBio IsoSeq Read Processing, Mapping to the Genome and Quanlity Control}
+\subsubsection{PacBio Iso-Seq Read Processing, Mapping to the Genome, and Quality Control}
 
-Three technical replicates were repeated for one biological sample of the synthetic bacterium JCVI-Syn1.0.
-Three replicates were pooled into one read file of 2.95~M entries given their high consistency.
+Three technical replicates were generated for one biological sample of the synthetic bacterium JCVI-Syn1.0 (NCBI SRA accessions SRR36012641, SRR36012642, and SRR36012643).
+The three replicates were pooled into one read file of 2.95~M entries given their high consistency.
 Demultiplexed PacBio HiFi cDNA reads were preprocessed with a custom streaming pipeline before isoform clustering.
 The pipeline comprises four sequential steps: strand orientation, primer removal, 3$'$ poly(A) trimming, and post-mapping quality control.
 Each step operates on FASTQ file; no third-party Iso-Seq tool (e.g.\ \texttt{lima}, \texttt{isoseq3 refine}) was used, giving explicit control over filter thresholds in this bacterial, non-natively-polyadenylated context.
 
-Each double-stranded cDNA read carries one of two primer configurations: an antisense molecule reads 5$'$--H1 (oligo-dT handle, TAAGCAGTGGTATCAACGCAGAGTAC, 26~nt)--polyT--[reverse-complement of mRNA]--BCRC--3$'$,whereas a sense molecule reads 5$'$--BC (barcode, CCCAACCCTGCGACTTCATTGCA, 23~nt)--mRNA--polyA--H2--3$'$.
+Each double-stranded cDNA read carries one of two primer configurations: an antisense molecule reads 5$'$--H1 (oligo-dT handle, TAAGCAGTGGTATCAACGCAGAGTAC, 26~nt)--polyT--[reverse-complement of mRNA]--BCRC--3$'$, whereas a sense molecule reads 5$'$--BC (barcode, CCCAACCCTGCGACTTCATTGCA, 23~nt)--mRNA--polyA--H2--3$'$.
 A read was reverse-complemented to sense orientation if H1 occurred within its first 80~bp or if it ended in BCRC; otherwise it was kept as-is.
 Oriented reads were then required to terminate in an exact polyA ($\geq 10$~nt) $+$ H2 suffix as evidence of a full-length sense cDNA.
 Of 2.95~M raw HiFi reads, 1.35~M were flipped via H1 and 191~k via BCRC; 255~k lacking the canonical polyA$+$H2 suffix were discarded, yielding 2.69~M oriented reads.
@@ -35,7 +35,7 @@ Syn1 transcripts are not natively polyadenylated, so any residual 3$'$ A-run ref
 Across the 2.62~M primer-trimmed reads the trailing-A run had median 30~nt and 99th percentile 34~nt, but a heavy tail reached 1.15~knt.
 Because the Syn1 genome contains no A-stretch longer than $\sim$40~nt, runs $>70$~nt cannot be biological and were discarded as likely concatemers or internal-priming artifacts; retained reads had up to 35 trailing As removed.
 
-Cleaned reads were mapped to JCVI-Syn1.0 (CP002027.1) with \texttt{minimap2, v2.30}, producing 2.62~M primary alignments.
+Cleaned reads were mapped to JCVI-Syn1.0 (CP002027.1) with \texttt{minimap2} v2.30~\cite{li_minimap2_2018} and sorted and indexed with \texttt{samtools} v1.22.1~\cite{li2009samtools}, producing 2.62~M primary alignments.
 Alignments were generated with the -ax map-hifi preset, which is optimized for high-accuracy PacBio HiFi reads and enforces contiguous read-to-genome alignment without splice junction inference.
 
 A per-read QC table was then built from the sorted BAM with \texttt{pysam}, grouping each read's primary and supplementary alignments.
@@ -43,9 +43,9 @@ Reads were failed if any of the following was violated: MAPQ $\geq 20$; primary 
 Reads were additionally flagged as strong concatemers when they produced $\geq 2$ supplementary alignments that either covered the same locus with a $\geq 1.5\times$ reference-span ratio, or mapped to disjoint loci (different contig/strand, or $>200$~bp genomic gap).
 All failing reads were removed from the final high quality (HQ) BAM.
 
-99.6\% of primary-mapped reads (2.62~M $\rightarrow$ 2.6~M) passed all QC thresholds and constitute the HQ BAM used for all downstream analyses.
+99.3\% of primary-mapped reads (2.62~M $\rightarrow$ 2.6~M) passed all QC thresholds and constitute the HQ BAM used for all downstream analyses.
 Read length is typical of bacterial mRNA isoforms (median 1.56~kb; 5th--95th percentile 0.88--3.07~kb; 99th percentile 3.93~kb; maximum 10.9~kb).
-Mapping quality is uniformly high (median MAPQ 60, mean 60.0, minimum 36 after filtering).
+Mapping quality is uniformly high (median MAPQ 60, mean 60.0, minimum 20 after filtering).
 The primary aligned fraction is essentially saturated (median 1.00, mean 0.998, 5th percentile 0.994), and the soft-clip fraction is negligible (median 0, mean 0.2\%, 95th percentile 0.6\%).
 95\% of retained reads have $|\text{query length} - \text{reference span}| \leq 10$~bp and 99\% $\leq 55$~bp, confirming near-gapless full-length alignments.
 
@@ -54,7 +54,7 @@ The primary aligned fraction is essentially saturated (median 1.00, mean 0.998, 
 Isoform clustering of PacBio FLNC reads.
 2.6~M primary FLNC alignments yielded 621~k unique (chrom, strand, pos5p0, pos3p0) tuples at single-bp resolution, with 77.3\% supported by a single read — far exceeding the 911 annotated Syn1 genes and reflecting a combination of biological TSS/TTS micro-heterogeneity, alignment noise, and low-count degradation products.                                 
 
-A bare read-count threshold is unacceptably lossy: requiring n $\geq$ 10 reads per single-bp tuple discards $\approx$990~k reads ($\approx$38\% of all primary reads), most of which sit on tuples directly adjacent to high-count tuples and represent biological wobble around a single underlying TSS/TTS rather than independent transcripts.
+A bare read-count threshold is unacceptably lossy: requiring n $\geq$ 10 reads per single-bp tuple discards $\approx$874~k reads ($\approx$34\% of all primary reads), most of which sit on tuples directly adjacent to high-count tuples and represent biological wobble around a single underlying TSS/TTS rather than independent transcripts.
 Clustering is required to recover this signal for quantification and to deduplicate near-identical end positions for downstream analyses.
 
 To choose a bp-tolerance (eps), cluster counts were swept over a range of tolerances on informative subsets (tuples with n $\geq$ 10 and n $\geq$ 50 reads).
@@ -66,13 +66,14 @@ Complete linkage (rather than single linkage) was required to prevent chain-like
 No minimum-read filter was applied at cluster construction, so the isoform catalog is complete and downstream analyses select their own thresholds.
 For each cluster, the read-count-weighted median 5'/3' end positions, the median absolute deviation (MAD) of member positions on each axis, and the total number of supporting reads were reported.
 
-Complete-linkage clustering collapsed 612~k single-bp tuples into 267~k isoform clusters.
+Complete-linkage clustering collapsed 621~k single-bp tuples into 267~k isoform clusters.
 The diameter guarantee was reflected in the empirical distributions: median MAD was 0 bp on both 5' and 3' ends, the 99th percentile was 5.0 bp (5') and 4.5 bp (3'), and the maximum was bounded at 5 bp (= eps/2).
-Applying minimum-read thresholds to clusters rather than raw tuples substantially increased the quantified signal: at n $\geq$ 10, clustering retained $\approx$21~k isoforms covering $\approx$2.1~M reads (vs. $\approx$17~k tuples covering $\approx$1.7~M reads, +24\%); at n $\geq$ 50, clustering retained $\approx$4~k isoforms covering $\approx$1.8~M reads (vs. $\approx$3.3~k tuples covering $\approx$1.4~M reads, +29\%).
+Applying minimum-read thresholds to clusters rather than raw tuples substantially increased the quantified signal: at n $\geq$ 10, clustering retained $\approx$21~k isoforms covering $\approx$2.1~M reads (vs. $\approx$17~k tuples covering $\approx$1.7~M reads, +23\%); at n $\geq$ 50, clustering retained $\approx$4~k isoforms covering $\approx$1.8~M reads (vs. $\approx$3.3~k tuples covering $\approx$1.5~M reads, +22\%).
 The n $\geq$ 50 set was used for operon segmentation and the n $\geq$ 10 set for transcript visualization in subsequent figures.
 
 Each cluster was annotated against the Syn1 gene model (GFF3) as sense, antisense, intergenic, or mixed using 95\%-of-length assignment rules with a 50-bp minimum gene-overlap threshold.
 
 \subsubsection{Quantification of TPM from Sequencing Depth}
 
-% Same as in Illumina Syn1; shorten this part.
+Per-gene sense and antisense TPM were computed from the PacBio HQ per-strand depth tracks (\texttt{syn1.PacBio.FLNC.HQ.\{plus,minus\}.bedGraph}) using the same depth-based definition applied to the Illumina data, namely the gene-length-normalized mean per-base depth scaled to transcripts per million against a single sense-plus-antisense denominator.
+Because the three technical replicates were pooled into a single library before mapping, no replicate averaging was applied, yielding one~\syn~PacBio TPM profile (\texttt{syn1\_pacbio\_TPM\_profiles.tsv}).
