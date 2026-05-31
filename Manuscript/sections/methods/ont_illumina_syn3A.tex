@@ -15,7 +15,7 @@ These tubes were centrifuged for five minutes at 4\textdegree C under 10,000 x g
 All supernatants were aspirated completely, and the remaining pellets were snap frozen using liquid nitrogen.
 Sample tubes were transferred to dry ice and immediately stored at -80\textdegree C.
 
-In the next step, cellular RNA was extracted from JCVI-syn3A cell samples using a phenol-chloroform extraction protocol based off procedures adapted from~\cite{Grnberger2019b} and the ThermoFisher TRIzol\textsuperscript{TM} Reagent user guide~\cite{thermofisher_trizol}.
+In the next step, cellular RNA was extracted from JCVI-syn3A cell samples using a phenol-chloroform extraction protocol based off procedures adapted from~\cite{grunberger_next_2019} and the ThermoFisher TRIzol\textsuperscript{TM} Reagent user guide~\cite{thermofisher_trizol}.
 Briefly, 1 ml of 4\textdegree C TRIzol\textsuperscript{TM} was added to each tube containing frozen cell pellets.
 The liquid was pipetted up and down multiple times to break up the cell pellet.
 The tubes were incubated at room temperature for 5 minutes to allow complete disassociation of nucleoprotein complexes.
@@ -73,7 +73,7 @@ In all run reports, base-called bases were 99.99--100\% confident.
 \subsubsection{Mapping ONT Reads to Syn3A Genome}
 
 
-Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li2018minimap2} with the long-read Oxford Nanopore preset for non-spliced alignment: \texttt{-ax map-ont -p 0.99 --MD}.
+Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li_minimap2_2018} with the long-read Oxford Nanopore preset for non-spliced alignment: \texttt{-ax map-ont -p 0.99 --MD}.
 The \texttt{map-ont} preset was selected in preference to the splice-aware preset commonly used for ONT direct RNA because JCVI-syn3A, like its parent \Mmy, is intron-less; allowing N-skip (spliced) CIGAR operations would yield single-read alignments that bridge tens to hundreds of kilobases of unrelated reference.
 Strandedness of direct-RNA reads is preserved through the BAM flag bits.
 Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.22.1~\cite{li2009samtools}.
@@ -83,7 +83,7 @@ The 175~k unmapped reads (23.9\%) were of substantially lower quality (mean Q20.
 Secondary alignments accounted for 3.6\% of primary mapped reads (20.2~k alignments) and clustered tightly at two genomic loci ($\sim$55{,}460 and $\sim$343{,}267~bp), corresponding to the two ribosomal RNA operons of syn3A.
 A further 7.3~k supplementary alignments (split-read mappings) were retained.
 
-% Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li2018minimap2} with the splice-aware preset: \texttt{-ax splice -uf -k14 -p 0.99 --MD}. The \texttt{-uf} flag enforces forward-strand alignment, exploiting the inherent strandedness of direct RNA reads. Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.x~\cite{li2009samtools}.
+% Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li_minimap2_2018} with the splice-aware preset: \texttt{-ax splice -uf -k14 -p 0.99 --MD}. The \texttt{-uf} flag enforces forward-strand alignment, exploiting the inherent strandedness of direct RNA reads. Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.x~\cite{li2009samtools}.
 
 % Of 734~k input reads, 541~k (73.7\%) mapped as primary alignments
 % to the syn3A genome, with a mean read length of 390~nt and mean per-read
@@ -99,7 +99,7 @@ A further 7.3~k supplementary alignments (split-read mappings) were retained.
 
 \subsubsection{Mapping Illumina Reads to Syn3A Genome}
 
-Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase in \ref{iScience} were retrieved from NCBI SRA database and assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels2016multiqc}.
+Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase from~\cite{sandberg_adaptive_2023} were retrieved from NCBI SRA database and assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels2016multiqc}.
 Per-base and per-read quality scores passed all checks and no Illumina adapters were detected, so no trimming was applied.
 
 % The FastQC \emph{sequence duplication} and \emph{per-base sequence content} flags failed in both mates as expected for RNA-seq on a 543~kb bacterial genome (the same transcript fragment is sequenced many times, and the first $\sim$10~nt show the canonical random-hexamer priming bias); neither was treated as a quality issue. A small fraction of overrepresented sequences mapped to the 16S/23S/5S ribosomal operons, indicating residual rRNA after Ribo-Zero depletion, but these were retained for downstream strand-split depth analysis.

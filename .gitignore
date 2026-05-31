@@ -23,6 +23,7 @@ USELESS/
 /Manuscript/*fdb*
 /Manuscript/*synctex*
 /Manuscript/*log
+/Manuscript/*.blg
 *.DS_Store
 
 # ----------------------------
