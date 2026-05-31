@@ -7,9 +7,32 @@ expand them into prose, quoting numbers verbatim from the files you list.
 
 TO DO Reminder:
 
-- Fill out the logics in Results and generate the Results.
-- Regenerate and format the figures.
-- Reorganize Operon_Visual Jupyter Notebook before publication.
+**A. Pending analyses (these block their Results text + figure panels):**
+- [ ] R2 / M4 — the whole RNA-processing/RNase analysis: transcriptome-wide 3' vs 5' erosion (L2.2), putative 3'→5' exoribonuclease via order of 3'-end RNA secondary structure (L2.3), ATP-synthase α-subunit cleavage + check other complexes + secondary-structure visual (L2.4).
+- [ ] R5 L5.5 (panel e) — essentiality × trace-expression script; supply the syn3A essentiality source.
+- [ ] R6 L6.4 (panel d) — ATP/GTP flux comparison; supply the metabolic model/source.
+- [ ] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
+- [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
+
+**B. Methods still to write:**
+- [ ] M3 — write the "Locate TSS, TTS, and RNA Cleavage Sites from PacBio RNAseq" subsubsection (also closes R1 L1.4).
+- [ ] M4 — write "RNA processing and ribonucleases" (after analysis A above).
+
+**C. Results prose (draft from logics, §0 style — one section at a time):**
+- [ ] Generate all six Results sections. R5 (`reduction_operons.tex`) is still empty; R5-L5.5 and R6-L6.4 are blocked on analyses A.
+
+**D. Figures:**
+- [ ] Regenerate + format the six multi-panel figures in Illustrator.
+
+**E. Numbers to re-verify (flagged during Methods drafting):**
+- [ ] M7 — recount the ~26,000 candidate ORFs and 44 proteotypic ORFs (notebook outputs were cleared; 816 abnormal isoforms confirmed).
+- [ ] M8 — re-confirm Illumina/ONT TPM r=0.998 and the syn3A Illumina alignment % (no local logs).
+
+**F. Style / front-and-back matter:**
+- [ ] §0 — fill the "Exemplar paragraph" field and the "Things to NEVER do" list.
+- [ ] Draft Abstract, Introduction, and Discussion (~500 words each; not yet in this file).
+- [ ] Reorganize the Operon_Visual Jupyter notebook before publication.
+- [ ] Final LaTeX pass (resolve overfull \hbox lines / typesetting).
 
 ---
 
@@ -415,7 +438,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Figure:** `Manuscript/figures/genome_reduction.pdf`
 
 - Panel a: Schematics of genome reduction from syn1 to syn3A.
-- Panel b: Fusion of new operons.
+- Panel b: One instance of fusion of new operons at junctions.
 - Panel c: Box plot of gene expressions to highlight decapitated ones having lower values.
 - Panel d: the HupA operon, whose true promoter, located inside gene 0349, was deleted.
 - Panel e: Gene essentiality evaluation for those trace-expressed genes that are still essential.

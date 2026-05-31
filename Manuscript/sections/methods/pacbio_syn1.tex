@@ -35,7 +35,7 @@ Syn1 transcripts are not natively polyadenylated, so any residual 3$'$ A-run ref
 Across the 2.62~M primer-trimmed reads the trailing-A run had median 30~nt and 99th percentile 34~nt, but a heavy tail reached 1.15~knt.
 Because the Syn1 genome contains no A-stretch longer than $\sim$40~nt, runs $>70$~nt cannot be biological and were discarded as likely concatemers or internal-priming artifacts; retained reads had up to 35 trailing As removed.
 
-Cleaned reads were mapped to JCVI-Syn1.0 (CP002027.1) with \texttt{minimap2} v2.30~\cite{li_minimap2_2018} and sorted and indexed with \texttt{samtools} v1.22.1~\cite{li2009samtools}, producing 2.62~M primary alignments.
+Cleaned reads were mapped to JCVI-Syn1.0 (CP002027.1) with \texttt{minimap2} v2.30~\cite{li_minimap2_2018} and sorted and indexed with \texttt{samtools} v1.22.1~\cite{li_sequence_2009}, producing 2.62~M primary alignments.
 Alignments were generated with the -ax map-hifi preset, which is optimized for high-accuracy PacBio HiFi reads and enforces contiguous read-to-genome alignment without splice junction inference.
 
 A per-read QC table was then built from the sorted BAM with \texttt{pysam}, grouping each read's primary and supplementary alignments.

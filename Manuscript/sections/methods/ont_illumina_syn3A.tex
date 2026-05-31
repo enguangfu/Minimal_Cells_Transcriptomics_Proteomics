@@ -15,7 +15,7 @@ These tubes were centrifuged for five minutes at 4\textdegree C under 10,000$\ti
 All supernatants were aspirated completely, and the remaining pellets were snap frozen using liquid nitrogen.
 Sample tubes were transferred to dry ice and immediately stored at -80\textdegree C.
 
-In the next step, cellular RNA was extracted from JCVI-syn3A cell samples using a phenol-chloroform extraction protocol based off procedures adapted from~\cite{grunberger_next_2019} and the ThermoFisher TRIzol\textsuperscript{TM} Reagent user guide~\cite{thermofisher_trizol}.
+In the next step, cellular RNA was extracted from JCVI-syn3A cell samples using a phenol-chloroform extraction protocol based off procedures adapted from~\cite{grunberger_next_2019}, using the ThermoFisher TRIzol\textsuperscript{TM} Reagent.
 Briefly, 1 mL of 4\textdegree C TRIzol\textsuperscript{TM} was added to each tube containing frozen cell pellets.
 The liquid was pipetted up and down multiple times to break up the cell pellet.
 The tubes were incubated at room temperature for 5 minutes to allow complete disassociation of nucleoprotein complexes.
@@ -76,14 +76,14 @@ In all run reports, base-called bases were 99.99--100\% confident.
 Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li_minimap2_2018} with the long-read Oxford Nanopore preset for non-spliced alignment: \texttt{-ax map-ont -p 0.99 --MD}.
 The \texttt{map-ont} preset was selected in preference to the splice-aware preset commonly used for ONT direct RNA because JCVI-syn3A, like its parent \Mmy, is intron-less; allowing N-skip (spliced) CIGAR operations would yield single-read alignments that bridge tens to hundreds of kilobases of unrelated reference.
 Strandedness of direct-RNA reads is preserved through the BAM flag bits.
-Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.22.1~\cite{li2009samtools}.
+Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.22.1~\cite{li_sequence_2009}.
 
 Of 734~k input reads, 559~k (76.2\%) mapped as primary alignments to the syn3A genome, with a mean read length of 383~nt (range 49--2{,}858~nt) and mean per-read Phred quality of 31.2; 98.2\% of primary mapped reads exceeded a mean quality of Q20.
 The 175~k unmapped reads (23.9\%) were of substantially lower quality (mean Q20.7), with 42.0\% falling below Q15 and 61.0\% shorter than 300~nt, consistent with the expected tail of low-quality and truncated molecules characteristic of ONT direct RNA sequencing rather than reference mismatch.
 Secondary alignments accounted for 3.6\% of primary mapped reads (20.2~k alignments) and clustered tightly at two genomic loci ($\sim$55{,}460 and $\sim$343{,}267~bp), corresponding to the two ribosomal RNA operons of syn3A.
 A further 7.3~k supplementary alignments (split-read mappings) were retained.
 
-% Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li_minimap2_2018} with the splice-aware preset: \texttt{-ax splice -uf -k14 -p 0.99 --MD}. The \texttt{-uf} flag enforces forward-strand alignment, exploiting the inherent strandedness of direct RNA reads. Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.x~\cite{li2009samtools}.
+% Reads were aligned to the JCVI-syn3A reference genome (NCBI accession CP016816.2) using \texttt{minimap2} v2.30~\cite{li_minimap2_2018} with the splice-aware preset: \texttt{-ax splice -uf -k14 -p 0.99 --MD}. The \texttt{-uf} flag enforces forward-strand alignment, exploiting the inherent strandedness of direct RNA reads. Resulting SAM output was converted, sorted, and indexed using \texttt{samtools} v1.x~\cite{li_sequence_2009}.
 
 % Of 734~k input reads, 541~k (73.7\%) mapped as primary alignments
 % to the syn3A genome, with a mean read length of 390~nt and mean per-read
@@ -99,14 +99,14 @@ A further 7.3~k supplementary alignments (split-read mappings) were retained.
 
 \subsubsection{Mapping Illumina Reads to Syn3A Genome}
 
-Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase from~\cite{sandberg_adaptive_2023} were retrieved from NCBI SRA database and assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels2016multiqc}.
+Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase from~\cite{sandberg_adaptive_2023} were retrieved from NCBI SRA database and assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels_multiqc_2016}.
 Per-base and per-read quality scores passed all checks and no Illumina adapters were detected, so no trimming was applied.
 
 % The FastQC \emph{sequence duplication} and \emph{per-base sequence content} flags failed in both mates as expected for RNA-seq on a 543~kb bacterial genome (the same transcript fragment is sequenced many times, and the first $\sim$10~nt show the canonical random-hexamer priming bias); neither was treated as a quality issue. A small fraction of overrepresented sequences mapped to the 16S/23S/5S ribosomal operons, indicating residual rRNA after Ribo-Zero depletion, but these were retained for downstream strand-split depth analysis.
 
-Reads were aligned to the JCVI-syn3A reference (NCBI accession CP016816.2) with \texttt{bowtie2} v2.5.5~\cite{langmead2012bowtie2} in default paired-end mode.
+Reads were aligned to the JCVI-syn3A reference (NCBI accession CP016816.2) with \texttt{bowtie2} v2.5.5~\cite{langmead_fast_2012} in default paired-end mode.
 The overall alignment rate was 98.88\%: 83.55\% of pairs mapped concordantly exactly once, 10.43\% concordantly with $>$1 hit (corresponding to the two ribosomal RNA operons of syn3A), and 6.02\% of pairs were discordant or unpaired.
-SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22.1~\cite{li2009samtools}.
+SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22.1~\cite{li_sequence_2009}.
 Strand-specific BAMs were generated using the dUTP / fr-firststrand flag convention (read 2 forward on $+$ strand and read 1 reverse on $+$ strand define plus-strand reads; their reverse complements define minus-strand reads), matching the Kapa Stranded RNA-Seq Kit library preparation, and per-strand sequencing-depth bedGraph tracks were computed with \texttt{samtools depth}.
 
 \subsubsection{Quantification of TPM from Sequencing Depth}

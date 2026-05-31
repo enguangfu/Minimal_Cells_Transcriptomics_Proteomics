@@ -45,10 +45,10 @@ The library pool was quantitated by qPCR and sequenced on one MiSeq Nano flowcel
 
 Three strand-specific RNA-seq datasets of~\syn~were retrieved from the NCBI SRA database (accessions SRR35996296, SRR35996297, and SRR35996298), each comprising paired-end reads of 2$\times$251~nt sequenced on an Illumina MiSeq.
 Datasets SRR35996296 and SRR35996297 are technical replicates of one biological RNA sample, and SRR35996298 is a second biological sample, yielding $\sim$505~k, $\sim$511~k, and $\sim$1.09~M read pairs, respectively.
-Raw reads were assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels2016multiqc}; no adapter or quality trimming was applied prior to alignment.
-Reads were aligned to the~\syn~reference genome (NCBI accession CP002027.1) with \texttt{bowtie2} v2.5.5~\cite{langmead2012bowtie2} in default paired-end mode, against an index built with \texttt{bowtie2-build} from the same reference.
+Raw reads were assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels_multiqc_2016}; no adapter or quality trimming was applied prior to alignment.
+Reads were aligned to the~\syn~reference genome (NCBI accession CP002027.1) with \texttt{bowtie2} v2.5.5~\cite{langmead_fast_2012} in default paired-end mode, against an index built with \texttt{bowtie2-build} from the same reference.
 Overall alignment rates were 99.49--99.56\% across the three datasets, of which 89.4--93.1\% of pairs aligned concordantly exactly once and 5.1--7.8\% aligned concordantly more than once.
-SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22.1~\cite{li2009samtools}.
+SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22.1~\cite{li_sequence_2009}.
 Strand-specific BAMs were generated using the dUTP / fr-firststrand flag convention (read 2 forward on the $+$ strand and read 1 reverse on the $+$ strand define plus-strand reads; their reverse complements define minus-strand reads), matching the Kapa Hyper Stranded mRNA library preparation, and per-strand sequencing-depth bedGraph tracks were computed with \texttt{samtools depth}.
 
 \subsubsection{Quantification of TPM from Sequencing Depth}
