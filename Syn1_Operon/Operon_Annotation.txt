@@ -1,0 +1,27 @@
+OPERON SIZE / GENE-COUNT SUMMARY
+============================================================
+
+(Gene counts deduplicated from *_gene_loci; the tsv's *_gene_count over-counts
+ genes shared by merged operons -- see segmentation TO DO.)
+
+n_operons = 480
+
+Per-operon summary (length / sense / antisense / total gene count):
+        length  sense_gene_count  antisense_gene_count  gene_count
+count    480.0             480.0                 480.0       480.0
+mean    1961.9               1.9                   0.2         2.1
+std     1462.5               1.7                   0.4         1.7
+min       75.0               0.0                   0.0         0.0
+25%      956.2               1.0                   0.0         1.0
+50%     1628.5               1.0                   0.0         1.0
+75%     2501.5               2.0                   0.0         3.0
+max    10954.0              21.0                   3.0        21.0
+
+Antisense gene coverage per operon (removed from panel b):
+  operons with >=1 antisense gene: 68 (14.2%)
+  antisense_gene_count distribution (n_antisense_genes : n_operons):
+antisense_gene_loci
+0    412
+1     59
+2      6
+3      3
