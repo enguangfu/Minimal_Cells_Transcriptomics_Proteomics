@@ -1,10 +1,22 @@
-How transcription and further RNA processing can complexity the transcriptome even of the reduced organism
+Bacterial genes are frequently organized into operons, in which adjacent genes on the same strand are co-transcribed from a shared promoter into a single polycistronic RNA.
+Several transcription start and termination sites layered over one gene cluster generate overlapping transcription units, and endo- and exoribonucleases then cleave and trim these primary transcripts into a spectrum of shorter RNA isoforms (Fig.~\ref{fig:operon}a).
+This combinatorial interplay of co-transcription and post-transcriptional processing was mapped at single-molecule resolution in the synthetic bacterium \jsyn~(\syn), to test whether a reduced genome still supports a complex transcriptional architecture.
 
-FLNC reads clustered to isoforms: 2.6M by 10 bps to 205k clustered; Use 10 for visual of 50 for operon backbone;  distribution of sharpness 5' and 3' ends
+Full-length transcripts were captured by PacBio HiFi sequencing of the \syn~cDNA library.
+After full-length non-chimeric (FLNC) read recovery and quality filtering, 2.6~M high-quality full-length reads were obtained (Methods).
+Because the \fiveprime\ and \threeprime\ ends of individual reads carry residual reverse-transcription and sequencing noise, reads sharing their transcript ends within 10~bp were clustered into 267~k isoform clusters, each a distinct transcript species with sharply defined boundaries.
+These boundary-resolved isoform clusters, rather than raw reads, provided the evidence of gene connectivity from which operons were called.
 
-Find the longest RNA isoform for representative of operons; then merge and rescue to get total 480 operons
+Operons were segmented from the isoform clusters in three stages (Methods).
+The 4~k isoform clusters supported by at least 50 reads were first grouped into candidate transcription units by containment clustering, which joins clusters whenever one transcript is fully nested within another, yielding 316 initial operons.
+Same-strand operons that overlapped were then resolved by a transcription-direction rule that distinguished genuinely independent promoters from apparent overlaps produced by RNase processing, collapsing the set to 299 isoform-derived operons.
+Finally, genes left uncovered were rescued by recovering reads that spanned consecutive uncovered genes, by adding the two highly structured rRNA operons that long reads capture poorly, and by assigning the remaining isolated genes as single-gene transcription units.
+This produced a final map of 480 operons that achieved complete sense-strand coverage of all 911 annotated \syn~genes.
 
-Statistics on operon size: operon can cover anti-sense genes; longest is rPtn operon; operon length distribution;
+The resulting operons were predominantly small.
+An average operon spanned 1{,}628~bp (median; mean 1{,}962~bp) and carried a single sense gene at the median, with the 911 genes distributed across 480 operons giving a mean of 1.9 sense genes per operon (Fig.~\ref{fig:operon}b,c).
+The size distribution had a long polycistronic tail that culminated in the $\sim$11~kb ribosomal-protein supercluster (\locus{0652}--\locus{0672}), the largest operon in the genome, which co-transcribes the bulk of the small- and large-subunit ribosomal-protein and translation-machinery genes.
+Beyond their sense-strand content, 68 operons (14.2\%) also enclosed at least one gene transcribed from the opposite strand, and nine operons covered only antisense genes or intergenic regions, so that operonal boundaries frequently captured antisense transcription alongside the sense genes.
 
 Promoter and terminator signatures: -10 box significant; -35 box not; terminator predicted as hairpins + polyU
 
@@ -13,8 +25,6 @@ Promoter and terminator signatures: -10 box significant; -35 box not; terminator
 tRNAs in operons
 
 Put one operon here: DCW operon?
-
-% 5' and 3' UTRs
 
 % Evaluate biological significance of gene co-expression: 
 
@@ -28,14 +38,10 @@ Put one operon here: DCW operon?
     \centering
     \includegraphics[width=1\linewidth]{figures/operon.pdf}
     \caption{Caption}
-    \label{fig:placeholder}
+    \label{fig:operon}
 \end{figure}
 
 \textbf{Extended Figure:}
-
-operon length distribution  
-
--35 region of TSS: not characteristic
 
 tRNA in operons
 

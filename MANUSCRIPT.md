@@ -34,6 +34,11 @@ TO DO Reminder:
 - [ ] Reorganize the Operon_Visual Jupyter notebook before publication.
 - [ ] Final LaTeX pass (resolve overfull \hbox lines / typesetting).
 
+**H. Operon segmentation — revisit after first draft (KNOWN ISSUE):**
+- [ ] `Syn1_Operon/operons.candidate_blocks.tsv` (480 operons) is **not reproduced** by re-running the current `Operon_Segmentation.py` on the server isoforms (`Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv`, 267 k) — that yields **483 operons** and splits the 11 kb ribosomal supercluster (0652–0672) into 3 units (no bridging isoforms across rpsQ/0662). The canonical table came from a different isoform-clustering run. Re-run output kept at `operons.candidate_blocks.rerun483.tsv`; the run also overwrote untracked `gene_operon_coverage.tsv`/`uncovered_genes.tsv` with 483-versions (regenerable).
+- [ ] Root-caused dedup bug: the Step-5a overlap merge concatenates the two merged operons' gene lists and sums counts, so shared genes are double-listed (14 operons, max 23 vs 21 true). Fix `dedup_operon_gene_lists` is now in `Operon_Segmentation.py` (final pass before `to_csv`); **for the first draft it is applied at consumption** (panel b + `Operon_Annotation.txt` recount unique loci; the tsv is left untouched). Decide later whether to (a) dedupe the canonical tsv in place, or (b) locate the original isoform file and regenerate end-to-end.
+- [ ] FOOTGUN: the patched `Operon_Segmentation.py` has `OUT_FOLDER="."`, so running it from `Syn1_Operon/` overwrites the canonical tsv with the divergent 483 map. Do not run until the isoform-input question is resolved.
+
 ---
 
 ## 0. Style guide (read before drafting any subsection)
@@ -118,10 +123,10 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Analysis:** None
 - **Outputs:** None
 - **Numbers to cite:**  None
-- **Figure panels:** a  
+- **Figure panels:** a
 - **Conclusion:** None
 - **Caveats:** None
-- **Notes for LLM:** This is a descriptive part.
+- **Notes for LLM:** This is a descriptive part. DONE — L1.1 drafted in `operons.tex`.
 
 #### L1.2: 2.6 M full-length PacBio RNA seq clustered into 267k isoform clusters.
 
@@ -136,7 +141,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** None
 - **Conclusion:** 267k isoform clusters with sharp ends serve as solid foundation for operon calling.
 - **Caveats:** None
-- **Notes for LLM:** More details presented in Methods M2.
+- **Notes for LLM:** More details presented in Methods M2. DONE — L1.2 drafted in `operons.tex`.
 
 #### L1.3: 480 operons were mapped by full-length PacBio RNA seq.
 
@@ -146,11 +151,18 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - Operon annotation: `Syn1_Operon/Operon_Annotation.ipynb`
 - **Outputs:** 
   - Operons: `Syn1_Operon/operons.candidate_blocks.tsv`
-- **Numbers to cite:**  MIN_READS threshold = 50. mean and median of length, sense gene count, anti-sense gene count; largest operon of ribosomal proteins
+- **Numbers to cite:**  
+  - MIN_READS threshold = 50;
+  - Mean and median of sense-genes per operon
+  - On average, 911/480 genes per operon
+  - Mean and median of operon length
+  - Number of operons cover anti-sense genes
+  - Largest operon of ribosomal proteins and translation machineries: MMSYN1_0652–MMSYN1_0672 (~11 kb)
+  - Nine operons covers only anti-sense genes or intergenic regions
 - **Figure panels:** b,c
 - **Conclusion:** None
-- **Caveats:** None
-- **Notes for LLM:** More details are in Methods M3
+- **Caveats:** `sense_gene_count` double-counts duplicated loci in 14 operons (21 extra slots; e.g. OP_00358 lists 23 but has 21 unique loci, MMSYN1_0652–0672) — the genes-per-operon max and mean (and panel b) are mildly inflated; dedupe before finalizing.
+- **Notes for LLM:** More details are in Methods M3. DONE — L1.3 drafted in `operons.tex` (segmentation-algorithm paragraph + size-statistics paragraph).
 
 #### L1.4: Transcription signatures located for operons.
 
