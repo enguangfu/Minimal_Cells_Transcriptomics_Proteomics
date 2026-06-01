@@ -16,15 +16,17 @@ After the initial segmentation, 200 of 911 genes (22.0\%) remained uncovered by 
 These were rescued through three complementary strategies: (i)~13 groups of consecutive uncovered genes (gap $\leq$500~bp) were recovered by identifying spanning isoforms in the BAM file, (ii)~the two rRNA operons (16S--23S--5S) were added manually, as their extreme secondary structure precludes faithful long-read capture, and (iii)~the remaining 166 uncovered genes with non-zero spanning reads were added as single-gene transcription units.
 The final operon map comprised 480 operons (283 from isoform clustering, 14 merged, 2 gene-combined, 15 multi-gene rescue, and 166 single-gene rescue) and achieved complete sense-strand coverage of all 911 annotated \textit{Syn1} genes (91.4\% sense-only, 5.8\% both sense and antisense, 2.7\% antisense-only, 0\% uncovered).
 
-\subsubsection{Locate TSS, TTS, and RNA Cleavage Sites from PacBio RNASeq}
+\subsubsection{Locate Transcription Promoter and Terminator Signatures}
 
-Questions here: can FLNC faithfully represent the ends of native transcripts?
+Promoter and terminator signatures were characterized only for canonical operons, tentatively defined as isoform-derived operons (segmentation type \texttt{isoform\_operon}) whose transcription start site (TSS) and transcription termination site (TTS) both fall in intergenic regions, meaning that neither boundary lies inside a same-strand gene body.
+This restriction retains only operons whose mapped \fiveprime\ and \threeprime\ ends reflect genuine promoter and terminator positions rather than RNase-truncated or internally nested transcript ends.
+The TSS was taken as the operon \texttt{start0} on the plus strand and the \texttt{end0} on the minus strand, with the TTS at the opposite boundary.
 
-the start and end locations of each read, which are then used to determine the covered genes for this each.
-The likely TUs are defined by the consecutive covered genes.
-For each TU, the TSSs and TTSs are defined by locating the possible motifs at the 5' and 3' of the covered genes that identified by bioinformatic predictions.
-The truncated RNA reads tell the possible cleavage sites by ribonucleases.
+For each canonical TSS, the upstream promoter was read off the transcribed strand of the \syn~genome (with circular wraparound).
+The $-10$ box was located by IUPAC consensus matching, scanning a 6-mer consensus \texttt{TANAAT} over the window from $-12$ to $-7$ and an extended 9-mer consensus \texttt{TNNTANAAT} over $-15$ to $-7$ relative to the TSS, each allowed a register shift of up to $\pm 2$~bp, and selecting the offset that minimized the number of IUPAC mismatches (ties broken by the smallest shift).
+The $-35$ region (from $-37$ to $-31$) carried no fixed consensus and was instead summarized by a position-specific sequence logo, which showed it to be AT-rich.
+Information-content sequence logos were also generated for the $-10$ box and the TSS context.
 
-The endo RNA cleavage sites are differentiated from the internal promoters based on the predicted and inferred locations of internal promoters.
-
-Iso-Seq HQ consensus isoforms constitute a non-redundant set of unique transcript species derived from read-level data; while they define transcript boundaries and connectivity, they do not preserve molecule counts or relative abundances.
+Rho-independent (intrinsic) terminators were predicted across the \syn~genome with TransTermHP~\cite{kingsford_rapid_2007}, each prediction consisting of a stem-loop hairpin followed by a \threeprime\ poly-uridine tail and carrying a confidence score.
+A predicted terminator was assigned to a canonical operon as terminating when it fell within 50~bp downstream of the TTS in the transcription direction, or as internal when it lay inside the operon body at least 50~bp from the TTS.
+The terminator hairpins were rendered as sequence logos.

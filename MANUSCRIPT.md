@@ -15,7 +15,6 @@ TO DO Reminder:
 - [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
 
 **B. Methods still to write:**
-- [ ] M3 — write the "Locate TSS, TTS, and RNA Cleavage Sites from PacBio RNAseq" subsubsection (also closes R1 L1.4).
 - [ ] M4 — write "RNA processing and ribonucleases" (after analysis A above).
 
 **C. Results prose (draft from logics, §0 style — one section at a time):**
@@ -31,7 +30,7 @@ TO DO Reminder:
 **F. Style / front-and-back matter:**
 - [ ] §0 — fill the "Exemplar paragraph" field and the "Things to NEVER do" list.
 - [ ] Draft Abstract, Introduction, and Discussion (~500 words each; not yet in this file).
-- [ ] Reorganize the Operon_Visual Jupyter notebook before publication.
+- [ ] Reorganize the Operon_Visual Jupyter notebook before publication. (Progress: `Operon_Annotation.py` cleaned to analysis-only and confirmed to run end-to-end; the per-operon `plot_one_operon` driver was split out into a new `Operon_Visualization.ipynb`.)
 - [ ] Final LaTeX pass (resolve overfull \hbox lines / typesetting).
 
 **H. Operon segmentation — revisit after first draft (KNOWN ISSUE):**
@@ -168,14 +167,14 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 - **Logic:** Exact transcription start site (TSS) and termination sites (TTS) were located for canonical operons whose boundaries were intergenic.
 - **Analysis:** 
-  - Operon segmentation: `Syn1_Operon/Operon_Annotation.ipynb`
+  - Annotation (analysis-only; runs end-to-end via `MPLBACKEND=Agg python Operon_Annotation.py`): `Syn1_Operon/Operon_Annotation.py`
 - **Outputs:** 
-  - Transcription signatures: `Syn1_Operon/annotation/canonical/`
+  - Transcription signatures: `Syn1_Operon/annotation/canonical/` (`promoter_logo_minus35.pdf`, `promoter_logo_minus10.pdf`, `promoter_logo_tss.pdf`, `tts_hairpins/all_hairpins.pdf`)
 - **Numbers to cite:** None
 - **Figure panels:** d
 - **Conclusion:** Signatures are both consistent with previous knowledge: -10 box of TSS has TANAAT, -35 just AT rich; TTS as intrinsic terminators as hairpin + polyU
 - **Caveats:** The TSS, TTS sites are only for canonical operons; we might need to refine for all cases.
-- **Notes for LLM:** Corresponding Method needs to be finished.
+- **Notes for LLM:** Corresponding Method finished (M3). Panel d: -35 / -10 promoter logos regenerated to OUTPUT.md spec (1x1 in, x-tick labels removed, enlarged ATCG); TSS-context + terminator-hairpin logos also available under `annotation/canonical/`. Prose not yet drafted.
 
 #### L1.5: One instance of polycistronic operons
 
@@ -625,7 +624,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Analysis:** `Syn1_Transcriptomics/Isoforms_PacBio/Cluster_Isoform.py`, `Syn1_Operon/…`  
 **Key params:** clustering thresholds, min reads, TSS/TTS calling rule.  
 **Outputs:** `isoform_clusters_annotated.tsv`, `operons.candidate_blocks.tsv`  
-**Notes for LLM:** Subsubsection **Locate TSS, TTS, and RNA Cleavage Sites from PacBio RNASeq** needs to be changed and written.  
+**Notes for LLM:** Subsubsection **Locate Transcription Promoter and Terminator Signatures** finished.  
 
 ---
 
