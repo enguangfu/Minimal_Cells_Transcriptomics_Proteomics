@@ -1343,8 +1343,9 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None, minimal=F
     # Place characters so the LAST char sits just left of x_L at stem_base
     # and earlier chars extend toward the lower-left corner.
     for k, ch in enumerate(reversed(tail5_label)):
-        # k=0 is closest to stem
-        bx = x_L - 1.4 * cw - k * char_w
+        # k=0 is closest to stem; start beyond the bottom stem letter so the
+        # horizontal tail does not overlap the bottom row of the stem
+        bx = x_L - (off + 1.7 * cw) - k * char_w
         by = stem_base
         if bx < 0.02 or by < 0.02:
             break
@@ -1364,7 +1365,7 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None, minimal=F
     tail3_label = tail3_show + ("…" if len(tail3) > tail_show else "")
     n3 = len(tail3_label)
     for k, ch in enumerate(tail3_label):
-        bx = x_R + 1.4 * cw + k * char_w
+        bx = x_R + (off + 1.7 * cw) + k * char_w
         by = stem_base
         if bx > 0.98 or by < 0.02:
             break
@@ -1456,8 +1457,8 @@ fig, ax = plt.subplots(figsize=(7/3, 7/9), constrained_layout=True)
 vc = stem_bp.value_counts().sort_index()
 ax.bar(vc.index, vc.values, width=0.85, color="#377EB8", edgecolor="white", linewidth=0.3)
 ax.axvline(stem_bp.median(), color="crimson", lw=0.8, ls="--")
-ax.set_xlabel("Stem length (bp)", fontsize=5)
-ax.set_ylabel("Terminators", fontsize=5)
+ax.set_xlabel("Stem length (bp)", fontsize=6, labelpad=1.5)
+ax.set_ylabel("Terminators", fontsize=6, labelpad=1.5)
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 fig.savefig("annotation/canonical/term_stem_length.pdf", dpi=300)
@@ -1468,8 +1469,8 @@ fig, ax = plt.subplots(figsize=(7/3, 7/9), constrained_layout=True)
 vc = loop_len.value_counts().sort_index()
 ax.bar(vc.index, vc.values, width=0.85, color="#4DAF4A", edgecolor="white", linewidth=0.3)
 ax.axvline(loop_len.median(), color="crimson", lw=0.8, ls="--")
-ax.set_xlabel("Loop length (nt)", fontsize=5)
-ax.set_ylabel("Terminators", fontsize=5)
+ax.set_xlabel("Loop length (nt)", fontsize=6, labelpad=1.5)
+ax.set_ylabel("Terminators", fontsize=6, labelpad=1.5)
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 fig.savefig("annotation/canonical/term_loop_length.pdf", dpi=300)
@@ -1504,9 +1505,9 @@ logomaker.Logo(tail_freq, ax=ax, color_scheme=CLASSIC, stack_order="big_on_top")
 ax.axvline(polyU_med + 0.5, color="crimson", lw=0.8, ls="--")
 ax.set_ylim(0, 1)
 ax.set_xticks([1, 5, 10, 15])
-ax.set_xlabel("3' tail position (nt)", fontsize=5)
-ax.set_ylabel("Probability", fontsize=5)
-ax.tick_params(axis="both", labelsize=6)
+ax.set_xlabel("3' tail position (nt)", fontsize=6, labelpad=1.5)
+ax.set_ylabel("Probability", fontsize=6, labelpad=1.5)
+ax.tick_params(axis="both", labelsize=6, pad=1.5)
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 fig.savefig("annotation/canonical/term_tail3_logo.pdf", dpi=300)
