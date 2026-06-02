@@ -1,6 +1,6 @@
 Gene-level proteome abundance (relative iPM) was correlated against transcriptome abundance (sense TPM) to test how faithfully transcript level predicts protein level in~\syn, and the deviations from this relationship were then attributed to translation and protein-turnover effects.
 The two layers were joined by locus tag, and the correlation was restricted to the 717 mRNA genes with non-zero signal in both.
-Illumina sense TPM was used as the transcriptome axis because it correlated more strongly with iPM than PacBio TPM did.
+Illumina sense TPM was used as the transcriptome axis, following the convention for short-read quantification.
 On a $\log_{10}$ scale, transcript and protein levels were positively correlated across all detected proteins (Pearson $r = 0.61$, $r^{2} = 0.38$, $n = 717$) and more tightly for the cytoplasmic subset (Pearson $r = 0.70$, $r^{2} = 0.49$, $n = 512$), consistent with the under-recovery of membrane, lipoprotein, and extracellular proteins by the digestion workflow.
 For each gene the residual was defined as the offset of $\log_{10}(\text{iPM})$ from the ordinary-least-squares fit on $\log_{10}(\text{TPM})$, so that a positive residual marks more protein than the transcript predicts (efficient translation or a long-lived protein) and a negative residual marks less.
 Three layers, translation initiation, translation elongation, and protein degradation, were evaluated for their ability to explain this residual.
