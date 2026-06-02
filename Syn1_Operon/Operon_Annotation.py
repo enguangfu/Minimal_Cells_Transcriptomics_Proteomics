@@ -1513,6 +1513,62 @@ ax.spines["right"].set_visible(False)
 fig.savefig("annotation/canonical/term_tail3_logo.pdf", dpi=300)
 plt.show()
 
+# ── 4. Stem G+C content (terminator stem vs the AT-rich genome) ──────────────
+# Intrinsic-terminator stems are stabilized by G:C pairs; quantifying their G+C
+# against the genome baseline tests whether the stems are genuinely GC-rich.
+def _stem_gc(s5, s3):
+    bases = [c for c in (str(s5) + str(s3)) if c in "ACGU"]
+    return (sum(c in "GC" for c in bases) / len(bases)) if bases else np.nan
+stem_gc   = tts_terms_canonical.apply(lambda r: _stem_gc(r["stem5"], r["stem3"]), axis=1)
+genome_gc = (sum(genome[c].count("G") + genome[c].count("C") for c in genome)
+             / sum(len(genome[c]) for c in genome))
+
+fig, ax = plt.subplots(figsize=(7/3, 7/9), constrained_layout=True)
+ax.hist(stem_gc * 100, bins=np.arange(0, 101, 10), color="#984ea3", edgecolor="white", linewidth=0.3)
+ax.axvline(stem_gc.median() * 100, color="crimson", lw=0.8, ls="--")
+ax.axvline(genome_gc * 100, color="black", lw=0.8, ls=":")   # genome baseline
+ax.set_xlim(0, 100)
+ax.set_xlabel("Stem G+C (%)", fontsize=6, labelpad=1.5)
+ax.set_ylabel("Terminators", fontsize=6, labelpad=1.5)
+ax.tick_params(axis="both", labelsize=6, pad=1.5)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+fig.savefig("annotation/canonical/term_stem_gc.pdf", dpi=300)
+plt.show()
+
+# ── 5. Distance from the mapped TTS to the 3' end of the poly-U tract ────────
+# Hairpin spans [start0, end0); the poly-U tail begins at end0 (+ strand) or just
+# below start0 (- strand), so the U-tract 3' end is end0 + polyU_run (+) or
+# start0 - polyU_run (-). Signed distance in transcription direction:
+#   d = strand_sign * (TTS - polyU_end);  d>0 = TTS lies 3' beyond the poly-U,
+#   d=0 = TTS coincides with the poly-U end, d<0 = TTS falls short of it.
+dist_rows = []
+for _, o in op_canonical.iterrows():
+    hit = find_terminators_near_tts(o, terms_df, window=TERM_WINDOW)
+    if len(hit) == 0:
+        continue
+    best   = hit.loc[hit["conf"].idxmax()]
+    run    = _polyU_run(str(best["tail3"]))
+    s      = 1 if str(o["strand"]) == "+" else -1
+    pu_end = (int(best["end0"]) + run) if s == 1 else (int(best["start0"]) - run)
+    dist_rows.append(s * (int(o["tts"]) - pu_end))
+tts_pu_dist = pd.Series(dist_rows, dtype=float)
+
+lo = int(np.floor(tts_pu_dist.min() / 2.0) * 2)
+hi = int(np.ceil(tts_pu_dist.max() / 2.0) * 2)
+fig, ax = plt.subplots(figsize=(7/3, 7/9), constrained_layout=True)
+ax.hist(tts_pu_dist, bins=np.arange(lo, hi + 2, 2), color="#FF7F00", edgecolor="white", linewidth=0.3)
+ax.axvline(tts_pu_dist.median(), color="crimson", lw=0.8, ls="--")
+ax.axvline(0, color="black", lw=0.6, ls=":")
+ax.set_xlim(-15, 20)   # 96% lie within +/-10 nt; crop the few far outliers
+ax.set_xlabel("TTS to poly-U end (nt)", fontsize=6, labelpad=1.5)
+ax.set_ylabel("Terminators", fontsize=6, labelpad=1.5)
+ax.tick_params(axis="both", labelsize=6, pad=1.5)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+fig.savefig("annotation/canonical/term_tts_polyU_distance.pdf", dpi=300)
+plt.show()
+
 # ── Stats -> append to Operon_Annotation.txt + console ───────────────────────
 mean_U = tail_freq["U"].mean()
 with open("Operon_Annotation.txt", "a") as fh:
@@ -1526,12 +1582,25 @@ with open("Operon_Annotation.txt", "a") as fh:
              + polyU_len.describe().round(1).to_string() + "\n")
     fh.write(f"  median poly-U tract length = {polyU_med:.0f} nt\n\n")
     fh.write(f"Mean U fraction across the 15-nt 3' tail: {mean_U:.2f}\n")
-    fh.write("3' tail per-position U fraction:\n" + tail_freq["U"].round(2).to_string() + "\n")
+    fh.write("3' tail per-position U fraction:\n" + tail_freq["U"].round(2).to_string() + "\n\n")
+    fh.write(f"Stem G+C content (%): median {stem_gc.median()*100:.0f}%, "
+             f"mean {stem_gc.mean()*100:.0f}%  (genome G+C = {genome_gc*100:.0f}%)\n")
+    fh.write((stem_gc * 100).describe().round(1).to_string() + "\n\n")
+    within10 = (tts_pu_dist.abs() <= 10).mean()
+    fh.write("Signed distance from mapped TTS to 3' end of poly-U tract "
+             "(nt; + = TTS beyond poly-U, 0 = coincident):\n")
+    fh.write(tts_pu_dist.describe().round(1).to_string() + "\n")
+    fh.write(f"  median = {tts_pu_dist.median():.0f} nt; within +/-10 nt of the poly-U end: {within10:.0%}\n")
 print(f"\nStem length (bp): median {stem_bp.median():.0f}, range {stem_bp.min()}-{stem_bp.max()}")
 print(f"Loop length (nt): median {loop_len.median():.0f}, range {loop_len.min()}-{loop_len.max()}")
 print(f"Poly-U tract length (nt): median {polyU_med:.0f}, range {polyU_len.min()}-{polyU_len.max()}")
 print(f"Mean 3'-tail U fraction: {mean_U:.2f}")
-print("Saved: term_stem_length.pdf, term_loop_length.pdf, term_tail3_logo.pdf")
+print(f"Stem G+C: median {stem_gc.median()*100:.0f}% vs genome {genome_gc*100:.0f}%")
+print(f"TTS to poly-U end (nt): median {tts_pu_dist.median():.0f}, "
+      f"IQR {tts_pu_dist.quantile(.25):.0f} to {tts_pu_dist.quantile(.75):.0f}, "
+      f"within +/-10 nt: {(tts_pu_dist.abs()<=10).mean():.0%}")
+print("Saved: term_stem_length.pdf, term_loop_length.pdf, term_tail3_logo.pdf, "
+      "term_stem_gc.pdf, term_tts_polyU_distance.pdf")
 
 
 # In[ ]:
