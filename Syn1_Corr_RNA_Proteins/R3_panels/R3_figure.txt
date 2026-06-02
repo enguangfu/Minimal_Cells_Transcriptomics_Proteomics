@@ -1,0 +1,17 @@
+R3 FIGURE PANELS (transcriptome-proteome correlation)
+============================================================
+Sizes (in): a 7/2 x 7/4; b 7/2 x 7/2; c-h 7/4 x 7/4. Default fonts.
+
+a) cytoplasmic: n=516 median=46.9 copies
+a) lipoprotein: n=68 median=20.7 copies
+a) membrane: n=126 median=9.6 copies
+a) extracellular: n=11 median=3.1 copies
+b) all r=0.614 (n=717); cytoplasmic r=0.697 (n=512); R^2 NOT shown
+c) PacBio vs Illumina r=0.617 (n=884, TPM>=0.5)
+d) residual vs log10(TIR) r=0.172 (n=566)
+e) residual vs CAI r=0.358 (n=717)
+f) R all 0.614->0.676; cytosolic 0.697->0.733 (R^2 all 0.377->0.457, cyto 0.486->0.537)
+g) half-life median=32.3 h, shortest=4.7 h, n=245
+h) residual vs log10(half-life) r=-0.120 (n=242)
+
+syn1_omics.xlsx: 911 genes (TPM_illumina 911, TPM_PacBio 911, iPM 721, copy 721, TIR 572, CAI 828, half-life 245)

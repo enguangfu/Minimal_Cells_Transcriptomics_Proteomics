@@ -26,8 +26,9 @@ The MS raw data associated with this study has been deposited onto the MassIVE R
 Protein abundances were quantified from the Spectronaut iBAQ (intensity-based absolute quantification) values, which serve as a within-sample proxy for molar protein amount.
 For each of the three replicates per organism, iBAQ was converted to a relative abundance in parts per million (iPM), $\text{iPM}_i = 10^{6}\,\text{iBAQ}_i / \sum_j \text{iBAQ}_j$, and the per-protein mean iPM across replicates was used for all downstream analyses, with the across-replicate coefficient of variation retained as a quality metric.
 For~\syn, 721 of the 828 annotated protein-coding genes (87.1\%) carried a quantified iPM.
+The per-gene relative abundances (iPM) are available in SI file \texttt{syn1\_omics.xlsx}.
 
-\subsubsection{Absolute Intracellular Protein Quantification}
+\subsubsection{Absolute Protein Quantification}
 
 %Currently in \refsec{methods-ptn-quant}. \cmt{Do we want to move this here?}
 %\subsubsection{Proteome Quantification for \jsyn}
@@ -45,7 +46,7 @@ Finally, absolute protein abundances were calculated using the following formula
 \label{eqn:abs-formula}
 \text{$Abs~Abundance_{i} = \frac{dry~mass * mass~fraction}{avg~molecular~weight} * Rel~Abundance_{i}$}
 \end{equation}
-% The resulting proteomics are reported in \siproteomics.
+The resulting per-gene absolute copy numbers are available in SI file \texttt{syn1\_omics.xlsx}.
 
 \subsubsection{Localization of Proteome}
 
@@ -54,4 +55,5 @@ Transmembrane regions (TMRs) were predicted with \texttt{DeepTMHMM}~\cite{hallgr
 Each protein was assigned to one of four classes by priority: a SignalP secretory or lipoprotein signal peptide marked it as extracellular or lipoprotein, respectively; otherwise one or more DeepTMHMM TMRs marked it as membrane, and proteins with no TMR were assigned cytoplasmic.
 Of the 721 detected~\syn~proteins, 516 were cytoplasmic, 126 membrane, 68 lipoprotein, and 11 extracellular.
 Median copy number per cell fell steeply with membrane association, from 47 for cytoplasmic proteins to 21 (lipoprotein), 10 (membrane), and 3 (extracellular), consistent with the under-digestion and under-recovery of membrane-embedded proteins rather than a true abundance difference.
+The per-protein localization assignments are available in SI file \texttt{syn1\_omics.xlsx}.
 

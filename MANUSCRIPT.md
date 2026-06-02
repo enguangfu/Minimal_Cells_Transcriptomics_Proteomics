@@ -103,20 +103,22 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 **Tex file:** `Manuscript/sections/results/operons.tex`  
 
+**SI file:** Operons.xlsx (boundaries, promoters, terminators, gene coverage, protein complex annotation)
+
 ### One-sentence Summary
 **480 operons were identified using PacBio long-read RNAseq, with transcription signatures located.**
 
 ### Figure
 **Figure:** `Manuscript/figures/operon.pdf`
 
-- Panel a: Two-gene operon co-transcription and the following RNA processing.
-- Panel b: Number of sense genes per operon in syn1.
-- Panel c: Lengths per operon in syn1.
-- Panel d: Transcription promoter and terminator on a genome axe. Promoter -35 and -10 logo drawn; terminator for dnaA-dnaN operon shown.
-- Panel e: Dist of terminator loop lengths.
-- Panel f: Dist of terminator stem lengths.
-- Panel g: polyU signature of terminators.
-- Panel f: Macromolecular complex ... operonal structure in syn1.
+- Panel a: Two-gene operon co-transcription and subsequent RNA processing (schematic).
+- Panel b: Sense genes per operon.
+- Panel c: Operon length distribution.
+- Panel d: Promoter and terminator on a genome axis: -35/-10 logos at canonical TSSs and the dnaA-dnaN (MMSYN1_0001-0002) terminator.
+- Panel e: Terminator loop-length distribution.
+- Panel f: Terminator stem-length distribution.
+- Panel g: Terminator 3' poly-U tail logo.
+- Panel h: Operonal structure of a macromolecular-complex cluster (L1.5 showcase).
 
 ### Chain of Logics
 
@@ -173,18 +175,22 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Analysis:** 
   - Annotation (analysis-only; runs end-to-end via `MPLBACKEND=Agg python Operon_Annotation.py`): `Syn1_Operon/Operon_Annotation.py`
 - **Outputs:** 
-  - `Syn1_Operon/Operon_Annotation.txt`
-  - Transcription signatures: `Syn1_Operon/annotation/canonical/` (`promoter_logo_minus35.pdf`, `promoter_logo_minus10.pdf`, `promoter_logo_tss.pdf`, `tts_hairpins/all_hairpins.pdf`)
+  - `Syn1_Operon/Operon_Annotation.txt` (terminator statistics section: stem/loop/poly-U tract lengths, stem G+C, TTS→poly-U distance)
+  - Promoter logos: `Syn1_Operon/annotation/canonical/` (`promoter_logo_minus35.pdf`, `promoter_logo_minus10.pdf`, `promoter_logo_tss.pdf`)
+  - Terminator hairpins: `tts_hairpins/TERM_*.pdf` (clean 1×1 in, logomaker classic colors) + `tts_hairpins/all_hairpins.pdf` (labeled QC grid)
+  - Terminator stat strips (each 7/3 × 7/9 in): `term_stem_length.pdf`, `term_loop_length.pdf`, `term_tail3_logo.pdf`, `term_stem_gc.pdf`, `term_tts_polyU_distance.pdf`
 - **Numbers to cite:** 
-  - Number of canonical operons
-  - TANAAT signature of -10 box
-  - Just AT rich of -35 box
-  - Median length of stem and loop
-  - Logos of poluU tails
-- **Figure panels:** d,e,f,g
-- **Conclusion:** Signatures are both consistent with previous knowledge: -10 box of TSS has TANAAT, -35 just AT rich; TTS as intrinsic terminators as hairpin + polyU
-- **Caveats:** The TSS, TTS sites are only for canonical operons; we might need to refine for all cases.
-- **Notes for LLM:** Corresponding Method finished (M3). Panel d: -35 / -10 promoter logos regenerated to OUTPUT.md spec (1x1 in, x-tick labels removed, enlarged ATCG); TSS-context + terminator-hairpin logos also available under `annotation/canonical/`. Prose not yet drafted.
+  - 141 canonical operons (isoform_operon with TSS+TTS both intergenic)
+  - -10 box: `TANAAT` hexamer 92/141 (65%); extended `TNNTANAAT` 54/141 (38%)
+  - -35 box: no fixed hexamer, broadly AT-rich
+  - terminators near TTS: 108/141 (77%)
+  - stem median 8 bp (4–19); loop median 4 nt (3–7); poly-U tract median 5 nt
+  - stem G+C: median 40%, mean 43% vs genome 24% (G+C-enriched, not absolute GC-rich)
+  - TTS to 3' poly-U end: median 3 nt beyond, IQR 1–4, 96% within ±10 nt
+- **Figure panels:** d (promoter + terminator logos), e (terminator stat strips: stem length, loop length, poly-U tail logo, stem G+C, TTS→poly-U distance)
+- **Conclusion:** Signatures are both consistent with previous knowledge: -10 box of TSS has TANAAT, -35 just AT rich; TTS as intrinsic terminators (G+C-enriched hairpin + poly-U) whose 3' poly-U end coincides with the mapped TTS.
+- **Caveats:** The TSS, TTS sites are only for canonical operons; we might need to refine for all cases. Stem G+C 40% is enriched relative to the AT-rich genome but not "GC-rich" in absolute terms — phrase as G+C-enriched.
+- **Notes for LLM:** Corresponding Method finished (M3). DONE — L1.4 drafted in `operons.tex` (promoter sentence + terminator sentences with stem G+C and TTS→poly-U distance). Panel d: -35 / -10 promoter logos regenerated to OUTPUT.md spec (1×1 in, x-tick labels removed, enlarged ATCG). Panel e candidate = the five terminator stat strips (user is assembling); tex keeps Fig. d refs until panel letters are fixed.
 
 #### L1.5: One instance of polycistronic operons
 
@@ -269,20 +275,22 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 **Tex file:** `Manuscript/sections/results/corr_RNA_ptn.tex`
 
+**SI file:** `Syn1_Corr_RNA_Proteins/syn1_omics.xlsx` (all 911 genes; columns: locusTag, gene_name, rna_type, gene_product, protein_localization, TPM_illumina, TPM_PacBio, iPM_mean, protein_copy_number, TIR, CAI, protein_halflife_h; gene name/product taken from the syn3A proteome where an ortholog exists). Built by `Syn1_Corr_RNA_Proteins/R3_figure_panels.py`.
+
 ### One-sentence Summary
 **High correlation found between transcriptome and proteome.**
 
 ### Figure
 **Figure:** `Manuscript/figures/correlation.pdf`
 
-- Panel a: Log10 distribution of proteins copy numbers as cytoplasm, membrane, lipoprotein and secreted proteins.
-- Panel b: Correlation between Illumina TPM and Mass-spec iPM.
-- Panel c: PacBio TPM and Illumina TPM correlation of syn1.
-- Panel d: Predicted Translation Initiation Rate (TIR) poorly correlates with residual.
-- Panel e: Codon Adaptation Index (CAI) decently correlates with residual.
-- Panel f: Correlation coefficient R improvements as only cytosolic proteins or entire proteome and with CAI or not.
-- Panel g: Intrinsic protein half-lives distribution transferred from Mpn.
-- Panel h: Protein half-lives poorly correlate with the residual.
+- Panel a: Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular).
+- Panel b: Illumina sense TPM vs proteome iPM (log10).
+- Panel c: PacBio vs Illumina sense TPM (log10).
+- Panel d: Predicted TIR vs proteome residual.
+- Panel e: CAI vs proteome residual.
+- Panel f: Model R² for whole proteome and cytoplasmic proteins, with/without CAI.
+- Panel g: Intrinsic protein half-lives transferred from Mpn.
+- Panel h: Protein half-life vs proteome residual.
 
 ### Chain of Logics
 
@@ -293,22 +301,22 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - Copy number quantification: `Syn1_Syn3A_Proteomics/Protein_Quantification_Localization.ipynb`
 - **Outputs:** 
   - syn1 proteomics: `Syn1_Syn3A_Proteomics/syn1_proteomics_localization_2026.csv`
-- **Numbers to cite:**  Median copy number of protein at locations
+- **Numbers to cite:**  721/828 annotated proteins detected (87%); median copies/cell: cytoplasmic 47 (n=516), lipoprotein 21 (n=68), membrane 10 (n=126), extracellular 3 (n=11); most abundant = EF-Tu (tuf, MMSYN1_0151) ~7,200 copies
 - **Figure panels:** a
 - **Conclusion:** Poor coverage of membrane proteins because of the protease digestion; 
 - **Caveats:** None
-- **Notes for LLM:** DONE — Method **Relative Protein Quantification**, **Localization of Proteome** (both written), and **Absolute Intracellular Protein Quantification** (polished) are complete in M5.
+- **Notes for LLM:** Method M5 done (Relative/Absolute Protein Quantification + Localization). DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.1 copy-number paragraph).
 
 #### L3.2: Using Illumina TPM as standard of transcriptome quantification
 
 - **Logic:** PacBio and Illumina TPMs of syn1 were correlated to get r of 0.62; no significant TPM and length bias was found.
 - **Analysis:** `Syn1_Transcriptomics/Gene_TPM/Gene_Transcriptomics.py`
 - **Outputs:** plots in `Syn1_Transcriptomics/Gene_TPM/`
-- **Numbers to cite:**  r of 0.62
+- **Numbers to cite:**  PacBio vs Illumina sense TPM Pearson r=0.62 (log10, n=884 at TPM≥0.5; figure threshold low_threshold=0.5); no abundance/length bias
 - **Figure panels:** c
 - **Conclusion:** As convention, Illumina TPMs were used to do correlation.
-- **Caveats:** None
-- **Notes for LLM:** DONE — Method **Illumina MiSeq Read Processing, Mapping to the Genome** (M1) and the **Quantification of TPM from Sequencing Depth** subsubsections (M1 and M2; a third was added under M8 for syn3A) are complete.
+- **Caveats:** Do NOT say "Illumina TPM used since correlate with iPM better."
+- **Notes for LLM:** Methods M1/M2/M8 done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.2). r=0.62 verified = the panel-c figure value (TPM≥0.5); all-feature r=0.61, mRNA-only r=0.68.
 
 #### L3.3: Decent correlation found between transcriptome and proteome for syn1
 
@@ -316,11 +324,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Analysis:** `Syn1_Corr_RNA_Proteins/Transcription_Translation.py`
 - **Outputs:** 
   - Same name Txt file
-- **Numbers to cite:**  Pearson r's
+- **Numbers to cite:**  all proteins Pearson r=0.61 (R²=0.38, n=717; Spearman 0.67); cytosolic-only r=0.70 (R²=0.49, n=512; Spearman 0.75)
 - **Figure panels:** b
 - **Conclusion:** Decent correlation.
 - **Caveats:** None
-- **Notes for LLM:** None
+- **Notes for LLM:** DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.3). The old tex heading's "0.67 for cytosolic" was STALE — cytosolic Pearson is 0.70 (0.6971); corrected in the prose.
 
 #### L3.4: Predicted TIR had low correlation with residuals between two omics
 
@@ -329,11 +337,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:** 
   - Same name Txt file
   - plots under `Syn1_Corr_RNA_Proteins/residual_analysis`
-- **Numbers to cite:**  Pearson r's
+- **Numbers to cite:**  residual vs log10(TIR) Pearson r=0.17; ΔR² from TIR +0.020 (2% of variance); baseline on n=566 UTR-genes r=0.59 / R²=0.35
 - **Figure panels:** d
 - **Conclusion:** No improvement on correlations, could be because the prediction itself was inaccurate.
 - **Caveats:** None
-- **Notes for LLM:** DONE — Method **Translation Initiation Rate Prediction** is complete in M6.
+- **Notes for LLM:** Method M6 (TIR) done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.4); cite OSTIR `roots_ostir_2021`.
 
 #### L3.5: Translation elongation factor improved the correlations
 
@@ -342,11 +350,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:** 
   - Same name Txt file
   - plots under `Syn1_Corr_RNA_Proteins/residual_analysis`
-- **Numbers to cite:**  Pearson r's
+- **Numbers to cite:**  CAI vs residual Pearson r=0.36; ΔR² from CAI +0.080 (+21% of baseline); cytosolic ΔR² +0.052; CAI reference set = top 20% by iPM = 144/721 genes
 - **Figure panels:** e,f
 - **Conclusion:** Translation elongation affected the protein biosynthesis.
 - **Caveats:** None
-- **Notes for LLM:** DONE — Method **Codon Adaptation Index (CAI)** is complete in M6.
+- **Notes for LLM:** Method M6 (CAI) done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.5); cite CAI `sharp_codon_1987`.
 
 #### L3.6: Protein degradation had low correlation with residuals.
 
@@ -358,11 +366,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - Same name Txt file
   - plots under `Syn1_Corr_RNA_Proteins/residual_analysis/`
   - Homology under `Genomes_Input/homology_syn1_mpn/`
-- **Numbers to cite:**  half-life distributions; Pearson r's
+- **Numbers to cite:**  245 Mpn-mapped half-lives; Syn1-corrected median 32 h, shortest 4.7 h vs ~1 h doubling; residual vs log10(t½) Pearson r=−0.12 (P=0.06, n=242); ΔR² from half-life ≤0.01
 - **Figure panels:** g,h
 - **Conclusion:** Intrinsic protein degradation is way slower than protein synthesis and doubling in syn1, thus having a minor effect on proteome abundances.
 - **Caveats:** Only a subset of proteins found reciprocal homologs; the intrinsic half-lives were corrected by protease (Lon or FtsH) abundances.
-- **Notes for LLM:** DONE — Method **Protein Degradation Rate Mapping from Mpn** is complete in M6.
+- **Notes for LLM:** Method M6 (degradation) done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.6); cite Mpn half-lives `burgos_protein_2020`.
 
 ---
 

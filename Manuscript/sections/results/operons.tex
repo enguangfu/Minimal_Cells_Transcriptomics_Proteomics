@@ -20,7 +20,11 @@ An average operon spanned 1{,}628~bp (median; mean 1{,}962~bp) and carried a sin
 The size distribution had a long polycistronic tail that culminated in the $\sim$11~kb ribosomal-protein supercluster (\locus{0652}--\locus{0672}), the largest operon in the genome, which co-transcribes the bulk of the small- and large-subunit ribosomal-protein and translation-machinery genes.
 Beyond their sense-strand content, 68 operons (14.2\%) also enclosed at least one gene transcribed from the opposite strand, and nine operons covered only antisense genes or intergenic regions, so that operonal boundaries frequently captured antisense transcription alongside the sense genes.
 
-Promoter and terminator signatures: -10 box significant; -35 box not; terminator predicted as hairpins + polyU
+Transcription start sites (TSS) and termination sites (TTS) were read from the operon boundaries for the 141 canonical operons whose start and end both fell in intergenic regions, where the mapped ends reflect genuine regulatory positions rather than RNase-processed transcript termini (Methods).
+Upstream of these start sites the bacterial $-10$ promoter element was clearly recovered: the \texttt{TANAAT} hexamer matched 92 of the 141 operons (65\%) and the extended \texttt{TNNTANAAT} motif matched 54 (38\%), whereas the $-35$ region carried no fixed hexamer and was only broadly AT-rich (Fig.~\ref{fig:operon}d).
+At the TTS, rho-independent terminators predicted with TransTermHP~\cite{kingsford_rapid_2007} were found at the operon end in 108 of the 141 operons (77\%), and the mapped TTS coincided with the \threeprime\ end of the poly-U tract, lying a median of 3~nt beyond it with 96\% of operons within 10~nt.
+These terminators showed the canonical intrinsic architecture of a stem-loop hairpin followed by a uridine-rich \threeprime\ tail, with a median stem of 8~bp, a median loop of 4~nt, and a median poly-U tract of 5~nt, and with stems enriched in G+C relative to the AT-rich genome (median 40\% versus 24\%) (Fig.~\ref{fig:operon}d--g).
+The $-10$ box and the intrinsic terminators are consistent with the promoter and terminator elements of other bacteria, indicating that the reduced genome retains a conventional transcription-signal architecture, although these assignments are so far limited to operons with intergenic boundaries.
 
 % \textit{Protein complexes in operons}
 
@@ -28,29 +32,18 @@ Promoter and terminator signatures: -10 box significant; -35 box not; terminator
 
 % Put one operon here: DCW operon?
 
-% Evaluate biological significance of gene co-expression: 
-
-% \begin{itemize}
-%     \item Glycolytic enzymes
-%     \item rPtn operon
-%     \item DNA replisome scattered (Angad commented)
-% \end{itemize}
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/operon.pdf}
-    \caption{Caption}
+    \caption{\textbf{Operon architecture of \syn~from PacBio long-read RNA sequencing.}
+    (a) Schematic of two-gene operon co-transcription and subsequent RNA processing into isoforms.
+    (b) Sense genes per operon.
+    (c) Operon length distribution.
+    (d) Promoter and terminator signatures: $-35$ and $-10$ sequence logos at canonical TSSs, and the intrinsic terminator of the \gene{dnaA}{0001}--\gene{dnaN}{0002} operon.
+    (e) Terminator loop-length distribution.
+    (f) Terminator stem-length distribution.
+    (g) Terminator \threeprime\ poly-U tail sequence logo.
+    (h) Operonal structure of a macromolecular-complex gene cluster.}
     \label{fig:operon}
 \end{figure}
 
-% \textbf{Extended Figure:}
-
-% tRNA in operons
-
-\textbf{SI: Excel File Co-expression}
-
-Sheet 1 operon candidate;
-
-Sheet 2 protein complexes: operon, expression level; protein abundance
-
-Sheet 3 tRNAs

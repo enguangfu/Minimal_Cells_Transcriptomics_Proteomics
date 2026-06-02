@@ -2,32 +2,45 @@
 
 % \textbf{Excel Sheet \newline\textit{Gene-level Transcription and Translation Strength}}
 
-How to calculate the absolute abundance? Protein density; \textbf{Distribution of absolute copy numbers of proteins}: most abundant one; median; how protein synthesis resource biased toward metabolism?
+Absolute protein abundances were derived from the \syn~mass-spectrometry proteome by converting each protein's intensity-based absolute quantification (iBAQ) value to a relative abundance in parts per million (iPM), and then to an intracellular copy number using the protein content per cell (Methods).
+Of the 828 annotated proteins, 721 (87\%) were detected.
+Copy number was strongly localization-dependent: cytoplasmic proteins had a median of 47 copies per cell ($n = 516$), compared with 21 for lipoproteins ($n = 68$), 10 for membrane proteins ($n = 126$), and 3 for extracellular proteins ($n = 11$), and the most abundant protein was the translation elongation factor Tu (\gene{tuf}{0151}) at roughly 7{,}200 copies (Fig.~\ref{fig:correlation}a).
+The low membrane and secreted values reflect the poor recovery of these classes by trypsin-only digestion rather than genuinely low abundance.
 
-Low coverage of membrane proteins: dist of ptns in different locations; poor digestion by trypsin alone
+Two orthogonal transcriptome measurements were available for \syn, short-read Illumina and long-read PacBio.
+Their per-gene sense transcripts per million (TPM) agreed moderately, with a Pearson correlation of $r = 0.62$ on $\log_{10}$ TPM ($n = 884$) and no systematic abundance- or length-dependent bias between the platforms (Fig.~\ref{fig:correlation}c).
+Illumina sense TPM, which correlated more strongly with the proteome, was therefore adopted as the transcriptome axis for all subsequent correlations.
 
-Use illumina to do the quantification
+Across the detected proteome, $\log_{10}$ iPM and $\log_{10}$ Illumina TPM were positively correlated (Pearson $r = 0.61$, $R^{2} = 0.38$, $n = 717$).
+Restricting the comparison to cytoplasmic proteins, which are quantified most reliably, raised the correlation to $r = 0.70$ ($R^{2} = 0.49$, $n = 512$; Fig.~\ref{fig:correlation}b).
+Transcript abundance is thus the primary determinant of protein abundance in \syn, with roughly half of the variance left to post-transcriptional effects.
 
-\textbf{Correlation coefficient of 0.67 found for cytosolic proteins:} compare to other organisms; outliers; why those?
+To dissect this residual variance, defined as the offset of each protein's $\log_{10}$ iPM from the transcript fit, three post-transcriptional layers were tested in turn.
+Translation-initiation rates (TIR) predicted for every coding sequence with OSTIR~\cite{roots_ostir_2021} were largely uninformative: $\log_{10}$(TIR) correlated only weakly with the residual (Pearson $r = 0.17$), and adding it to the model raised $R^{2}$ by just 0.020, about 2\% of the variance (Fig.~\ref{fig:correlation}d).
+This most likely reflects the limited accuracy of de novo initiation-rate prediction rather than an absence of initiation control.
 
-Then three levels to investigate the global deviation of proteomics from transcriptomics:
+The codon adaptation index (CAI)~\cite{sharp_codon_1987}, a proxy for translation-elongation efficiency, was by contrast a substantial predictor: it correlated with the residual (Pearson $r = 0.36$) and increased $R^{2}$ by 0.080, a 21\% gain over the transcript-only baseline (Fig.~\ref{fig:correlation}e,f).
+Elongation efficiency, set by codon usage against the AT-rich genome, therefore measurably tunes protein output beyond transcript level.
 
-Translation initiation predicted by OSTIR failed to explain the deviation;
+Protein turnover, the third layer, has not been measured in \syn, so intrinsic half-lives were transferred from the related minimal bacterium~\mpn~\cite{burgos_protein_2020} by reciprocal-best-hit orthology and scaled by protease abundance (Methods).
+The 245 mapped half-lives were long, with a median of 32~h and a minimum of 4.7~h, far exceeding the roughly 1~h doubling time of \syn (Fig.~\ref{fig:correlation}g).
+Half-life was uncorrelated with the residual (Pearson $r = -0.12$, $P = 0.06$, $n = 242$) and added at most 0.01 to $R^{2}$ (Fig.~\ref{fig:correlation}h).
+Intrinsic degradation therefore has little influence on steady-state protein abundance in this fast-growing cell, where turnover is dominated by dilution through growth.
 
-Elongation speed quantified by CAI dramatically increased the correlation factor: codon usage (AT rich genome);
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/correlation.pdf}
+    \caption{\textbf{Transcriptome--proteome correlation in \syn.}
+    (a) Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular).
+    (b) Illumina sense TPM versus proteome iPM ($\log_{10}$).
+    (c) PacBio versus Illumina sense TPM ($\log_{10}$).
+    (d) Predicted TIR versus the proteome residual.
+    (e) CAI versus the proteome residual.
+    (f) Model $R^{2}$ for the whole proteome and for cytoplasmic proteins, with and without CAI.
+    (g) Intrinsic protein half-lives transferred from \mpn.
+    (h) Protein half-life versus the proteome residual.}
+    \label{fig:correlation}
+\end{figure}
 
-Protein degradation speed mapped from Mpn significantly slower than the cell cycle of Syn1, thus not decisive on the protein abundance.
 
-\textbf{Extended Figure:}
-
-Dist of ptn copy numbers in different localization;
-
-Illumina corr. w. PacBio
-
-TIR w. residual
-
-tAI w. residual
-
-\textbf{SI: Excel file Gene-level RNA Processing and Expression}
-
-Sheet 2: Transcriptomics and Proteomics of all syn1 genes
+\textbf{SI: \texttt{syn1\_omics.xlsx}} --- per-gene transcriptome and proteome table for all 911 \syn~genes, with columns locus tag, gene name, RNA type, gene product, protein localization, Illumina TPM, PacBio TPM, iPM, protein copy number, TIR, CAI, and protein half-life.

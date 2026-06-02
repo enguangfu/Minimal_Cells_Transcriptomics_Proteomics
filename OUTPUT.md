@@ -60,6 +60,7 @@ Follow these conventions for every matplotlib figure.
   scatter plot with millions of points).
 - Do not embed bitmapped images in plots for this project — all figures are
   pure vector.
+- By default, do NOT set title.
 
 ### Standard preamble
 Every plotting script should begin with this configuration block:
