@@ -37,6 +37,7 @@ TO DO Reminder:
 - [ ] `Syn1_Operon/operons.candidate_blocks.tsv` (480 operons) is **not reproduced** by re-running the current `Operon_Segmentation.py` on the server isoforms (`Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv`, 267 k) — that yields **483 operons** and splits the 11 kb ribosomal supercluster (0652–0672) into 3 units (no bridging isoforms across rpsQ/0662). The canonical table came from a different isoform-clustering run. Re-run output kept at `operons.candidate_blocks.rerun483.tsv`; the run also overwrote untracked `gene_operon_coverage.tsv`/`uncovered_genes.tsv` with 483-versions (regenerable).
 - [ ] Root-caused dedup bug: the Step-5a overlap merge concatenates the two merged operons' gene lists and sums counts, so shared genes are double-listed (14 operons, max 23 vs 21 true). Fix `dedup_operon_gene_lists` is now in `Operon_Segmentation.py` (final pass before `to_csv`); **for the first draft it is applied at consumption** (panel b + `Operon_Annotation.txt` recount unique loci; the tsv is left untouched). Decide later whether to (a) dedupe the canonical tsv in place, or (b) locate the original isoform file and regenerate end-to-end.
 - [ ] FOOTGUN: the patched `Operon_Segmentation.py` has `OUT_FOLDER="."`, so running it from `Syn1_Operon/` overwrites the canonical tsv with the divergent 483 map. Do not run until the isoform-input question is resolved.
+- [ ] Could use promoter and terminator predictions to judge the merging of truncated operons; then we can expand the statistics of transcription signatures to all operons.
 
 ---
 
@@ -111,8 +112,10 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - Panel a: Two-gene operon co-transcription and the following RNA processing.
 - Panel b: Number of sense genes per operon in syn1.
 - Panel c: Lengths per operon in syn1.
-- Panel d: Transcription promoter and terminator.
-- Panel e: Terminator statistics.
+- Panel d: Transcription promoter and terminator on a genome axe. Promoter -35 and -10 logo drawn; terminator for dnaA-dnaN operon shown.
+- Panel e: Dist of terminator loop lengths.
+- Panel f: Dist of terminator stem lengths.
+- Panel g: polyU signature of terminators.
 - Panel f: Macromolecular complex ... operonal structure in syn1.
 
 ### Chain of Logics
@@ -178,7 +181,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - Just AT rich of -35 box
   - Median length of stem and loop
   - Logos of poluU tails
-- **Figure panels:** d,e
+- **Figure panels:** d,e,f,g
 - **Conclusion:** Signatures are both consistent with previous knowledge: -10 box of TSS has TANAAT, -35 just AT rich; TTS as intrinsic terminators as hairpin + polyU
 - **Caveats:** The TSS, TTS sites are only for canonical operons; we might need to refine for all cases.
 - **Notes for LLM:** Corresponding Method finished (M3). Panel d: -35 / -10 promoter logos regenerated to OUTPUT.md spec (1x1 in, x-tick labels removed, enlarged ATCG); TSS-context + terminator-hairpin logos also available under `annotation/canonical/`. Prose not yet drafted.
@@ -208,7 +211,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - Panel a: RNA isoform distribution for gene 0154/lap with more 5' erosion.
 - Panel b: RNA isoform distribution for gene 0178 with more 3' erosion.
 - Panel c: RNA isoform truncation categories.
-- Panel d: Biased RNA Processing schematics.
+- Panel d: Biased RNA Processing schematics: endo and exo from 3'.
 - Panel e: RNA isoform distributions for ATP synthase operon.
 
 ### Chain of Logics
@@ -250,7 +253,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 #### L2.4: ATP synthase operon is co-expressed in one-go but cut at $\alpha$ subunit.
 
-- **Logic:** Macromolecular complexes' gene co-expression can be altered by RNA processing. ATP synthase's RNA isoform distribution has a clear pattern of isolation at $\alpha$ subunits, which was identified as endo RNase III cleavage site.
+- **Logic:** Macromolecular complexes' gene co-expression can be altered by RNA processing. ATP synthase's RNA isoform distribution has a clear pattern of isolation at $\alpha$ subunits, which was identified as endo RNase III cleavage site. Comment on the other membrane complexes.
 - **Analysis:** 
 - **Outputs:** 
   - plot: `Syn1_Operon/ATP_Synthase_wdepth.pdf`
