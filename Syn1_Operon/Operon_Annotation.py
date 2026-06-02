@@ -1216,24 +1216,29 @@ print(f"Unique TTS terminators for canonical operons: {len(tts_terms_canonical)}
 
 # -- Drawing helpers ----------------------------------------------------------
 MONO = {"family": "monospace"}
+# Exact logomaker 'classic' colours, so hairpin bases match the promoter logos.
 BASE_COLOR = {
-    "U": "#E41A1C",
-    "C": "#377EB8",
-    "A": "#4DAF4A",
-    "G": "#FF7F00",
+    "A": "#008000",   # green
+    "C": "#0000ff",   # blue
+    "G": "#ffa600",   # orange
+    "U": "#ff0000",   # red
+    "T": "#ff0000",
     "-": "#AAAAAA",
 }
 
 def base_col(ch):
     return BASE_COLOR.get(ch.upper(), "#333333")
 
-def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None):
+def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None, minimal=False):
     """
     Draw a single terminator hairpin with:
       - stem rising vertically in the middle (base at bottom, loop on top)
-      - base pairs linked by short dashes between the two stem columns
+      - base pairs linked by short connector lines between the two stem columns
       - 5' tail streaming down-and-left from the stem base
       - 3' tail (poly-U) streaming down-and-right from the stem base
+
+    minimal=True  -> hairpin only: no title, no 5'/3' tail-end labels (for the
+    standalone per-terminator panels used in the figure).
     """
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
@@ -1246,12 +1251,34 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None):
     tail3 = term_row["tail3"]
 
     stem_len = max(len(stem5), len(stem3))
+    n_loop   = max(1, len(loop))
 
-    # Layout (axes [0,1] coords, y up)
+    # ── Style / sizing ───────────────────────────────────────────────────────
+    # The standalone per-terminator panels are born at 1x1 in (axes == figure),
+    # so they need small fonts (Nature 5 pt floor) and tight, cw-scaled spacing;
+    # the QC summary grid keeps the larger original style. cw = nucleotide
+    # character width in axes units.
+    if minimal:
+        fs_nt, fs_loop = 5, 5
+        cw       = 0.050
+        row_cap  = 0.075
+        tail_show = 6
+    else:
+        fs_nt, fs_loop = 10, 9
+        cw       = 0.020
+        row_cap  = 0.050
+        tail_show = 10
+
+    # Layout (axes [0,1] coords, y up). Vertically centered; row height adapts
+    # so even a 19 bp stem fits inside the panel.
     cx        = 0.50
-    stem_gap  = 0.1
-    row_h     = 0.045
-    stem_base = 0.32                    # y of stem bottom (closest to tails)
+    stem_gap  = 0.9 * cw                 # horizontal gap between the two stem columns
+    off       = 0.55 * cw                # base-letter offset from its column line
+    Y0, Y1    = 0.07, 0.93
+    row_h     = min(row_cap, (Y1 - Y0) / (stem_len + 2.0))
+    loop_h    = 0.6 * row_h + 0.012 * n_loop
+    block_h   = stem_len * row_h + loop_h
+    stem_base = Y0 + ((Y1 - Y0) - block_h) / 2     # center the whole hairpin
     stem_top  = stem_base + stem_len * row_h
 
     x_L = cx - stem_gap / 2
@@ -1262,8 +1289,8 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None):
     # (at stem_base) and its last char is adjacent to the loop (at stem_top).
     for i, ch in enumerate(stem5):
         y = stem_base + i * row_h
-        ax.text(x_L - 0.012, y, ch, ha="right", va="center",
-                fontsize=10, color=base_col(ch), fontdict=MONO,
+        ax.text(x_L - off, y, ch, ha="right", va="center",
+                fontsize=fs_nt, color=base_col(ch), fontdict=MONO,
                 transform=ax.transAxes)
 
     # stem3 is 5'→3' leaving the hairpin; its first char is adjacent to the
@@ -1272,8 +1299,8 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None):
     # Place so that stem3[0] sits at stem_top - row_h (paired with stem5[-1])
     for i, ch in enumerate(stem3):
         y = stem_top - row_h - i * row_h
-        ax.text(x_R + 0.012, y, ch, ha="left", va="center",
-                fontsize=10, color=base_col(ch), fontdict=MONO,
+        ax.text(x_R + off, y, ch, ha="left", va="center",
+                fontsize=fs_nt, color=base_col(ch), fontdict=MONO,
                 transform=ax.transAxes)
 
     # ── Base-pair dashes between columns ─────────────────────────────────────
@@ -1286,98 +1313,90 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None):
             continue
         y = stem_base + i * row_h
         pair = frozenset([ch5.upper(), ch3.upper()])
-        dash = "----" if pair != frozenset(["G", "U"]) else "- - "
-        ax.text(cx, y, dash, ha="center", va="center",
-                fontsize=8, color="#666666", fontdict=MONO,
-                transform=ax.transAxes)
+        # Connector line spans the gap between the two base columns; dashed for
+        # a G-U wobble, solid for Watson-Crick. Scales with stem_gap.
+        ls = (0, (1.5, 1.5)) if pair == frozenset(["G", "U"]) else "-"
+        ax.plot([x_L - 0.35 * cw, x_R + 0.35 * cw], [y, y], color="#666666",
+                lw=0.7, ls=ls, transform=ax.transAxes, zorder=0)
 
-    # ── Loop arc on top of the stem ──────────────────────────────────────────
-    arc_rx = stem_gap / 2
-    arc_ry = 0.035 + len(loop) * 0.005
-    theta = np.linspace(0, np.pi, 80)           # 0 = right, pi = left
-    arc_xs = cx + arc_rx * np.cos(theta)
-    arc_ys = stem_top + arc_ry * np.sin(theta)
-    ax.plot(arc_xs, arc_ys, color="#999999", lw=0.8,
-            transform=ax.transAxes, zorder=0)
-
-    # Loop bases along the arc, in 5'→3' order = right→top→left
-    # (loop sits between stem5 end and stem3 start; entering from right column)
+    # ── Loop bases on top of the stem (no arc drawn) ─────────────────────────
+    # Loop ends sit roughly above the two stem columns (so it reads as connected)
+    # and only widen slightly for large loops; shallow and anchored just above the
+    # topmost stem base so the loop stays close to the stem on the y axis.
+    loop_rx = (stem_gap / 2 + off) + 0.10 * cw * max(0, n_loop - 4)
+    loop_ry = 0.022 + 0.5 * row_h
+    y0_loop = stem_top - 0.6 * row_h
     for j, ch in enumerate(loop):
-        t = (j + 0.5) / len(loop) * np.pi       # 0..pi
-        bx = cx + arc_rx * np.cos(t)
-        by = stem_top + arc_ry * np.sin(t)
+        t  = np.pi - (j + 0.5) / n_loop * np.pi  # left -> top -> right (5'->3')
+        bx = cx + loop_rx * np.cos(t)
+        by = y0_loop + loop_ry * np.sin(t)
         ax.text(bx, by, ch, ha="center", va="center",
-                fontsize=9, color=base_col(ch), fontdict=MONO,
+                fontsize=fs_loop, color=base_col(ch), fontdict=MONO,
                 transform=ax.transAxes)
 
     # ── 5' tail: stream from stem base down-and-left ─────────────────────────
-    TAIL_SHOW = 10
-    tail5_show = tail5[-TAIL_SHOW:] if len(tail5) > TAIL_SHOW else tail5
-    tail5_label = ("…" if len(tail5) > TAIL_SHOW else "") + tail5_show
+    tail5_show = tail5[-tail_show:] if len(tail5) > tail_show else tail5
+    tail5_label = ("…" if len(tail5) > tail_show else "") + tail5_show
     # Bases nearest the stem are the last chars of tail5_label (3' end of tail5)
-    char_w = 0.020
+    char_w = cw
     n5 = len(tail5_label)
     # Place characters so the LAST char sits just left of x_L at stem_base
     # and earlier chars extend toward the lower-left corner.
     for k, ch in enumerate(reversed(tail5_label)):
         # k=0 is closest to stem
-        bx = x_L - 0.05 - k * char_w
-        # by = stem_base - 0.012 * k           # gentle diagonal downward
+        bx = x_L - 1.4 * cw - k * char_w
         by = stem_base
         if bx < 0.02 or by < 0.02:
             break
         col = base_col(ch) if ch != "…" else "#888888"
         ax.text(bx, by, ch, ha="center", va="center",
-                fontsize=10, color=col, fontdict=MONO,
+                fontsize=fs_nt, color=col, fontdict=MONO,
                 transform=ax.transAxes)
 
     # 5' label near lower-left
-    ax.text(0.015, max(0.02, stem_base - 0.012 * min(n5, 12) - 0.02),
-            "5'", ha="left", va="center",
-            fontsize=9, color="#555555", transform=ax.transAxes)
+    if not minimal:
+        ax.text(0.015, max(0.02, stem_base - 0.012 * min(n5, 12) - 0.02),
+                "5'", ha="left", va="center",
+                fontsize=9, color="#555555", transform=ax.transAxes)
 
     # ── 3' tail: stream from stem base down-and-right (poly-U region) ────────
-    tail3_show = tail3[:TAIL_SHOW] if len(tail3) > TAIL_SHOW else tail3
-    tail3_label = tail3_show + ("…" if len(tail3) > TAIL_SHOW else "")
+    tail3_show = tail3[:tail_show] if len(tail3) > tail_show else tail3
+    tail3_label = tail3_show + ("…" if len(tail3) > tail_show else "")
     n3 = len(tail3_label)
     for k, ch in enumerate(tail3_label):
-        bx = x_R + 0.05 + k * char_w
-        # by = stem_base - 0.012 * k
+        bx = x_R + 1.4 * cw + k * char_w
         by = stem_base
         if bx > 0.98 or by < 0.02:
             break
         col = base_col(ch) if ch != "…" else "#888888"
         ax.text(bx, by, ch, ha="center", va="center",
-                fontsize=10, color=col, fontdict=MONO,
+                fontsize=fs_nt, color=col, fontdict=MONO,
                 transform=ax.transAxes)
 
-    ax.text(0.985, max(0.02, stem_base - 0.012 * min(n3, 12) - 0.02),
-            "3'", ha="right", va="center",
-            fontsize=9, color="#555555", transform=ax.transAxes)
+    if not minimal:
+        ax.text(0.985, max(0.02, stem_base - 0.012 * min(n3, 12) - 0.02),
+                "3'", ha="right", va="center",
+                fontsize=9, color="#555555", transform=ax.transAxes)
 
     # ── Title with operon hit(s) ─────────────────────────────────────────────
-    op_str = ""
-    if operon_ids:
-        op_str = "operon: " + ",".join(operon_ids)
-    conf_str = (f"conf={term_row['conf']}  "
-                f"ΔG={term_row['hp_score']} kcal/mol  "
-                f"tail={term_row['tail_score']}")
-    parts = [p for p in [title, op_str, conf_str] if p]
-    ax.set_title("\n".join(parts), fontsize=7.5, pad=4)
+    if not minimal:
+        op_str = ""
+        if operon_ids:
+            op_str = "operon: " + ",".join(operon_ids)
+        conf_str = (f"conf={term_row['conf']}  "
+                    f"ΔG={term_row['hp_score']} kcal/mol  "
+                    f"tail={term_row['tail_score']}")
+        parts = [p for p in [title, op_str, conf_str] if p]
+        ax.set_title("\n".join(parts), fontsize=7.5, pad=4)
 
 
-# -- Individual plots ---------------------------------------------------------
+# -- Individual plots (hairpin only: born at 1x1 in, no title/5'/3' labels) ---
 for _, t in tts_terms_canonical.iterrows():
-    ops = term_to_operons.get(int(t["term_id"]), [])
-    fig, ax = plt.subplots(figsize=(4, 5))
-    draw_terminator_hairpin(
-        ax, t,
-        title=f"TERM {int(t['term_id'])}  ({t['strand']} strand)",
-        operon_ids=ops,
-    )
-    plt.tight_layout()
+    fig, ax = plt.subplots(figsize=(1, 1))
+    fig.subplots_adjust(left=0, right=1, bottom=0, top=1)   # axes fills figure
+    draw_terminator_hairpin(ax, t, minimal=True)
     save_path = f"annotation/canonical/tts_hairpins/TERM_{int(t['term_id'])}.pdf"
-    plt.savefig(save_path, bbox_inches="tight")
+    plt.savefig(save_path)                                  # exact 1x1 in
     plt.close()
 
 print(f"Saved {len(tts_terms_canonical)} individual hairpin plots.")
@@ -1406,6 +1425,112 @@ plt.tight_layout()
 plt.savefig("annotation/canonical/tts_hairpins/all_hairpins.pdf", dpi=300, bbox_inches="tight")
 plt.show()
 print("Saved: annotation/canonical/tts_hairpins/all_hairpins.pdf")
+
+
+# ============================================================
+# Terminator statistics (R1 panel e): stem length, loop length, 3' poly-U tail
+# ============================================================
+#
+# Three strip subplots, each born at (7/3, 7/9) in, to be assembled in
+# Illustrator into one ~(7/3 x 7/3) panel. Computed over the unique intrinsic
+# terminators at canonical operon TTSs (tts_terms_canonical). Base colours and
+# the tail logo use the exact logomaker 'classic' scheme, matching the promoter
+# logos in panel d.
+#   1. term_stem_length.pdf  -- stem length (base pairs)
+#   2. term_loop_length.pdf  -- loop length (nt)
+#   3. term_tail3_logo.pdf   -- 3' tail composition logo (poly-U + A/C readthrough)
+
+import logomaker
+
+CLASSIC = {"A": "#008000", "C": "#0000ff", "G": "#ffa600", "U": "#ff0000"}
+
+def _bp_count(s5, s3):
+    """Number of base pairs = aligned non-gap positions (stem5[i] vs stem3[-1-i])."""
+    return sum(1 for a, b in zip(str(s5), str(s3)[::-1]) if a != "-" and b != "-")
+
+stem_bp  = tts_terms_canonical.apply(lambda r: _bp_count(r["stem5"], r["stem3"]), axis=1)
+loop_len = tts_terms_canonical["loop"].astype(str).str.replace("-", "", regex=False).str.len()
+
+# ── 1. Stem length (bp) ──────────────────────────────────────────────────────
+fig, ax = plt.subplots(figsize=(7/3, 7/9), constrained_layout=True)
+vc = stem_bp.value_counts().sort_index()
+ax.bar(vc.index, vc.values, width=0.85, color="#377EB8", edgecolor="white", linewidth=0.3)
+ax.axvline(stem_bp.median(), color="crimson", lw=0.8, ls="--")
+ax.set_xlabel("Stem length (bp)", fontsize=5)
+ax.set_ylabel("Terminators", fontsize=5)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+fig.savefig("annotation/canonical/term_stem_length.pdf", dpi=300)
+plt.show()
+
+# ── 2. Loop length (nt) ──────────────────────────────────────────────────────
+fig, ax = plt.subplots(figsize=(7/3, 7/9), constrained_layout=True)
+vc = loop_len.value_counts().sort_index()
+ax.bar(vc.index, vc.values, width=0.85, color="#4DAF4A", edgecolor="white", linewidth=0.3)
+ax.axvline(loop_len.median(), color="crimson", lw=0.8, ls="--")
+ax.set_xlabel("Loop length (nt)", fontsize=5)
+ax.set_ylabel("Terminators", fontsize=5)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+fig.savefig("annotation/canonical/term_loop_length.pdf", dpi=300)
+plt.show()
+
+# ── 3. 3' poly-U tail composition logo ───────────────────────────────────────
+TAILLEN = 15   # TransTermHP reports a fixed 15-nt 3' tail window
+tails = [str(t) for t in tts_terms_canonical["tail3"]
+         if len(str(t)) == TAILLEN and set(str(t)) <= set("ACGU")]
+tail_counts = pd.DataFrame(0.0, index=range(1, TAILLEN + 1), columns=["A", "C", "G", "U"])
+for t in tails:
+    for i, ch in enumerate(t):
+        tail_counts.loc[i + 1, ch] += 1
+tail_freq = tail_counts.div(tail_counts.sum(axis=1), axis=0)
+
+# Poly-U tract length = leading run of consecutive U from the stem (stop at first
+# non-U), the canonical intrinsic-terminator U-tail length.
+def _polyU_run(t):
+    n = 0
+    for ch in t:
+        if ch == "U":
+            n += 1
+        else:
+            break
+    return n
+polyU_len = pd.Series([_polyU_run(t) for t in tails])
+polyU_med = polyU_len.median()
+
+fig, ax = plt.subplots(figsize=(7/3, 7/9), constrained_layout=True)
+logomaker.Logo(tail_freq, ax=ax, color_scheme=CLASSIC, stack_order="big_on_top")
+# median poly-U tract length (drawn at the position boundary it reaches)
+ax.axvline(polyU_med + 0.5, color="crimson", lw=0.8, ls="--")
+ax.set_ylim(0, 1)
+ax.set_xticks([1, 5, 10, 15])
+ax.set_xlabel("3' tail position (nt)", fontsize=5)
+ax.set_ylabel("Probability", fontsize=5)
+ax.tick_params(axis="both", labelsize=6)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+fig.savefig("annotation/canonical/term_tail3_logo.pdf", dpi=300)
+plt.show()
+
+# ── Stats -> append to Operon_Annotation.txt + console ───────────────────────
+mean_U = tail_freq["U"].mean()
+with open("Operon_Annotation.txt", "a") as fh:
+    fh.write("\n\nTERMINATOR STATISTICS (canonical operon TTS intrinsic terminators)\n")
+    fh.write("=" * 60 + "\n")
+    fh.write(f"n unique terminators = {len(tts_terms_canonical)} "
+             f"(tail logo built from {len(tails)} full 15-nt tails)\n\n")
+    fh.write("Stem length (bp):\n" + stem_bp.describe().round(1).to_string() + "\n\n")
+    fh.write("Loop length (nt):\n" + loop_len.describe().round(1).to_string() + "\n\n")
+    fh.write("Poly-U tract length (leading consecutive U in the 3' tail):\n"
+             + polyU_len.describe().round(1).to_string() + "\n")
+    fh.write(f"  median poly-U tract length = {polyU_med:.0f} nt\n\n")
+    fh.write(f"Mean U fraction across the 15-nt 3' tail: {mean_U:.2f}\n")
+    fh.write("3' tail per-position U fraction:\n" + tail_freq["U"].round(2).to_string() + "\n")
+print(f"\nStem length (bp): median {stem_bp.median():.0f}, range {stem_bp.min()}-{stem_bp.max()}")
+print(f"Loop length (nt): median {loop_len.median():.0f}, range {loop_len.min()}-{loop_len.max()}")
+print(f"Poly-U tract length (nt): median {polyU_med:.0f}, range {polyU_len.min()}-{polyU_len.max()}")
+print(f"Mean 3'-tail U fraction: {mean_U:.2f}")
+print("Saved: term_stem_length.pdf, term_loop_length.pdf, term_tail3_logo.pdf")
 
 
 # In[ ]:

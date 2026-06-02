@@ -112,7 +112,8 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - Panel b: Number of sense genes per operon in syn1.
 - Panel c: Lengths per operon in syn1.
 - Panel d: Transcription promoter and terminator.
-- Panel e: Macromolecular complex ... operonal structure in syn1.
+- Panel e: Terminator statistics.
+- Panel f: Macromolecular complex ... operonal structure in syn1.
 
 ### Chain of Logics
 
@@ -169,9 +170,15 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Analysis:** 
   - Annotation (analysis-only; runs end-to-end via `MPLBACKEND=Agg python Operon_Annotation.py`): `Syn1_Operon/Operon_Annotation.py`
 - **Outputs:** 
+  - `Syn1_Operon/Operon_Annotation.txt`
   - Transcription signatures: `Syn1_Operon/annotation/canonical/` (`promoter_logo_minus35.pdf`, `promoter_logo_minus10.pdf`, `promoter_logo_tss.pdf`, `tts_hairpins/all_hairpins.pdf`)
-- **Numbers to cite:** None
-- **Figure panels:** d
+- **Numbers to cite:** 
+  - Number of canonical operons
+  - TANAAT signature of -10 box
+  - Just AT rich of -35 box
+  - Median length of stem and loop
+  - Logos of poluU tails
+- **Figure panels:** d,e
 - **Conclusion:** Signatures are both consistent with previous knowledge: -10 box of TSS has TANAAT, -35 just AT rich; TTS as intrinsic terminators as hairpin + polyU
 - **Caveats:** The TSS, TTS sites are only for canonical operons; we might need to refine for all cases.
 - **Notes for LLM:** Corresponding Method finished (M3). Panel d: -35 / -10 promoter logos regenerated to OUTPUT.md spec (1x1 in, x-tick labels removed, enlarged ATCG); TSS-context + terminator-hairpin logos also available under `annotation/canonical/`. Prose not yet drafted.
