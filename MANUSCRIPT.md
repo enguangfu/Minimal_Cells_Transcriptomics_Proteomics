@@ -381,14 +381,22 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 ### One-sentence Summary
 **Long-read RNA seq reveals anti-sense and intergenic transcription.**
 
+### References:
+- Syn1, Science, 2010
+- antisense RNAs as noise, Science Advances, 2016
+
 ### Figure
 **Figure:** `Manuscript/figures/novel.pdf`
 
-- Panel a: Distribution of anti-sense percentage of all isoforms
-- Panel b: Schematics of read-through, embedded, and spurious promoter to explain anti-sense coverage in operons.
-- Panel c: Distribution of 5' and 3' untranslated regions (UTR) in operons
-- Panel d: Truly intergenic transcription between 0154 and 0155.
-- Panel e: New ORF encoding peptide of length 118 aas found after gene 0592.
+<!-- - Panel a: Distribution of anti-sense percentage of all isoforms. (7/4,7/4) -->
+- Panel a: Schematics of read-through, embedded, and spurious promoter to explain anti-sense coverage in operons. (7/2,7/4)
+- Panel b: Isoform length and read distribution for all three cases of anti-sense transcription. (7/4, 7/4)
+- Panel c: Isoform read distribution for all three cases of anti-sense transcription. (7/4, 7/4)
+- Panel d: Unexpected anti-sense transcription inside inserted Yeast vector. (7/2,7/4)
+- Panel e: Truly intergenic transcription between 0154 and 0155. (7/2, 7/4)
+- Panel f: Distribution of 5' and 3' untranslated regions (UTR) in operons. (7/4, 7/4)
+- Panel g: Intergenic coverage of all RNA isoforms (7/4,7/4)
+- Panel h: New ORF encoding peptide of length 118 aas found after gene 0592. (7/2, 7/4)
 
 ### Chain of Logics
 
@@ -400,60 +408,73 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - `Syn1_Novel_ORF/Abnormal_Transcripts.py`
 - **Outputs:** 
   - Same name Txt file
-  - plots under `Syn1_Novel_ORF`
 - **Numbers to cite:**  2%; cases of anti-sense coverage
-- **Figure panels:** a,b
+- **Figure panels:** a
 - **Conclusion:** Full-length RNA isoforms reveal new cases of anti-sense transcription as read-throughs.
 - **Caveats:** None
-- **Notes for LLM:** DONE — Method **Novel Transcription and Translation** is complete in M7 (written + polished).
+- **Notes for LLM:** 
 
-#### L4.2: Distribution of 5' and 3' UTR lengths.
+#### L4.2: Spurious promoter has highest isoform read support out of three cases, but still minor compared to sense-transcription.
 
-- **Logic:** UTR lengths were evaluated for all canonical operons with median of tens of nucleotides.
+- **Logic:** Spurious promoter has most isoform read support; embedded case tend to be in longer length; all three cases were minor in read compared to sense transciption, except one case of 0918, yeast gene.
 - **Analysis:** 
-  - `Syn1_Operon/Operon_Annotation.ipynb`
+  - `Syn1_Novel_ORF/Novel_translation.ipynb`
 - **Outputs:** 
-  - Output inside Notebook
-- **Numbers to cite:**  Median, and maximum
-- **Figure panels:** c
-- **Conclusion:** Median values were consistent with previous papers; high outliers are due to the anti-sense transcription or truncations.
+  - Same name Txt file
+  - plots under `Syn1_Novel_ORF`
+- **Numbers to cite:**  2%; cases of anti-sense coverage
+- **Figure panels:** b,c
+- **Conclusion:** 
 - **Caveats:** None
-- **Notes for LLM:** None
+- **Notes for LLM:** Panel a,b, and c are in the same row.
 
-#### L4.3: One truly isolated intergenic transcription.
+#### L4.3: Unexpected transcription of yeast vector gene 0918.
+
+- **Logic:** Yeast vector and watermarks were inserted into syn1's synthetic genome. Strikingly, one of the Yeast genes, 0918, was heavily transcribed in an anti-sense way but not translated at all. The watermarks were minimally transcribed as noise.
+- **Analysis:** None
+- **Outputs:** None
+- **Numbers to cite:**  None
+- **Figure panels:** d
+- **Conclusion:** None
+- **Notes for LLM:** A separate Python script can be created to finalize this analysis.
+
+#### L4.4: One truly isolated intergenic transcription.
 
 - **Logic:** One truly isolated intergenic transcription was found between genes 0154 and 0155.
 - **Analysis:** Operon coverage analysis in `Operon_Segmentation.ipynb`
 - **Outputs:** 
   - `Syn1_Operon/operons.candidate_blocks.tsv`
 - **Numbers to cite:**  None
-- **Figure panels:** d
+- **Figure panels:** e
 - **Conclusion:** None
+- **Caveats:** None
+- **Notes for LLM:** Panel d and e in the same row.
+
+#### L4.5: RNA isoforms has much more intergenic coverage than anti-sense.
+
+- **Logic:** UTR and regions between genes contributed to the intergenic coverage. lengths were evaluated for all canonical operons with median of tens of nucleotides.
+- **Analysis:** 
+  - `Syn1_Operon/Operon_Annotation.ipynb`
+- **Outputs:** 
+  - Output inside Notebook
+- **Numbers to cite:**  Median, and maximum
+- **Figure panels:** f,g
+- **Conclusion:** Median values were consistent with previous papers; high outliers are due to the anti-sense transcription or truncations.
 - **Caveats:** None
 - **Notes for LLM:** None
 
-#### L4.4: Novel peptide identified by enumerating all possible ORFs in isoforms having high abnormal fraction.
+#### L4.6: Two novel peptides identified by enumerating all possible ORFs in isoforms having high abnormal fraction.
 
-- **Logic:** Driven by curiosity, the possible translation of the abnormal fraction was checked by enumerating all ORFs using OSTIR.
+- **Logic:** The possible translation of the abnormal RNA isoforms was checked by enumerating all ORFs using OSTIR on the abnormal RNA isoforms. 
 - **Analysis:** 
   - `Syn1_Novel_ORF/Novel_translation.ipynb`
 - **Outputs:** 
   - `Syn1_Operon/operons.candidate_blocks.tsv`
 - **Numbers to cite:**  None
-- **Figure panels:** e
+- **Figure panels:** h
 - **Conclusion:** Two predicted ORFs were identified in Mass-spec proteome, and both were located near less annotated genes. Also, these two regions were deleted in syn3A.
-- **Caveats:** None
+- **Caveats:** Only top 100 ORFs were selected to do the new proteomics search, thus we cannot assure if all ORFs were translated or not (leave this question to the reviewers).
 - **Notes for LLM:** See Method **Novel Open-Reading Frames from Full-length RNA Isoforms** for details; the Analysis Jupyter Notebook can be cleaned up.
-
-#### L4.5: Traits of transcription of synthetic elements.
-
-- **Logic:** Yeast vector and watermarks were inserted into syn1's synthetic genome. Strikingly, one of the Yeast genes, 0918, was heavily transcribed in an anti-sense way but not translated at all. The watermarks were minimally transcribed as noise.
-- **Analysis:** None
-- **Outputs:** None
-- **Numbers to cite:**  None
-- **Figure panels:** None
-- **Conclusion:** None
-- **Notes for LLM:** A separate Python script can be created to finalize this analysis.
 
 ---
 
