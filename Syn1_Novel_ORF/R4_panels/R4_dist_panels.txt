@@ -1,0 +1,14 @@
+R4 DISTRIBUTION PANELS (b, c, e, f)
+==================================================
+Sizes 7/4 x 7/4 in. Default OUTPUT.md fonts.
+
+b) spurious_prom: n=59 median_len=1543 bp
+b) read_through: n=26 median_len=1626 bp
+b) embedded: n=4 median_len=2196 bp
+c) spurious_prom: n=59 median_cluster_reads=34 max=31747
+c) read_through: n=26 median_cluster_reads=111 max=2119
+c) embedded: n=4 median_cluster_reads=77 max=208
+f) 5'UTR: n=139 median=37 nt max=2575
+f) 3'UTR: n=139 median=41 nt max=2056
+f) canonical operons used: 139
+e) all isoforms (reads>10) n=18918 median_intergenic=2.1%
