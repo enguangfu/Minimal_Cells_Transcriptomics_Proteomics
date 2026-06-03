@@ -24,7 +24,7 @@ TO DO Reminder:
 - [ ] Regenerate + format the six multi-panel figures in Illustrator.
 
 **E. Numbers to re-verify (flagged during Methods drafting):**
-- [ ] M7 — recount the ~26,000 candidate ORFs and 44 proteotypic ORFs (notebook outputs were cleared; 816 abnormal isoforms confirmed).
+- [x] M7 — recounted on revised (post Apr-22) clusters: 837 abnormal isoforms -> 29,443 candidate ORFs -> top-100 -> 48 unique / 47 proteotypic; 2 MS peptides reproduced (NOVEL_PEP_002; NOVEL_PEP_043 = old 030).
 - [ ] M8 — re-confirm Illumina/ONT TPM r=0.998 and the syn3A Illumina alignment % (no local logs).
 
 **F. Style / front-and-back matter:**
@@ -65,9 +65,6 @@ TO DO Reminder:
 
 **Line Breaking in Latex:** One sentence per line for easier tracking  
 **Referring to files:** For now, use files names in the Git repo; replaced with SI file names later.
-
-### Exemplar paragraph (tone we want to match)
-> _<paste one paragraph from a paper whose voice you want to emulate, or one of your own already-good paragraphs>_
 
 ---
 
@@ -393,26 +390,26 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - Panel b: Isoform length and read distribution for all three cases of anti-sense transcription. (7/4, 7/4)
 - Panel c: Isoform read distribution for all three cases of anti-sense transcription. (7/4, 7/4)
 - Panel d: Unexpected anti-sense transcription inside inserted Yeast vector. (7/2,7/4)
-- Panel e: Truly intergenic transcription between 0154 and 0155. (7/2, 7/4)
+- Panel e: Intergenic coverage of all RNA isoforms (7/4,7/4)
 - Panel f: Distribution of 5' and 3' untranslated regions (UTR) in operons. (7/4, 7/4)
-- Panel g: Intergenic coverage of all RNA isoforms (7/4,7/4)
+- Panel g: Truly intergenic transcription between 0154 and 0155. (7/2, 7/4)
 - Panel h: New ORF encoding peptide of length 118 aas found after gene 0592. (7/2, 7/4)
 
 ### Chain of Logics
 
 #### L4.1: Minor percentage of isoforms have anti-sense coverages that can be categorized into three cases.
 
-- **Logic:** 2% of the isoforms have antisense transcription coverage. Two thirds came from the spurious promoters in the AT-rich genome; the transcription read-through can cause anti-sense transcription at the end or embedded inside the operons.
+- **Logic:** 1.4% of the isoforms have antisense transcription coverage. About two thirds came from the spurious promoters in the AT-rich genome; the transcription read-through can cause anti-sense transcription at the end or embedded inside the operons.
 - **Analysis:** 
   - `Syn1_Novel_ORF/Novel_translation.ipynb`
   - `Syn1_Novel_ORF/Abnormal_Transcripts.py`
 - **Outputs:** 
   - Same name Txt file
-- **Numbers to cite:**  2%; cases of anti-sense coverage
+- **Numbers to cite:** 1.4% antisense (267 isoforms -> 89 clusters); spurious 59 (66%), read-through 30 (34%, incl. 4 embedded)
 - **Figure panels:** a
 - **Conclusion:** Full-length RNA isoforms reveal new cases of anti-sense transcription as read-throughs.
 - **Caveats:** None
-- **Notes for LLM:** 
+- **Notes for LLM:** DONE — `novel.tex` drafted (L4.1–L4.6) against the final 8-panel figure (`R4_dist_panels.py` b/c/e/f + `R4_track_panels.py` a/d/g/h). Cites gibson_creation_2010, llorens-rico_bacterial_2016, roots_ostir_2021.
 
 #### L4.2: Spurious promoter has highest isoform read support out of three cases, but still minor compared to sense-transcription.
 
@@ -422,35 +419,23 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:** 
   - Same name Txt file
   - plots under `Syn1_Novel_ORF`
-- **Numbers to cite:**  2%; cases of anti-sense coverage
+- **Numbers to cite:** per-case counts 59 spurious / 26 read-through / 4 embedded; spurious has the highest read support (max ~16.6k reads), embedded the longest isoforms (median ~2.2 kb) (Abnormal_Transcripts.txt)
 - **Figure panels:** b,c
-- **Conclusion:** 
+- **Conclusion:** All three antisense classes are minor versus sense transcription; read-through has the highest typical (median) support, embedded the longest isoforms, and one spurious-promoter locus (his3/0918) is the sole high-abundance exception.
 - **Caveats:** None
-- **Notes for LLM:** Panel a,b, and c are in the same row.
+- **Notes for LLM:** Panel a,b, and c are in the same row. DONE.
 
 #### L4.3: Unexpected transcription of yeast vector gene 0918.
 
-- **Logic:** Yeast vector and watermarks were inserted into syn1's synthetic genome. Strikingly, one of the Yeast genes, 0918, was heavily transcribed in an anti-sense way but not translated at all. The watermarks were minimally transcribed as noise.
-- **Analysis:** None
-- **Outputs:** None
-- **Numbers to cite:**  None
+- **Logic:** Yeast vector elements were carried into syn1's synthetic genome during assembly. Strikingly, the yeast selection marker his3/0918 was heavily transcribed antisense (depth >30k) but not translated. The antisense isoforms initiate from a spurious promoter just upstream, which is itself deleted in syn3A; the his3 body sits at the deletion boundary, so the non-coding transcription is removed by minimization.
+- **Analysis:** `Syn1_Novel_ORF/R4_track_panels.py` (panel d): isoform table + PacBio plus-strand depth + deletion overlay from `Genome_Reduction/aln/raw/syn1_deleted_regions.bed`.
+- **Outputs:** `R4_panels/panel_d_his3_antisense.pdf`
+- **Numbers to cite:** his3/0918 antisense depth >30,000; 28 antisense isoforms (top 16.6k reads); the driving spurious-promoter region deleted in syn3A. Watermarks W1-W4 (located by exact sequence): length-weighted mean PacBio depth ~283/+ , ~360/- vs genome-wide average ~2133/2051 (6-8x lower); covered ORFs all hypothetical/watermark calls (plus real 0590) -> minimally transcribed noise.
 - **Figure panels:** d
-- **Conclusion:** None
-- **Notes for LLM:** A separate Python script can be created to finalize this analysis.
+- **Conclusion:** The yeast marker his3 is heavily transcribed antisense yet untranslated, and its driving spurious promoter is deleted in syn3A; the four watermarks are only minimally transcribed (noise).
+- **Notes for LLM:** DONE. his3 itself is RETAINED at the deletion boundary -- only its upstream promoter region is deleted, so do not claim the gene is deleted. Watermark expression quantified in `Abnormal_Transcripts.py` -> `watermark_expression.txt` (located by sequence, not in panel d); one sentence added to L4.3 in novel.tex.
 
-#### L4.4: One truly isolated intergenic transcription.
-
-- **Logic:** One truly isolated intergenic transcription was found between genes 0154 and 0155.
-- **Analysis:** Operon coverage analysis in `Operon_Segmentation.ipynb`
-- **Outputs:** 
-  - `Syn1_Operon/operons.candidate_blocks.tsv`
-- **Numbers to cite:**  None
-- **Figure panels:** e
-- **Conclusion:** None
-- **Caveats:** None
-- **Notes for LLM:** Panel d and e in the same row.
-
-#### L4.5: RNA isoforms has much more intergenic coverage than anti-sense.
+#### L4.4: RNA isoforms has much more intergenic coverage than anti-sense.
 
 - **Logic:** UTR and regions between genes contributed to the intergenic coverage. lengths were evaluated for all canonical operons with median of tens of nucleotides.
 - **Analysis:** 
@@ -458,10 +443,23 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:** 
   - Output inside Notebook
 - **Numbers to cite:**  Median, and maximum
-- **Figure panels:** f,g
+- **Figure panels:** e,f
 - **Conclusion:** Median values were consistent with previous papers; high outliers are due to the anti-sense transcription or truncations.
 - **Caveats:** None
-- **Notes for LLM:** None
+- **Notes for LLM:**  Panel d,e and f in the same row.
+
+#### L4.5: One truly isolated intergenic transcription.
+
+- **Logic:** One truly isolated intergenic transcription was found between genes 0154 and 0155.
+- **Analysis:** Operon coverage analysis in `Operon_Segmentation.ipynb`
+- **Outputs:** 
+  - `Syn1_Operon/operons.candidate_blocks.tsv`
+- **Numbers to cite:**  None
+- **Figure panels:** g
+- **Conclusion:** A single genuinely intergenic transcript exists (between lap/0154 and pseudo/0155, ~980 reads, 199,379-200,123); it lies in a syn3A-deleted region, while lap occupies the retained gap and was relocated.
+- **Caveats:** None
+- **Notes for LLM:** Panel g and h in the same row. DONE.
+
 
 #### L4.6: Two novel peptides identified by enumerating all possible ORFs in isoforms having high abnormal fraction.
 
@@ -470,10 +468,10 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - `Syn1_Novel_ORF/Novel_translation.ipynb`
 - **Outputs:** 
   - `Syn1_Operon/operons.candidate_blocks.tsv`
-- **Numbers to cite:**  None
+- **Numbers to cite:** 837 abnormal isoforms -> ~29,000 candidate ORFs -> top 100 -> 48 unique / 47 proteotypic; 2 MS-confirmed (NOVEL_PEP_002, 118 aa intergenic near 0592; NOVEL_PEP_043 = old 030, 225 aa, 54-aa N-term extension of 0768), both deleted in syn3A
 - **Figure panels:** h
 - **Conclusion:** Two predicted ORFs were identified in Mass-spec proteome, and both were located near less annotated genes. Also, these two regions were deleted in syn3A.
-- **Caveats:** Only top 100 ORFs were selected to do the new proteomics search, thus we cannot assure if all ORFs were translated or not (leave this question to the reviewers).
+- **Caveats:** Only top 100 ORFs were selected to do the new proteomics search, thus we cannot assure if all ORFs were translated or not (leave this question to the reviewers); the new canonical cluster isoforms gave new ORF candidiates, which were highly similar to the old ones that searched against raw proteoimcs.
 - **Notes for LLM:** See Method **Novel Open-Reading Frames from Full-length RNA Isoforms** for details; the Analysis Jupyter Notebook can be cleaned up.
 
 ---
@@ -698,8 +696,8 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Tex file:** `Manuscript/sections/methods/novel_orf.tex`  
 **Analysis:** `Syn1_Novel_ORF/Abnormal_Transcripts.py` (antisense classes), `Syn1_Novel_ORF/Novel_translation.ipynb` (novel ORFs).  
 **Key params:** antisense labeling base-by-base vs gene model, 3 classes (spurious-promoter / read-through / embedded); OSTIR all-start-codon scan (anti-SD ACCUCCUUU, genetic code 4 / UGA=Trp, ORFs >=15 aa); synthesis-rate rank (reads x TIR), top 100, in-silico trypsin (1 missed cleavage, 7-25 aa), Spectronaut re-search of augmented DB.  
-**Numbers to cite:** 2% antisense (345 isoforms -> 90 clusters); spurious-promoter 60 (67%), read-through 30 (33%, incl. 4 embedded); 816 abnormal isoforms -> ~26,000 candidate ORFs -> top 100 -> 44 with proteotypic peptides; 2 ORFs confirmed by MS (near MMSYN1_0592 and the 54-aa N-term extension of MMSYN1_0768), both deleted in syn3A.  
-**Notes for LLM:** DONE (polished). Added antisense subsubsection (L4.1, 3 classes) + polished novel-ORF subsubsection (L4.4). Fixed stale clustering opening (was "82,000 isoforms / 15 bp" -> now references the 816 abnormal isoforms from M2's 267k/10bp clusters), anti-SD ACCTCCTTT->ACCUCCUUU, grammar. VERIFY: ~26,000 candidate ORFs and 44 proteotypic-ORF counts not independently re-checked (notebook outputs cleared); 816 confirmed. The "2 confirmed in MS" is the R4-L4.4 result (kept out of Methods).  
+**Numbers to cite:** 1.4% antisense (267 isoforms -> 89 clusters); spurious-promoter 59 (66%), read-through 30 (34%, incl. 4 embedded); 837 abnormal isoforms -> ~29,000 candidate ORFs -> top 100 -> 48 unique -> 47 with proteotypic peptides; 2 ORFs confirmed by MS (near MMSYN1_0592 [revised NOVEL_PEP_002] and the 54-aa N-term extension of MMSYN1_0768 [revised NOVEL_PEP_043, = NOVEL_PEP_030 in the old-cluster MS search Excel]), both deleted in syn3A. NOTE: the Spectronaut MS search ran on the old-cluster candidate DB; both confirmed peptides are reproduced in the revised top-100.  
+**Notes for LLM:** DONE (polished + renumbered on revised clusters). Added antisense subsubsection (L4.1, 3 classes) + polished novel-ORF subsubsection. anti-SD ACCTCCTTT->ACCUCCUUU. RECOUNTED on the revised (post Apr-22) clusters via Novel_translation.py: 837 abnormal isoforms -> 29,443 candidate ORFs -> top-100 -> 48 unique / 47 proteotypic (no longer "~26,000 / 44"). The "2 confirmed in MS" is the R4-L4.6 result (kept out of Methods); both peptides reproduced in the revised top-100 (NOVEL_PEP_002; NOVEL_PEP_043 = old 030). NOTE: the Spectronaut search itself ran on the old-cluster DB.  
 
 ---
 

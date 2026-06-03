@@ -1,0 +1,38 @@
+WATERMARK EXPRESSION ANALYSIS
+============================================================
+Genome: CP002027.1 (1,078,809 bp)
+Genome-wide mean PacBio depth (baseline): + strand 2133, - strand 2051.
+Depth = mean per-base PacBio FLNC coverage over the watermark span, per strand.
+
+W1  (length 1070 bp)
+  location : 565,505-566,575 (0-based half-open), genome strand +
+  covered genes (1):
+    - MMSYN1_0924 (MMSYN1_0924, + strand) overlap 396 bp
+  mean depth: + strand = 61.10, - strand = 39.50   (sense 61.10, antisense 39.50)
+
+W2  (length 905 bp)
+  location : 725,655-726,560 (0-based half-open), genome strand +
+  covered genes (3):
+    - MMSYN1_0926 (MMSYN1_0926, - strand) overlap 567 bp
+    - MMSYN1_0927 (MMSYN1_0927, + strand) overlap 384 bp
+    - MMSYN1_0590 (MMSYN1_0590, - strand) overlap 8 bp
+  mean depth: + strand = 101.41, - strand = 721.31   (sense 101.41, antisense 721.31)
+
+W3  (length 933 bp)
+  location : 389,492-390,425 (0-based half-open), genome strand +
+  covered genes (1):
+    - MMSYN1_0306 (MMSYN1_0306, - strand) overlap 777 bp
+  mean depth: + strand = 565.71, - strand = 691.01   (sense 565.71, antisense 691.01)
+
+W4  (length 1046 bp)
+  location : 958,640-959,686 (0-based half-open), genome strand +
+  covered genes (3):
+    - MMSYN1_0815 (MMSYN1_0815, + strand) overlap 8 bp
+    - MMSYN1_0928 (MMSYN1_0928, - strand) overlap 507 bp
+    - MMSYN1_0929 (MMSYN1_0929, + strand) overlap 270 bp
+  mean depth: + strand = 415.38, - strand = 78.10   (sense 415.38, antisense 78.10)
+
+------------------------------------------------------------
+All 4 watermarks (length-weighted mean): + strand 283.1, - strand 359.5
+  vs genome-wide average: + 13.3%, - 17.5% (7.5x lower on +, 5.7x lower on -)
+

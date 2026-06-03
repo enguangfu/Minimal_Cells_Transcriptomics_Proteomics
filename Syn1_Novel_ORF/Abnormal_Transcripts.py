@@ -428,30 +428,99 @@ WATERMARK_DICT = {
 from Bio import SeqIO
 from Bio.Seq import Seq
 
-SYN1_FASTA = "/data/enguang/CMEODE/TRSC/Transcriptomics/gene_info/fasta_files/syn1_genome.fasta"
-SYN3A_FASTA = "/data/enguang/CMEODE/TRSC/Transcriptomics/gene_info/fasta_files/syn3A_genome.fasta"
-motif = "TTAACTAGCTAA"
-motif_rc = str(Seq(motif).reverse_complement())
+SYN1_FASTA  = '../Genomes_Input/syn1_genome.fasta'
+DEPTH_PLUS  = '../Syn1_Transcriptomics/PacBio/PacBio_Processing/depth_bedgraph/syn1.PacBio.FLNC.HQ.plus.bedGraph'
+DEPTH_MINUS = '../Syn1_Transcriptomics/PacBio/PacBio_Processing/depth_bedgraph/syn1.PacBio.FLNC.HQ.minus.bedGraph'
+OUT_TXT     = 'watermark_expression.txt'
 
-record = next(SeqIO.parse(SYN1_FASTA, "fasta"))
-seq = str(record.seq).upper()
+record = next(SeqIO.parse(SYN1_FASTA, 'fasta'))
+CHROM = record.id
+seq   = str(record.seq).upper()
 
-def find_all(haystack, needle):
-    pos = []
-    i = haystack.find(needle)
-    while i != -1:
-        pos.append(i)          # 0-based
-        i = haystack.find(needle, i + 1)
-    return pos
 
-hits_plus = find_all(seq, motif)
-hits_minus = find_all(seq, motif_rc)
+def locate(sub: str):
+    """(start0, end0, genome_strand) of an exact match of sub or its reverse complement."""
+    i = seq.find(sub)
+    if i != -1:
+        return i, i + len(sub), '+'
+    j = seq.find(str(Seq(sub).reverse_complement()))
+    if j != -1:
+        return j, j + len(sub), '-'
+    return None
 
-print("Motif:", motif)
-print("RC   :", motif_rc)
-print(f"+ strand exact hits: {len(hits_plus)}")
-print(f"- strand exact hits: {len(hits_minus)}")
 
-# Show first few coordinates (convert to 1-based if you prefer)
-print("First + hits (0-based):", hits_plus)
-print("First - hits (0-based):", hits_minus)
+def covered_genes(genes_df, s: int, e: int):
+    hit = genes_df[(genes_df['chrom'] == CHROM) & (genes_df['start0'] < e) & (genes_df['end0'] > s)]
+    rows = []
+    for _, g in hit.iterrows():
+        ov = min(e, int(g['end0'])) - max(s, int(g['start0']))
+        name = g['gene_name'] if str(g['gene_name']).strip() else g['locus_tag']
+        rows.append(f"{g['locus_tag']} ({name}, {g['strand']} strand) overlap {ov} bp")
+    return rows
+
+
+def mean_depth(dep_df, s: int, e: int) -> float:
+    """Mean per-base depth over [s, e); positions absent from the bedGraph count as 0."""
+    L = e - s
+    sub = dep_df[(dep_df['chrom'] == CHROM) & (dep_df['end'] > s) & (dep_df['start'] < e)]
+    if sub.empty or L <= 0:
+        return 0.0
+    ov = np.minimum(sub['end'].values, e) - np.maximum(sub['start'].values, s)
+    return float((sub['val'].values * ov).sum()) / L
+
+
+genes_df  = read_genes_gff3(GFF3_FILE)
+dep_plus  = pd.read_csv(DEPTH_PLUS,  sep='\t', header=None, names=['chrom', 'start', 'end', 'val'])
+dep_minus = pd.read_csv(DEPTH_MINUS, sep='\t', header=None, names=['chrom', 'start', 'end', 'val'])
+
+GENOME_LEN = len(seq)
+def genome_mean(dep_df) -> float:
+    return float((dep_df['val'].values * (dep_df['end'].values - dep_df['start'].values)).sum()) / GENOME_LEN
+gmean_p, gmean_m = genome_mean(dep_plus), genome_mean(dep_minus)
+
+out = []
+def w(msg=''):
+    print(msg); out.append(msg)
+
+w('WATERMARK EXPRESSION ANALYSIS')
+w('=' * 60)
+w(f'Genome: {CHROM} ({len(seq):,} bp)')
+w(f'Genome-wide mean PacBio depth (baseline): + strand {gmean_p:.0f}, - strand {gmean_m:.0f}.')
+w('Depth = mean per-base PacBio FLNC coverage over the watermark span, per strand.')
+w('')
+
+sum_p = sum_m = tot_len = 0.0
+for wname, wm in WATERMARK_DICT.items():
+    loc = locate(wm)
+    w(f'{wname}  (length {len(wm)} bp)')
+    if loc is None:
+        w('  not found in the syn1 genome (no exact / reverse-complement match)')
+        w('')
+        continue
+    s, e, strand = loc
+    w(f'  location : {s:,}-{e:,} (0-based half-open), genome strand {strand}')
+    cg = covered_genes(genes_df, s, e)
+    if cg:
+        w(f'  covered genes ({len(cg)}):')
+        for c in cg:
+            w(f'    - {c}')
+    else:
+        w('  covered genes : none (no annotated gene overlaps)')
+    mp, mm = mean_depth(dep_plus, s, e), mean_depth(dep_minus, s, e)
+    sum_p += mp * (e - s); sum_m += mm * (e - s); tot_len += (e - s)
+    sense, anti = (mp, mm) if strand == '+' else (mm, mp)
+    w(f'  mean depth: + strand = {mp:.2f}, - strand = {mm:.2f}'
+      f'   (sense {sense:.2f}, antisense {anti:.2f})')
+    w('')
+
+if tot_len:
+    wp, wmn = sum_p / tot_len, sum_m / tot_len
+    w('-' * 60)
+    w(f'All 4 watermarks (length-weighted mean): + strand {wp:.1f}, - strand {wmn:.1f}')
+    w(f'  vs genome-wide average: + {100*wp/gmean_p:.1f}%, - {100*wmn/gmean_m:.1f}% '
+      f'({gmean_p/wp:.1f}x lower on +, {gmean_m/wmn:.1f}x lower on -)')
+    w('')
+
+with open(OUT_TXT, 'w') as fh:
+    fh.write('\n'.join(out) + '\n')
+print(f'Wrote {OUT_TXT}')
