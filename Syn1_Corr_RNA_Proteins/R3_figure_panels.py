@@ -87,24 +87,31 @@ def r2_lstsq(X, y):
 prot = pd.read_csv('../Syn1_Syn3A_Proteomics/syn1_proteomics_localization_2026.csv')
 prot = prot[(prot['ptn_copy_number'] > 0) & prot['ptn_localization'].isin(LOC_ORDER)]
 fig, ax = plt.subplots(figsize=(HALF, QUART), constrained_layout=True)
-xgrid = np.linspace(-2, 4.2, 300)
+allv = np.log10(prot['ptn_copy_number'].values)
+lo, hi = allv.min(), allv.max()
+xgrid = np.linspace(lo, hi, 300)
+bw = (hi - lo) / 25.0                       # reference bin width: KDE -> protein counts
 for loc in LOC_ORDER:
     v = np.log10(prot.loc[prot['ptn_localization'] == loc, 'ptn_copy_number'].values)
     if len(v) < 5:
         continue
     n = len(v); med = float(np.median(v)); med_cn = 10 ** med
     kde = gaussian_kde(v)
-    ax.plot(xgrid, kde(xgrid), color=LOC_COLORS[loc], lw=1.2,
+    ycurve = kde(xgrid) * n * bw            # area under curve = protein count for this loc
+    ax.plot(xgrid, ycurve, color=LOC_COLORS[loc], lw=1.2,
             label=f"{LOC_LABEL[loc]} ({med_cn:.0f}, n={n})")
-    ax.fill_between(xgrid, kde(xgrid), color=LOC_COLORS[loc], alpha=0.13)
-    ax.vlines(med, 0, float(kde(med)), color=LOC_COLORS[loc], lw=0.9, ls='--')  # median
+    ax.fill_between(xgrid, ycurve, color=LOC_COLORS[loc], alpha=0.13)
+    ax.vlines(med, 0, float(kde(med)[0]) * n * bw, color=LOC_COLORS[loc], lw=0.9, ls='--')  # median
     say(f"a) {loc}: n={n} median={med_cn:.1f} copies")
 ax.set_xlabel('Copies per cell ($\\log_{10}$)')
-ax.set_ylabel('Density')
-ax.set_xlim(-2, 4.2)
-# compact 5 pt legend in the empty top-left corner
-ax.legend(frameon=False, handlelength=0.8, labelspacing=0.2, borderpad=0.2,
-          fontsize=5, loc='upper left')
+ax.set_ylabel('Proteins')
+ax.set_xlim(lo, hi)
+# compact 5 pt legend in the empty top-left corner; title flags the parenthetical
+# leading number as the median copies/cell (also drawn as the dashed vertical lines)
+leg = ax.legend(frameon=False, handlelength=0.8, labelspacing=0.2, borderpad=0.2,
+                fontsize=5, loc='upper left',
+                title='(median copies, n=unique proteins)', title_fontsize=5)
+leg._legend_box.align = 'left'
 ax.spines[['top', 'right']].set_visible(False)
 fig.savefig(f'{OUT}/panel_a_copynumber_by_localization.pdf', dpi=300); plt.close(fig)
 

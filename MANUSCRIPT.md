@@ -288,7 +288,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - Panel c: PacBio vs Illumina sense TPM (log10).
 - Panel d: Predicted TIR vs proteome residual.
 - Panel e: CAI vs proteome residual.
-- Panel f: Model R² for whole proteome and cytoplasmic proteins, with/without CAI.
+- Panel f: Model Pearson R for whole proteome and cytoplasmic proteins, with/without CAI.
 - Panel g: Intrinsic protein half-lives transferred from Mpn.
 - Panel h: Protein half-life vs proteome residual.
 
