@@ -1,37 +1,37 @@
 
 Gene models loaded from GFF3 : 911
-Raw isoforms (frac_anti > 0) : 345  (2.0% of all filtered)
-Unique clusters (repr.)      : 90  (collapsed from 345 raw,  tol = 10 bp)
+Raw isoforms (frac_anti > 0) : 267  (1.4% of all filtered)
+Unique clusters (repr.)      : 89  (collapsed from 267 raw,  tol = 10 bp)
 
   Category                                        n  % unique   % all
   -------------------------------------------------------------------
-  Read-through   (sense → anti)                  26     28.9%   0.15%
-    └ Embedded   (sense → anti → sense)           4      4.4%   0.02%
-  Spurious prom  (anti → ...)                    60     66.7%   0.34%
+  Read-through   (sense → anti)                  26     29.2%   0.14%
+    └ Embedded   (sense → anti → sense)           4      4.5%   0.02%
+  Spurious prom  (anti → ...)                    59     66.3%   0.31%
   Other          (sense-only overlap)             0      0.0%   0.00%
   -------------------------------------------------------------------
-  Read-through total (read_through + embedded) : 30  (33.3% of unique antisense clusters)
+  Read-through total (read_through + embedded) : 30  (33.7% of unique antisense clusters)
 
   Isoform length (bp)
   Category                                   n     mean       p0      p25      p50      p75     p100      min      max
   -------------------------------------------------------------------------------------
-  Read-through   (sense → anti)             26     1813      807     1469     1594     2173     3226      807     3226
+  Read-through   (sense → anti)             26     1889      807     1468     1626     2350     3226      807     3226
     └ Embedded   (sense → anti → sense)      4     2234     1815     2090     2196     2340     2728     1815     2728
-  Spurious prom  (anti → ...)               60     1645      562     1076     1516     2159     3803      562     3803
+  Spurious prom  (anti → ...)               59     1653      562     1068     1543     2184     3804      562     3804
   Other          (sense-only overlap)        —
 
   Repr. reads (n_reads)
   Category                                   n     mean       p0      p25      p50      p75     p100      min      max
   -------------------------------------------------------------------------------------
-  Read-through   (sense → anti)             26      216       12       21       70      205     1304       12     1304
-    └ Embedded   (sense → anti → sense)      4       46       18       34       41       53       86       18       86
-  Spurious prom  (anti → ...)               60      311       11       16       28       57    15477       11    15477
+  Read-through   (sense → anti)             26      210       11       21       50      201     1288       11     1288
+    └ Embedded   (sense → anti → sense)      4       41       18       28       33       46       81       18       81
+  Spurious prom  (anti → ...)               59      333       11       16       27       54    16643       11    16643
   Other          (sense-only overlap)        —
 
   Cluster reads (all members)
   Category                                   n     mean       p0      p25      p50      p75     p100      min      max
   -------------------------------------------------------------------------------------
-  Read-through   (sense → anti)             26      373       12       32      129      480     2235       12     2235
-    └ Embedded   (sense → anti → sense)      4      127       18       45       88      170      313       18      313
-  Spurious prom  (anti → ...)               60      626       11       17       35       96    31924       11    31924
+  Read-through   (sense → anti)             26      328       11       30      111      355     2119       11     2119
+    └ Embedded   (sense → anti → sense)      4       95       18       40       77      132      208       18      208
+  Spurious prom  (anti → ...)               59      623       11       16       34       88    31747       11    31747
   Other          (sense-only overlap)        —

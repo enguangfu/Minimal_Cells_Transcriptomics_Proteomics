@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import numpy as np
 
-ISOFORM_XLSX  = '../isoform_annotation/isoform_clusters_annotated.xlsx'
+ISOFORM_XLSX  = '../Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.xlsx'
 MIN_READS     = 10
 
 

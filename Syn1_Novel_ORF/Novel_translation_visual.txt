@@ -1,0 +1,21 @@
+========================================================================
+2. Translated region projected onto genome — gene overlaps
+========================================================================
+
+  NOVEL_PEP_002  (118 aa, - strand)
+    ORF coords: 728,399-728,756  |  MS peptides (exp-wide, searched as NOVEL_PEP_002): 6
+    Gene overlap: none (fully intergenic)
+
+  NOVEL_PEP_043  (225 aa, - strand)   [== NOVEL_PEP_030 in the old-cluster MS search Excel]
+    ORF coords: 905,181-905,859  |  MS peptides (exp-wide, searched as NOVEL_PEP_030): 14
+    [SENSE] MMSYN1_0767 (MMSYN1_0767, mRNA)  905,048-905,201  20 bp  (3% of ORF / 13% of gene)
+    [SENSE] mmyCIVR (MMSYN1_0768, mRNA)  905,181-905,697  516 bp  (76% of ORF / 100% of gene)
+    [SENSE] mmyCIVM (MMSYN1_0769, mRNA)  905,858-906,578  1 bp  (0% of ORF / 0% of gene)
+gs, ge: 728399 728756
+win_s, win_e: 726399 730756
+Isoforms fully covering ORF with ≥10 reads: 10
+Figure saved: novel_pep_NOVEL_PEP_002_genomic_context.pdf
+gs, ge: 905181 905859
+win_s, win_e: 903181 907859
+Isoforms fully covering ORF with ≥10 reads: 29
+Figure saved: novel_pep_NOVEL_PEP_043_genomic_context.pdf
