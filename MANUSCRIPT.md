@@ -11,7 +11,7 @@ TO DO Reminder:
 - [ ] R2 / M4 — the whole RNA-processing/RNase analysis: transcriptome-wide 3' vs 5' erosion (L2.2), putative 3'→5' exoribonuclease via order of 3'-end RNA secondary structure (L2.3), ATP-synthase α-subunit cleavage + check other complexes + secondary-structure visual (L2.4).
 - [ ] R5 L5.5 (panel e) — essentiality × trace-expression script; supply the syn3A essentiality source.
 - [ ] R6 L6.4 (panel d) — ATP/GTP flux comparison; supply the metabolic model/source.
-- [ ] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
+- [x] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
 - [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
 
 **B. Methods still to write:**
@@ -28,7 +28,7 @@ TO DO Reminder:
 - [ ] M8 — re-confirm Illumina/ONT TPM r=0.998 and the syn3A Illumina alignment % (no local logs).
 
 **F. Style / front-and-back matter:**
-- [ ] §0 — fill the "Exemplar paragraph" field and the "Things to NEVER do" list.
+- [x] §0 — fill the "Exemplar paragraph" field and the "Things to NEVER do" list.
 - [ ] Draft Abstract, Introduction, and Discussion (~500 words each; not yet in this file).
 - [ ] Reorganize the Operon_Visual Jupyter notebook before publication. (Progress: `Operon_Annotation.py` cleaned to analysis-only and confirmed to run end-to-end; the per-operon `plot_one_operon` driver was split out into a new `Operon_Visualization.ipynb`.)
 - [ ] Final LaTeX pass (resolve overfull \hbox lines / typesetting).
@@ -38,6 +38,7 @@ TO DO Reminder:
 - [ ] Root-caused dedup bug: the Step-5a overlap merge concatenates the two merged operons' gene lists and sums counts, so shared genes are double-listed (14 operons, max 23 vs 21 true). Fix `dedup_operon_gene_lists` is now in `Operon_Segmentation.py` (final pass before `to_csv`); **for the first draft it is applied at consumption** (panel b + `Operon_Annotation.txt` recount unique loci; the tsv is left untouched). Decide later whether to (a) dedupe the canonical tsv in place, or (b) locate the original isoform file and regenerate end-to-end.
 - [ ] FOOTGUN: the patched `Operon_Segmentation.py` has `OUT_FOLDER="."`, so running it from `Syn1_Operon/` overwrites the canonical tsv with the divergent 483 map. Do not run until the isoform-input question is resolved.
 - [ ] Could use promoter and terminator predictions to judge the merging of truncated operons; then we can expand the statistics of transcription signatures to all operons.
+- [ ] Also checking the operon gene coverage.
 
 ---
 
@@ -100,7 +101,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 **Tex file:** `Manuscript/sections/results/operons.tex`  
 
-**SI file:** Operons.xlsx (boundaries, promoters, terminators, gene coverage, protein complex annotation)
+**SI file:** operons.xlsx (boundaries, promoters, terminators, gene coverage, protein complex annotation)
 
 ### One-sentence Summary
 **480 operons were identified using PacBio long-read RNAseq, with transcription signatures located.**
