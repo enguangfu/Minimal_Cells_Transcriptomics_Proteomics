@@ -1,0 +1,20 @@
+-10 PROMOTER BOX AT NON-CANONICAL TSS
+====================================================
+TSS = 5' end (pos5p0) of the most-supported (+)-strand isoform; scan uses
+promoter_motif.scan_minus10 (identical algorithm to the canonical operons).
+Canonical baseline: TANAAT 6-mer 87/127 (69%); extended TNNTANAAT 52/127 (41%).
+
+his3/0918 antisense (spurious promoter)
+  isoforms (n_reads>=10): 28;  top ISO_004161 n_reads=16643;  TSS(pos5p0)=27522
+  -10 6-mer (TANAAT,   [-12,-7]):    TAAAAT  shift +0  match=True  mm=0
+  -10 9-mer (TNNTANAAT,[-15,-7]): GTGTAAAAT  shift +0  match=False  mm=1
+  -35 region          [-37,-31]:   CTTTGAA  (AT 5/7)
+  -10 tier: core_6mer
+
+intergenic lap/0154 - 0155
+  isoforms (n_reads>=10): 10;  top ISO_026614 n_reads=770;  TSS(pos5p0)=199379
+  -10 6-mer (TANAAT,   [-12,-7]):    TAAAAA  shift +0  match=False  mm=1
+  -10 9-mer (TNNTANAAT,[-15,-7]): ATATAAAAA  shift +0  match=False  mm=2
+  -35 region          [-37,-31]:   TATTGTA  (AT 6/7)
+  -10 tier: no_minus10
+

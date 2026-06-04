@@ -372,16 +372,16 @@ long_3utr[['operon_id', 'strand', 'locus_tag', 'gene_name', 'utr3_bp']] \
 
 # Copy plots
 for opid in long_5utr['operon_id']:
-    src = f'operon_plots/operon_{opid}.pdf'
-    dst = f'annotation/canonical/long_5UTR/operon_{opid}.pdf'
+    src = f'operon_plots/{opid}_wdepth.pdf'
+    dst = f'annotation/canonical/long_5UTR/{opid}_wdepth.pdf'
     if os.path.exists(src):
         shutil.copy2(src, dst)
     else:
         print(f"  [warn] plot not found: {src}")
 
 for opid in long_3utr['operon_id']:
-    src = f'operon_plots/operon_{opid}.pdf'
-    dst = f'annotation/canonical/long_3UTR/operon_{opid}.pdf'
+    src = f'operon_plots/{opid}_wdepth.pdf'
+    dst = f'annotation/canonical/long_3UTR/{opid}_wdepth.pdf'
     if os.path.exists(src):
         shutil.copy2(src, dst)
     else:
@@ -438,89 +438,15 @@ CONS9 = "TNNTANAAT"; REL9_START, REL9_END = -15, -7   # 9-mer -10 box
 
 LOGO_START, LOGO_END = -40, +5   # broad window for sequence logo
 
-# -- IUPAC helpers (identical to Peaks_Annotation) ---------------------------
-IUPAC = {
-    "A":"A","C":"C","G":"G","T":"T","N":"[ACGT]",
-    "R":"[AG]","Y":"[CT]","S":"[GC]","W":"[AT]","K":"[GT]","M":"[AC]",
-    "B":"[CGT]","D":"[AGT]","H":"[ACT]","V":"[ACG]"
-}
-
-def consensus_to_regex(consensus):
-    pat = "".join(IUPAC.get(ch.upper(), ch.upper()) for ch in consensus)
-    return re.compile("^" + pat + "$")
-
-def mismatches_iupac(seq, consensus):
-    """Count positions where seq violates IUPAC consensus."""
-    mm = 0
-    for s, c in zip(seq.upper(), consensus.upper()):
-        if c not in IUPAC:
-            mm += (s != c)
-        else:
-            if not re.fullmatch(IUPAC[c], s):
-                mm += 1
-    return int(mm)
-
-CONS6_RE = consensus_to_regex(CONS6)
-CONS9_RE = consensus_to_regex(CONS9)
-
-# -- Circular-safe fetch (identical to Peaks_Annotation) ---------------------
-def circular_slice(seq, s0, e0):
-    L = len(seq)
-    span = e0 - s0
-    if L == 0 or span <= 0:
-        return ""
-    s = s0 % L
-    if s + span <= L:
-        return seq[s:s+span]
-    first = seq[s:]
-    remain = span - (L - s)
-    fc, tail = divmod(remain, L)
-    return first + (seq * fc) + (seq[:tail] if tail else "")
-
-def extract_tx_kmer(tss0, chrom, strand, rel_start, rel_end):
-    """
-    Extract window in transcription orientation (identical to Peaks_Annotation).
-      + strand: g = tss0 + rel
-      - strand: g = tss0 - rel
-    """
-    tss0 = int(tss0)
-    if strand == "+":
-        g0 = tss0 + int(rel_start)
-        g1 = tss0 + int(rel_end) + 1
-    else:
-        g_a = tss0 - int(rel_start)
-        g_b = tss0 - int(rel_end)
-        g0, g1 = min(g_a, g_b), max(g_a, g_b) + 1
-    seq = circular_slice(genome[chrom], g0, g1)
-    if len(seq) != (g1 - g0):
-        return ""
-    if strand == "-":
-        seq = str(Seq(seq).reverse_complement())
-    return seq
-
-def best_shift_for_consensus(tss0, chrom, strand, rel_start, rel_end, consensus, cons_re):
-    """
-    Return (best_kmer, best_shift, matches, n_mismatches).
-    Selects by minimum IUPAC mismatches; tie-breaks by |shift| then sign.
-    Identical to Peaks_Annotation best_shift_for_consensus.
-    """
-    K = rel_end - rel_start + 1
-    shifts = sorted(range(-SHIFT_RANGE, SHIFT_RANGE+1), key=lambda x: (abs(x), x))
-    best = None
-    for sh in shifts:
-        kmer = extract_tx_kmer(tss0, chrom, strand, rel_start+sh, rel_end+sh)
-        if len(kmer) != K or not re.fullmatch(r"[ACGT]+", kmer):
-            mm, match = 10**9, False
-        else:
-            mm = mismatches_iupac(kmer, consensus)
-            match = bool(cons_re.match(kmer))
-        cand = (mm, abs(sh), sh, kmer, match)
-        if best is None or cand < best:
-            best = cand
-    mm, _, sh, kmer, match = best
-    if mm >= 10**8:
-        return ("", 0, False, np.nan)
-    return (kmer, int(sh), bool(match), int(mm))
+# -- -10 scanner: single source in promoter_motif.py -------------------------
+# These functions were extracted verbatim into promoter_motif.py so this canonical
+# analysis and the R4 novel-transcription promoter scan share ONE implementation
+# (verified: identical -10 classification, 0/127 mismatches). extract_tx_kmer reads
+# promoter_motif.GENOME = the same syn1 FASTA loaded above as `genome`.
+from promoter_motif import (
+    IUPAC, consensus_to_regex, mismatches_iupac, circular_slice,
+    extract_tx_kmer, best_shift_for_consensus, CONS6_RE, CONS9_RE,
+)
 
 # -- TSS coordinates ----------------------------------------------------------
 def tss_pos(row):

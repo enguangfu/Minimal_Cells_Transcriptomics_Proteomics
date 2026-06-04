@@ -305,6 +305,60 @@ def panel_a():
     fig.savefig(f'{OUT}/panel_a_schematic.pdf', dpi=300); plt.close(fig)
 
 
+# ====================================================================== -10 box at novel TSS
+def quantify_novel_promoters(out_txt=f'{OUT}/novel_promoter_minus10.txt'):
+    """Scan the -10 promoter box at the TSS of the two non-canonical transcription
+    events (his3/0918 antisense spurious promoter; intergenic lap-0154/0155), using
+    the SAME algorithm as the canonical operon promoters (Syn1_Operon/promoter_motif.py,
+    the single source). TSS = the 5' end (pos5p0) of the most-supported (+)-strand
+    isoform in each case. Reports both -10 boxes (6-mer TANAAT, 9-mer TNNTANAAT) +
+    the -35 region, so they're directly comparable to the canonical promoters."""
+    import sys, os
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Syn1_Operon'))
+    import promoter_motif as pm
+
+    his_s, his_e = 27639, 28301
+    inter_s, inter_e = 197500, 201700
+    cases = [
+        ("his3/0918 antisense (spurious promoter)",
+         ISO[(ISO.strand == '+') & (ISO.start0 < his_e) & (ISO.end0 > his_s) & (ISO.n_reads >= 10)]),
+        ("intergenic lap/0154 - 0155",
+         ISO[(ISO.strand == '+') & (ISO.start0 < inter_e) & (ISO.end0 > inter_s) &
+             (ISO.n_reads >= 10) & (ISO.frac_intergenic > 0.5)]),
+    ]
+    L = ["-10 PROMOTER BOX AT NON-CANONICAL TSS",
+         "=" * 52,
+         "TSS = 5' end (pos5p0) of the most-supported (+)-strand isoform; scan uses",
+         "promoter_motif.scan_minus10 (identical algorithm to the canonical operons).",
+         "Canonical baseline: TANAAT 6-mer 87/127 (69%); extended TNNTANAAT 52/127 (41%).",
+         ""]
+    for label, sel in cases:
+        if len(sel) == 0:
+            L += [f"{label}: no isoforms passing the filter", ""]; continue
+        top = sel.sort_values('n_reads', ascending=False).iloc[0]
+        tss0 = int(top['pos5p0'])
+        r = pm.scan_minus10(tss0, CHROM, '+')
+        m35 = pm.extract_tx_kmer(tss0, CHROM, '+', -37, -31)
+        at35 = sum(c in 'AT' for c in m35)
+        L += [
+            label,
+            f"  isoforms (n_reads>=10): {len(sel)};  top {top['isoform_id']} "
+            f"n_reads={int(top['n_reads'])};  TSS(pos5p0)={tss0}",
+            f"  -10 6-mer (TANAAT,   [-12,-7]): {str(r['minus10_6mer']):>9}  "
+            f"shift {r['shift6']:+d}  match={r['match6']}  mm={r['mm6']}",
+            f"  -10 9-mer (TNNTANAAT,[-15,-7]): {str(r['minus10_9mer']):>9}  "
+            f"shift {r['shift9']:+d}  match={r['match9']}  mm={r['mm9']}",
+            f"  -35 region          [-37,-31]: {str(m35):>9}  (AT {at35}/{len(m35) or 0})",
+            f"  -10 tier: {r['motif_tier']}",
+            "",
+        ]
+    txt = "\n".join(L)
+    with open(out_txt, 'w') as fh:
+        fh.write(txt + "\n")
+    print(txt)
+    print(f"Saved: {out_txt}")
+
+
 # ====================================================================== main
 def main():
     panel_a()
@@ -334,6 +388,7 @@ def main():
                 depth=False, seq=PEP002)
 
     print(f"Saved panels a, d, g, h to {OUT}/")
+    quantify_novel_promoters()
 
 
 if __name__ == '__main__':
