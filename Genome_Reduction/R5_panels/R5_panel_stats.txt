@@ -1,0 +1,2 @@
+
+[panel a] genome-reduction map: 95 deletions, 537 kb; length bins [1, 26, 38, 25, 5] -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5a_genome_reduction_map.pdf

@@ -1,0 +1,14 @@
+======================================================================
+Genome-Reduction SI workbook build
+======================================================================
+
+Wrote /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/genome_reduction.xlsx
+
+Sheets:
+  README                 index (6 sheets) + glossary (10 terms)
+  Deletions              95 rows x 24 cols
+  Operon_classification  459 rows x 15 cols
+  Coexpression           218 rows x 20 cols (87 cross-junction + 131 operon-internal)
+  Gene_table             914 rows x 31 cols (414 deleted, 500 retained)
+  Function_categories    59 rows x 13 cols (15 secondary + 44 tertiary)
+  Summary_stats          12 occupancy metrics + 2 complexes

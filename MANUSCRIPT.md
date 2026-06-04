@@ -490,7 +490,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - Panel a: Schematics of genome reduction from syn1 to syn3A. (7/2, 7/2)
 - Panel b: One instance of fusion of new operons at junctions. (7/2, 7/4)
 - Panel c: Box plot of gene expressions to highlight decapitated ones having lower values. (7/2, 7/4)
-- Panel d: the HupA operon, whose true promoter, located inside gene 0349, was deleted.
+- Panel d: the HupA operon, whose true promoter, located inside gene 0349, was deleted. (7,7/4)
 - Panel e: Gene essentiality evaluation for those trace-expressed genes that are still essential.
 
 ### Chain of Logics
@@ -543,7 +543,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:**
   - `Genome_Reduction/delete_gene/retained_gene_context.tsv` (`gene_impact_class` column)
   - `Genome_Reduction/Compare_RNA_Protein/TPM_FC_by_impact_class.pdf`
-- **Numbers to cite:** gene_impact_class (retained genes): promoter_lost 42, promoter_disconnected 6, new_promoter_fusion 3, readthrough_exposed 24, promoter_proximity_changed 17, context_only 45, unaffected 360; promoter_lost is the only class robustly down in TPM (median FC 0.44, Mann-Whitney p=2.7e-4 vs unaffected median 0.76); HupA (MMSYN1_0350) relTPM 6.68 -> 0.13 (FC 0.020), relIPM 6.48 -> 0.092 (FC 0.014); other decapitated drops rpmE/L31 relTPM FC 0.010, rpsU/S21 FC 0.044.
+- **Numbers to cite:** gene_impact_class (retained genes): promoter_lost 42, promoter_disconnected 6, new_promoter_fusion 3, readthrough_exposed 24, promoter_proximity_changed 17, context_only 45, unaffected 360; promoter_lost is the only class robustly down in TPM (median FC 0.44, Mann-Whitney p=2.7e-4 vs unaffected median 0.76); HupA (MMSYN1_0350) relTPM 6.68 -> 0.13 (FC 0.020), relIPM 6.48 -> 0.092 (FC 0.014); HupA operon -10 box = perfect TANAAT (TATAAT), extended TNNTANAAT match, strong_9mer tier, -10 window 441019-441024 inside deleted DEL_050 (440092-441059) [from R5_panels/R5_panel_stats.txt via promoter_motif.scan_minus10]; other decapitated drops rpmE/L31 relTPM FC 0.010, rpsU/S21 FC 0.044.
 - **Figure panels:** c, d
 - **Conclusion:** Promoter-source loss drives the largest expression decreases; promoter_lost is the only impact class robustly down in TPM.
 - **Caveats:** the class is assigned at operon level; 8 junctions lose only UTR (genes intact); the 05-vs-04 consistency check flags 2 flank operons as all_deleted.
