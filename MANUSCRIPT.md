@@ -33,10 +33,10 @@ TO DO Reminder:
 - [ ] Reorganize the Operon_Visual Jupyter notebook before publication. (Progress: `Operon_Annotation.py` cleaned to analysis-only and confirmed to run end-to-end; the per-operon `plot_one_operon` driver was split out into a new `Operon_Visualization.ipynb`.)
 - [ ] Final LaTeX pass (resolve overfull \hbox lines / typesetting).
 
-**H. Operon segmentation — revisit after first draft (KNOWN ISSUE):**
-- [ ] `Syn1_Operon/operons.candidate_blocks.tsv` (480 operons) is **not reproduced** by re-running the current `Operon_Segmentation.py` on the server isoforms (`Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv`, 267 k) — that yields **483 operons** and splits the 11 kb ribosomal supercluster (0652–0672) into 3 units (no bridging isoforms across rpsQ/0662). The canonical table came from a different isoform-clustering run. Re-run output kept at `operons.candidate_blocks.rerun483.tsv`; the run also overwrote untracked `gene_operon_coverage.tsv`/`uncovered_genes.tsv` with 483-versions (regenerable).
-- [ ] Root-caused dedup bug: the Step-5a overlap merge concatenates the two merged operons' gene lists and sums counts, so shared genes are double-listed (14 operons, max 23 vs 21 true). Fix `dedup_operon_gene_lists` is now in `Operon_Segmentation.py` (final pass before `to_csv`); **for the first draft it is applied at consumption** (panel b + `Operon_Annotation.txt` recount unique loci; the tsv is left untouched). Decide later whether to (a) dedupe the canonical tsv in place, or (b) locate the original isoform file and regenerate end-to-end.
-- [ ] FOOTGUN: the patched `Operon_Segmentation.py` has `OUT_FOLDER="."`, so running it from `Syn1_Operon/` overwrites the canonical tsv with the divergent 483 map. Do not run until the isoform-input question is resolved.
+**H. Operon segmentation — RESOLVED (new segmentation finalized 2026-06-04):**
+- [x] Reproducibility: the current `Operon_Segmentation.py`, run in conda env `RNAseq` (has pysam), reproduces the canonical `operons.candidate_blocks.tsv` (**459 operons**) byte-for-byte. The earlier 480-vs-483 gap is gone — the finalized map is 459 operons. Stage-by-stage counts are now persisted to `Syn1_Operon/Operon_Segmentation.txt` (mirrors `Operon_Annotation.txt`).
+- [x] Dedup bug fixed: `dedup_operon_gene_lists` runs as the final pass before `to_csv`, so the tsv's `sense_gene_count` already equals the unique-loci count (max 21, 0 mismatches across all 459 operons). No consumption-time recount needed.
+- [x] Co-transcription merge: the Step-5a overlap / coverage-hole merge is now read-evidence based (≥50 strand-specific PacBio bridging reads across the junction AND ≥0.5 gap/flank depth continuity), so the 11 kb rPtn supercluster (0652–0672) stays intact (61 candidate junctions → 43 pass → 37 merged operons). Running the script from `Syn1_Operon/` is safe — it regenerates the identical canonical map.
 - [ ] Could use promoter and terminator predictions to judge the merging of truncated operons; then we can expand the statistics of transcription signatures to all operons.
 - [ ] Also checking the operon gene coverage.
 
@@ -104,7 +104,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **SI file:** operons.xlsx (boundaries, promoters, terminators, gene coverage, protein complex annotation)
 
 ### One-sentence Summary
-**480 operons were identified using PacBio long-read RNAseq, with transcription signatures located.**
+**459 operons were identified using PacBio long-read RNAseq, with transcription signatures located.**
 
 ### Figure
 **Figure:** `Manuscript/figures/operon.pdf`
@@ -146,9 +146,9 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Caveats:** None
 - **Notes for LLM:** More details presented in Methods M2. DONE — L1.2 drafted in `operons.tex`.
 
-#### L1.3: 480 operons were mapped by full-length PacBio RNA seq.
+#### L1.3: 459 operons were mapped by full-length PacBio RNA seq.
 
-- **Logic:** Unique longest isoform clusters as evidence of gene co-transcription were constructed by containment to cover 316 initial operons. Overlap between operons was solved. Uncovered genes were rescued. Finally, 480 operons for 911 genes in syn1. The statistics on the size and length of operons were reported.
+- **Logic:** Unique longest isoform clusters as evidence of gene co-transcription were constructed by containment to cover 313 initial operons. Overlapping operons and clustering coverage holes were resolved by a read-level co-transcription test (PacBio bridging + depth continuity), collapsing the set to 275 isoform-derived operons. Uncovered genes were rescued. Finally, 459 operons for 911 genes in syn1. The statistics on the size and length of operons were reported.
 - **Analysis:** 
   - Operon segmentation: `Syn1_Operon/Operon_Segmentation.ipynb`
   - Operon annotation: `Syn1_Operon/Operon_Annotation.ipynb`
@@ -156,15 +156,15 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - Operons: `Syn1_Operon/operons.candidate_blocks.tsv`
 - **Numbers to cite:**  
   - MIN_READS threshold = 50;
-  - Mean and median of sense-genes per operon
-  - On average, 911/480 genes per operon
-  - Mean and median of operon length
-  - Number of operons cover anti-sense genes
-  - Largest operon of ribosomal proteins and translation machineries: MMSYN1_0652–MMSYN1_0672 (~11 kb)
-  - Nine operons covers only anti-sense genes or intergenic regions
+  - Sense genes per operon: median 1, mean 2.0 (911/459)
+  - On average, 911/459 genes per operon
+  - Operon length: median 1,650 bp, mean 2,049 bp
+  - 69 operons (15.0%) enclose ≥1 antisense gene
+  - Largest operon of ribosomal proteins and translation machineries: MMSYN1_0652–MMSYN1_0672 (21 genes, ~11 kb; OP_00341, 10,954 bp)
+  - Nine operons cover only anti-sense genes or intergenic regions (0 sense genes)
 - **Figure panels:** b,c
 - **Conclusion:** None
-- **Caveats:** `sense_gene_count` double-counts duplicated loci in 14 operons (21 extra slots; e.g. OP_00358 lists 23 but has 21 unique loci, MMSYN1_0652–0672) — the genes-per-operon max and mean (and panel b) are mildly inflated; dedupe before finalizing.
+- **Caveats:** RESOLVED — the segmentation now applies `dedup_operon_gene_lists` so `sense_gene_count` equals the unique-loci count (max 21, 0 mismatches across all 459 operons); panel b / mean are no longer inflated.
 - **Notes for LLM:** More details are in Methods M3. DONE — L1.3 drafted in `operons.tex` (segmentation-algorithm paragraph + size-statistics paragraph).
 
 #### L1.4: Transcription signatures located for operons.
@@ -178,13 +178,13 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - Terminator hairpins: `tts_hairpins/TERM_*.pdf` (clean 1×1 in, logomaker classic colors) + `tts_hairpins/all_hairpins.pdf` (labeled QC grid)
   - Terminator stat strips (each 7/3 × 7/9 in): `term_stem_length.pdf`, `term_loop_length.pdf`, `term_tail3_logo.pdf`, `term_stem_gc.pdf`, `term_tts_polyU_distance.pdf`
 - **Numbers to cite:** 
-  - 141 canonical operons (isoform_operon with TSS+TTS both intergenic)
-  - -10 box: `TANAAT` hexamer 92/141 (65%); extended `TNNTANAAT` 54/141 (38%)
+  - 127 canonical operons (isoform_operon with TSS+TTS both intergenic)
+  - -10 box: `TANAAT` hexamer 87/127 (69%); extended `TNNTANAAT` 52/127 (41%)
   - -35 box: no fixed hexamer, broadly AT-rich
-  - terminators near TTS: 108/141 (77%)
+  - terminators near TTS: 98/127 (77%)
   - stem median 8 bp (4–19); loop median 4 nt (3–7); poly-U tract median 5 nt
-  - stem G+C: median 40%, mean 43% vs genome 24% (G+C-enriched, not absolute GC-rich)
-  - TTS to 3' poly-U end: median 3 nt beyond, IQR 1–4, 96% within ±10 nt
+  - stem G+C: median 43%, mean 44% vs genome 24% (G+C-enriched, not absolute GC-rich)
+  - TTS to 3' poly-U end: median 3 nt beyond, IQR 1–4, 97% within ±10 nt
 - **Figure panels:** d (promoter + terminator logos), e (terminator stat strips: stem length, loop length, poly-U tail logo, stem G+C, TTS→poly-U distance)
 - **Conclusion:** Signatures are both consistent with previous knowledge: -10 box of TSS has TANAAT, -35 just AT rich; TTS as intrinsic terminators (G+C-enriched hairpin + poly-U) whose 3' poly-U end coincides with the mapped TTS.
 - **Caveats:** The TSS, TTS sites are only for canonical operons; we might need to refine for all cases. Stem G+C 40% is enriched relative to the AT-rich genome but not "GC-rich" in absolute terms — phrase as G+C-enriched.

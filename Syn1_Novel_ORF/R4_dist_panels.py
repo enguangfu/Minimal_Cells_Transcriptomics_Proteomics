@@ -12,8 +12,9 @@ Panel -> size (in) -> content -> source   (panel letters per reordered MANUSCRIP
   e  7/4 x 7/4  intergenic-coverage distribution, all isoforms
                 <- ../Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv
   f  7/4 x 7/4  5'/3' UTR length distribution (canonical operons)
-                <- ../Syn1_Operon/operons.candidate_blocks.tsv + GFF (UTR computed
-                   inline, replicating Operon_Annotation.py's canonical-operon formula)
+                <- ../Syn1_Operon/annotation/canonical/operon_utr.tsv (the UTR table
+                   exported by Operon_Annotation.py; read here, NOT recomputed, so the
+                   canonical set matches R1 exactly)
 
 Output: R4_panels/panel_{b,c,e,f}.pdf  + R4_dist_panels.txt
 Run from Syn1_Novel_ORF/.
@@ -39,8 +40,7 @@ OUT = 'R4_panels'
 os.makedirs(OUT, exist_ok=True)
 CAT_XLSX  = 'isoform_antisense_categories.xlsx'
 ISO_TSV   = '../Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv'
-OPERON_TSV = '../Syn1_Operon/operons.candidate_blocks.tsv'
-GFF       = '../Genomes_Input/syn1.genes.gff3'
+UTR_TSV   = '../Syn1_Operon/annotation/canonical/operon_utr.tsv'   # exported by Operon_Annotation.py
 MIN_READS = 10
 
 # Three antisense cases (Okabe-Ito), ordered by abundance
@@ -119,55 +119,15 @@ for c in CASE_ORDER:
 
 
 # ====================================================================== f
-# Canonical-operon 5'/3' UTR lengths. Replicates Operon_Annotation.py:
-#   canonical = TSS and TTS both intergenic (not inside any same-strand gene body)
-#   + strand: 5'UTR = first_gene.start0 - op.start0 ; 3'UTR = op.end0 - last_gene.end0
-#   - strand: 5'UTR = op.end0 - last_gene.end0      ; 3'UTR = first_gene.start0 - op.start0
-def load_gff(path):
-    rows = []
-    for line in open(path):
-        if not line.strip() or line.startswith('#'):
-            continue
-        p = line.rstrip('\n').split('\t')
-        if len(p) != 9 or p[2] != 'gene':
-            continue
-        attrs = dict(kv.split('=', 1) for kv in p[8].split(';') if '=' in kv)
-        rows.append({'locus_tag': attrs.get('locus_tag', ''), 'chrom': p[0],
-                     'start0': int(p[3]) - 1, 'end0': int(p[4]), 'strand': p[6]})
-    return pd.DataFrame(rows)
-
-genes = load_gff(GFF).drop_duplicates('locus_tag')
-gene_by_locus = genes.set_index('locus_tag')
-# same-strand interval lists for intergenic test
-strand_intervals = {s: g[['start0', 'end0']].values for s, g in genes.groupby('strand')}
-
-def is_intergenic(pos, strand):
-    iv = strand_intervals.get(strand)
-    if iv is None:
-        return True
-    return not bool(((iv[:, 0] <= pos) & (pos < iv[:, 1])).any())
-
-op = pd.read_csv(OPERON_TSV, sep='\t')
-utr5, utr3 = [], []
-n_canonical = 0
-for _, o in op.iterrows():
-    loci = [x for x in str(o['sense_gene_loci']).split(',') if x and x in gene_by_locus.index]
-    if not loci:
-        continue
-    if not (is_intergenic(int(o['tss']), o['strand']) and is_intergenic(int(o['tts']), o['strand'])):
-        continue
-    n_canonical += 1
-    sub = gene_by_locus.loc[loci]
-    first = sub.iloc[int(np.argmin(sub['start0'].values))]   # lowest-coord gene
-    last  = sub.iloc[int(np.argmax(sub['end0'].values))]     # highest-coord gene
-    s0, e0 = int(o['start0']), int(o['end0'])
-    if o['strand'] == '+':
-        u5, u3 = int(first['start0']) - s0, e0 - int(last['end0'])
-    else:
-        u5, u3 = e0 - int(last['end0']), int(first['start0']) - s0
-    utr5.append(max(0, u5)); utr3.append(max(0, u3))
-
-utr5, utr3 = np.array(utr5), np.array(utr3)
+# Canonical-operon 5'/3' UTR lengths -- read straight from the table
+# Operon_Annotation.py exports (canonical = isoform_operon with TSS+TTS both
+# intergenic, >=1 sense gene), so this panel uses the SAME set as R1 and never
+# drifts from it. Median is over all canonical operons (UTR=0 kept); the
+# histogram drops zeros because the x-axis is log.
+utr = pd.read_csv(UTR_TSV, sep='\t')
+utr5 = utr['utr5_bp'].dropna().to_numpy(dtype=float)
+utr3 = utr['utr3_bp'].dropna().to_numpy(dtype=float)
+n_canonical = len(utr)
 fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
 bins = np.logspace(0, np.log10(max(utr5.max(), utr3.max()) + 1), 26)
 for lab, arr in [("5'", utr5), ("3'", utr3)]:

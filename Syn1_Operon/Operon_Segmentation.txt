@@ -1,0 +1,53 @@
+OPERON SEGMENTATION SUMMARY
+============================================================
+
+Stage-by-stage operon counts from Operon_Segmentation.py (isoform-based segmentation of the syn1 PacBio FLNC transcriptome).
+
+Parameters: MIN_READS=50, BOUNDARY_TOL=10 bp; merge: MERGE_MAX_GAP=600, MERGE_W=80, MERGE_FLANK=300, MERGE_MIN_BRIDGE=50, MERGE_MIN_CONT=0.5; rescue: MAX_GENE_GAP=500 bp
+
+Step 1 -- Load isoforms
+  isoform clusters loaded:        267258
+  isoforms with n_reads >= 50:     4048  (plus 2232, minus 1816)
+
+Step 2 -- Containment clustering into initial operons
+  initial operons:                   313  (plus 147, minus 166)
+  operon length (bp):  median 2126, mean 2315
+
+Step 3 -- Gene annotation of initial operons
+  annotated genes loaded:            911
+  operons with >=1 sense gene:       304  (1 gene 104, 2 genes 98, 3+ genes 102; 0 sense 9)
+  operons with >=1 antisense gene:    65
+
+Step 4/5a -- Same-strand overlap + co-transcription merge
+  same-strand overlap pairs:          29  (shared-gene pairs: 24)
+  merge candidates:                   61  (overlap 29, gene_in_gap 32)
+    passed co-transcription test:     43
+    kept separate:                    18
+    -> merged output operons (pairwise, no chaining): 37
+
+Step 5b -- Merge operons sharing identical sense loci
+  isoform-derived operons after merges: 275
+    isoform_operon           237
+    isoform_operon_merged     37
+    isoform_gene_combined      1
+
+Step 6/7 -- Coverage + rescue of uncovered genes
+  uncovered genes (pre-rescue):      215 / 911 (23.6%)
+  consecutive uncovered groups (gap <= 500 bp): 46
+    rescued by spanning isoform:      20
+  rRNA operons added:                  2
+  single-gene BAM rescues:           162
+
+Step 8 -- Final operon map
+  total operons:                     459
+    isoform_operon             237
+    rescue_single              162
+    isoform_operon_merged       37
+    rescue_multiple             22
+    isoform_gene_combined        1
+
+  Final gene coverage (911 genes):
+    both sense + antisense:           51  (5.6%)
+    sense only:                      832  (91.3%)
+    antisense only:                   28  (3.1%)
+    uncovered:                         0  (0.0%)

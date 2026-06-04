@@ -1706,3 +1706,124 @@ to_bed6(all_operons[all_operons["strand"] == "-"]).to_csv(
     SEG_FOLDER + "/operons.candidate_blocks.minus.bed", sep="\t", index=False, header=False)
 print("BED files written for IGV inspection.")
 
+
+# ## Step 9 — Run summary (Operon_Segmentation.txt)
+#
+# Persist the stage-by-stage operon counts to a plain-text summary (mirrors
+# Operon_Annotation.txt) so the Methods/Results text can quote them without
+# re-parsing stdout. Written LAST: operons.candidate_blocks.tsv is already saved
+# above, so any issue here cannot corrupt the canonical operon table.
+
+# In[ ]:
+
+
+def _seg_get(name, default=None):
+    """Fetch a module-level variable that may be defined only on some branches."""
+    return globals().get(name, default)
+
+# ── Stage tallies (recomputed from the surviving stage DataFrames) ──────────
+_init_total = len(operons_all)                                  # Step 2 initial operons
+_init_plus  = len(operons_plus)
+_init_minus = len(operons_minus)
+_n_s0 = int((operons_annotated["sense_gene_count"] == 0).sum())  # Step 3 sense breakdown
+_n_s1 = int((operons_annotated["sense_gene_count"] == 1).sum())
+_n_s2 = int((operons_annotated["sense_gene_count"] == 2).sum())
+_n_s3 = int((operons_annotated["sense_gene_count"] >= 3).sum())
+_sense_ge1   = _n_s1 + _n_s2 + _n_s3
+_n_anti_init = int((operons_annotated["antisense_gene_count"] > 0).sum())
+
+if len(decisions_df):                                            # Step 5a candidate classes
+    _cand_overlap = int((decisions_df["relationship"] == "overlap").sum())
+    _cand_gig     = int((decisions_df["relationship"] == "gene_in_gap").sum())
+    _n_pass       = int(decisions_df["merge"].sum())             # pairs passing co-transcription test
+else:
+    _cand_overlap = _cand_gig = _n_pass = 0
+# NB: compute the separate count locally — the global `n_separate` is reassigned
+# later in the overlap-plotting block, so it no longer holds the merge-decision split.
+_n_sep = len(decisions_df) - _n_pass
+
+_iso_types    = operons_merged["segmentation_type"].value_counts().to_dict()  # after 5a/5b
+_n_iso_plain  = int(_iso_types.get("isoform_operon", 0))
+_n_iso_merged = int(_iso_types.get("isoform_operon_merged", 0))
+_n_iso_comb   = int(_iso_types.get("isoform_gene_combined", 0))
+_iso_total    = len(operons_merged)
+
+_pre_cov   = genes_covered["coverage_type"].value_counts().to_dict()          # Step 6 (pre-rescue)
+_pre_uncov = int(_pre_cov.get("uncovered", 0))
+
+_n_multi_groups = len(_seg_get("multi_groups", []))             # Step 7 rescue tallies
+_n_span_rescue  = len(_seg_get("span_df", []))
+_n_single       = len(_seg_get("single_gene_ops", []))
+_n_rrna         = len(RRNA_OPERONS)
+
+_final_types = all_operons["segmentation_type"].value_counts()  # Step 8 final
+
+_lines = []
+def _w(s=""):
+    _lines.append(str(s))
+
+_w("OPERON SEGMENTATION SUMMARY")
+_w("=" * 60)
+_w("")
+_w("Stage-by-stage operon counts from Operon_Segmentation.py "
+   "(isoform-based segmentation of the syn1 PacBio FLNC transcriptome).")
+_w("")
+_w(f"Parameters: MIN_READS={MIN_READS}, BOUNDARY_TOL={BOUNDARY_TOL} bp; "
+   f"merge: MERGE_MAX_GAP={MERGE_MAX_GAP}, MERGE_W={MERGE_W}, MERGE_FLANK={MERGE_FLANK}, "
+   f"MERGE_MIN_BRIDGE={MERGE_MIN_BRIDGE}, MERGE_MIN_CONT={MERGE_MIN_CONT}; "
+   f"rescue: MAX_GENE_GAP={MAX_GENE_GAP} bp")
+_w("")
+_w("Step 1 -- Load isoforms")
+_w(f"  isoform clusters loaded:        {len(df):>6}")
+_w(f"  isoforms with n_reads >= {MIN_READS}:   {len(df_iso):>6}  "
+   f"(plus {int((df_iso['strand']=='+').sum())}, minus {int((df_iso['strand']=='-').sum())})")
+_w("")
+_w("Step 2 -- Containment clustering into initial operons")
+_w(f"  initial operons:                {_init_total:>6}  (plus {_init_plus}, minus {_init_minus})")
+_w(f"  operon length (bp):  median {operons_all['length'].median():.0f}, mean {operons_all['length'].mean():.0f}")
+_w("")
+_w("Step 3 -- Gene annotation of initial operons")
+_w(f"  annotated genes loaded:         {len(genes_df):>6}")
+_w(f"  operons with >=1 sense gene:    {_sense_ge1:>6}  "
+   f"(1 gene {_n_s1}, 2 genes {_n_s2}, 3+ genes {_n_s3}; 0 sense {_n_s0})")
+_w(f"  operons with >=1 antisense gene:{_n_anti_init:>6}")
+_w("")
+_w("Step 4/5a -- Same-strand overlap + co-transcription merge")
+_w(f"  same-strand overlap pairs:      {len(same_strand_overlaps):>6}  "
+   f"(shared-gene pairs: {len(_seg_get('conflicts', []))})")
+_w(f"  merge candidates:               {len(decisions_df):>6}  "
+   f"(overlap {_cand_overlap}, gene_in_gap {_cand_gig})")
+_w(f"    passed co-transcription test: {_n_pass:>6}")
+_w(f"    kept separate:                {_n_sep:>6}")
+_w(f"    -> merged output operons (pairwise, no chaining): {_n_iso_merged}")
+_w("")
+_w("Step 5b -- Merge operons sharing identical sense loci")
+_w(f"  isoform-derived operons after merges: {_iso_total}")
+_w(f"    isoform_operon         {_n_iso_plain:>5}")
+_w(f"    isoform_operon_merged  {_n_iso_merged:>5}")
+_w(f"    isoform_gene_combined  {_n_iso_comb:>5}")
+_w("")
+_w("Step 6/7 -- Coverage + rescue of uncovered genes")
+_w(f"  uncovered genes (pre-rescue):   {_pre_uncov:>6} / {len(genes_df)} "
+   f"({_pre_uncov/len(genes_df)*100:.1f}%)")
+_w(f"  consecutive uncovered groups (gap <= {MAX_GENE_GAP} bp): {_n_multi_groups}")
+_w(f"    rescued by spanning isoform:  {_n_span_rescue:>6}")
+_w(f"  rRNA operons added:             {_n_rrna:>6}")
+_w(f"  single-gene BAM rescues:        {_n_single:>6}")
+_w("")
+_w("Step 8 -- Final operon map")
+_w(f"  total operons:                  {len(all_operons):>6}")
+for _stype, _n in _final_types.items():
+    _w(f"    {_stype:<24} {_n:>5}")
+_w("")
+_w(f"  Final gene coverage ({total} genes):")
+_w(f"    both sense + antisense:       {n_both:>6}  ({n_both/total*100:.1f}%)")
+_w(f"    sense only:                   {n_sense:>6}  ({n_sense/total*100:.1f}%)")
+_w(f"    antisense only:               {n_anti_only:>6}  ({n_anti_only/total*100:.1f}%)")
+_w(f"    uncovered:                    {n_uncov:>6}  ({n_uncov/total*100:.1f}%)")
+
+OUT_SUMMARY = OUT_FOLDER + "/Operon_Segmentation.txt"
+with open(OUT_SUMMARY, "w") as _fh:
+    _fh.write("\n".join(_lines) + "\n")
+print(f"Saved: {OUT_SUMMARY}")
+

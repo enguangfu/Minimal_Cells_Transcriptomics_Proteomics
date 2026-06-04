@@ -35,8 +35,8 @@ import Operon_Visualization as ov   # OperonCoord / plot_one_operon used in the 
 
 os.makedirs('annotation', exist_ok=True)
 
-OPERON_TSV   = 'operons.candidate_blocks.tsv'
-GENE_COV_TSV = 'gene_operon_coverage.tsv'
+OPERON_TSV   = 'operons.candidate_blocks.tsv'                 # canonical 459-operon map (main folder)
+GENE_COV_TSV = 'segmentation/gene_operon_coverage.tsv'       # moved to segmentation/ in the Operon_Segmentation output reorg
 
 op = pd.read_csv(OPERON_TSV, sep='\t')
 gc = pd.read_csv(GENE_COV_TSV, sep='\t')
@@ -271,6 +271,19 @@ for _, o in op_canonical.iterrows():
 
 utr5_df = pd.DataFrame(utr5_rows)
 utr3_df = pd.DataFrame(utr3_rows)
+
+# ── Export per-canonical-operon UTR table ────────────────────────────────────
+# One row per canonical operon (isoform_operon, TSS+TTS both intergenic, >=1 sense
+# gene) with both UTR lengths. Consumed by Syn1_Novel_ORF/R4_dist_panels.py
+# (panel f) so its UTR distribution uses this exact canonical set rather than
+# recomputing it (which had drifted from this definition).
+utr_tbl = (utr5_df[['operon_id', 'strand', 'utr5_bp']]
+           .merge(utr3_df[['operon_id', 'utr3_bp']], on='operon_id', how='outer')
+           .sort_values('operon_id')
+           .reset_index(drop=True))
+os.makedirs('annotation/canonical', exist_ok=True)
+utr_tbl.to_csv('annotation/canonical/operon_utr.tsv', sep='\t', index=False)
+print(f"Saved canonical-operon UTR table: annotation/canonical/operon_utr.tsv ({len(utr_tbl)} operons)")
 
 n = len(op_canonical)
 print(f"Canonical operons with >=1 sense gene: {n}")

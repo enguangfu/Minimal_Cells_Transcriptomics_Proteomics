@@ -8,7 +8,7 @@ b) embedded: n=4 median_len=2196 bp
 c) spurious_prom: n=59 median_cluster_reads=34 max=31747
 c) read_through: n=26 median_cluster_reads=111 max=2119
 c) embedded: n=4 median_cluster_reads=77 max=208
-f) 5'UTR: n=139 median=37 nt max=2575
-f) 3'UTR: n=139 median=41 nt max=2056
-f) canonical operons used: 139
+f) 5'UTR: n=118 median=37 nt max=798
+f) 3'UTR: n=118 median=42 nt max=1220
+f) canonical operons used: 118
 e) all isoforms (reads>10) n=18918 median_intergenic=2.1%
