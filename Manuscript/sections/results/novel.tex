@@ -14,6 +14,7 @@ With that one exception every antisense cluster was far less abundant than the s
 The exceptional locus was the yeast selection marker \gene{his3}{0918}, one of the vector elements carried into the synthetic \syn~genome during its assembly~\cite{gibson_creation_2010}.
 \gene{his3}{0918} was transcribed almost entirely on the antisense strand, at a read depth exceeding 30{,}000, yet produced no detectable protein (Fig.~\ref{fig:novel}d).
 These antisense isoforms initiated from a spurious promoter immediately upstream of the gene, within a segment that was excised in \syna, so this conspicuous non-coding transcription was eliminated by genome minimization.
+Scanning the sequence upstream of the antisense start site with the same $-10$ detection applied to the canonical operons (Methods) recovered a perfect \texttt{TANAAT} hexamer (\texttt{TAAAAT}) at the $-10$ position, indicating that the antisense transcription is driven by a genuine, if mislocated, $\sigma$-factor promoter rather than by stochastic initiation.
 The four genomic watermarks were by contrast only minimally transcribed, at a mean PacBio depth of $\sim$280--360 per strand, six- to eightfold below the genome-wide average of $\sim$2{,}100, consistent with spurious noise over their hypothetical reading frames.
 
 Intergenic coverage was far more pervasive than antisense coverage but was overwhelmingly benign (Fig.~\ref{fig:novel}e).
@@ -22,6 +23,7 @@ The \fiveprime~and \threeprime~untranslated regions of canonical operons had med
 
 Only one transcription unit was genuinely intergenic along its entire length.
 A cluster of isoforms spanning 199{,}379--200{,}123, supported by $\sim$980 reads, lay entirely between \gene{lap}{0154} and the pseudogene \locus{0155} and overlapped neither (Fig.~\ref{fig:novel}g).
+In contrast to the \gene{his3}{0918} antisense promoter, the start site of this intergenic transcript carried no recognizable $-10$ box (its closest \texttt{TANAAT} match, \texttt{TAAAAA}, differed at one position), consistent with pervasive low-level transcription rather than a defined promoter.
 This intergenic unit and \locus{0155} both fell within a region deleted in \syna, whereas \gene{lap}{0154} occupied the narrow retained gap between two deletions and was relocated elsewhere in the minimal genome.
 
 To test whether any of this non-canonical transcription was translated, every open reading frame within the 837 most abnormal isoforms was enumerated and scored for translation initiation with \texttt{OSTIR}~\cite{roots_ostir_2021}.

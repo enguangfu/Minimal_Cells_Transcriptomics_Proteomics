@@ -30,7 +30,7 @@ TO DO Reminder:
 **F. Style / front-and-back matter:**
 - [x] §0 — fill the "Exemplar paragraph" field and the "Things to NEVER do" list.
 - [ ] Draft Abstract, Introduction, and Discussion (~500 words each; not yet in this file).
-- [ ] Reorganize the Operon_Visual Jupyter notebook before publication. (Progress: `Operon_Annotation.py` cleaned to analysis-only and confirmed to run end-to-end; the per-operon `plot_one_operon` driver was split out into a new `Operon_Visualization.ipynb`.)
+- [x] Reorganize the Operon_Visual Jupyter notebook before publication. (Progress: `Operon_Annotation.py` cleaned to analysis-only and confirmed to run end-to-end; the per-operon `plot_one_operon` driver was split out into a new `Operon_Visualization.ipynb`.)
 - [ ] Final LaTeX pass (resolve overfull \hbox lines / typesetting).
 
 **H. Operon segmentation — RESOLVED (new segmentation finalized 2026-06-04):**
@@ -429,11 +429,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 #### L4.3: Unexpected transcription of yeast vector gene 0918.
 
 - **Logic:** Yeast vector elements were carried into syn1's synthetic genome during assembly. Strikingly, the yeast selection marker his3/0918 was heavily transcribed antisense (depth >30k) but not translated. The antisense isoforms initiate from a spurious promoter just upstream, which is itself deleted in syn3A; the his3 body sits at the deletion boundary, so the non-coding transcription is removed by minimization.
-- **Analysis:** `Syn1_Novel_ORF/R4_track_panels.py` (panel d): isoform table + PacBio plus-strand depth + deletion overlay from `Genome_Reduction/aln/raw/syn1_deleted_regions.bed`.
-- **Outputs:** `R4_panels/panel_d_his3_antisense.pdf`
-- **Numbers to cite:** his3/0918 antisense depth >30,000; 28 antisense isoforms (top 16.6k reads); the driving spurious-promoter region deleted in syn3A. Watermarks W1-W4 (located by exact sequence): length-weighted mean PacBio depth ~283/+ , ~360/- vs genome-wide average ~2133/2051 (6-8x lower); covered ORFs all hypothetical/watermark calls (plus real 0590) -> minimally transcribed noise.
+- **Analysis:** `Syn1_Novel_ORF/R4_track_panels.py` (panel d): isoform table + PacBio plus-strand depth + deletion overlay from `Genome_Reduction/aln/raw/syn1_deleted_regions.bed`. -10 box at the antisense TSS scored by `R4_track_panels.py:quantify_novel_promoters()` (same algorithm as canonical operons, via `Syn1_Operon/promoter_motif.py`).
+- **Outputs:** `R4_panels/panel_d_his3_antisense.pdf`; `R4_panels/novel_promoter_minus10.txt`
+- **Numbers to cite:** his3/0918 antisense depth >30,000; 28 antisense isoforms (top 16.6k reads); the driving spurious-promoter region deleted in syn3A; the antisense TSS (pos5p0 27522) carries a perfect -10 hexamer TAAAAT (TANAAT consensus, 0 mismatch; core_6mer tier) with an AT-rich -35 (CTTTGAA), confirming a genuine spurious promoter. Watermarks W1-W4 (located by exact sequence): length-weighted mean PacBio depth ~283/+ , ~360/- vs genome-wide average ~2133/2051 (6-8x lower); covered ORFs all hypothetical/watermark calls (plus real 0590) -> minimally transcribed noise.
 - **Figure panels:** d
-- **Conclusion:** The yeast marker his3 is heavily transcribed antisense yet untranslated, and its driving spurious promoter is deleted in syn3A; the four watermarks are only minimally transcribed (noise).
+- **Conclusion:** The yeast marker his3 is heavily transcribed antisense yet untranslated, and its driving spurious promoter (which carries a canonical TAAAAT -10 box, i.e. a real but mislocated sigma-factor promoter) is deleted in syn3A; the four watermarks are only minimally transcribed (noise).
 - **Notes for LLM:** DONE. his3 itself is RETAINED at the deletion boundary -- only its upstream promoter region is deleted, so do not claim the gene is deleted. Watermark expression quantified in `Abnormal_Transcripts.py` -> `watermark_expression.txt` (located by sequence, not in panel d); one sentence added to L4.3 in novel.tex.
 
 #### L4.4: RNA isoforms has much more intergenic coverage than anti-sense.
@@ -452,12 +452,13 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 #### L4.5: One truly isolated intergenic transcription.
 
 - **Logic:** One truly isolated intergenic transcription was found between genes 0154 and 0155.
-- **Analysis:** Operon coverage analysis in `Operon_Segmentation.ipynb`
+- **Analysis:** Operon coverage analysis in `Operon_Segmentation.ipynb`; -10 box at the intergenic TSS scored by `R4_track_panels.py:quantify_novel_promoters()` (via `Syn1_Operon/promoter_motif.py`).
 - **Outputs:** 
   - `Syn1_Operon/operons.candidate_blocks.tsv`
-- **Numbers to cite:**  None
+  - `R4_panels/novel_promoter_minus10.txt`
+- **Numbers to cite:**  intergenic TSS (pos5p0 199379) has NO canonical -10 box (best TANAAT match TAAAAA, 1 mismatch; no_minus10 tier; -35 TATTGTA) — contrast with the his3/0918 spurious promoter.
 - **Figure panels:** g
-- **Conclusion:** A single genuinely intergenic transcript exists (between lap/0154 and pseudo/0155, ~980 reads, 199,379-200,123); it lies in a syn3A-deleted region, while lap occupies the retained gap and was relocated.
+- **Conclusion:** A single genuinely intergenic transcript exists (between lap/0154 and pseudo/0155, ~980 reads, 199,379-200,123); it lies in a syn3A-deleted region, while lap occupies the retained gap and was relocated. Unlike the his3 spurious promoter, its TSS lacks a recognizable -10 box (1 mismatch from TANAAT), consistent with pervasive rather than promoter-driven transcription.
 - **Caveats:** None
 - **Notes for LLM:** Panel g and h in the same row. DONE.
 
