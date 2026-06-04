@@ -18,7 +18,7 @@ TO DO Reminder:
 - [ ] M4 — write "RNA processing and ribonucleases" (after analysis A above).
 
 **C. Results prose (draft from logics, §0 style — one section at a time):**
-- [ ] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) still to draft. R5-L5.5 (panel e) and R6-L6.4 (panel d) remain blocked on analyses A.
+- [x] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) drafted (L6.1–L6.3 + L6.4 omics, 459-era numbers). Only blocked panels remain: R5-L5.5 (panel e essentiality) and R6-L6.4 flux (panel d) — both await analyses A.
 
 **D. Figures:**
 - [ ] Regenerate + format the six multi-panel figures in Illustrator.
