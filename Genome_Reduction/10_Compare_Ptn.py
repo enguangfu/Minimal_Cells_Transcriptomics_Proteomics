@@ -67,7 +67,7 @@ NATURE_RC = {
 # ── Inputs / outputs ─────────────────────────────────────────────────────────
 IN_CSV       = "Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv"   # written by 09
 SYN3A_PTN_CSV = "../Syn1_Syn3A_Proteomics/syn3a_proteomics_summary_2026.csv"
-OPERON_COV   = "../Syn1_Operon/gene_operon_coverage.tsv"
+OPERON_COV   = "../Syn1_Operon/segmentation/gene_operon_coverage.tsv"
 OPERON_PLOTS = "../Syn1_Operon/operon_plots"
 OUTDIR       = "Compare_RNA_Protein"
 OUT_REPORT   = f"{OUTDIR}/Compare_Ptn.txt"

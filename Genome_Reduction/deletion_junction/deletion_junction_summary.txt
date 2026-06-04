@@ -5,10 +5,10 @@ DELETION-JUNCTION TAXONOMY (syn1 -> syn3A)
 deletions analysed : 95
 
 strand_relationship:
-  tandem         : 55
+  tandem         : 53
   convergent     : 19
   divergent      : 15
-  intra_operon   : 6
+  intra_operon   : 8
 
 junction_type:
   fusion                : upstream lost terminator AND downstream lost promoter
@@ -16,140 +16,141 @@ junction_type:
   readthrough_extension : upstream operon lost its terminator only
   clean_excision        : both regulators retained (whole operon(s) removed between)
   fusion                 : 3
-  decapitation           : 10
-  readthrough_extension  : 8
-  clean_excision         : 34
+  decapitation           : 9
+  readthrough_extension  : 11
+  clean_excision         : 30
   convergent             : 19
   divergent              : 15
-  intra_operon           : 6
+  intra_operon           : 8
 
 Flanking-operon gene_deletion_pattern (from 05) at tandem junctions:
-  L=intact           R=intact           : 26
+  L=intact           R=intact           : 22
   L=leading_deleted  R=intact           : 6
-  L=intact           R=lagging_deleted  : 5
   L=intact           R=leading_deleted  : 5
-  L=lagging_deleted  R=intact           : 4
-  L=leading_deleted  R=intra_deleted    : 3
+  L=intact           R=lagging_deleted  : 5
+  L=lagging_deleted  R=intact           : 5
   L=intact           R=intra_deleted    : 2
-  L=lagging_deleted  R=leading_deleted  : 1
-  L=intra_deleted    R=intact           : 1
+  L=leading_deleted  R=intra_deleted    : 2
+  L=intra_deleted    R=intact           : 2
+  L=lagging_deleted  R=intra_deleted    : 1
+  L=intra_deleted    R=intra_deleted    : 1
   L=leading_deleted  R=lagging_deleted  : 1
   L=leading_deleted  R=leading_deleted  : 1
 
 Per-deletion detail (scar_id  rel/type  L | DEL | R):
 ----------------------------------------------------------------
   DEL_001  divergent    divergent               L=OP_00007(-)  DEL 18715-27638 [7g]  R=OP_00012(+)
-  DEL_002  convergent   convergent              L=OP_00013(+)  DEL 31258-42889 [8g]  R=OP_00018(-)
-  DEL_003  divergent    divergent               L=OP_00018(-)  DEL 44600-44810 [1g]  R=OP_00019(+)
-  DEL_004  tandem       decapitation            L=OP_00020(-)  DEL 46715-50834 [1g]  R=OP_00022(-)
-  DEL_005  convergent   convergent              L=OP_00023(+)  DEL 59775-65040 [2g]  R=OP_00026(-)
-  DEL_006  tandem       clean_excision          L=OP_00026(-)  DEL 67264-68093 [0g]  R=OP_00028(-)
-  DEL_007  tandem       clean_excision          L=OP_00029(-)  DEL 74944-75306 [0g]  R=OP_00031(-)
-  DEL_008  tandem       clean_excision          L=OP_00031(-)  DEL 75532-76503 [0g]  R=OP_00033(-)
-  DEL_009  tandem       clean_excision          L=OP_00033(-)  DEL 77335-79851 [1g]  R=OP_00034(-)
-  DEL_010  divergent    divergent               L=OP_00034(-)  DEL 80692-85410 [4g]  R=OP_00036(+)
-  DEL_011  tandem       clean_excision          L=OP_00036(+)  DEL 87981-88277 [0g]  R=OP_00037(+)
-  DEL_012  tandem       readthrough_extension   L=OP_00041(-)  DEL 97604-104574 [3g]  R=OP_00043(-)
-  DEL_013  intra_operon intra_operon            L=OP_00043(-)  DEL 107091-108218 [0g]  R=OP_00043(-)
-  DEL_014  tandem       fusion                  L=OP_00045(-)  DEL 111508-126973 [8g]  R=OP_00053(-)
-  DEL_015  divergent    divergent               L=OP_00054(-)  DEL 130729-131305 [1g]  R=OP_00055(+)
-  DEL_016  convergent   convergent              L=OP_00055(+)  DEL 132496-136059 [2g]  R=OP_00059(-)
-  DEL_017  convergent   convergent              L=OP_00055(+)  DEL 136259-140014 [3g]  R=OP_00059(-)
-  DEL_018  divergent    divergent               L=OP_00061(-)  DEL 144073-147287 [2g]  R=OP_00063(+)
-  DEL_019  tandem       fusion                  L=OP_00066(+)  DEL 152702-163934 [8g]  R=OP_00072(+)
-  DEL_020  tandem       clean_excision          L=OP_00073(+)  DEL 169009-169984 [1g]  R=OP_00074(+)
-  DEL_021  tandem       clean_excision          L=OP_00074(+)  DEL 174618-176104 [0g]  R=OP_00077(+)
-  DEL_022  tandem       clean_excision          L=OP_00074(+)  DEL 176703-177405 [0g]  R=OP_00077(+)
-  DEL_023  tandem       clean_excision          L=OP_00082(+)  DEL 193470-197590 [2g]  R=OP_00084(+)
-  DEL_024  tandem       clean_excision          L=OP_00084(+)  DEL 199189-203734 [3g]  R=OP_00088(+)
-  DEL_025  convergent   convergent              L=OP_00088(+)  DEL 204413-209414 [3g]  R=OP_00093(-)
-  DEL_026  convergent   convergent              L=OP_00097(+)  DEL 222394-256770 [24g]  R=OP_00112(-)
-  DEL_027  tandem       clean_excision          L=OP_00114(+)  DEL 266188-275868 [8g]  R=OP_00119(+)
-  DEL_028  convergent   convergent              L=OP_00120(+)  DEL 279393-280162 [0g]  R=OP_00121(-)
-  DEL_029  divergent    divergent               L=OP_00121(-)  DEL 281737-282901 [1g]  R=OP_00122(+)
-  DEL_030  tandem       decapitation            L=OP_00124(+)  DEL 288391-292905 [2g]  R=OP_00126(+)
-  DEL_031  tandem       decapitation            L=OP_00126(+)  DEL 298422-300803 [0g]  R=OP_00127(+)
-  DEL_032  convergent   convergent              L=OP_00127(+)  DEL 303533-304560 [0g]  R=OP_00129(-)
-  DEL_033  convergent   convergent              L=OP_00131(+)  DEL 308606-323314 [4g]  R=OP_00137(-)
-  DEL_034  tandem       readthrough_extension   L=OP_00140(-)  DEL 325824-327238 [1g]  R=OP_00141(-)
-  DEL_035  tandem       decapitation            L=OP_00142(-)  DEL 329649-332391 [0g]  R=OP_00144(-)
-  DEL_036  tandem       readthrough_extension   L=OP_00144(-)  DEL 334374-335091 [0g]  R=OP_00145(-)
-  DEL_037  intra_operon intra_operon            L=OP_00146(-)  DEL 338719-339334 [0g]  R=OP_00146(-)
-  DEL_038  divergent    divergent               L=OP_00146(-)  DEL 342141-344319 [0g]  R=OP_00149(+)
-  DEL_039  tandem       clean_excision          L=OP_00149(+)  DEL 345422-359429 [7g]  R=OP_00157(+)
-  DEL_040  tandem       clean_excision          L=OP_00149(+)  DEL 359689-359975 [0g]  R=OP_00157(+)
-  DEL_041  tandem       decapitation            L=OP_00158(+)  DEL 363144-364030 [0g]  R=OP_00159(+)
-  DEL_042  tandem       fusion                  L=OP_00161(+)  DEL 371713-375754 [2g]  R=OP_00164(+)
-  DEL_043  divergent    divergent               L=OP_00168(-)  DEL 389505-389779 [0g]  R=OP_00169(+)
-  DEL_044  divergent    divergent               L=OP_00168(-)  DEL 389979-390909 [0g]  R=OP_00169(+)
-  DEL_045  tandem       clean_excision          L=OP_00169(+)  DEL 392044-399521 [3g]  R=OP_00175(+)
-  DEL_046  tandem       clean_excision          L=OP_00175(+)  DEL 402992-412894 [6g]  R=OP_00182(+)
-  DEL_047  tandem       readthrough_extension   L=OP_00183(+)  DEL 419454-420167 [0g]  R=OP_00184(+)
-  DEL_048  tandem       decapitation            L=OP_00184(+)  DEL 421585-426208 [5g]  R=OP_00188(+)
-  DEL_049  convergent   convergent              L=OP_00188(+)  DEL 427508-435700 [4g]  R=OP_00193(-)
-  DEL_050  tandem       decapitation            L=OP_00195(+)  DEL 440092-441059 [0g]  R=OP_00196(+)
-  DEL_051  intra_operon intra_operon            L=OP_00196(+)  DEL 441989-442461 [0g]  R=OP_00196(+)
-  DEL_052  tandem       clean_excision          L=OP_00196(+)  DEL 443061-444476 [0g]  R=OP_00199(+)
-  DEL_053  tandem       clean_excision          L=OP_00196(+)  DEL 444649-445872 [0g]  R=OP_00199(+)
-  DEL_054  intra_operon intra_operon            L=OP_00199(+)  DEL 446339-447889 [1g]  R=OP_00199(+)
-  DEL_055  tandem       clean_excision          L=OP_00200(+)  DEL 454458-458129 [1g]  R=OP_00204(+)
-  DEL_056  tandem       clean_excision          L=OP_00200(+)  DEL 458291-458590 [0g]  R=OP_00204(+)
-  DEL_057  tandem       clean_excision          L=OP_00211(+)  DEL 470395-473494 [2g]  R=OP_00216(+)
-  DEL_058  tandem       clean_excision          L=OP_00219(+)  DEL 479540-480825 [0g]  R=OP_00220(+)
-  DEL_059  convergent   convergent              L=OP_00220(+)  DEL 483409-489238 [1g]  R=OP_00223(-)
-  DEL_060  tandem       decapitation            L=OP_00233(-)  DEL 521837-522282 [0g]  R=OP_00234(-)
-  DEL_061  tandem       clean_excision          L=OP_00241(+)  DEL 538698-539341 [0g]  R=OP_00242(+)
-  DEL_062  intra_operon intra_operon            L=OP_00248(+)  DEL 551789-552252 [0g]  R=OP_00248(+)
-  DEL_063  tandem       readthrough_extension   L=OP_00248(+)  DEL 553594-555079 [2g]  R=OP_00250(+)
-  DEL_064  convergent   convergent              L=OP_00251(+)  DEL 561556-581943 [18g]  R=OP_00260(-)
-  DEL_065  divergent    divergent               L=OP_00260(-)  DEL 583080-585099 [0g]  R=OP_00261(+)
-  DEL_066  tandem       clean_excision          L=OP_00262(-)  DEL 587539-589539 [0g]  R=OP_00264(-)
-  DEL_067  convergent   convergent              L=OP_00265(+)  DEL 590637-601785 [9g]  R=OP_00272(-)
-  DEL_068  tandem       clean_excision          L=OP_00274(-)  DEL 604988-608019 [1g]  R=OP_00275(-)
-  DEL_069  tandem       readthrough_extension   L=OP_00279(-)  DEL 614765-615840 [0g]  R=OP_00280(-)
-  DEL_070  tandem       clean_excision          L=OP_00284(-)  DEL 632731-637180 [1g]  R=OP_00286(-)
-  DEL_071  tandem       readthrough_extension   L=OP_00291(-)  DEL 657178-728756 [45g]  R=OP_00326(-)
-  DEL_072  divergent    divergent               L=OP_00327(-)  DEL 731219-740661 [4g]  R=OP_00330(+)
-  DEL_073  tandem       clean_excision          L=OP_00344(-)  DEL 766800-776197 [8g]  R=OP_00350(-)
-  DEL_074  tandem       clean_excision          L=OP_00358(-)  DEL 806355-811864 [3g]  R=OP_00363(-)
-  DEL_075  tandem       clean_excision          L=OP_00358(-)  DEL 812216-813128 [1g]  R=OP_00363(-)
-  DEL_076  tandem       readthrough_extension   L=OP_00363(-)  DEL 813808-815809 [0g]  R=OP_00366(-)
-  DEL_077  tandem       clean_excision          L=OP_00370(-)  DEL 832677-844099 [8g]  R=OP_00375(-)
-  DEL_078  divergent    divergent               L=OP_00376(-)  DEL 849524-856517 [5g]  R=OP_00381(+)
-  DEL_079  convergent   convergent              L=OP_00382(+)  DEL 862388-863402 [1g]  R=OP_00383(-)
-  DEL_080  divergent    divergent               L=OP_00383(-)  DEL 865971-878161 [12g]  R=OP_00387(+)
-  DEL_081  convergent   convergent              L=OP_00387(+)  DEL 879068-907483 [22g]  R=OP_00401(-)
-  DEL_082  convergent   convergent              L=OP_00406(+)  DEL 917652-924893 [5g]  R=OP_00409(-)
-  DEL_083  tandem       decapitation            L=OP_00409(-)  DEL 928330-929517 [0g]  R=OP_00410(-)
-  DEL_084  tandem       decapitation            L=OP_00413(-)  DEL 939085-941581 [1g]  R=OP_00416(-)
-  DEL_085  divergent    divergent               L=OP_00417(-)  DEL 953141-955926 [2g]  R=OP_00420(+)
-  DEL_086  convergent   convergent              L=OP_00420(+)  DEL 958918-960048 [3g]  R=OP_00423(-)
-  DEL_087  tandem       clean_excision          L=OP_00428(+)  DEL 975827-976616 [0g]  R=OP_00429(+)
-  DEL_088  convergent   convergent              L=OP_00433(+)  DEL 987121-1003970 [10g]  R=OP_00438(-)
-  DEL_089  divergent    divergent               L=OP_00439(-)  DEL 1005339-1011820 [4g]  R=OP_00442(+)
-  DEL_090  convergent   convergent              L=OP_00442(+)  DEL 1014115-1025786 [10g]  R=OP_00451(-)
-  DEL_091  intra_operon intra_operon            L=OP_00451(-)  DEL 1027733-1028408 [0g]  R=OP_00451(-)
-  DEL_092  tandem       clean_excision          L=OP_00454(-)  DEL 1037852-1038822 [0g]  R=OP_00456(-)
-  DEL_093  tandem       clean_excision          L=OP_00456(-)  DEL 1040770-1043410 [1g]  R=OP_00459(-)
-  DEL_094  tandem       clean_excision          L=OP_00460(-)  DEL 1048869-1074325 [16g]  R=OP_00479(-)
-  DEL_095  tandem       clean_excision          L=OP_00460(-)  DEL 1074591-1074749 [0g]  R=OP_00479(-)
+  DEL_002  convergent   convergent              L=OP_00013(+)  DEL 31258-42889 [8g]  R=OP_00019(-)
+  DEL_003  divergent    divergent               L=OP_00019(-)  DEL 44600-44810 [1g]  R=OP_00020(+)
+  DEL_004  tandem       decapitation            L=OP_00021(-)  DEL 46715-50834 [1g]  R=OP_00023(-)
+  DEL_005  convergent   convergent              L=OP_00024(+)  DEL 59775-65040 [2g]  R=OP_00027(-)
+  DEL_006  tandem       clean_excision          L=OP_00027(-)  DEL 67264-68093 [0g]  R=OP_00029(-)
+  DEL_007  tandem       readthrough_extension   L=OP_00030(-)  DEL 74944-75306 [0g]  R=OP_00031(-)
+  DEL_008  intra_operon intra_operon            L=OP_00031(-)  DEL 75532-76503 [0g]  R=OP_00031(-)
+  DEL_009  tandem       clean_excision          L=OP_00031(-)  DEL 77335-79851 [1g]  R=OP_00032(-)
+  DEL_010  divergent    divergent               L=OP_00032(-)  DEL 80692-85410 [4g]  R=OP_00034(+)
+  DEL_011  intra_operon intra_operon            L=OP_00034(+)  DEL 87981-88277 [0g]  R=OP_00034(+)
+  DEL_012  tandem       readthrough_extension   L=OP_00038(-)  DEL 97604-104574 [3g]  R=OP_00040(-)
+  DEL_013  intra_operon intra_operon            L=OP_00040(-)  DEL 107091-108218 [0g]  R=OP_00040(-)
+  DEL_014  tandem       fusion                  L=OP_00043(-)  DEL 111508-126973 [8g]  R=OP_00050(-)
+  DEL_015  divergent    divergent               L=OP_00051(-)  DEL 130729-131305 [1g]  R=OP_00052(+)
+  DEL_016  convergent   convergent              L=OP_00052(+)  DEL 132496-136059 [2g]  R=OP_00056(-)
+  DEL_017  convergent   convergent              L=OP_00052(+)  DEL 136259-140014 [3g]  R=OP_00056(-)
+  DEL_018  divergent    divergent               L=OP_00058(-)  DEL 144073-147287 [2g]  R=OP_00060(+)
+  DEL_019  tandem       fusion                  L=OP_00063(+)  DEL 152702-163934 [8g]  R=OP_00069(+)
+  DEL_020  tandem       readthrough_extension   L=OP_00069(+)  DEL 169009-169984 [1g]  R=OP_00070(+)
+  DEL_021  tandem       clean_excision          L=OP_00070(+)  DEL 174618-176104 [0g]  R=OP_00073(+)
+  DEL_022  tandem       clean_excision          L=OP_00070(+)  DEL 176703-177405 [0g]  R=OP_00073(+)
+  DEL_023  tandem       clean_excision          L=OP_00076(+)  DEL 193470-197590 [2g]  R=OP_00078(+)
+  DEL_024  tandem       clean_excision          L=OP_00078(+)  DEL 199189-203734 [3g]  R=OP_00082(+)
+  DEL_025  convergent   convergent              L=OP_00082(+)  DEL 204413-209414 [3g]  R=OP_00087(-)
+  DEL_026  convergent   convergent              L=OP_00092(+)  DEL 222394-256770 [24g]  R=OP_00108(-)
+  DEL_027  tandem       clean_excision          L=OP_00110(+)  DEL 266188-275868 [8g]  R=OP_00115(+)
+  DEL_028  convergent   convergent              L=OP_00116(+)  DEL 279393-280162 [0g]  R=OP_00117(-)
+  DEL_029  divergent    divergent               L=OP_00117(-)  DEL 281737-282901 [1g]  R=OP_00118(+)
+  DEL_030  tandem       decapitation            L=OP_00119(+)  DEL 288391-292905 [2g]  R=OP_00121(+)
+  DEL_031  tandem       decapitation            L=OP_00121(+)  DEL 298422-300803 [0g]  R=OP_00122(+)
+  DEL_032  convergent   convergent              L=OP_00122(+)  DEL 303533-304560 [0g]  R=OP_00124(-)
+  DEL_033  convergent   convergent              L=OP_00126(+)  DEL 308606-323314 [4g]  R=OP_00132(-)
+  DEL_034  tandem       readthrough_extension   L=OP_00133(-)  DEL 325824-327238 [1g]  R=OP_00134(-)
+  DEL_035  tandem       decapitation            L=OP_00135(-)  DEL 329649-332391 [0g]  R=OP_00137(-)
+  DEL_036  tandem       readthrough_extension   L=OP_00137(-)  DEL 334374-335091 [0g]  R=OP_00138(-)
+  DEL_037  intra_operon intra_operon            L=OP_00139(-)  DEL 338719-339334 [0g]  R=OP_00139(-)
+  DEL_038  divergent    divergent               L=OP_00139(-)  DEL 342141-344319 [0g]  R=OP_00142(+)
+  DEL_039  tandem       clean_excision          L=OP_00142(+)  DEL 345422-359429 [7g]  R=OP_00150(+)
+  DEL_040  tandem       clean_excision          L=OP_00142(+)  DEL 359689-359975 [0g]  R=OP_00150(+)
+  DEL_041  tandem       decapitation            L=OP_00151(+)  DEL 363144-364030 [0g]  R=OP_00152(+)
+  DEL_042  tandem       fusion                  L=OP_00155(+)  DEL 371713-375754 [2g]  R=OP_00158(+)
+  DEL_043  divergent    divergent               L=OP_00162(-)  DEL 389505-389779 [0g]  R=OP_00163(+)
+  DEL_044  divergent    divergent               L=OP_00162(-)  DEL 389979-390909 [0g]  R=OP_00163(+)
+  DEL_045  tandem       clean_excision          L=OP_00163(+)  DEL 392044-399521 [3g]  R=OP_00169(+)
+  DEL_046  tandem       clean_excision          L=OP_00169(+)  DEL 402992-412894 [6g]  R=OP_00174(+)
+  DEL_047  tandem       readthrough_extension   L=OP_00175(+)  DEL 419454-420167 [0g]  R=OP_00176(+)
+  DEL_048  tandem       decapitation            L=OP_00176(+)  DEL 421585-426208 [5g]  R=OP_00180(+)
+  DEL_049  convergent   convergent              L=OP_00180(+)  DEL 427508-435700 [4g]  R=OP_00185(-)
+  DEL_050  tandem       decapitation            L=OP_00186(+)  DEL 440092-441059 [0g]  R=OP_00187(+)
+  DEL_051  intra_operon intra_operon            L=OP_00187(+)  DEL 441989-442461 [0g]  R=OP_00187(+)
+  DEL_052  tandem       clean_excision          L=OP_00187(+)  DEL 443061-444476 [0g]  R=OP_00190(+)
+  DEL_053  tandem       clean_excision          L=OP_00187(+)  DEL 444649-445872 [0g]  R=OP_00190(+)
+  DEL_054  intra_operon intra_operon            L=OP_00190(+)  DEL 446339-447889 [1g]  R=OP_00190(+)
+  DEL_055  tandem       readthrough_extension   L=OP_00191(+)  DEL 454458-458129 [1g]  R=OP_00194(+)
+  DEL_056  tandem       clean_excision          L=OP_00191(+)  DEL 458291-458590 [0g]  R=OP_00194(+)
+  DEL_057  tandem       clean_excision          L=OP_00201(+)  DEL 470395-473494 [2g]  R=OP_00206(+)
+  DEL_058  tandem       clean_excision          L=OP_00208(+)  DEL 479540-480825 [0g]  R=OP_00209(+)
+  DEL_059  convergent   convergent              L=OP_00209(+)  DEL 483409-489238 [1g]  R=OP_00212(-)
+  DEL_060  tandem       decapitation            L=OP_00221(-)  DEL 521837-522282 [0g]  R=OP_00222(-)
+  DEL_061  tandem       clean_excision          L=OP_00226(+)  DEL 538698-539341 [0g]  R=OP_00227(+)
+  DEL_062  intra_operon intra_operon            L=OP_00233(+)  DEL 551789-552252 [0g]  R=OP_00233(+)
+  DEL_063  tandem       readthrough_extension   L=OP_00233(+)  DEL 553594-555079 [2g]  R=OP_00235(+)
+  DEL_064  convergent   convergent              L=OP_00236(+)  DEL 561556-581943 [18g]  R=OP_00246(-)
+  DEL_065  divergent    divergent               L=OP_00246(-)  DEL 583080-585099 [0g]  R=OP_00247(+)
+  DEL_066  tandem       clean_excision          L=OP_00248(-)  DEL 587539-589539 [0g]  R=OP_00250(-)
+  DEL_067  convergent   convergent              L=OP_00251(+)  DEL 590637-601785 [9g]  R=OP_00258(-)
+  DEL_068  tandem       clean_excision          L=OP_00260(-)  DEL 604988-608019 [1g]  R=OP_00261(-)
+  DEL_069  tandem       readthrough_extension   L=OP_00264(-)  DEL 614765-615840 [0g]  R=OP_00265(-)
+  DEL_070  tandem       clean_excision          L=OP_00269(-)  DEL 632731-637180 [1g]  R=OP_00271(-)
+  DEL_071  tandem       readthrough_extension   L=OP_00276(-)  DEL 657178-728756 [45g]  R=OP_00311(-)
+  DEL_072  divergent    divergent               L=OP_00312(-)  DEL 731219-740661 [4g]  R=OP_00314(+)
+  DEL_073  tandem       clean_excision          L=OP_00328(-)  DEL 766800-776197 [8g]  R=OP_00334(-)
+  DEL_074  tandem       clean_excision          L=OP_00341(-)  DEL 806355-811864 [3g]  R=OP_00346(-)
+  DEL_075  tandem       clean_excision          L=OP_00341(-)  DEL 812216-813128 [1g]  R=OP_00346(-)
+  DEL_076  tandem       readthrough_extension   L=OP_00346(-)  DEL 813808-815809 [0g]  R=OP_00349(-)
+  DEL_077  tandem       clean_excision          L=OP_00353(-)  DEL 832677-844099 [8g]  R=OP_00358(-)
+  DEL_078  divergent    divergent               L=OP_00358(-)  DEL 849524-856517 [5g]  R=OP_00363(+)
+  DEL_079  convergent   convergent              L=OP_00364(+)  DEL 862388-863402 [1g]  R=OP_00365(-)
+  DEL_080  divergent    divergent               L=OP_00365(-)  DEL 865971-878161 [12g]  R=OP_00370(+)
+  DEL_081  convergent   convergent              L=OP_00370(+)  DEL 879068-907483 [22g]  R=OP_00386(-)
+  DEL_082  convergent   convergent              L=OP_00390(+)  DEL 917652-924893 [5g]  R=OP_00393(-)
+  DEL_083  tandem       decapitation            L=OP_00393(-)  DEL 928330-929517 [0g]  R=OP_00394(-)
+  DEL_084  tandem       clean_excision          L=OP_00397(-)  DEL 939085-941581 [1g]  R=OP_00398(-)
+  DEL_085  divergent    divergent               L=OP_00399(-)  DEL 953141-955926 [2g]  R=OP_00402(+)
+  DEL_086  convergent   convergent              L=OP_00402(+)  DEL 958918-960048 [3g]  R=OP_00406(-)
+  DEL_087  tandem       clean_excision          L=OP_00409(+)  DEL 975827-976616 [0g]  R=OP_00410(+)
+  DEL_088  convergent   convergent              L=OP_00413(+)  DEL 987121-1003970 [10g]  R=OP_00418(-)
+  DEL_089  divergent    divergent               L=OP_00419(-)  DEL 1005339-1011820 [4g]  R=OP_00422(+)
+  DEL_090  convergent   convergent              L=OP_00422(+)  DEL 1014115-1025786 [10g]  R=OP_00431(-)
+  DEL_091  intra_operon intra_operon            L=OP_00431(-)  DEL 1027733-1028408 [0g]  R=OP_00431(-)
+  DEL_092  tandem       clean_excision          L=OP_00434(-)  DEL 1037852-1038822 [0g]  R=OP_00436(-)
+  DEL_093  tandem       clean_excision          L=OP_00436(-)  DEL 1040770-1043410 [1g]  R=OP_00439(-)
+  DEL_094  tandem       clean_excision          L=OP_00440(-)  DEL 1048869-1074325 [16g]  R=OP_00458(-)
+  DEL_095  tandem       clean_excision          L=OP_00440(-)  DEL 1074591-1074749 [0g]  R=OP_00458(-)
 
 ================================================================
 CONSISTENCY CHECK vs 04 (operon_deletion_classification)
 ================================================================
 Check 1  facing-regulator-loss <-> overlap_class side : 0 mismatch(es)
 Check 2  no flank operon is 04 'all_deleted'          : FAIL (2)
-    [DEL_065 R] OP_00261 is all_deleted but used as a flank
-    [DEL_072 R] OP_00330 is all_deleted but used as a flank
+    [DEL_065 R] OP_00247 is all_deleted but used as a flank
+    [DEL_072 R] OP_00314 is all_deleted but used as a flank
 Check 3  UTR-only regulator loss (lost, genes intact) : 8
     [DEL_001 R] OP_00012 (promoter lost, no CDS deleted)  [overlap_class=5'_truncation_UTR]
-    [DEL_032 R] OP_00129 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
-    [DEL_042 L] OP_00161 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
-    [DEL_042 R] OP_00164 (promoter lost, no CDS deleted)  [overlap_class=5'_truncation_UTR]
-    [DEL_079 R] OP_00383 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
-    [DEL_083 L] OP_00409 (promoter lost, no CDS deleted)  [overlap_class=5'_truncation_UTR]
-    [DEL_086 R] OP_00423 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
-    [DEL_089 R] OP_00442 (promoter lost, no CDS deleted)  [overlap_class=5'_truncation_UTR]
+    [DEL_032 R] OP_00124 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
+    [DEL_042 L] OP_00155 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
+    [DEL_042 R] OP_00158 (promoter lost, no CDS deleted)  [overlap_class=5'_truncation_UTR]
+    [DEL_079 R] OP_00365 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
+    [DEL_083 L] OP_00393 (promoter lost, no CDS deleted)  [overlap_class=5'_truncation_UTR]
+    [DEL_086 R] OP_00406 (terminator lost, no CDS deleted)  [overlap_class=3'_truncation_UTR]
+    [DEL_089 R] OP_00422 (promoter lost, no CDS deleted)  [overlap_class=5'_truncation_UTR]
 
 Wrote: /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/deletion_junction/deletion_junctions.tsv
 Wrote: /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/deletion_junction/deletion_junction_summary.txt

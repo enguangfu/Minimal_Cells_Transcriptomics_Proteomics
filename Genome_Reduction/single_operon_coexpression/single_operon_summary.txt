@@ -7,17 +7,17 @@ Unit = one operon. Verdict = every consecutive retained pair must pass.
   split            : at least one pair fails both
 
 ----------------------------------------------------------------
-pristine: 109 operons (51 testable with >=2 retained genes)
+pristine: 95 operons (45 testable with >=2 retained genes)
     preserved_strict         : 1  (2% of testable)
-    preserved_loose          : 33  (65% of testable)
-    split                    : 17  (33% of testable)
-    untestable_<2_retained   : 58
-    pair-level: 119 pairs  strict=15 (13%)  loose=100 (84%)
+    preserved_loose          : 27  (60% of testable)
+    split                    : 17  (38% of testable)
+    untestable_<2_retained   : 50
+    pair-level: 111 pairs  strict=16 (14%)  loose=91 (82%)
 ----------------------------------------------------------------
-intra_operon: 6 operons (6 testable with >=2 retained genes)
-    preserved_loose          : 2  (33% of testable)
-    split                    : 4  (67% of testable)
-    pair-level: 17 pairs  strict=3 (18%)  loose=13 (76%)
+intra_operon: 8 operons (8 testable with >=2 retained genes)
+    preserved_loose          : 3  (38% of testable)
+    split                    : 5  (62% of testable)
+    pair-level: 20 pairs  strict=3 (15%)  loose=15 (75%)
 
 Interpretation: the pristine rate is the baseline 'preserved' frequency
 when the reduction never touched the operon. Compare intra_operon against it

@@ -13,7 +13,7 @@ Locus tags correspond one-to-one between organisms with the numeric suffix prese
 
 \subsubsection{Overlaying deletions onto Syn1.0 operons}
 
-Each of the 95 deletions was intersected at single-base resolution with the 480~\syn~operons called from PacBio long reads (against \texttt{operons.candidate\_blocks.tsv}).  % script: 04_deletion_overlaid_operon.py
+Each of the 95 deletions was intersected at single-base resolution with the 459~\syn~operons called from PacBio long reads (against \texttt{operons.candidate\_blocks.tsv}).  % script: 04_deletion_overlaid_operon.py
 Every operon was described along two orthogonal axes.
 The truncation axis classified each overlapping deletion on its own as \texttt{fully\_deleted} (both operon boundaries removed), \texttt{5'\_truncation\_gene} or \texttt{5'\_truncation\_UTR}, \texttt{3'\_truncation\_gene} or \texttt{3'\_truncation\_UTR} (a boundary cut that reached a sense-gene coding sequence, CDS, or stopped in the untranslated region, UTR, respectively), or \texttt{intra\_truncated} (lying strictly inside the operon, neither boundary touched).
 The 5$'$ versus 3$'$ assignment was strand-aware, and an operon hit by more than one deletion took the sorted union of its per-hit cases.

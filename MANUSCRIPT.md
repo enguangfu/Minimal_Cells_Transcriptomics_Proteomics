@@ -18,7 +18,7 @@ TO DO Reminder:
 - [ ] M4 — write "RNA processing and ribonucleases" (after analysis A above).
 
 **C. Results prose (draft from logics, §0 style — one section at a time):**
-- [ ] Generate all six Results sections. R5 (`reduction_operons.tex`) is still empty; R5-L5.5 and R6-L6.4 are blocked on analyses A.
+- [ ] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) still to draft. R5-L5.5 (panel e) and R6-L6.4 (panel d) remain blocked on analyses A.
 
 **D. Figures:**
 - [ ] Regenerate + format the six multi-panel figures in Illustrator.
@@ -487,9 +487,9 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 ### Figure
 **Figure:** `Manuscript/figures/genome_reduction.pdf`
 
-- Panel a: Schematics of genome reduction from syn1 to syn3A.
-- Panel b: One instance of fusion of new operons at junctions.
-- Panel c: Box plot of gene expressions to highlight decapitated ones having lower values.
+- Panel a: Schematics of genome reduction from syn1 to syn3A. (7/2, 7/2)
+- Panel b: One instance of fusion of new operons at junctions. (7/2, 7/4)
+- Panel c: Box plot of gene expressions to highlight decapitated ones having lower values. (7/2, 7/4)
 - Panel d: the HupA operon, whose true promoter, located inside gene 0349, was deleted.
 - Panel e: Gene essentiality evaluation for those trace-expressed genes that are still essential.
 
@@ -508,15 +508,15 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Caveats:** dnadiff reports 118 raw reference-side "insertion" events; the filtered >= 50 bp BED set (95) is the authoritative deletion list.
 - **Notes for LLM:** Method M9. Use this to frame the whole section as a structural/regulatory (not sequence-level) story.
 
-#### L5.2: Deletions overlaid on syn1's 480 operons show whole-operon excision dominating over partial truncation.
+#### L5.2: Deletions overlaid on syn1's 459 operons show whole-operon excision dominating over partial truncation.
 
-- **Logic:** Intersecting the 95 deletions with the 480 syn1 operons at single-bp resolution classifies how each operon was hit, separating operons removed wholesale from those left partially truncated; the truncations are what create the junction effects in L5.3 and L5.4.
+- **Logic:** Intersecting the 95 deletions with the 459 syn1 operons at single-bp resolution classifies how each operon was hit, separating operons removed wholesale from those left partially truncated; the truncations are what create the junction effects in L5.3 and L5.4.
 - **Analysis:** `Genome_Reduction/04_deletion_overlaid_operon.py`
 - **Outputs:** `Genome_Reduction/deletion_overlaid_operon/operon_deletion_classification.tsv`
-- **Numbers to cite:** span-level overlap_class (n=480): intact 180, fully_deleted 179, 3'_truncation_gene 50, 5'_truncation_gene 32, intra_truncated 18; gene-level gene_deletion_pattern: all_deleted 238, intact 190, leading_deleted 23, lagging_deleted 20, intra_deleted 9; 414 syn1 genes overlapped by a deletion.
+- **Numbers to cite:** span-level overlap_class (n=459): fully_deleted 181, intact 162, 3'_truncation_gene 47, 5'_truncation_gene 28, intra_truncated 17 (plus 9 UTR-only and 15 multi-hit); gene-level gene_deletion_pattern: all_deleted 235 (51.2%), intact 172 (37.5%), leading_deleted 21 (4.6%), lagging_deleted 20 (4.4%), intra_deleted 11 (2.4%); 414 syn1 genes overlapped by a deletion.
 - **Figure panels:** a
 - **Conclusion:** Reduction preferentially removed entire operons; the minority of partial truncations (5' vs 3') sets up the junction taxonomy.
-- **Caveats:** the two axes (span-level truncation vs gene-level deletion) differ by design; 180 vs 190 "intact" reflects operons whose genes are all kept but whose UTR/flank was nicked.
+- **Caveats:** the two axes (span-level truncation vs gene-level deletion) differ by design; 162 vs 172 "intact" reflects operons whose genes are all kept but whose UTR/flank was nicked.
 - **Notes for LLM:** None.
 
 #### L5.3: Same-strand deletion junctions can fuse new transcription units, but true fusion is rare.
@@ -528,7 +528,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:**
   - `Genome_Reduction/deletion_junction/deletion_junctions.tsv`, `deletion_junction_summary.txt`
   - `Genome_Reduction/operon_pair_coexpression/`, `single_operon_coexpression/`
-- **Numbers to cite:** 95 junctions: tandem 55, convergent 19, divergent 15, intra_operon 6; tandem junction_type: fusion 3, decapitation 10, readthrough_extension 8, clean_excision 34; cross-junction co-transcription (loose): fusion 67% (n=3) vs clean_excision 15% (negative control); pristine single-operon baseline preserved_loose 65% (51 testable); fusion exemplar DEL_014 OP_00045 -> OP_00053 (MMSYN1_0082 -> MMSYN1_0094), n_span=2, n_bridge=37.
+- **Numbers to cite:** 95 junctions: tandem 53, convergent 19, divergent 15, intra_operon 8; tandem junction_type: fusion 3, decapitation 9, readthrough_extension 11, clean_excision 30; cross-junction co-transcription (loose): fusion 67% (2/3) vs clean_excision 10% (3/30, negative control); pristine single-operon baseline preserved_loose 60% (45 testable, 111 pairs); fusion exemplar DEL_014 OP_00043 -> OP_00050 (MMSYN1_0082 -> MMSYN1_0094), n_span=2, n_bridge=37.
 - **Figure panels:** b
 - **Conclusion:** Operon fusion is real but rare (3 events); the dominant junction outcome is clean excision of whole operon(s) between intact neighbors.
 - **Caveats:** ONT depth is low, so most positive calls are loose-bridge rather than strict-spanning; convergent/divergent junctions are opposite-strand and not expected to co-transcribe.
@@ -543,7 +543,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:**
   - `Genome_Reduction/delete_gene/retained_gene_context.tsv` (`gene_impact_class` column)
   - `Genome_Reduction/Compare_RNA_Protein/TPM_FC_by_impact_class.pdf`
-- **Numbers to cite:** gene_impact_class: promoter_lost 35, promoter_disconnected 8, new_promoter_fusion 3, readthrough_exposed 14, promoter_proximity_changed 17, context_only 43, unaffected 377; HupA (MMSYN1_0350) relTPM 6.68 -> 0.13 (FC 0.020), relIPM 6.48 -> 0.092 (FC 0.014); other decapitated drops rpmE/L31 FC 0.010, rpsU/S21 FC 0.044.
+- **Numbers to cite:** gene_impact_class (retained genes): promoter_lost 42, promoter_disconnected 6, new_promoter_fusion 3, readthrough_exposed 24, promoter_proximity_changed 17, context_only 45, unaffected 360; promoter_lost is the only class robustly down in TPM (median FC 0.44, Mann-Whitney p=2.7e-4 vs unaffected median 0.76); HupA (MMSYN1_0350) relTPM 6.68 -> 0.13 (FC 0.020), relIPM 6.48 -> 0.092 (FC 0.014); other decapitated drops rpmE/L31 relTPM FC 0.010, rpsU/S21 FC 0.044.
 - **Figure panels:** c, d
 - **Conclusion:** Promoter-source loss drives the largest expression decreases; promoter_lost is the only impact class robustly down in TPM.
 - **Caveats:** the class is assigned at operon level; 8 junctions lose only UTR (genes intact); the 05-vs-04 consistency check flags 2 flank operons as all_deleted.

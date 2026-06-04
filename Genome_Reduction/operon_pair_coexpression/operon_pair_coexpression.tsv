@@ -1,90 +1,88 @@
 scar_id	strand_relationship	junction_type	operon_L_id	operon_R_id	left_gene	right_gene	testable	note	syn3A_chrom	syn3A_intergenic_bp	n_spanning_reads	n_bridging_reads	ont_depth_a	ont_depth_b	ill_depth_a	ill_depth_b	ill_gap_depth	bridge_threshold	gap_depth_threshold	bridge_pass	gap_depth_pass	pair_preserved_strict	pair_preserved_loose	co_transcribed_strict	co_transcribed_loose
 DEL_001	divergent	divergent	OP_00007	OP_00012	MMSYN1_0012	MMSYN1_0918	True		CP016816.2	200.0	0.0	3.0	218.276	11.52	210.107	655.799	380.28	2.304	42.021	True	True	False	True	False	True
-DEL_002	convergent	convergent	OP_00013	OP_00018	MMSYN1_0913	MMSYN1_0025	False	opposite_strand																False	False
-DEL_003	divergent	divergent	OP_00018	OP_00019	MMSYN1_0027	MMSYN1_0029	False	opposite_strand																False	False
-DEL_004	tandem	decapitation	OP_00020	OP_00022	MMSYN1_0030	MMSYN1_0033	True		CP016816.2	260.0	0.0	2.0	509.645	54.457	2032.882	69.536	324.95	10.0	13.907	False	True	False	False	False	False
-DEL_005	convergent	convergent	OP_00023	OP_00026	MMSYN1_0034	MMSYN1_0039	False	opposite_strand																False	False
-DEL_006	tandem	clean_excision	OP_00026	OP_00028	MMSYN1_0039	MMSYN1_0040	True		CP016816.2	231.0	0.0	4.0	177.645	158.27	6743.234	132.204	402.139	10.0	26.441	False	True	False	False	False	False
-DEL_007	tandem	clean_excision	OP_00029	OP_00031	MMSYN1_0047	MMSYN1_0049	True		CP016816.2	168.0	0.0	18.0	50.465	31.896	225.762	1035.719	484.0	6.379	45.152	True	True	False	True	False	True
-DEL_008	tandem	clean_excision	OP_00031	OP_00033	MMSYN1_0049	MMSYN1_0051	True		CP016816.2	123.0	0.0	5.0	31.896	50.003	1035.719	13.831	10.537	6.379	2.766	False	True	False	False	False	False
-DEL_009	tandem	clean_excision	OP_00033	OP_00034	MMSYN1_0051	MMSYN1_0054	True		CP016816.2	281.0	0.0	0.0	50.003	531.498	13.831	252.842	32.167	10.0	2.766	False	True	False	False	False	False
-DEL_010	divergent	divergent	OP_00034	OP_00036	MMSYN1_0054	MMSYN1_0060	False	opposite_strand																False	False
-DEL_011	tandem	clean_excision	OP_00036	OP_00037	MMSYN1_0061	MMSYN1_0063	True		CP016816.2	109.0	0.0	16.0	317.446	47.523	860.027	1749.561	711.899	9.505	172.005	True	True	False	True	False	True
-DEL_012	tandem	readthrough_extension	OP_00041	OP_00043	MMSYN1_0071	MMSYN1_0076	True		CP016816.2	469.0	0.0	3.0	298.158	76.037	5728.237	443.338	52.65	10.0	88.668	False	False	False	False	False	False
-DEL_014	tandem	fusion	OP_00045	OP_00053	MMSYN1_0082	MMSYN1_0094	True		CP016816.2	133.0	2.0	37.0	944.996	101.873	263.484	79.729	262.263	10.0	15.946	True	True	True	True	True	True
-DEL_015	divergent	divergent	OP_00054	OP_00055	MMSYN1_0095	MMSYN1_0097	False	opposite_strand																False	False
-DEL_016	convergent	convergent	OP_00055	OP_00059	MMSYN1_0097	MMSYN1_0105	False	opposite_strand																False	False
-DEL_017	convergent	convergent	OP_00055	OP_00059	MMSYN1_0097	MMSYN1_0105	False	opposite_strand																False	False
-DEL_018	divergent	divergent	OP_00061	OP_00063	MMSYN1_0109	MMSYN1_0113	False	opposite_strand																False	False
-DEL_019	tandem	fusion	OP_00066	OP_00072	MMSYN1_0117	MMSYN1_0126	True		CP016816.2	195.0	0.0	0.0	240.034	112.84	448.514	156.628	114.492	10.0	31.326	False	True	False	False	False	False
-DEL_020	tandem	clean_excision	OP_00073	OP_00074	MMSYN1_0129	MMSYN1_0131	True		CP016816.2	288.0	0.0	0.0	756.575	1199.215	738.899	3548.786	34.899	10.0	147.78	False	False	False	False	False	False
-DEL_021	tandem	clean_excision	OP_00074	OP_00077	MMSYN1_0133	MMSYN1_0137	True		CP016816.2	859.0	0.0	0.0	228.23	209.086	173.043	647.961	27.555	10.0	34.609	False	False	False	False	False	False
-DEL_022	tandem	clean_excision	OP_00074	OP_00077	MMSYN1_0133	MMSYN1_0137	True		CP016816.2	859.0	0.0	0.0	228.23	209.086	173.043	647.961	27.555	10.0	34.609	False	False	False	False	False	False
-DEL_023	tandem	clean_excision	OP_00082	OP_00084	MMSYN1_0151	MMSYN1_0154	True		CP016816.2	207310.0	0.0	0.0	466.448	675.015	46405.762	3758.221	1104.669	10.0	751.644	False	True	False	False	False	False
-DEL_024	tandem	clean_excision	OP_00084	OP_00088	MMSYN1_0154	MMSYN1_0158	True		CP016816.2	206623.0	0.0	0.0	675.015	56001.129	3758.221	120566.625	868.363	10.0	751.644	False	True	False	False	False	False
-DEL_025	convergent	convergent	OP_00088	OP_00093	MMSYN1_0158	MMSYN1_0163	False	opposite_strand																False	False
-DEL_026	convergent	convergent	OP_00097	OP_00112	MMSYN1_0169	MMSYN1_0195	False	opposite_strand																False	False
-DEL_027	tandem	clean_excision	OP_00114	OP_00119	MMSYN1_0203	MMSYN1_0213	True		CP016816.2	207.0	0.0	1.0	100.418	452.209	283.454	3813.708	249.894	10.0	56.691	False	True	False	False	False	False
-DEL_028	convergent	convergent	OP_00120	OP_00121	MMSYN1_0216	MMSYN1_0218	False	opposite_strand																False	False
-DEL_029	divergent	divergent	OP_00121	OP_00122	MMSYN1_0218	MMSYN1_0220	False	opposite_strand																False	False
-DEL_030	tandem	decapitation	OP_00124	OP_00126	MMSYN1_0222	MMSYN1_0227	True		CP016816.2	510.0	0.0	0.0	123.469	86.034	245.363	8661.634	450.22	10.0	49.073	False	True	False	False	False	False
-DEL_031	tandem	decapitation	OP_00126	OP_00127	MMSYN1_0230	MMSYN1_0233	True		CP016816.2	161.0	0.0	7.0	475.782	254.382	3888.805	951.728	37.292	10.0	190.346	False	False	False	False	False	False
-DEL_032	convergent	convergent	OP_00127	OP_00129	MMSYN1_0235	MMSYN1_0238	False	opposite_strand																False	False
-DEL_033	convergent	convergent	OP_00131	OP_00137	MMSYN1_0240	MMSYN1_0247	False	opposite_strand																False	False
-DEL_034	tandem	readthrough_extension	OP_00140	OP_00141	MMSYN1_0250	MMSYN1_0253	True		CP016816.2	125.0	0.0	138.0	377.742	472.475	103.706	747.021	59.784	10.0	20.741	True	True	False	True	False	True
-DEL_035	tandem	decapitation	OP_00142	OP_00144	MMSYN1_0254	MMSYN1_0257	True		CP016816.2	121.0	0.0	17.0	162.558	227.373	83.096	833.951	30.298	10.0	16.619	True	True	False	True	False	True
-DEL_036	tandem	readthrough_extension	OP_00144	OP_00145	MMSYN1_0257	MMSYN1_0259	True		CP016816.2	136.0	0.0	21.0	227.373	109.999	833.951	172.439	199.066	10.0	34.488	True	True	False	True	False	True
-DEL_038	divergent	divergent	OP_00146	OP_00149	MMSYN1_0264	MMSYN1_0270	False	opposite_strand																False	False
-DEL_039	tandem	clean_excision	OP_00149	OP_00157	MMSYN1_0271	MMSYN1_0280	True		CP016816.2	541.0	0.0	0.0	97.496	2.511	49.248	57.556	2.194	1.0	9.85	False	False	False	False	False	False
-DEL_040	tandem	clean_excision	OP_00149	OP_00157	MMSYN1_0271	MMSYN1_0280	True		CP016816.2	541.0	0.0	0.0	97.496	2.511	49.248	57.556	2.194	1.0	9.85	False	False	False	False	False	False
-DEL_041	tandem	decapitation	OP_00158	OP_00159	MMSYN1_0283	MMSYN1_0285	True		CP016816.2	24.0	0.0	28.0	56.286	39.076	246.547	382.521	212.375	7.815	49.309	True	True	False	True	False	True
-DEL_042	tandem	fusion	OP_00161	OP_00164	MMSYN1_0291	MMSYN1_0294	True		CP016816.2	234.0	0.0	29.0	137.243	177.753	25.42	887.198	332.346	10.0	5.084	True	True	False	True	False	True
-DEL_043	divergent	divergent	OP_00168	OP_00169	MMSYN1_0305	MMSYN1_0308	False	opposite_strand																False	False
-DEL_044	divergent	divergent	OP_00168	OP_00169	MMSYN1_0305	MMSYN1_0308	False	opposite_strand																False	False
-DEL_045	tandem	clean_excision	OP_00169	OP_00175	MMSYN1_0308	MMSYN1_0314	True		CP016816.2	135.0	0.0	1.0	28.566	249.721	13.595	1130.159	27.452	5.713	2.719	False	True	False	False	False	False
-DEL_046	tandem	clean_excision	OP_00175	OP_00182	MMSYN1_0317	MMSYN1_0325	True		CP016816.2	1422.0	0.0	0.0	268.606	38.44	687.561	55.349	14.651	7.688	11.07	False	True	False	False	False	False
-DEL_047	tandem	readthrough_extension	OP_00183	OP_00184	MMSYN1_0330	MMSYN1_0332	True		CP016816.2	110.0	0.0	48.0	244.126	140.22	272.405	88.867	195.073	10.0	17.773	True	True	False	True	False	True
-DEL_048	tandem	decapitation	OP_00184	OP_00188	MMSYN1_0332	MMSYN1_0338	True		CP016816.2	674.0	0.0	0.0	140.22	2103.239	88.867	5212.169	23.42	10.0	17.773	False	True	False	False	False	False
-DEL_049	convergent	convergent	OP_00188	OP_00193	MMSYN1_0338	MMSYN1_0344	False	opposite_strand																False	False
-DEL_050	tandem	decapitation	OP_00195	OP_00196	MMSYN1_0348	MMSYN1_0350	True		CP016816.2	54.0	0.0	57.0	75.436	154.216	83.271	312.996	249.944	10.0	16.654	True	True	False	True	False	True
-DEL_052	tandem	clean_excision	OP_00196	OP_00199	MMSYN1_0353	MMSYN1_0356	True		CP016816.2	417.0	0.0	0.0	311.27	4175.265	66.429	146632.984	21.372	10.0	13.286	False	True	False	False	False	False
-DEL_053	tandem	clean_excision	OP_00196	OP_00199	MMSYN1_0353	MMSYN1_0356	True		CP016816.2	417.0	0.0	0.0	311.27	4175.265	66.429	146632.984	21.372	10.0	13.286	False	True	False	False	False	False
-DEL_055	tandem	clean_excision	OP_00200	OP_00204	MMSYN1_0366	MMSYN1_0371	True		CP016816.2	380.0	0.0	0.0	327.873	38.971	225.671	186.85	67.432	7.794	37.37	False	True	False	False	False	False
-DEL_056	tandem	clean_excision	OP_00200	OP_00204	MMSYN1_0366	MMSYN1_0371	True		CP016816.2	380.0	0.0	0.0	327.873	38.971	225.671	186.85	67.432	7.794	37.37	False	True	False	False	False	False
-DEL_057	tandem	clean_excision	OP_00211	OP_00216	MMSYN1_0382	MMSYN1_0387	True		CP016816.2	228.0	0.0	1.0	114.178	57.84	112.93	62.378	10.64	10.0	12.476	False	False	False	False	False	False
-DEL_058	tandem	clean_excision	OP_00219	OP_00220	MMSYN1_0392	MMSYN1_0394	True		CP016816.2	138.0	0.0	5.0	417.488	1040.622	594.439	862.247	145.022	10.0	118.888	False	True	False	False	False	False
-DEL_059	convergent	convergent	OP_00220	OP_00223	MMSYN1_0394	MMSYN1_0398	False	opposite_strand																False	False
-DEL_060	tandem	decapitation	OP_00233	OP_00234	MMSYN1_0416	MMSYN1_0418	True		CP016816.2	144.0	0.0	6.0	227.751	166.283	89.397	561.552	42.924	10.0	17.879	False	True	False	False	False	False
-DEL_061	tandem	clean_excision	OP_00241	OP_00242	MMSYN1_0435	MMSYN1_0437	True		CP016816.2	72.0	0.0	37.0	41.994	1938.694	202.474	2305.973	208.139	8.399	40.495	True	True	False	True	False	True
-DEL_063	tandem	readthrough_extension	OP_00248	OP_00250	MMSYN1_0448	MMSYN1_0451	True		CP016816.2	170.0	0.0	7.0	3099.742	461.005	1472.994	1102.009	20.476	10.0	220.402	False	False	False	False	False	False
-DEL_064	convergent	convergent	OP_00251	OP_00260	MMSYN1_0453	MMSYN1_0475	False	opposite_strand																False	False
-DEL_065	divergent	divergent	OP_00260	OP_00261	MMSYN1_0475	MMSYN1_0478	True		CP016816.2	102.0	0.0	0.0	3180.101	47.824	26280.414	27.73	1176.823	9.565	5.546	False	True	False	False	False	False
-DEL_066	tandem	clean_excision	OP_00262	OP_00264	MMSYN1_0479	MMSYN1_0481	True		CP016816.2	222.0	0.0	0.0	45.583	67.425	36.792	500.9	9.811	9.117	7.358	False	True	False	False	False	False
-DEL_067	convergent	convergent	OP_00265	OP_00272	MMSYN1_0482	MMSYN1_0493	False	opposite_strand																False	False
-DEL_068	tandem	clean_excision	OP_00274	OP_00275	MMSYN1_0495	MMSYN1_0499	True		CP016816.2	174.0	0.0	44.0	317.822	1139.504	121.489	7830.44	132.672	10.0	24.298	True	True	False	True	False	True
-DEL_069	tandem	readthrough_extension	OP_00279	OP_00280	MMSYN1_0513	MMSYN1_0515	True		CP016816.2	59.0	0.0	32.0	112.961	186.623	119.498	776.435	108.814	10.0	23.9	True	True	False	True	False	True
-DEL_070	tandem	clean_excision	OP_00284	OP_00286	MMSYN1_0530	MMSYN1_0532	True		CP016816.2	123.0	0.0	0.0	359.984	38.312	250.478	47043.176	71.106	7.662	50.096	False	True	False	False	False	False
-DEL_071	tandem	readthrough_extension	OP_00291	OP_00326	MMSYN1_0549	MMSYN1_0592	True		CP016816.2	1678.0	0.0	1.0	183.726	37.645	97.894	19.494	200.889	7.529	3.899	False	True	False	False	False	False
-DEL_072	divergent	divergent	OP_00327	OP_00330	MMSYN1_0593	MMSYN1_0599	True		CP016816.2	268.0	1.0	1.0	8.749	222.163	2.097	97.454	49.623	1.75	0.419	False	True	True	False	True	False
-DEL_073	tandem	clean_excision	OP_00344	OP_00350	MMSYN1_0624	MMSYN1_0634	True		CP016816.2	186.0	0.0	0.0	0.908	88.369	25.566	440.342	3.387	1.0	5.113	False	False	False	False	False	False
-DEL_074	tandem	clean_excision	OP_00358	OP_00363	MMSYN1_0672	MMSYN1_0678	True		CP016816.2	842.0	0.0	0.0	448.074	1065.118	20247.117	2781.579	1761.97	10.0	556.316	False	True	False	False	False	False
-DEL_075	tandem	clean_excision	OP_00358	OP_00363	MMSYN1_0672	MMSYN1_0678	True		CP016816.2	842.0	0.0	0.0	448.074	1065.118	20247.117	2781.579	1761.97	10.0	556.316	False	True	False	False	False	False
-DEL_076	tandem	readthrough_extension	OP_00363	OP_00366	MMSYN1_0681	MMSYN1_0684	True		CP016816.2	101.0	1.0	101.0	246.276	157.25	2126.618	239.323	798.832	10.0	47.865	True	True	True	True	True	True
-DEL_077	tandem	clean_excision	OP_00370	OP_00375	MMSYN1_0697	MMSYN1_0706	True		CP016816.2	421.0	0.0	0.0	129.691	50.616	51.914	121.308	2.014	10.0	10.383	False	False	False	False	False	False
-DEL_078	divergent	divergent	OP_00376	OP_00381	MMSYN1_0710	MMSYN1_0717	False	opposite_strand																False	False
-DEL_079	convergent	convergent	OP_00382	OP_00383	MMSYN1_0730	MMSYN1_0732	False	opposite_strand																False	False
-DEL_080	divergent	divergent	OP_00383	OP_00387	MMSYN1_0733	MMSYN1_0747	False	opposite_strand																False	False
-DEL_081	convergent	convergent	OP_00387	OP_00401	MMSYN1_0747	MMSYN1_0771	False	opposite_strand																False	False
-DEL_082	convergent	convergent	OP_00406	OP_00409	MMSYN1_0779	MMSYN1_0787	False	opposite_strand																False	False
-DEL_083	tandem	decapitation	OP_00409	OP_00410	MMSYN1_0787	MMSYN1_0789	True		CP016816.2	417.0	0.0	0.0	198.141	229.463	403.603	991.62	168.42	10.0	80.721	False	True	False	False	False	False
-DEL_084	tandem	decapitation	OP_00413	OP_00416	MMSYN1_0800	MMSYN1_0803	True		CP016816.2	167.0	0.0	0.0	75.007	69.195	781.532	4378.111	89.06	10.0	156.306	False	False	False	False	False	False
-DEL_085	divergent	divergent	OP_00417	OP_00420	MMSYN1_0810	MMSYN1_0813	False	opposite_strand																False	False
-DEL_086	convergent	convergent	OP_00420	OP_00423	MMSYN1_0814	MMSYN1_0817	False	opposite_strand																False	False
-DEL_087	tandem	clean_excision	OP_00428	OP_00429	MMSYN1_0828	MMSYN1_0830	True		CP016816.2	137.0	1.0	2.0	7.8	106.655	13.36	23.245	3.642	1.56	2.672	True	True	True	True	True	True
-DEL_088	convergent	convergent	OP_00433	OP_00438	MMSYN1_0840	MMSYN1_0851	False	opposite_strand																False	False
-DEL_089	divergent	divergent	OP_00439	OP_00442	MMSYN1_0853	MMSYN1_0859	False	opposite_strand																False	False
-DEL_090	convergent	convergent	OP_00442	OP_00451	MMSYN1_0859	MMSYN1_0870	False	opposite_strand																False	False
-DEL_092	tandem	clean_excision	OP_00454	OP_00456	MMSYN1_0879	MMSYN1_0881	True		CP016816.2	398.0	0.0	0.0	87.038	3711.573	110.091	5955.354	22.224	10.0	22.018	False	True	False	False	False	False
-DEL_093	tandem	clean_excision	OP_00456	OP_00459	MMSYN1_0881	MMSYN1_0885	True		CP016816.2	463.0	0.0	0.0	3711.573	223.93	5955.354	1088.287	233.145	10.0	217.657	False	True	False	False	False	False
-DEL_094	tandem	clean_excision	OP_00460	OP_00479	MMSYN1_0887	MMSYN1_0906	True		CP016816.2	979.0	0.0	0.0	126.161	169.204	443.802	125.679	43.618	10.0	25.136	False	True	False	False	False	False
-DEL_095	tandem	clean_excision	OP_00460	OP_00479	MMSYN1_0887	MMSYN1_0906	True		CP016816.2	979.0	0.0	0.0	126.161	169.204	443.802	125.679	43.618	10.0	25.136	False	True	False	False	False	False
+DEL_002	convergent	convergent	OP_00013	OP_00019	MMSYN1_0913	MMSYN1_0025	False	opposite_strand																False	False
+DEL_003	divergent	divergent	OP_00019	OP_00020	MMSYN1_0027	MMSYN1_0029	False	opposite_strand																False	False
+DEL_004	tandem	decapitation	OP_00021	OP_00023	MMSYN1_0030	MMSYN1_0033	True		CP016816.2	260.0	0.0	2.0	509.645	54.457	2032.882	69.536	324.95	10.0	13.907	False	True	False	False	False	False
+DEL_005	convergent	convergent	OP_00024	OP_00027	MMSYN1_0034	MMSYN1_0039	False	opposite_strand																False	False
+DEL_006	tandem	clean_excision	OP_00027	OP_00029	MMSYN1_0039	MMSYN1_0040	True		CP016816.2	231.0	0.0	4.0	177.645	158.27	6743.234	132.204	402.139	10.0	26.441	False	True	False	False	False	False
+DEL_007	tandem	readthrough_extension	OP_00030	OP_00031	MMSYN1_0047	MMSYN1_0049	True		CP016816.2	168.0	0.0	18.0	50.465	31.896	225.762	1035.719	484.0	6.379	45.152	True	True	False	True	False	True
+DEL_009	tandem	clean_excision	OP_00031	OP_00032	MMSYN1_0051	MMSYN1_0054	True		CP016816.2	281.0	0.0	0.0	50.003	531.498	13.831	252.842	32.167	10.0	2.766	False	True	False	False	False	False
+DEL_010	divergent	divergent	OP_00032	OP_00034	MMSYN1_0054	MMSYN1_0060	False	opposite_strand																False	False
+DEL_012	tandem	readthrough_extension	OP_00038	OP_00040	MMSYN1_0071	MMSYN1_0076	True		CP016816.2	469.0	0.0	3.0	298.158	76.037	5728.237	443.338	52.65	10.0	88.668	False	False	False	False	False	False
+DEL_014	tandem	fusion	OP_00043	OP_00050	MMSYN1_0082	MMSYN1_0094	True		CP016816.2	133.0	2.0	37.0	944.996	101.873	263.484	79.729	262.263	10.0	15.946	True	True	True	True	True	True
+DEL_015	divergent	divergent	OP_00051	OP_00052	MMSYN1_0095	MMSYN1_0097	False	opposite_strand																False	False
+DEL_016	convergent	convergent	OP_00052	OP_00056	MMSYN1_0097	MMSYN1_0105	False	opposite_strand																False	False
+DEL_017	convergent	convergent	OP_00052	OP_00056	MMSYN1_0097	MMSYN1_0105	False	opposite_strand																False	False
+DEL_018	divergent	divergent	OP_00058	OP_00060	MMSYN1_0109	MMSYN1_0113	False	opposite_strand																False	False
+DEL_019	tandem	fusion	OP_00063	OP_00069	MMSYN1_0117	MMSYN1_0126	True		CP016816.2	195.0	0.0	0.0	240.034	112.84	448.514	156.628	114.492	10.0	31.326	False	True	False	False	False	False
+DEL_020	tandem	readthrough_extension	OP_00069	OP_00070	MMSYN1_0129	MMSYN1_0131	True		CP016816.2	288.0	0.0	0.0	756.575	1199.215	738.899	3548.786	34.899	10.0	147.78	False	False	False	False	False	False
+DEL_021	tandem	clean_excision	OP_00070	OP_00073	MMSYN1_0133	MMSYN1_0137	True		CP016816.2	859.0	0.0	0.0	228.23	209.086	173.043	647.961	27.555	10.0	34.609	False	False	False	False	False	False
+DEL_022	tandem	clean_excision	OP_00070	OP_00073	MMSYN1_0133	MMSYN1_0137	True		CP016816.2	859.0	0.0	0.0	228.23	209.086	173.043	647.961	27.555	10.0	34.609	False	False	False	False	False	False
+DEL_023	tandem	clean_excision	OP_00076	OP_00078	MMSYN1_0151	MMSYN1_0154	True		CP016816.2	207310.0	0.0	0.0	466.448	675.015	46405.762	3758.221	1104.669	10.0	751.644	False	True	False	False	False	False
+DEL_024	tandem	clean_excision	OP_00078	OP_00082	MMSYN1_0154	MMSYN1_0158	True		CP016816.2	206623.0	0.0	0.0	675.015	56001.129	3758.221	120566.625	868.363	10.0	751.644	False	True	False	False	False	False
+DEL_025	convergent	convergent	OP_00082	OP_00087	MMSYN1_0158	MMSYN1_0163	False	opposite_strand																False	False
+DEL_026	convergent	convergent	OP_00092	OP_00108	MMSYN1_0169	MMSYN1_0195	False	opposite_strand																False	False
+DEL_027	tandem	clean_excision	OP_00110	OP_00115	MMSYN1_0203	MMSYN1_0213	True		CP016816.2	207.0	0.0	1.0	100.418	452.209	283.454	3813.708	249.894	10.0	56.691	False	True	False	False	False	False
+DEL_028	convergent	convergent	OP_00116	OP_00117	MMSYN1_0216	MMSYN1_0218	False	opposite_strand																False	False
+DEL_029	divergent	divergent	OP_00117	OP_00118	MMSYN1_0218	MMSYN1_0220	False	opposite_strand																False	False
+DEL_030	tandem	decapitation	OP_00119	OP_00121	MMSYN1_0222	MMSYN1_0227	True		CP016816.2	510.0	0.0	0.0	123.469	86.034	245.363	8661.634	450.22	10.0	49.073	False	True	False	False	False	False
+DEL_031	tandem	decapitation	OP_00121	OP_00122	MMSYN1_0230	MMSYN1_0233	True		CP016816.2	161.0	0.0	7.0	475.782	254.382	3888.805	951.728	37.292	10.0	190.346	False	False	False	False	False	False
+DEL_032	convergent	convergent	OP_00122	OP_00124	MMSYN1_0235	MMSYN1_0238	False	opposite_strand																False	False
+DEL_033	convergent	convergent	OP_00126	OP_00132	MMSYN1_0240	MMSYN1_0247	False	opposite_strand																False	False
+DEL_034	tandem	readthrough_extension	OP_00133	OP_00134	MMSYN1_0250	MMSYN1_0253	True		CP016816.2	125.0	0.0	138.0	377.742	472.475	103.706	747.021	59.784	10.0	20.741	True	True	False	True	False	True
+DEL_035	tandem	decapitation	OP_00135	OP_00137	MMSYN1_0254	MMSYN1_0257	True		CP016816.2	121.0	0.0	17.0	162.558	227.373	83.096	833.951	30.298	10.0	16.619	True	True	False	True	False	True
+DEL_036	tandem	readthrough_extension	OP_00137	OP_00138	MMSYN1_0257	MMSYN1_0259	True		CP016816.2	136.0	0.0	21.0	227.373	109.999	833.951	172.439	199.066	10.0	34.488	True	True	False	True	False	True
+DEL_038	divergent	divergent	OP_00139	OP_00142	MMSYN1_0264	MMSYN1_0270	False	opposite_strand																False	False
+DEL_039	tandem	clean_excision	OP_00142	OP_00150	MMSYN1_0271	MMSYN1_0280	True		CP016816.2	541.0	0.0	0.0	97.496	2.511	49.248	57.556	2.194	1.0	9.85	False	False	False	False	False	False
+DEL_040	tandem	clean_excision	OP_00142	OP_00150	MMSYN1_0271	MMSYN1_0280	True		CP016816.2	541.0	0.0	0.0	97.496	2.511	49.248	57.556	2.194	1.0	9.85	False	False	False	False	False	False
+DEL_041	tandem	decapitation	OP_00151	OP_00152	MMSYN1_0283	MMSYN1_0285	True		CP016816.2	24.0	0.0	28.0	56.286	39.076	246.547	382.521	212.375	7.815	49.309	True	True	False	True	False	True
+DEL_042	tandem	fusion	OP_00155	OP_00158	MMSYN1_0291	MMSYN1_0294	True		CP016816.2	234.0	0.0	29.0	137.243	177.753	25.42	887.198	332.346	10.0	5.084	True	True	False	True	False	True
+DEL_043	divergent	divergent	OP_00162	OP_00163	MMSYN1_0305	MMSYN1_0308	False	opposite_strand																False	False
+DEL_044	divergent	divergent	OP_00162	OP_00163	MMSYN1_0305	MMSYN1_0308	False	opposite_strand																False	False
+DEL_045	tandem	clean_excision	OP_00163	OP_00169	MMSYN1_0308	MMSYN1_0314	True		CP016816.2	135.0	0.0	1.0	28.566	249.721	13.595	1130.159	27.452	5.713	2.719	False	True	False	False	False	False
+DEL_046	tandem	clean_excision	OP_00169	OP_00174	MMSYN1_0317	MMSYN1_0325	True		CP016816.2	1422.0	0.0	0.0	268.606	38.44	687.561	55.349	14.651	7.688	11.07	False	True	False	False	False	False
+DEL_047	tandem	readthrough_extension	OP_00175	OP_00176	MMSYN1_0330	MMSYN1_0332	True		CP016816.2	110.0	0.0	48.0	244.126	140.22	272.405	88.867	195.073	10.0	17.773	True	True	False	True	False	True
+DEL_048	tandem	decapitation	OP_00176	OP_00180	MMSYN1_0332	MMSYN1_0338	True		CP016816.2	674.0	0.0	0.0	140.22	2103.239	88.867	5212.169	23.42	10.0	17.773	False	True	False	False	False	False
+DEL_049	convergent	convergent	OP_00180	OP_00185	MMSYN1_0338	MMSYN1_0344	False	opposite_strand																False	False
+DEL_050	tandem	decapitation	OP_00186	OP_00187	MMSYN1_0348	MMSYN1_0350	True		CP016816.2	54.0	0.0	57.0	75.436	154.216	83.271	312.996	249.944	10.0	16.654	True	True	False	True	False	True
+DEL_052	tandem	clean_excision	OP_00187	OP_00190	MMSYN1_0353	MMSYN1_0356	True		CP016816.2	417.0	0.0	0.0	311.27	4175.265	66.429	146632.984	21.372	10.0	13.286	False	True	False	False	False	False
+DEL_053	tandem	clean_excision	OP_00187	OP_00190	MMSYN1_0353	MMSYN1_0356	True		CP016816.2	417.0	0.0	0.0	311.27	4175.265	66.429	146632.984	21.372	10.0	13.286	False	True	False	False	False	False
+DEL_055	tandem	readthrough_extension	OP_00191	OP_00194	MMSYN1_0366	MMSYN1_0371	True		CP016816.2	380.0	0.0	0.0	327.873	38.971	225.671	186.85	67.432	7.794	37.37	False	True	False	False	False	False
+DEL_056	tandem	clean_excision	OP_00191	OP_00194	MMSYN1_0366	MMSYN1_0371	True		CP016816.2	380.0	0.0	0.0	327.873	38.971	225.671	186.85	67.432	7.794	37.37	False	True	False	False	False	False
+DEL_057	tandem	clean_excision	OP_00201	OP_00206	MMSYN1_0382	MMSYN1_0387	True		CP016816.2	228.0	0.0	1.0	114.178	57.84	112.93	62.378	10.64	10.0	12.476	False	False	False	False	False	False
+DEL_058	tandem	clean_excision	OP_00208	OP_00209	MMSYN1_0392	MMSYN1_0394	True		CP016816.2	138.0	0.0	5.0	417.488	1040.622	594.439	862.247	145.022	10.0	118.888	False	True	False	False	False	False
+DEL_059	convergent	convergent	OP_00209	OP_00212	MMSYN1_0394	MMSYN1_0398	False	opposite_strand																False	False
+DEL_060	tandem	decapitation	OP_00221	OP_00222	MMSYN1_0416	MMSYN1_0418	True		CP016816.2	144.0	0.0	6.0	227.751	166.283	89.397	561.552	42.924	10.0	17.879	False	True	False	False	False	False
+DEL_061	tandem	clean_excision	OP_00226	OP_00227	MMSYN1_0435	MMSYN1_0437	True		CP016816.2	72.0	0.0	37.0	41.994	1938.694	202.474	2305.973	208.139	8.399	40.495	True	True	False	True	False	True
+DEL_063	tandem	readthrough_extension	OP_00233	OP_00235	MMSYN1_0448	MMSYN1_0451	True		CP016816.2	170.0	0.0	7.0	3099.742	461.005	1472.994	1102.009	20.476	10.0	220.402	False	False	False	False	False	False
+DEL_064	convergent	convergent	OP_00236	OP_00246	MMSYN1_0453	MMSYN1_0475	False	opposite_strand																False	False
+DEL_065	divergent	divergent	OP_00246	OP_00247	MMSYN1_0475	MMSYN1_0478	True		CP016816.2	102.0	0.0	0.0	3180.101	47.824	26280.414	27.73	1176.823	9.565	5.546	False	True	False	False	False	False
+DEL_066	tandem	clean_excision	OP_00248	OP_00250	MMSYN1_0479	MMSYN1_0481	True		CP016816.2	222.0	0.0	0.0	45.583	67.425	36.792	500.9	9.811	9.117	7.358	False	True	False	False	False	False
+DEL_067	convergent	convergent	OP_00251	OP_00258	MMSYN1_0482	MMSYN1_0493	False	opposite_strand																False	False
+DEL_068	tandem	clean_excision	OP_00260	OP_00261	MMSYN1_0495	MMSYN1_0499	True		CP016816.2	174.0	0.0	44.0	317.822	1139.504	121.489	7830.44	132.672	10.0	24.298	True	True	False	True	False	True
+DEL_069	tandem	readthrough_extension	OP_00264	OP_00265	MMSYN1_0513	MMSYN1_0515	True		CP016816.2	59.0	0.0	32.0	112.961	186.623	119.498	776.435	108.814	10.0	23.9	True	True	False	True	False	True
+DEL_070	tandem	clean_excision	OP_00269	OP_00271	MMSYN1_0530	MMSYN1_0532	True		CP016816.2	123.0	0.0	0.0	359.984	38.312	250.478	47043.176	71.106	7.662	50.096	False	True	False	False	False	False
+DEL_071	tandem	readthrough_extension	OP_00276	OP_00311	MMSYN1_0549	MMSYN1_0592	True		CP016816.2	1678.0	0.0	1.0	183.726	37.645	97.894	19.494	200.889	7.529	3.899	False	True	False	False	False	False
+DEL_072	divergent	divergent	OP_00312	OP_00314	MMSYN1_0593	MMSYN1_0599	True		CP016816.2	268.0	1.0	1.0	8.749	222.163	2.097	97.454	49.623	1.75	0.419	False	True	True	False	True	False
+DEL_073	tandem	clean_excision	OP_00328	OP_00334	MMSYN1_0624	MMSYN1_0634	True		CP016816.2	186.0	0.0	0.0	0.908	88.369	25.566	440.342	3.387	1.0	5.113	False	False	False	False	False	False
+DEL_074	tandem	clean_excision	OP_00341	OP_00346	MMSYN1_0672	MMSYN1_0678	True		CP016816.2	842.0	0.0	0.0	448.074	1065.118	20247.117	2781.579	1761.97	10.0	556.316	False	True	False	False	False	False
+DEL_075	tandem	clean_excision	OP_00341	OP_00346	MMSYN1_0672	MMSYN1_0678	True		CP016816.2	842.0	0.0	0.0	448.074	1065.118	20247.117	2781.579	1761.97	10.0	556.316	False	True	False	False	False	False
+DEL_076	tandem	readthrough_extension	OP_00346	OP_00349	MMSYN1_0681	MMSYN1_0684	True		CP016816.2	101.0	1.0	101.0	246.276	157.25	2126.618	239.323	798.832	10.0	47.865	True	True	True	True	True	True
+DEL_077	tandem	clean_excision	OP_00353	OP_00358	MMSYN1_0697	MMSYN1_0706	True		CP016816.2	421.0	0.0	0.0	129.691	50.616	51.914	121.308	2.014	10.0	10.383	False	False	False	False	False	False
+DEL_078	divergent	divergent	OP_00358	OP_00363	MMSYN1_0710	MMSYN1_0717	False	opposite_strand																False	False
+DEL_079	convergent	convergent	OP_00364	OP_00365	MMSYN1_0730	MMSYN1_0732	False	opposite_strand																False	False
+DEL_080	divergent	divergent	OP_00365	OP_00370	MMSYN1_0733	MMSYN1_0747	False	opposite_strand																False	False
+DEL_081	convergent	convergent	OP_00370	OP_00386	MMSYN1_0747	MMSYN1_0771	False	opposite_strand																False	False
+DEL_082	convergent	convergent	OP_00390	OP_00393	MMSYN1_0779	MMSYN1_0787	False	opposite_strand																False	False
+DEL_083	tandem	decapitation	OP_00393	OP_00394	MMSYN1_0787	MMSYN1_0789	True		CP016816.2	417.0	0.0	0.0	198.141	229.463	403.603	991.62	168.42	10.0	80.721	False	True	False	False	False	False
+DEL_084	tandem	clean_excision	OP_00397	OP_00398	MMSYN1_0800	MMSYN1_0803	True		CP016816.2	167.0	0.0	0.0	75.007	69.195	781.532	4378.111	89.06	10.0	156.306	False	False	False	False	False	False
+DEL_085	divergent	divergent	OP_00399	OP_00402	MMSYN1_0810	MMSYN1_0813	False	opposite_strand																False	False
+DEL_086	convergent	convergent	OP_00402	OP_00406	MMSYN1_0814	MMSYN1_0817	False	opposite_strand																False	False
+DEL_087	tandem	clean_excision	OP_00409	OP_00410	MMSYN1_0828	MMSYN1_0830	True		CP016816.2	137.0	1.0	2.0	7.8	106.655	13.36	23.245	3.642	1.56	2.672	True	True	True	True	True	True
+DEL_088	convergent	convergent	OP_00413	OP_00418	MMSYN1_0840	MMSYN1_0851	False	opposite_strand																False	False
+DEL_089	divergent	divergent	OP_00419	OP_00422	MMSYN1_0853	MMSYN1_0859	False	opposite_strand																False	False
+DEL_090	convergent	convergent	OP_00422	OP_00431	MMSYN1_0859	MMSYN1_0870	False	opposite_strand																False	False
+DEL_092	tandem	clean_excision	OP_00434	OP_00436	MMSYN1_0879	MMSYN1_0881	True		CP016816.2	398.0	0.0	0.0	87.038	3711.573	110.091	5955.354	22.224	10.0	22.018	False	True	False	False	False	False
+DEL_093	tandem	clean_excision	OP_00436	OP_00439	MMSYN1_0881	MMSYN1_0885	True		CP016816.2	463.0	0.0	0.0	3711.573	223.93	5955.354	1088.287	233.145	10.0	217.657	False	True	False	False	False	False
+DEL_094	tandem	clean_excision	OP_00440	OP_00458	MMSYN1_0887	MMSYN1_0906	True		CP016816.2	979.0	0.0	0.0	126.161	169.204	443.802	125.679	43.618	10.0	25.136	False	True	False	False	False	False
+DEL_095	tandem	clean_excision	OP_00440	OP_00458	MMSYN1_0887	MMSYN1_0906	True		CP016816.2	979.0	0.0	0.0	126.161	169.204	443.802	125.679	43.618	10.0	25.136	False	True	False	False	False	False

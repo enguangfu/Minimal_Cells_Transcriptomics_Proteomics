@@ -46,10 +46,10 @@ cw  neighbor changed in syn3A : 91 retained genes
 ccw neighbor changed in syn3A : 91 retained genes
 
 gene_impact_class (promoter-source change, retained genes):
-  promoter_lost                   35
-  promoter_disconnected            8
+  promoter_lost                   42
+  promoter_disconnected            6
   new_promoter_fusion              3
-  readthrough_exposed             14
+  readthrough_exposed             24
   promoter_proximity_changed      17
-  context_only                    43
-  unaffected                     377
+  context_only                    45
+  unaffected                     360
