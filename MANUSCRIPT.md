@@ -580,7 +580,7 @@ Extended Figure:
 - Panel b: Significant mRNA pool share changes from syn1 to syn3A as tertiary functions.
 - Panel c: Transcription and translation changes of RNAP, degradosome and enzymes in central metabolism.
 - Panel d: The giant ~11 kb ribosomal-protein operon OP_00341 (MMSYN1_0652–0672), one polycistron, no internal terminator; gene track + RNA isoforms + depth; supplies 12% of the syn1 → 34% of the syn3A coding mRNA pool. (14/3, 7/3). [L6.3. Replaces the blocked ATP/GTP flux panel; the flux prediction stays text-only in L6.5.]
-- Panel e: The syn3A tRNA operon (Thr/Val/Glu/Asn, MMSYN1_0678–0681) relocated by the flanking deletions to ~770 bp upstream of the rPtn operon; Illumina depth across the silent inter-operon gap shows no read-through (the two operons stay independent). Broken minus-strand axis. (7/3, 7/3). [L6.3]
+- Panel e: The syn3A tRNA operon (Thr/Val/Glu/Asn, MMSYN1_0678–0681) relocated by the flanking deletions to ~770 bp upstream of the rPtn operon; Illumina + ONT depth across the silent inter-operon gap show no read-through (the two operons stay independent). Broken minus-strand axis. (7/3, 7/3). [L6.3]
 
 ### Chain of Logics
 

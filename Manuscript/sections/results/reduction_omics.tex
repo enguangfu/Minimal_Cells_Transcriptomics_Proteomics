@@ -28,8 +28,6 @@ A concerted downgrade of the glycolytic, acetate, and lactate enzymes at both la
 
 % L6.5 ATP/GTP flux: analysis not done (needs a metabolic-flux model); prose stops at the prediction, no panel. Panels d (operon structure) and e (tRNA junction) belong to L6.3 (the giant rPtn operon OP_00341).
 
-\textbf{SI: \texttt{genome\_reduction.xlsx}} (sheets Gene\_table, Function\_categories, Summary\_stats) --- the per-gene transcript and protein fold changes, per-function retained-pool share statistics, and deleted-gene occupancy underlying this section.
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/reduction_omics.pdf}
@@ -38,6 +36,8 @@ A concerted downgrade of the glycolytic, acetate, and lactate enzymes at both la
     (b) Function categories with the largest retained-pool share changes (Tertiary function), \syn~to \syna.
     (c) Transcript and protein fold changes of RNA polymerase, the degradosome, and the central-carbon enzymes.
     (d) The $\sim$11~kb ribosomal-protein operon \locus{0652}--\locus{0672} in \syn (gene track, RNA isoforms, read depth): a single polycistron with no internal terminator, transcribed at high 5$'$ depth and shaped by a sharp internal processing step, that supplies over a third of the \syna~coding transcriptome.
-    (e) The four-tRNA operon \locus{0678}--\locus{0681} relocated by the flanking deletions to immediately upstream of the r-protein operon in \syna; the intervening region is transcriptionally silent (short-read depth, minus strand), so the two operons remain transcriptionally independent.}
+    (e) The four-tRNA operon \locus{0678}--\locus{0681} relocated by the flanking deletions to immediately upstream of the r-protein operon in \syna; the intervening region is transcriptionally silent in both short-read (Illumina) and long-read (ONT direct-RNA) coverage on the minus strand, so the two operons remain transcriptionally independent.}
     \label{fig:reduction_omics}
 \end{figure}
+
+\textbf{SI: \texttt{genome\_reduction.xlsx}} (sheets Gene\_table, Function\_categories, Summary\_stats) --- the per-gene transcript and protein fold changes, per-function retained-pool share statistics, and deleted-gene occupancy underlying this section.

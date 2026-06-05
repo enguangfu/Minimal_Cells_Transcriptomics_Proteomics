@@ -103,7 +103,7 @@ def panel_c(out_name="R6c_complex_enzyme_FC.pdf", figsize=(7 / 3, 7 / 2)):
     for tick, col in zip(ax.get_yticklabels(), lab_colors):  # colour labels by Primary family
         tick.set_color(col)
     ax.set_ylim(min(ys) - 0.7, max(h[0] for h in headers) + 0.6)
-    ax.set_xlabel("Fold Change", fontsize=7)
+    ax.set_xlabel("Fold Change (Syn3A/Syn1)", fontsize=7)
     ax.tick_params(axis="both", length=2, pad=1.5)
     for sp in ("top", "right"):
         ax.spines[sp].set_visible(False)

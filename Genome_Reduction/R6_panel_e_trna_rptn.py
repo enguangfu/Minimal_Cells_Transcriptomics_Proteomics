@@ -3,16 +3,17 @@
 R6 panel e -- Syn3A tRNA-operon -> rPtn-operon junction (new neighbour from the deletion).
 Co-expression test (ONT spanning/bridging + Illumina gap depth, the 06/07 method): the two
 operons are SPLIT -- 0/3084 ONT reads read through and the true inter-operon middle is silent
-in BOTH platforms (Illumina mean 27 = 1.2% of flanking; ONT ~0). The panel shows the Illumina
-depth (the clean, uniform readout used for the continuity test); the ONT read-through count is
-reported in R6_stats.txt.
+in BOTH platforms (Illumina mean 27 = 1.2% of flanking; ONT ~0). The panel shows BOTH depth
+tracks -- Illumina (uniform, the continuity readout) and ONT direct-RNA (3'-biased) -- each on
+its own scale; the silent inter-operon gap is shaded in both. The ONT read-through count is in
+R6_stats.txt.
 
 Broken x-axis (minus strand, drawn 5'->3' = high genome coord on the LEFT); the visual break
 between the two segments is left empty (add the // in Illustrator):
   left  : the four tRNA ORFs (Thr/Val/Glu/Asn) -> silent gap -> rPtn 5' (rpsJ ...)
   right : rPtn 3' (secY/0652 ...)
 
-Run in the RNAseq conda env (needs pysam for nothing here, but kept consistent):
+Run in the RNAseq conda env (kept consistent with 06/07):
   /home/enguang/anaconda3/envs/RNAseq/bin/python R6_panel_e_trna_rptn.py
 """
 import os
@@ -27,13 +28,16 @@ mpl.rcParams.update({"font.size": 7, "font.family": "sans-serif", "font.sans-ser
 
 GR    = os.path.dirname(os.path.abspath(__file__))
 ILLBG = os.path.join(GR, "../Syn3A_Transcriptomics/Illumina/Illumina_Processing/depth_bedgraph/syn3A_rep1.minus.bedGraph")
+ONTBG = os.path.join(GR, "../Syn3A_Transcriptomics/ONT/ONT_Processing/depth_bedgraph/syn3A.ONT.rep1.minus.bedGraph")
 OUT   = os.path.join(GR, "R6_panels/R6e_trna_rptn_syn3A.pdf")
 CHROM = "CP016816.2"
-GRAY, TEAL, ILLC, ILLL, RED = "#7a7a7a", "#2c9e8f", "#9ecae1", "#3182bd", "#c0392b"
+GRAY, TEAL, RED = "#7a7a7a", "#2c9e8f", "#c0392b"
+ILLC, ILLL = "#9ecae1", "#3182bd"     # Illumina depth fill / line (blue)
+ONTC, ONTL = "#dadaeb", "#756bb1"     # ONT depth fill / line (purple)
 
-def ill_minus(lo, hi):
+def depth_minus(path, lo, hi):
     d = np.zeros(hi - lo)
-    for ln in open(ILLBG):
+    for ln in open(path):
         f = ln.split()
         if f[0] != CHROM:
             continue
@@ -52,17 +56,18 @@ genesR = [(408864, 410312, "secY", GRAY), (410312, 410749, "", GRAY), (410768, 4
 GAP = (419784, 420350)   # true silent inter-operon middle (depth ~0 in both platforms)
 
 fig = plt.figure(figsize=(7 / 3, 7 / 3), constrained_layout=True)
-gs = fig.add_gridspec(2, 2, height_ratios=[1.0, 2.2], width_ratios=[1.7, 1.0],
-                      hspace=0.08, wspace=0.06)
+gs = fig.add_gridspec(3, 2, height_ratios=[1.0, 1.5, 1.5], width_ratios=[1.7, 1.0],
+                      hspace=0.10, wspace=0.06)
 axg = [fig.add_subplot(gs[0, 0]), fig.add_subplot(gs[0, 1])]
-axi = [fig.add_subplot(gs[1, 0]), fig.add_subplot(gs[1, 1])]
+axi = [fig.add_subplot(gs[1, 0]), fig.add_subplot(gs[1, 1])]    # Illumina depth
+axo = [fig.add_subplot(gs[2, 0]), fig.add_subplot(gs[2, 1])]    # ONT depth
 
 def garrow(ax, s, e, fc, y=0, h=1):
     hl = min((e - s) * 0.5, 40)
     ax.add_patch(plt.Polygon([(e, y), (s + hl, y), (s, y + h / 2), (s + hl, y + h), (e, y + h)],
                              closed=True, facecolor=fc, edgecolor="none"))
 
-imax = 0
+imax = omax = 0
 for ci, (lo, hi) in enumerate((L, R)):
     g = axg[ci]
     if ci == 0:                                   # the four tRNA ORFs (left segment only)
@@ -75,24 +80,37 @@ for ci, (lo, hi) in enumerate((L, R)):
         if lab:
             g.text((s + e) / 2, 1.4, lab, ha="center", va="bottom", fontsize=5, color=c)
     g.set_xlim(hi, lo); g.set_ylim(-0.3, 2.4); g.axis("off")        # inverted x (high coord left)
-    xi, di = ill_minus(lo, hi); imax = max(imax, di.max())
+    xi, di = depth_minus(ILLBG, lo, hi); imax = max(imax, di.max())
     axi[ci].fill_between(xi, di, color=ILLC, lw=0); axi[ci].plot(xi, di, color=ILLL, lw=0.4)
-    axi[ci].set_xlim(hi, lo)
+    xo, do = depth_minus(ONTBG, lo, hi); omax = max(omax, do.max())
+    axo[ci].fill_between(xo, do, color=ONTC, lw=0); axo[ci].plot(xo, do, color=ONTL, lw=0.4)
+    axi[ci].set_xlim(hi, lo); axo[ci].set_xlim(hi, lo)
 
-axi[0].axvspan(*GAP, color=RED, alpha=0.08)
+# silent inter-operon gap: shaded in both depth tracks, labelled once (on the Illumina row)
+for a in (axi[0], axo[0]):
+    a.axvspan(*GAP, color=RED, alpha=0.08)
 axi[0].text(sum(GAP) / 2, imax * 0.55, "silent\ngap", ha="center", va="center",
             fontsize=4.5, color=RED, linespacing=0.9)
-for a in axi:
-    a.set_ylim(0, imax * 1.05)
-    for sp in ("top", "right"):
-        a.spines[sp].set_visible(False)
-    a.tick_params(length=2, pad=1)
-axi[1].spines["left"].set_visible(False); axi[1].set_yticks([])
+
+for row, mx in ((axi, imax), (axo, omax)):
+    for a in row:
+        a.set_ylim(0, mx * 1.05)
+        for sp in ("top", "right"):
+            a.spines[sp].set_visible(False)
+        a.tick_params(length=2, pad=1)
+    row[1].spines["left"].set_visible(False); row[1].set_yticks([])
+
 axi[0].set_yticks([0, 20000]); axi[0].set_yticklabels(["0", "20k"])
-axi[0].set_ylabel("Illumina depth (−)", fontsize=6)
-axi[0].set_xticks([420500, 419500, 418500]); axi[0].set_xticklabels(["420.5", "419.5", "418.5"])
-axi[1].set_xticks([411000, 409500]); axi[1].set_xticklabels(["411", "409.5"])
+axi[0].set_ylabel("Illumina (−)", fontsize=6)
+axo[0].set_yticks([0, 1000]); axo[0].set_yticklabels(["0", "1k"])
+axo[0].set_ylabel("ONT (−)", fontsize=6)
+
+# x ticks/labels only on the bottom (ONT) row; the Illumina row hides its x axis
+for a in axi:
+    a.tick_params(axis="x", labelbottom=False, bottom=False)
+axo[0].set_xticks([420500, 419500, 418500]); axo[0].set_xticklabels(["420.5", "419.5", "418.5"])
+axo[1].set_xticks([411000, 409500]); axo[1].set_xticklabels(["411", "409.5"])
 fig.text(0.5, -0.02, "Syn3A genome position (kb)", fontsize=6, ha="center")
 
 fig.savefig(OUT, dpi=300, bbox_inches="tight")
-print(f"wrote {OUT}  (Illumina max {int(imax)})")
+print(f"wrote {OUT}  (Illumina max {int(imax)}, ONT max {int(omax)})")
