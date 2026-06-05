@@ -234,15 +234,15 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 #### L2.2: Transcriptome-wide, significantly more 3' erosion found.
 
 - **Logic:** Overlaid RNA isoforms to gene ORFs to find significantly more 3' erosions.
-- **Analysis:** `Syn1_Operon/RNA_Processing.py`
+- **Analysis:** `Syn1_RNase/RNA_Processing.py` (endpoint-context: each isoform 5'/3' end labelled intragenic vs intergenic; + ORF start-without-stop)
 - **Outputs:** 
-  - `Syn1_Operon/RNA_Processing.txt`
-  - plots in `Syn1_Operon/RNase/`
-- **Numbers to cite:**  None
+  - `Syn1_RNase/RNA_Processing.txt`
+  - plots + tables in `Syn1_RNase/RNase/`
+- **Numbers to cite:** (current clustering, n_reads>=10, 20,885 isoforms) full-length/unprocessed 8.3% isoforms / 27.0% reads; 3'-intragenic-only 30.3% iso / 47.5% reads (the dominant non-canonical class); both-eroded 41.9% iso; 5'-intragenic-only 19.5% iso; 5'/3' intragenic ratio 0.40 by reads (3' erosion dominates); 42.2% of contained ORFs have a start codon but no stop codon (read-weighted 38.9%).
 - **Figure panels:** c
-- **Conclusion:** None
-- **Caveats:** None
-- **Notes for LLM:** Method **RNA Processing Analysis** needs to be finished.
+- **Conclusion:** Most full-length isoforms are processed; endpoints fall inside ORFs far more often at the 3' end, evidence of biased 3'-directed erosion.
+- **Caveats:** intragenic-endpoint logic counts a 3' end inside a gene body as processing (cannot be a terminator); does not distinguish endo- from exo-nucleolytic origin.
+- **Notes for LLM:** L2.2 ANALYSIS DONE (refreshed 2026-06-05 against the current Apr-23 clustering; the stale dead-path version is fixed). Still TODO: born-at-size **panel c** for figures/rnase.pdf, and the **RNA Processing Analysis** Methods subsection (M4).
 
 #### L2.3: 3' Exo ribonucleases can contribute to the biased RNA digestion. (Putative)
 

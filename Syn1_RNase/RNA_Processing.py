@@ -45,7 +45,7 @@ os.makedirs("RNase", exist_ok=True)
 # Configuration
 # ═══════════════════════════════════════════════════════════════════════════════
 MOTHER_FOLDER = ".."
-ISOFORMS_TSV  = MOTHER_FOLDER + "/isoform_annotation/isoform_clusters_annotated.tsv"
+ISOFORMS_TSV  = MOTHER_FOLDER + "/Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv"
 GFF3_FILE     = MOTHER_FOLDER + "/Genomes_Input/syn1.genes.gff3"
 OUT_FOLDER    = "./RNase"
 
