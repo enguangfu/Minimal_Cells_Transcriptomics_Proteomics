@@ -2,19 +2,18 @@
 
 Minimization removed not only genes but a substantial share of the expression budget.
 Of the 911 \syn~loci, 418 are absent from \syna: 382 protein-coding genes, 33 pseudogenes, and 3 structural RNAs.
-In \syn~these deleted loci together accounted for 21.8\% of the messenger-RNA pool (14.2\% of total transcription) and 22.3\% of the proteome by mass-spectrometry intensity (Methods).
+In \syn~these deleted loci together accounted for 21.8\% of the messenger-RNA pool and 22.3\% of the proteome by mass-spectrometry intensity (Methods).
 Their most highly transcribed members were the yeast-vector marker \gene{lacZ}{0915}, the pyruvate-dehydrogenase subunits \gene{pdhA}{0225} and \gene{pdhB}{0226}, and alanine dehydrogenase \gene{ald}{0059}, all dispensable for growth in rich medium~\cite{breuer_essential_2019}.
 Because relative transcript and protein units each sum to a fixed total within an organism, excising roughly a fifth of the coding output frees an equivalent fraction of the pool for the retained genes; the cross-organism comparisons below therefore use mean-normalized units renormalized to the retained-gene pool, so that a gene whose true abundance is unchanged reads as no change despite this freed capacity (Methods).
 
 The freed capacity was taken up overwhelmingly by the translation machinery rather than spread evenly across functions (Fig.~\ref{fig:reduction_omics}a).
 The Translation category, already the largest consumer of transcription in \syn, rose from 53.1\% to 64.9\% of the retained messenger-RNA pool, an 11.8-percentage-point gain across its 131 genes, and the largest single increases were all ribosomal proteins (\gene{rpsK}{0646}, \gene{rplO}{0653}, \gene{rplX}{0660}, and \gene{rplN}{0661}, each gaining 4.3 to 6.0 relative units).
 This gain came at the expense of metabolism: Central Carbon Metabolism fell from 17.0\% to 10.7\%, a 6.2-point drop across 49 genes (median fold change 0.66, two-sided Mann--Whitney $p = 1.3\times10^{-3}$), with smaller but significant losses in Membrane Transport (median 0.80, $p = 0.016$) and Transcription (median 0.55, $p = 0.040$) (Fig.~\ref{fig:reduction_omics}b).
-The reallocation was not uniform, however: the ribosomal-protein genes whose operon promoter was deleted instead collapsed (\gene{rpmE}{0137}, \gene{rpsU}{0482}), so the shift is a redistribution of the pool rather than a uniform up-regulation of every translation gene.
+The reallocation was not uniform, however: the two ribosomal-protein genes whose original promoter was deleted and replaced by a weak fused promoter instead collapsed (\gene{rpsT}{0082}, \gene{rpsO}{0294}; Fig.~\ref{fig:reduction_operons}), so the shift is a redistribution of the pool rather than a uniform up-regulation of every translation gene.
 
 The opposing movement of two protein-only machines, estimated from their limiting (lowest-stoichiometry) subunit, accompanied this reweighting.
-Core RNA polymerase, taken as the minimum of \textit{rpoA}/2, \textit{rpoC}, and \textit{rpoB}, fell to a fold change of 0.65 in transcript and 0.79 in protein (a 35\% and a 21\% reduction), whereas the RNase~J-based degradosome~\cite{redko_minimal_2013}, taken as the minimum of \textit{rny}, \textit{rnjA}, and \textit{yhaM}\,+\,\textit{rnr}, rose to 1.68 in transcript and 1.36 in protein (a 68\% and a 36\% increase) (Fig.~\ref{fig:reduction_omics}c).
+Core RNA polymerase, taken as the minimum of \textit{rpoA}/2, \textit{rpoC}, and \textit{rpoB}, fell to a fold change of 0.65 in transcript and 0.79 in protein (a 35\% and a 21\% reduction), whereas the RNase~Y-based degradosome~\cite{redko_minimal_2013}, the endoribonuclease around which the minimal degradosome is organized and taken as the minimum of \textit{rny}, \textit{rnjA}, and \textit{yhaM}\,+\,\textit{rnr}, rose to 1.68 in transcript and 1.36 in protein (a 68\% and a 36\% increase) (Fig.~\ref{fig:reduction_omics}c).
 Lower transcription capacity together with higher RNA-turnover capacity is coherent with the slower growth of \syna, whose cell cycle is roughly 105~min against 60~min for \syn~\cite{pelletier_genetic_2021}.
-These complex-level estimates rest on the limiting-subunit assumption, and the protein-to-transcript ratios used throughout are steady-state proxies for translation efficiency rather than ribosome-profiling measurements (Methods).
 
 The decline of Central Carbon Metabolism was coordinated across the energy-yielding pathways at both the transcript and the protein level (Fig.~\ref{fig:reduction_omics}c).
 In glycolysis the enzymes \gene{eno}{0213}, \gene{pgk}{0606}, and \gene{pyk}{0221} fell to transcript and protein fold changes of 0.37/0.38, 0.35/0.44, and 0.51/0.34; the pyruvate-dehydrogenase E1 subunits \gene{pdhA}{0225} and \gene{pdhB}{0226} were deleted outright while the retained E2 subunit \gene{pdhC}{0227} dropped to 0.45/0.34; and the acetate- and lactate-producing steps \gene{pta}{0229}, \gene{ackA}{0230}, and \gene{ldh}{0475} fell to 0.27/0.26, 0.19/0.44, and 0.66/0.70.
@@ -26,7 +25,7 @@ A concerted downgrade of the glycolytic, acetate, and lactate enzymes at both la
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{figures/reduction.pdf}
+    \includegraphics[width=1\linewidth]{figures/reduction_omics.pdf}
     \caption{\textbf{The \syna~transcriptome and proteome reallocate from metabolism to translation.}
     (a) Composition of the retained messenger-RNA pool by Secondary function in \syn~and \syna, deletion-corrected.
     (b) Function categories with the largest retained-pool share changes (Tertiary function), \syn~to \syna.

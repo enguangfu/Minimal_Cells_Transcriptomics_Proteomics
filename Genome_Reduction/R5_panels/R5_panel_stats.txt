@@ -1,16 +1,18 @@
 
 [panel a] genome-reduction map: 95 deletions, 537 kb; length bins [1, 26, 38, 25, 5] -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5a_genome_reduction_map.pdf
 
-[panel b] isoforms shown: 30 others + 1 full-span highlighted (>= 3 reads for others)
-[panel b] fusion DEL_014 (Syn3A joined OP_00043|OP_00050) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5b_fusion_DEL014.pdf
+[panel b] Syn1 operon OP_00043 (rpsT/0082 + 0083, before fusion) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5b_rpsT_operon_syn1.pdf
 
-[panel c | grouping=g3 kind=violin] log10 TPM FC by group
+[panel c] isoforms shown: 30 others + 1 full-span highlighted (>= 3 reads for others)
+[panel c] fusion DEL_014 (Syn3A joined OP_00043|OP_00050) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5c_fusion_DEL014.pdf
+
+[panel d | grouping=g3 kind=violin] log10 TPM FC by group
   Promoter lost              n= 42  median FC=0.438  p(vs Unaffected)=2.67e-04  star=***
   Other affected             n= 85  median FC=0.672  p(vs Unaffected)=7.42e-01  star=ns
   Unaffected                 n=324  median FC=0.762  p(vs Unaffected)=nan  star=-
-Saved: /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5c_TPM_FC_by_impact_class.pdf  (figsize=3.50 x 1.17 in)
+Saved: /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5d_TPM_FC_by_impact_class.pdf  (figsize=1.75 x 1.75 in)
 
-[panel d] HupA operon OP_00187 (decapitation, DEL_050) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5d_hupA_operon.pdf
+[panel e] HupA operon OP_00187 (decapitation, DEL_050) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5e_hupA_operon.pdf
 
 [hupA -10 promoter] operon OP_00187  TSS=441031 (+ strand)
   -10 hexamer (TANAAT)   : TATAAT  match=True mm=0 shift=0

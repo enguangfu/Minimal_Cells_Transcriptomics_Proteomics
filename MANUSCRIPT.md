@@ -9,7 +9,7 @@ TO DO Reminder:
 
 **A. Pending analyses (these block their Results text + figure panels):**
 - [ ] R2 / M4 — the whole RNA-processing/RNase analysis: transcriptome-wide 3' vs 5' erosion (L2.2), putative 3'→5' exoribonuclease via order of 3'-end RNA secondary structure (L2.3), ATP-synthase α-subunit cleavage + check other complexes + secondary-structure visual (L2.4).
-- [ ] R5 L5.5 (panel e) — essentiality × trace-expression script; supply the syn3A essentiality source.
+- [ ] R5 L5.5 (panel e) — **DEFERRED** essentiality × trace-expression script; supply the syn3A essentiality source. 
 - [ ] R6 L6.4 (panel d) — ATP/GTP flux comparison; supply the metabolic model/source.
 - [x] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
 - [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
@@ -25,7 +25,7 @@ TO DO Reminder:
 
 **E. Numbers to re-verify (flagged during Methods drafting):**
 - [x] M7 — recounted on revised (post Apr-22) clusters: 837 abnormal isoforms -> 29,443 candidate ORFs -> top-100 -> 48 unique / 47 proteotypic; 2 MS peptides reproduced (NOVEL_PEP_002; NOVEL_PEP_043 = old 030).
-- [ ] M8 — re-confirm Illumina/ONT TPM r=0.998 and the syn3A Illumina alignment % (no local logs).
+- [x] M8 — RE-VERIFIED (Syn3A_TPM.py rerun): the r=0.998 is **our depth-based Illumina TPM vs Palsson/Sandberg reported Illumina TPM** (n=458; Spearman 0.998), NOT Illumina vs ONT. Illumina vs ONT agreement is only Pearson r=0.570 / Spearman 0.558 (n=496). The earlier note conflated the two. syn3A Illumina alignment % still not locally re-verifiable (no logs).
 
 **F. Style / front-and-back matter:**
 - [x] §0 — fill the "Exemplar paragraph" field and the "Things to NEVER do" list.
@@ -488,10 +488,15 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Figure:** `Manuscript/figures/genome_reduction.pdf`
 
 - Panel a: Schematics of genome reduction from syn1 to syn3A. (7/2, 7/2)
-- Panel b: One instance of fusion of new operons at junctions. (7/2, 7/4)
-- Panel c: Box plot of gene expressions to highlight decapitated ones having lower values. (7/2, 7/4)
-- Panel d: the HupA operon, whose true promoter, located inside gene 0349, was deleted. (7,7/4)
-- Panel e: Gene essentiality evaluation for those trace-expressed genes that are still essential.
+- Panel b: 0083 and rpsT/0082 co-expressed in syn1. (7/2, 7/4)
+- Panel c: 0094 and 0082 co-expressed in syn3A. (7/2, 7/4)
+- Panel d: Box plot of gene expressions to highlight decapitated ones having lower values. (7/4, 7/4)
+- Panel e: the HupA operon, whose true promoter, located inside gene 0349, was deleted. (21/4, 7/4)
+- Panel f: Gene essentiality evaluation for those trace-expressed genes that are still essential.
+
+Extended Figure:
+
+- rpsO situation same as rpsT/0082
 
 ### Chain of Logics
 
@@ -528,11 +533,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:**
   - `Genome_Reduction/deletion_junction/deletion_junctions.tsv`, `deletion_junction_summary.txt`
   - `Genome_Reduction/operon_pair_coexpression/`, `single_operon_coexpression/`
-- **Numbers to cite:** 95 junctions: tandem 53, convergent 19, divergent 15, intra_operon 8; tandem junction_type: fusion 3, decapitation 9, readthrough_extension 11, clean_excision 30; cross-junction co-transcription (loose): fusion 67% (2/3) vs clean_excision 10% (3/30, negative control); pristine single-operon baseline preserved_loose 60% (45 testable, 111 pairs); fusion exemplar DEL_014 OP_00043 -> OP_00050 (MMSYN1_0082 -> MMSYN1_0094), n_span=2, n_bridge=37.
-- **Figure panels:** b
+- **Numbers to cite:** 95 junctions: tandem 53, convergent 19, divergent 15, intra_operon 8; tandem junction_type: fusion 3, decapitation 9, readthrough_extension 11, clean_excision 30; cross-junction co-transcription (loose): fusion 67% (2/3) vs clean_excision 10% (3/30, negative control); pristine single-operon baseline preserved_loose 60% (45 testable, 111 pairs); fusion exemplar DEL_014 OP_00043 -> OP_00050 (MMSYN1_0094 -> MMSYN1_0082 = rpsT/S20), n_span=2, n_bridge=37, however the TPM FC was still low as 0.074 for rpsT/0082 since the fused promoter of 0094 is weak (in syn1, 0082 was co-transcribed with 0083 instead); a second r-protein rpsO/S15 (MMSYN1_0294) followed the same route (lost its own promoter, gained a weak fused one) and likewise collapsed to TPM FC 0.036. Both rpsT/0082 and rpsO/0294 are gene_impact_class new_promoter_fusion (from 08).
+- **Figure panels:** b,c in the same column
 - **Conclusion:** Operon fusion is real but rare (3 events); the dominant junction outcome is clean excision of whole operon(s) between intact neighbors.
 - **Caveats:** ONT depth is low, so most positive calls are loose-bridge rather than strict-spanning; convergent/divergent junctions are opposite-strand and not expected to co-transcribe.
-- **Notes for LLM:** This logic, not "all new operons fused," supports the reworded one-sentence summary.
+- **Notes for LLM:** This logic, not "all new operons fused," supports the reworded one-sentence summary. The weak-fused-promoter expression story (rpsT/0082, rpsO/0294 both crash despite structural fusion) lives HERE in L5.3, not L5.4, so the two paragraphs do not overlap; L5.4 covers only pure decapitation (hupA).
 
 #### L5.4: Decapitated operons that lost their own promoter are the one class that robustly drops in expression; HupA is the showcase.
 
@@ -543,11 +548,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:**
   - `Genome_Reduction/delete_gene/retained_gene_context.tsv` (`gene_impact_class` column)
   - `Genome_Reduction/Compare_RNA_Protein/TPM_FC_by_impact_class.pdf`
-- **Numbers to cite:** gene_impact_class (retained genes): promoter_lost 42, promoter_disconnected 6, new_promoter_fusion 3, readthrough_exposed 24, promoter_proximity_changed 17, context_only 45, unaffected 360; promoter_lost is the only class robustly down in TPM (median FC 0.44, Mann-Whitney p=2.7e-4 vs unaffected median 0.76); HupA (MMSYN1_0350) relTPM 6.68 -> 0.13 (FC 0.020), relIPM 6.48 -> 0.092 (FC 0.014); HupA operon -10 box = perfect TANAAT (TATAAT), extended TNNTANAAT match, strong_9mer tier, -10 window 441019-441024 inside deleted DEL_050 (440092-441059) [from R5_panels/R5_panel_stats.txt via promoter_motif.scan_minus10]; other decapitated drops rpmE/L31 relTPM FC 0.010, rpsU/S21 FC 0.044.
-- **Figure panels:** c, d
+- **Numbers to cite:** gene_impact_class (retained genes): promoter_lost 42, promoter_disconnected 6, new_promoter_fusion 3, readthrough_exposed 24, promoter_proximity_changed 17, context_only 45, unaffected 360; promoter_lost is the only class robustly down in TPM (median FC 0.44, Mann-Whitney p=2.7e-4 vs unaffected median 0.76); HupA (MMSYN1_0350) relTPM 6.68 -> 0.13 (FC 0.020), relIPM 6.48 -> 0.092 (FC 0.014); HupA operon -10 box = perfect TANAAT (TATAAT), extended TNNTANAAT match, strong_9mer tier, -10 window 441019-441024 inside deleted DEL_050 (440092-441059) [from R5_panels/R5_panel_stats.txt via promoter_motif.scan_minus10]. NOTE: the weak-fused-promoter r-proteins rpsT/0082 and rpsO/0294 belong to L5.3 (new_promoter_fusion), NOT here. rpmE/L31 (0137) and rpsU/S21 (0482) are gene_impact_class unaffected (operon structure intact) with only mild TPM dips FC 0.198 and 0.413, so they are NOT decapitation cases either.
+- **Figure panels:** d,e in the same row
 - **Conclusion:** Promoter-source loss drives the largest expression decreases; promoter_lost is the only impact class robustly down in TPM.
 - **Caveats:** the class is assigned at operon level; 8 junctions lose only UTR (genes intact); the 05-vs-04 consistency check flags 2 flank operons as all_deleted.
-- **Notes for LLM:** HupA's true promoter sits inside deleted gene MMSYN1_0349 (panel d).
+- **Notes for LLM:** HupA's true promoter sits inside deleted gene MMSYN1_0349 (panel e); HupA (promoter_lost) is pure decapitation, no replacement promoter, and is the ONLY decapitation gene featured in L5.4. The weak-fused-promoter r-proteins (rpsT/0082, rpsO/0294) are covered in L5.3, not here. rpmE/L31 and rpsU/S21 were NOT affected by any deletion (operon structure intact), so do not cite them as decapitated.
 
 #### L5.5: A few trace-expressed retained genes remain essential.
 
@@ -585,11 +590,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:**
   - `Compare_RNA_Protein/deleted_gene_occupancy.txt`
   - `Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv`
-- **Numbers to cite:** 418 deleted loci (911 -> 496); by RNA type mRNA 382, pseudo 33, ncRNA 2, tRNA 1; deleted share = 21.78% of the syn1 mRNA pool (14.22% of all-RNA TPM), 22.25% of the iPM proteome; top deleted by TPM lacZ, pdhA/pdhB, ald; unclear-function proteins occupy only ~3%.
+- **Numbers to cite:** 418 deleted loci (911 -> 496); by RNA type mRNA 382, pseudo 33, ncRNA 2, tRNA 1; deleted share = 21.78% of the syn1 mRNA pool, 22.25% of the iPM proteome; top deleted by TPM lacZ, pdhA/pdhB, ald; unclear-function proteins occupy only ~3%.
 - **Figure panels:** a
 - **Conclusion:** Minimization removed ~1/5 of the coding transcriptome and proteome, concentrated in dispensable metabolism, leaving pool capacity that syn3A redistributes.
 - **Caveats:** shares are raw syn1 TPM/iPM; cross-organism comparisons in L6.2-L6.4 are mean-normalized and deletion-corrected to the retained-gene pool.
-- **Notes for LLM:** "Non-essential" in the heading is shorthand for syn3A-deleted loci.
+- **Notes for LLM:** "Non-essential" in the heading is shorthand for syn3A-deleted loci; Do NOT mention the deleted share of all-RNA TPM since rRNA were depleted during RNA sample preparation.
 
 #### L6.2: The retained mRNA pool reallocates toward the translation machinery.
 
@@ -615,7 +620,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** c
 - **Conclusion:** Lower transcription capacity plus higher RNA turnover is coherent with slower growth.
 - **Caveats:** limiting-subunit estimate; PTR is a steady-state proxy, not Ribo-seq TE; r-proteins excluded from PTR (digestion bias).
-- **Notes for LLM:** None.
+- **Notes for LLM:** Degradosome is RNase Y, the endo-ribonucleases based, not RNase-J based; No need to mention the caveates at the end of this logic.
 
 #### L6.4: Central-metabolism enzymes are coordinately downgraded, predicting lower ATP/GTP generation.
 
@@ -708,7 +713,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Analysis:** `Syn3A_Transcriptomics/ONT/ONT_Processing/` (ONT) + `Syn3A_Transcriptomics/Illumina/Illumina_Processing/` (Illumina)  
 **Key params:** ONT direct-RNA, `minimap2 -ax map-ont` (NOT splice, bacteria are intron-less), per-strand depth; Illumina syn3A paired-end bowtie2 (dUTP / fr-firststrand), per-strand bedGraph.  
 **Inputs:** ONT raw `Syn3A_Transcriptomics/ONT/ONT_Raw/`; Illumina syn3A SRA accessions (SRR19432056/57 mate pair) via `Syn3A_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh`.  
-**Notes for LLM:** DONE (polished). Seven subsubsections: ONT RNA sample prep, RNA QC, ONT library prep + direct sequencing, raw-read processing/base-calling, ONT→syn3A mapping, Illumina→syn3A mapping, and "Quantification of TPM from Sequencing Depth" (added; mirrors M1/M2). TPM subsubsection: depth-based TPM (same definition as M1) computed for both Illumina + ONT per-strand bedGraphs over 496 loci (493 gene + 3 pseudogene, both feature types parsed); single replicate each → no averaging; output `syn3A_TPM_Illumina_ONT.tsv`; Illumina = quantitative track, ONT = orthogonal check; validated vs Sandberg-reported TPM, Pearson r=0.998 on log10 (script: `Syn3A_Transcriptomics/Gene_TPM/Syn3A_TPM.py`). VERIFY: r=0.998 taken from CLAUDE.md's documented value (script's TSV/console output not saved in OneDrive copy); 496 loci re-counted from the GFF3. ONT mapping numbers re-verified against `syn3A.ONT.rep1.sorted.bam.qc_report.txt`: 734.08k reads → 559k (76.2%) primary mapped, mean 383 nt (49--2,858), Q31.2, 98.2% ≥Q20; 175k unmapped (23.9%, mean Q20.7, 42.0% <Q15, 61.0% <300nt); 20.2k secondary (3.6%) at the two rRNA operons (~55,460 & ~343,267 bp); 7.3k supplementary. minimap2 v2.30 `-ax map-ont -p 0.99 --MD` (NOT splice; old splice-preset numbers kept commented). Illumina syn3A: bowtie2 v2.5.5 default paired-end, 98.88% overall (83.55% concordant-once, 10.43% multi = rRNA operons, 6.02% discordant/unpaired), dUTP/fr-firststrand strand split — alignment % not locally re-verifiable (no logs/ in OneDrive copy; trusted from prior run). Polish pass: units → mL/$\mu$L, centrifugal force → `$\times$g` (matches M1), removed a double space. Compiles clean (24 pp).  
+**Notes for LLM:** DONE (polished). Seven subsubsections: ONT RNA sample prep, RNA QC, ONT library prep + direct sequencing, raw-read processing/base-calling, ONT→syn3A mapping, Illumina→syn3A mapping, and "Quantification of TPM from Sequencing Depth" (added; mirrors M1/M2). TPM subsubsection: depth-based TPM (same definition as M1) computed for both Illumina + ONT per-strand bedGraphs over 496 loci (493 gene + 3 pseudogene, both feature types parsed); single replicate each → no averaging; output `syn3A_TPM_Illumina_ONT.tsv`; Illumina = quantitative track, ONT = orthogonal check. RE-VERIFIED (Syn3A_TPM.py rerun): our depth-based Illumina TPM validated against Palsson/Sandberg-reported Illumina TPM at Pearson r=0.998 / Spearman 0.998 on log10 (n=458); the Illumina-vs-ONT cross-platform agreement is only Pearson r=0.570 / Spearman 0.558 (n=496). Do NOT report 0.998 as the Illumina/ONT correlation. (script: `Syn3A_Transcriptomics/Gene_TPM/Syn3A_TPM.py`; 496 loci re-counted from the GFF3.) ONT mapping numbers re-verified against `syn3A.ONT.rep1.sorted.bam.qc_report.txt`: 734.08k reads → 559k (76.2%) primary mapped, mean 383 nt (49--2,858), Q31.2, 98.2% ≥Q20; 175k unmapped (23.9%, mean Q20.7, 42.0% <Q15, 61.0% <300nt); 20.2k secondary (3.6%) at the two rRNA operons (~55,460 & ~343,267 bp); 7.3k supplementary. minimap2 v2.30 `-ax map-ont -p 0.99 --MD` (NOT splice; old splice-preset numbers kept commented). Illumina syn3A: bowtie2 v2.5.5 default paired-end, 98.88% overall (83.55% concordant-once, 10.43% multi = rRNA operons, 6.02% discordant/unpaired), dUTP/fr-firststrand strand split — alignment % not locally re-verifiable (no logs/ in OneDrive copy; trusted from prior run). Polish pass: units → mL/$\mu$L, centrifugal force → `$\times$g` (matches M1), removed a double space. Compiles clean (24 pp).  
 
 ---
 
@@ -726,6 +731,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - PTR definition: relIPM/relTPM; `PTR_fold_change = iPM_FC / TPM_FC`; explicitly a steady-state proxy, not Ribo-seq TE.
 - Co-expression test (06/07): ONT spanning/bridging reads + Illumina gap depth; thresholds in `coexpression_common.py`.
 
-**Notes for LLM:** This is the longest Methods subsection — draft it in the same order as the pipeline; More details were recorded in the CLAUDE.md file.
+**Notes for LLM:** DONE — polished. This is the longest Methods subsection, drafted in the same order as the pipeline; More details were recorded in the CLAUDE.md file.
 
 ---

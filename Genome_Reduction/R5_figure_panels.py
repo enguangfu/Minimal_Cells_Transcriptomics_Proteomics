@@ -91,8 +91,8 @@ def _stars(p):
 
 
 # ============================================================ panel c: impact-class plot
-def panel_c(grouping="g3", kind="violin", figsize=(7 / 2, 7 / 6), min_n_star=5,
-            out_name="R5c_TPM_FC_by_impact_class.pdf"):
+def panel_d(grouping="g3", kind="violin", figsize=(7 / 4, 7 / 4), min_n_star=5,
+            out_name="R5d_TPM_FC_by_impact_class.pdf"):
     """log10 Syn3A/Syn1 transcript fold change by gene_impact_class.
 
     Final R5 panel c = 3-group violin (Promoter lost / Other affected /
@@ -156,7 +156,7 @@ def panel_c(grouping="g3", kind="violin", figsize=(7 / 2, 7 / 6), min_n_star=5,
 
     ax.axhline(0, color="0.4", linestyle="--", linewidth=0.7, zorder=1)
 
-    log(f"\n[panel c | grouping={grouping} kind={kind}] log10 TPM FC by group")
+    log(f"\n[panel d | grouping={grouping} kind={kind}] log10 TPM FC by group")
     ymax = max(np.max(d) for d in data if len(d))
     for i, (g, d) in enumerate(zip(groups, data)):
         if g == base_label or len(d) < 2 or len(base) < 2:
@@ -216,7 +216,7 @@ def _hupA_minus10():
 
 
 # ============================================================ panel d: HupA decapitation
-def panel_d(out_name="R5d_hupA_operon.pdf", fig_w=7, fig_h=7 / 4):
+def panel_e(out_name="R5e_hupA_operon.pdf", fig_w=21 / 4, fig_h=7 / 4):
     """HupA operon (OP_00187, + strand): decapitated because DEL_050 (440092-441059)
     removed its promoter region inside the neighbouring gene gpsA/MMSYN1_0349.
     Reuses the publication single-operon plotter (born-at-size, syn3A-deletion band);
@@ -240,7 +240,7 @@ def panel_d(out_name="R5d_hupA_operon.pdf", fig_w=7, fig_h=7 / 4):
         OV.plot_one_operon(row, out, PLOT_DEPTH=True, fig_w=fig_w, fig_h=fig_h)
     finally:
         OV.gene_label, OV.GENES, OV.PAD_BP = _gl, _genes, _pad
-    log(f"\n[panel d] HupA operon OP_00187 (decapitation, DEL_050) -> {out}")
+    log(f"\n[panel e] HupA operon OP_00187 (decapitation, DEL_050) -> {out}")
     _hupA_minus10()
     return out
 
@@ -280,7 +280,7 @@ def _draw_isoforms_highlight(ax, oc, others, highlight, gap_tx=20):
 
 
 # ============================================================ panel b: fusion DEL_014
-def panel_b(out_name="R5b_fusion_DEL014.pdf", figsize=(7 / 2, 7 / 3),
+def panel_c(out_name="R5c_fusion_DEL014.pdf", figsize=(7 / 2, 7 / 4),
             iso_min_reads=3):
     """Fusion junction DEL_014: in Syn1, OP_00043 (rpsT/0082) and OP_00050 (0094)
     sit ~15.5 kb apart across 8 deleted genes; in Syn3A they are adjacent on the
@@ -349,7 +349,7 @@ def panel_b(out_name="R5b_fusion_DEL014.pdf", figsize=(7 / 2, 7 / 3),
     axg.spines["top"].set_visible(False)   # drop the gene panel's own top spine
     _draw_isoforms_highlight(axi, oc3, others, full)
     OC.draw_depth(axd, oc3, d3, ps3, pe3, s3_strand)
-    log(f"\n[panel b] isoforms shown: {len(others)} others + {len(full)} full-span "
+    log(f"\n[panel c] isoforms shown: {len(others)} others + {len(full)} full-span "
         f"highlighted (>= {iso_min_reads} reads for others)")
 
     # headroom so the gene labels + deletion note (above the arrows) are not clipped
@@ -387,7 +387,7 @@ def panel_b(out_name="R5b_fusion_DEL014.pdf", figsize=(7 / 2, 7 / 3),
     out = os.path.join(OUTDIR, out_name)
     fig.savefig(out, dpi=300)
     plt.close(fig)
-    log(f"[panel b] fusion DEL_014 (Syn3A joined OP_00043|OP_00050) -> {out}")
+    log(f"[panel c] fusion DEL_014 (Syn3A joined OP_00043|OP_00050) -> {out}")
     return out
 
 
@@ -496,7 +496,31 @@ def panel_a(out_name="R5a_genome_reduction_map.pdf", figsize=(7 / 2, 7 / 2)):
     return out
 
 
-PANELS = {"a": panel_a, "b": panel_b, "c": panel_c, "d": panel_d}
+# ============================================================ panel b: syn1 rpsT operon (before)
+def panel_b(out_name="R5b_rpsT_operon_syn1.pdf", fig_w=7 / 2, fig_h=7 / 4):
+    """Syn1 operon OP_00043: rpsT/0082 co-transcribed with 0083 -- the 'before' of the
+    DEL_014 fusion shown in panel c. The +strand neighbour trmE/0081 is excluded and
+    the window tightened so only 0082+0083 show; 0083 (deleted in Syn3A) keeps its
+    deletion band. Reuses the publication single-operon plotter (as panel e)."""
+    syn1op = os.path.join(GR, "..", "Syn1_Operon")
+    if syn1op not in sys.path:
+        sys.path.insert(0, syn1op)
+    import Operon_Visualization as OV
+    _genes, _pad = OV.GENES, OV.PAD_BP
+    OV.GENES = OV.GENES[OV.GENES["locus_tag"] != "MMSYN1_0081"].copy()
+    OV.PAD_BP = 50
+    try:
+        ops = pd.read_csv(os.path.join(syn1op, "operons.candidate_blocks.tsv"), sep="\t")
+        row = ops[ops["operon_id"] == "OP_00043"].iloc[0]
+        out = os.path.join(OUTDIR, out_name)
+        OV.plot_one_operon(row, out, PLOT_DEPTH=True, fig_w=fig_w, fig_h=fig_h)
+    finally:
+        OV.GENES, OV.PAD_BP = _genes, _pad
+    log(f"\n[panel b] Syn1 operon OP_00043 (rpsT/0082 + 0083, before fusion) -> {out}")
+    return out
+
+
+PANELS = {"a": panel_a, "b": panel_b, "c": panel_c, "d": panel_d, "e": panel_e}
 
 if __name__ == "__main__":
     want = sys.argv[1:] or list(PANELS)
