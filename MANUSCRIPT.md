@@ -10,7 +10,7 @@ TO DO Reminder:
 **A. Pending analyses (these block their Results text + figure panels):**
 - [ ] R2 / M4 — the whole RNA-processing/RNase analysis: transcriptome-wide 3' vs 5' erosion (L2.2), putative 3'→5' exoribonuclease via order of 3'-end RNA secondary structure (L2.3), ATP-synthase α-subunit cleavage + check other complexes + secondary-structure visual (L2.4).
 - [ ] R5 L5.5 (panel e) — **DEFERRED** essentiality × trace-expression script; supply the syn3A essentiality source. 
-- [ ] R6 L6.4 (panel d) — ATP/GTP flux comparison; supply the metabolic model/source.
+- [ ] R6 L6.5 (no panel) — ATP/GTP flux comparison; supply the metabolic model/source. (panel d/e now = rPtn operon + tRNA junction, L6.3.)
 - [x] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
 - [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
 
@@ -18,7 +18,7 @@ TO DO Reminder:
 - [ ] M4 — write "RNA processing and ribonucleases" (after analysis A above).
 
 **C. Results prose (draft from logics, §0 style — one section at a time):**
-- [x] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) drafted (L6.1–L6.3 + L6.4 omics, 459-era numbers). Only blocked panels remain: R5-L5.5 (panel e essentiality) and R6-L6.4 flux (panel d) — both await analyses A.
+- [x] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) drafted (L6.1–L6.5, 459-era numbers; L6.3 = the 11 kb rPtn operon + tRNA-junction paragraph, panels d/e). Only blocked items remain: R5-L5.5 (panel e essentiality) and R6-L6.5 flux (no panel) — both await analyses A.
 
 **D. Figures:**
 - [ ] Regenerate + format the six multi-panel figures in Illustrator.
@@ -37,7 +37,7 @@ TO DO Reminder:
 - [x] Reproducibility: the current `Operon_Segmentation.py`, run in conda env `RNAseq` (has pysam), reproduces the canonical `operons.candidate_blocks.tsv` (**459 operons**) byte-for-byte. The earlier 480-vs-483 gap is gone — the finalized map is 459 operons. Stage-by-stage counts are now persisted to `Syn1_Operon/Operon_Segmentation.txt` (mirrors `Operon_Annotation.txt`).
 - [x] Dedup bug fixed: `dedup_operon_gene_lists` runs as the final pass before `to_csv`, so the tsv's `sense_gene_count` already equals the unique-loci count (max 21, 0 mismatches across all 459 operons). No consumption-time recount needed.
 - [x] Co-transcription merge: the Step-5a overlap / coverage-hole merge is now read-evidence based (≥50 strand-specific PacBio bridging reads across the junction AND ≥0.5 gap/flank depth continuity), so the 11 kb rPtn supercluster (0652–0672) stays intact (61 candidate junctions → 43 pass → 37 merged operons). Running the script from `Syn1_Operon/` is safe — it regenerates the identical canonical map.
-- [ ] Could use promoter and terminator predictions to judge the merging of truncated operons; then we can expand the statistics of transcription signatures to all operons.
+- [ ] Could use promoter and terminator predictions to judge the merging of truncated operons; then we can expand the statistics of transcription signatures to all operons; tell if internal promoter and terminator.
 - [ ] Also checking the operon gene coverage.
 
 ---
@@ -269,7 +269,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 ---
 
-## R3 — High Correlation between transcriptomics and proteomics in the reduced organism.
+## R3 — High Correlation between transcriptome and proteome in the reduced organism.
 
 **Tex file:** `Manuscript/sections/results/corr_RNA_ptn.tex`
 
@@ -372,7 +372,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 ---
 
-## R4 — Novel transcription and translation activities of the synthetic bacterium, Syn1
+## R4 — Novel transcription and translation activities in the synthetic bacterium, Syn1
 
 **Tex file:** `Manuscript/sections/results/novel.tex`
 
@@ -574,12 +574,13 @@ Extended Figure:
 **More transcription on ribosomal protein operons suppresses the expression of enzymatic proteins in central metabolism.**
 
 ### Figure
-**Figure:** `Manuscript/figures/reduction.pdf`
+**Figure:** `Manuscript/figures/reduction_omics.pdf`
 
 - Panel a: mRNA pool compositions in syn1 and syn3A as secondary protein functions.
 - Panel b: Significant mRNA pool share changes from syn1 to syn3A as tertiary functions.
 - Panel c: Transcription and translation changes of RNAP, degradosome and enzymes in central metabolism.
-- Panel d: Flux comparison of ATP/GTP generation between syn1 and syn3A.
+- Panel d: The giant ~11 kb ribosomal-protein operon OP_00341 (MMSYN1_0652–0672), one polycistron, no internal terminator; gene track + RNA isoforms + depth; supplies 12% of the syn1 → 34% of the syn3A coding mRNA pool. (14/3, 7/3). [L6.3. Replaces the blocked ATP/GTP flux panel; the flux prediction stays text-only in L6.5.]
+- Panel e: The syn3A tRNA operon (Thr/Val/Glu/Asn, MMSYN1_0678–0681) relocated by the flanking deletions to ~770 bp upstream of the rPtn operon; Illumina depth across the silent inter-operon gap shows no read-through (the two operons stay independent). Broken minus-strand axis. (7/3, 7/3). [L6.3]
 
 ### Chain of Logics
 
@@ -606,12 +607,25 @@ Extended Figure:
 - **Numbers to cite:** largest r-protein TPM absolute gains rpsK +6.04, rplO +5.04, infA +4.97, rplX +4.83, rplN +4.33; rpoA +2.69; per-category median FC + Mann-Whitney p from TPM_change_by_*.tsv.
 - **Figure panels:** a, b
 - **Conclusion:** The transcriptome shifts toward translation/ribosome biogenesis at the expense of central metabolism.
-- **Caveats:** the shift is a pool-level reallocation, not uniform; several decapitated r-proteins (rpmF/L32, rpmE/L31, rpsU/S21) crash (links to L5.4).
-- **Notes for LLM:** None.
+- **Caveats:** the shift is a pool-level reallocation, not uniform. Two routes make some r-proteins buck the up-trend: (i) the fusion-affected rpsT/S20 (0082) and rpsO/S15 (0294) crash because their deleted promoter was replaced by a weak fused one (gene_impact_class new_promoter_fusion; links to L5.3/L5.4); (ii) three structurally-INTACT r-proteins rpmF/L32 (0526), rpmE/L31 (0137), rpsU/S21 (0482) also drop sharply in transcript (TPM FC 0.126 / 0.010 / 0.044) yet are gene_impact_class **unaffected — NOT decapitated** (their operon structure is untouched), and their protein is in fact maintained or up (iPM FC 36.2 / 1.37 / 1.98). [CORRECTION 2026-06-05: the earlier "decapitated rpmF/rpmE/rpsU" claim was wrong — none are decapitation cases; rpsT/rpsO are the only deletion-hit r-proteins, both new_promoter_fusion.]
+- **Notes for LLM:** The 11~kb rPtn operon now has its own paragraph (L6.3) — do NOT fold it back in here.
 
-#### L6.3: RNA polymerase is downregulated while the degradosome is upregulated in syn3A.
+#### L6.3: A single 11 kb ribosomal-protein operon (OP_00341) triples its mRNA-pool share and dominates syn3A transcription, expressed from its own retained promoter despite a newly adjacent tRNA operon.
 
-- **Logic:** Estimating each machine's assembled abundance from its limiting (lowest-stoichiometry) subunit compares transcription capacity against RNA-turnover capacity; opposite movement is coherent with syn3A's longer cell cycle.
+- **Logic:** The reallocation toward translation (L6.2) is concentrated in one polycistron — OP_00341 (MMSYN1_0652–0672) — so its mRNA-pool occupancy, transcript structure, and new syn3A genomic neighbourhood are examined to see how the dominant translation unit is expressed and whether the deletion that relocated an upstream tRNA operon couples the two.
+- **Analysis:** `Genome_Reduction/09_Compare_RNA_Protein.py` (pool shares); `Genome_Reduction/R6_panel_e_trna_rptn.py` + `coexpression_common.py` (the tRNA-junction co-expression test, the 06/07 method).
+- **Outputs:**
+  - `Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv`
+  - `R6_panels/R6_stats.txt`
+- **Numbers to cite:** OP_00341 = 21 genes, ~11 kb (10,954 bp), minus strand, one polycistron with NO internal terminator; coding mRNA-pool share 12.1% (syn1) → 34.0% (syn3A), share FC 2.80, per-gene relTPM FC 1.48; full-length ~11 kb reads rare (1–2, PacBio read-length limit); depth = 5' polarity gradient (~90k at 5') with a sharp internal step at tx~2100 (endonucleolytic cut, likely RNase Y/degradosome which is up in syn3A, L6.4). New upstream neighbour after DEL_074 (5,509 bp; dhaK/0673–0676) + DEL_075 (912 bp; 0677): co-directional 4-tRNA operon MMSYN1_0678–0681 = Thr/Val/Glu/Asn; TSS(806176)→nearest deletion 179 bp (promoter intact); TSS→tRNA-3' 7,193 bp (syn1) → 772 bp (syn3A). Co-expression test rpsJ/0672 ↔ tRNA cluster: ONT 0/3084 spanning reads; Illumina true inter-operon middle (419784–420350) mean depth 27 = 1.2% of flanking → SPLIT (not co-transcribed).
+- **Figure panels:** d, e
+- **Conclusion:** The 11 kb r-protein operon, expressed from its own retained promoter as one endonucleolytically processed transcript, carries about a third of the syn3A coding mRNA pool; the deletion that parked a tRNA operon within ~770 bp upstream changed its neighbour but not its regulation, and the two operons stay transcriptionally independent — so the upregulation is the intact promoter plus the L6.2 pool reallocation, NOT tRNA read-through.
+- **Caveats:** the ~11 kb full-length isoform is undersampled by PacBio read-length, so single-unit structure is inferred from continuous depth + no internal terminator, not from many full-span reads; the internal step is a depth/3'-end signature consistent with RNase Y cleavage, not a mapped cut site.
+- **Notes for LLM:** This is the separate rPtn paragraph promised in L6.2. The tRNA-upstream result is a NEGATIVE co-expression finding — state plainly the operons stay independent (no read-through). Panels d (operon structure) and e (tRNA junction) both belong here.
+
+#### L6.4: RNA polymerase is downregulated while the degradosome is upregulated in syn3A.
+
+- **Logic:** Estimating gene-expression machinery RNAP and degradosome's assembled abundance from its limiting (lowest-stoichiometry) subunit compares transcription capacity against RNA-turnover capacity; opposite movement is coherent with syn3A's longer cell cycle.
 - **Analysis:** `Genome_Reduction/10_Compare_Ptn.py`
 - **Outputs:**
   - `Compare_RNA_Protein/macromolecule_complex_abundance.tsv`
@@ -622,7 +636,7 @@ Extended Figure:
 - **Caveats:** limiting-subunit estimate; PTR is a steady-state proxy, not Ribo-seq TE; r-proteins excluded from PTR (digestion bias).
 - **Notes for LLM:** Degradosome is RNase Y, the endo-ribonucleases based, not RNase-J based; No need to mention the caveates at the end of this logic.
 
-#### L6.4: Central-metabolism enzymes are coordinately downgraded, predicting lower ATP/GTP generation.
+#### L6.5: Central-metabolism enzymes are coordinately downgraded, predicting lower ATP/GTP generation.
 
 - **Logic:** Glycolytic and energy-generating enzymes are tracked at both RNA and protein level; coordinated downgrade across the pathway predicts reduced ATP/GTP flux, to be confirmed against a metabolic-flux comparison.
 - **Analysis:**
@@ -632,10 +646,10 @@ Extended Figure:
   - `Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv` (enzyme FCs)
   - flux output: TBD
 - **Numbers to cite (omics, TPM_FC / iPM_FC, both down):** gapDH 0.44/0.63, eno 0.37/0.38, pgk 0.35/0.44, pdhC 0.45/0.34, ackA 0.19/0.44, pta 0.27/0.26, ldh 0.66/0.70, pyk -/0.34; flux numbers TBD.
-- **Figure panels:** d
+- **Figure panels:** (none — flux is text-only; the metabolic-flux panel was dropped and panel d reassigned to the giant rPtn operon, see L6.2)
 - **Conclusion:** Central-carbon and acetate-pathway enzymes drop in concert, predicting suppressed ATP/GTP output (flux quantification pending).
 - **Caveats:** the flux claim is currently inferred from enzyme abundance only.
-- **Notes for LLM:** FLUX ANALYSIS (panel d) NOT YET DONE. Keep the logic; the ATP/GTP flux comparison needs a metabolic model and must be finished before drafting the flux claim. Model/source to be supplied.
+- **Notes for LLM:** FLUX ANALYSIS NOT YET DONE (needs a metabolic model) — prose stops at the prediction with NO panel. Panel d is now the giant ribosomal-protein operon OP_00341 (belongs to L6.2). Update gapDH→GapA in the numbers above if reused.
 
 ---
 

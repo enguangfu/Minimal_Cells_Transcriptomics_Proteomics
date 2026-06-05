@@ -1,0 +1,79 @@
+R6 - Transcriptome & proteome reallocation in Syn3A : key numbers
+================================================================
+
+[L6.1] Deleted-gene occupancy (raw Syn1 share)
+  deleted loci                    : 418
+  mRNA     : 382
+  pseudo   : 33
+  ncRNA    : 2
+  tRNA     : 1
+  mRNA pool (coding only)       :  21.78%  (140,255 / 644,001 TPM)
+  total proteome                :  22.25%  (222,479 / 999,890 iPM)
+
+[L6.2 / panels a,b] Function-category mRNA-pool share change (retained pool, deletion-corrected; FC=Syn3A/Syn1)
+  Translation                 53.11% ->  64.95%  (d +11.83 pts)  medFC 1.16  p=1.75e-01
+  Folding, Sorting and Degra   3.32% ->   4.46%  (d +1.14 pts)  medFC 1.37  p=9.71e-02
+  Cell Growth                  0.76% ->   1.11%  (d +0.35 pts)  medFC 1.60  p=1.84e-01
+  No Kegg ortholog             1.84% ->   2.16%  (d +0.32 pts)  medFC 2.54  p=4.58e-04
+  Energy Metabolism            1.38% ->   1.47%  (d +0.09 pts)  medFC 0.95  p=4.50e-01
+  Defense                      0.02% ->   0.03%  (d +0.01 pts)  medFC 1.46  p=nan
+  Signal Transduction          0.01% ->   0.01%  (d +0.00 pts)  medFC 1.15  p=nan
+  Biosynthesis                 1.52% ->   1.36%  (d -0.16 pts)  medFC 1.10  p=6.63e-01
+  Other Enzymes                0.87% ->   0.56%  (d -0.31 pts)  medFC 0.70  p=3.23e-01
+  Exogenous                    1.45% ->   0.91%  (d -0.54 pts)  medFC 2.68  p=nan
+  Kegg ortholog defined        1.95% ->   1.22%  (d -0.73 pts)  medFC 0.80  p=3.51e-01
+  DNA Maintenance              2.32% ->   1.24%  (d -1.07 pts)  medFC 1.15  p=8.48e-01
+  Transcription                3.41% ->   2.26%  (d -1.15 pts)  medFC 0.55  p=4.00e-02
+  Membrane Transport          10.82% ->   7.42%  (d -3.40 pts)  medFC 0.80  p=1.61e-02
+  Central Carbon Metabolism   16.98% ->  10.73%  (d -6.25 pts)  medFC 0.66  p=1.32e-03
+
+[L6.3 / panel c] Macromolecular complexes (limiting-subunit, FC=Syn3A/Syn1)
+  RNA polymerase   MIN(rpoA/2, rpoC, rpoB)    TPM_FC 0.65  iPM_FC 0.79
+  Degradosome      MIN(rny, rnjA, yhaM+rnr)   TPM_FC 1.68  iPM_FC 1.36
+  cell cycle: Syn3A ~105 min vs Syn1 ~60 min
+
+[panel c] Transcript / protein FC (Syn3A/Syn1) by group
+  PTS (Carbohydrate transport):
+     ptsI  /0233  TPM 0.517  iPM 0.602
+     ptsH  /0694  TPM 0.168  iPM 0.723
+     crr   /0234  TPM 0.411  iPM 0.495
+     ptsG  /0779  TPM 0.958  iPM 1.481
+  Glycolysis (pathway order):
+     pgi   /0445  TPM 0.352  iPM 0.442
+     pfkA  /0220  TPM 0.485  iPM 0.506
+     fbaA  /0131  TPM 0.599  iPM 0.263
+     tpiA  /0727  TPM 0.313  iPM 1.101
+     gapDH /0607  TPM 0.440  iPM 0.627
+     gapdh /0451  TPM 0.690  iPM 0.673
+     pgk   /0606  TPM 0.352  iPM 0.437
+     pgm   /0729  TPM 0.596  iPM 1.039
+     eno   /0213  TPM 0.369  iPM 0.377
+     pyk   /0221  TPM 0.511  iPM 0.340
+  Pyruvate metabolism:
+     pdhC  /0227  TPM 0.448  iPM 0.341
+     pta   /0229  TPM 0.273  iPM 0.265
+     ackA  /0230  TPM 0.194  iPM 0.440
+     ldh   /0475  TPM 0.660  iPM 0.704
+
+[panels d,e] Giant rPtn operon OP_00341 (MMSYN1_0652-0672, 21 genes, ~11 kb, minus strand)
+  coding mRNA-pool share: Syn1 12.1%  ->  Syn3A 34.0%  (share FC 2.80; per-gene relTPM FC 1.48)
+  single polycistron, NO internal terminator; full-length ~11kb reads rare (1-2);
+  depth = 5'-polarity gradient (~90k at 5') with a sharp internal endonucleolytic step (tx~2100)
+
+[L6.2 caveat] r-proteins that buck the up-trend (TPM down, protein held/up)
+  rpsT  /0082  TPM 0.074  iPM 1.898  - new_promoter_fusion (weak fused promoter)
+  rpsO  /0294  TPM 0.144  iPM 1.261  - new_promoter_fusion (weak fused promoter)
+  rpmF  /0526  TPM 0.126  iPM 36.209  - UNAFFECTED (operon intact, not decapitated)
+  rpmE  /0137  TPM 0.010  iPM 1.374  - UNAFFECTED (operon intact, not decapitated)
+  rpsU  /0482  TPM 0.044  iPM 1.978  - UNAFFECTED (operon intact, not decapitated)
+
+[panel e] tRNA operon -> rPtn junction (Syn3A); deletion changed neighbour, not regulation
+  new upstream neighbour: tRNAs MMSYN1_0678-0681 = Thr/Val/Glu/Asn (TGT/TAC/TTC/GTT), co-directional (minus)
+  TSS(806176) -> nearest deletion (DEL_074 @806355): 179 bp  -> rPtn promoter retained/intact
+  Syn1 TSS->tRNA-3' = 7193 bp ; deleted (DEL_074 5509 + DEL_075 912) = 6421 bp ; Syn3A = 772 bp
+  Syn3A coords: rpsJ/0672 419409-419717 ; tRNA cluster 420560-420889 (minus)
+  Co-expression test (ONT + Illumina, the 06/07 method) for rpsJ/0672 <-> tRNA cluster:
+    ONT      : 0 / 3084 minus-strand reads span (enclose both); 0 bridge (>=50 bp on both genes)
+    Illumina : true inter-operon middle (419784-420350) mean depth 27 = 1.2% of flanking (vs rpsJ 20272, tRNA 2300)
+    -> BOTH platforms silent across the middle ; VERDICT = SPLIT (not co-transcribed)
+  => the deletion changed the operon's neighbour but NOT its regulation; the two stay independent

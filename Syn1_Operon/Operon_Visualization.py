@@ -76,6 +76,7 @@ PAD_BP              = 200                    # plot window = operon span +/- PAD
                                             # its full body (no edge slivers). Operon span itself is
                                             # marked by the dashed boundary guide lines (tx 0 / len).
 MARK_SYN3A_DELETION = True                  # shade syn3A-deleted regions on the gene track
+ALT_LABELS          = False                 # stagger gene labels on two rows (dense operons)
 MAX_ISOFORMS_TO_PLOT = 100                  # cap per operon (top by n_reads)
 
 GENE_COLOR   = "#7a7a7a"                    # genes: gray for BOTH strands
@@ -234,14 +235,19 @@ def draw_gene_arrows(ax, oc: OperonCoord, genes_df: pd.DataFrame, fig_w: float =
 
     # syn3A deletion overlay (shaded band, behind everything)
     if MARK_SYN3A_DELETION and DELETIONS:
-        drew = False
+        drew = False; first_span = None
         for d0, d1 in DELETIONS:
             xa, xb = oc.tx_of_genome_pos0(d0), oc.tx_of_genome_pos0(d1)
             a, b = max(min(xa, xb), win_lo), min(max(xa, xb), win_hi)
             if b > a:
                 ax.axvspan(a, b, facecolor=DEL_COLOR, alpha=0.17, lw=0, zorder=0)
                 drew = True
-        if drew:
+                if first_span is None:
+                    first_span = (a, b)
+        if drew and ALT_LABELS:                 # below-arrow blocks fill the bottom-left; label the band itself
+            ax.text(sum(first_span) / 2, 0.18, "syn3A\ndeletion", ha="center", va="top",
+                    fontsize=5, color="#c0392b", linespacing=0.85)
+        elif drew:
             ax.text(0.005, 0.04, "syn3A deletion (shaded)", transform=ax.transAxes,
                     ha="left", va="bottom", fontsize=5, color="#c0392b")
 
@@ -249,7 +255,7 @@ def draw_gene_arrows(ax, oc: OperonCoord, genes_df: pd.DataFrame, fig_w: float =
     ax.hlines(Y, win_lo, win_hi, color="black", lw=0.8, zorder=1)
 
     if not genes_df.empty:
-        for _, r in genes_df.sort_values("start0").iterrows():
+        for gi, (_, r) in enumerate(genes_df.sort_values("start0").iterrows()):
             x0 = oc.tx_of_genome_pos0(int(r["start0"]))
             x1 = oc.tx_of_genome_pos0(int(r["end0"]))
             xl, xr = min(x0, x1), max(x0, x1)
@@ -274,16 +280,28 @@ def draw_gene_arrows(ax, oc: OperonCoord, genes_df: pd.DataFrame, fig_w: float =
             ax.add_patch(mpatches.Polygon(v, closed=True, facecolor=base, alpha=alpha,
                                           edgecolor="black", lw=elw, linestyle=ls, zorder=2))
 
-            # label EVERY gene: full label if it fits the box, else the bare locus number
+            # label EVERY gene: full label if it fits the box, else the bare locus number.
+            # ALT_LABELS staggers labels on two rows (+ a thin connector) so a dense operon
+            # shows every name without collapsing to the locus number.
             full_label = gene_label(r)
             locus_num  = str(r["locus_tag"]).split("_")[-1]
             box_width_pt = (width / xlim_span_tx) * (fig_w_inches * 72) * 0.92
-            label = full_label if (len(full_label) * char_pt) <= box_width_pt else locus_num
-            ax.text((xl + xr) / 2, Y + TRI/2 + 0.06, label,
-                    ha="center", va="bottom", fontsize=GENE_LABEL_FONTSIZE,
-                    color="#333" if is_sense else "#999", clip_on=True)
+            cx = (xl + xr) / 2
+            col = "#333" if is_sense else "#999"
+            if ALT_LABELS:                            # 2-line block (name over locusNum), alternating
+                blk = (full_label.split("/")[0] + "\n" + locus_num) if "/" in full_label else locus_num
+                if gi % 2 == 0:                       # above the arrow
+                    ax.text(cx, Y + TRI/2 + 0.05, blk, ha="center", va="bottom",
+                            fontsize=GENE_LABEL_FONTSIZE, color=col, clip_on=True, linespacing=0.82)
+                else:                                 # below the arrow
+                    ax.text(cx, Y - TRI/2 - 0.05, blk, ha="center", va="top",
+                            fontsize=GENE_LABEL_FONTSIZE, color=col, clip_on=True, linespacing=0.82)
+            else:
+                label = full_label if (len(full_label) * char_pt) <= box_width_pt else locus_num
+                ax.text(cx, Y + TRI/2 + 0.06, label, ha="center", va="bottom",
+                        fontsize=GENE_LABEL_FONTSIZE, color=col, clip_on=True)
 
-    ax.set_ylim(0, 1.15)
+    ax.set_ylim(*((-0.15, 1.15) if ALT_LABELS else (0, 1.15)))
     ax.set_yticks([])
     ax.set_xticks([])
     ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
@@ -419,7 +437,8 @@ def plot_one_operon(op, save_path: str, dpi: int = 300, PLOT_DEPTH: bool = True,
                   (ISO["n_reads"] >= isoform_reads_threshold)].copy()
 
     n_panels = 3 if PLOT_DEPTH else 2
-    hr = [1.0, 2.6, 1.1] if PLOT_DEPTH else [1.2, 2.8]
+    g_hr = 2.1 if ALT_LABELS else 1.0     # taller gene track to fit 2-line blocks above + below
+    hr = [g_hr, 2.6, 1.1] if PLOT_DEPTH else [g_hr + 0.2, 2.8]
     fig, axes = plt.subplots(n_panels, 1, figsize=(fig_w or FIG_W, fig_h or FIG_H),
                              height_ratios=hr, sharex=True, constrained_layout=True)
     ax_genes, ax_iso = axes[0], axes[1]
