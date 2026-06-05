@@ -110,7 +110,7 @@ for a in axi:
     a.tick_params(axis="x", labelbottom=False, bottom=False)
 axo[0].set_xticks([420500, 419500, 418500]); axo[0].set_xticklabels(["420.5", "419.5", "418.5"])
 axo[1].set_xticks([411000, 409500]); axo[1].set_xticklabels(["411", "409.5"])
-fig.text(0.5, -0.02, "Syn3A genome position (kb)", fontsize=6, ha="center")
+fig.supxlabel("Syn3A genome position (kb)", fontsize=6)
 
-fig.savefig(OUT, dpi=300, bbox_inches="tight")
+fig.savefig(OUT, dpi=300)   # born-at-size 7/3 x 7/3; constrained_layout, NO bbox_inches="tight"
 print(f"wrote {OUT}  (Illumina max {int(imax)}, ONT max {int(omax)})")
