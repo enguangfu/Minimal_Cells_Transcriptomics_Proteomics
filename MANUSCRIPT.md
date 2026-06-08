@@ -8,17 +8,18 @@ expand them into prose, quoting numbers verbatim from the files you list.
 TO DO Reminder:
 
 **A. Pending analyses (these block their Results text + figure panels):**
-- [ ] R2 / M4 — the whole RNA-processing/RNase analysis: transcriptome-wide 3' vs 5' erosion (L2.2), putative 3'→5' exoribonuclease via order of 3'-end RNA secondary structure (L2.3), ATP-synthase α-subunit cleavage + check other complexes + secondary-structure visual (L2.4).
+- [~] R2 / M4 — RNA-processing/RNase analysis. DONE: L2.2 transcriptome-wide 3' vs 5' erosion (panel d) + L2.4 ATP-synthase α cleavage (panel f); R2 prose (`RNase.tex`) + M4 Methods (`RNA_processing.tex`) DRAFTED 2026-06-07. PENDING (tomorrow): L2.3 3'→5' exo via 3'-end RNA 2° structure (ViennaRNA), other-membrane-complex scan, and the B.subtilis→Syn1 RNase-site mapping (M4 last subsubsection is a TODO comment).
 - [ ] R5 L5.5 (panel e) — **DEFERRED** essentiality × trace-expression script; supply the syn3A essentiality source. 
 - [ ] R6 L6.5 (no panel) — ATP/GTP flux comparison; supply the metabolic model/source. (panel d/e now = rPtn operon + tRNA junction, L6.3.)
 - [x] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
 - [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
 
 **B. Methods still to write:**
-- [ ] M4 — write "RNA processing and ribonucleases" (after analysis A above).
+- [~] M4 — "RNA processing and ribonucleases" DRAFTED (ribonuclease inventory + RNA-processing endpoint analysis + RNase III/Y homology table; versions pinned). Pending: the B.subtilis→Syn1 RNase-site-mapping + 3'-end 2°-structure subsubsection (commented TODO, after tomorrow's analysis).
 
 **C. Results prose (draft from logics, §0 style — one section at a time):**
 - [x] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) drafted (L6.1–L6.5, 459-era numbers; L6.3 = the 11 kb rPtn operon + tRNA-junction paragraph, panels d/e). Only blocked items remain: R5-L5.5 (panel e essentiality) and R6-L6.5 flux (no panel) — both await analyses A.
+- [x] R2 (`RNase.tex`) DRAFTED 2026-06-07 (L2.1–L2.4 prose, panels a–f, ribonuclease table; L2.3 exo mechanism kept as a hedged prediction pending tomorrow's 2°-structure analysis). Compiles clean (durand_rnases_2018, redko_minimal_2013, janssen_tmrna_2012). **ALL SIX RESULTS SECTIONS + R2 NOW DRAFTED.**
 
 **D. Figures:**
 - [ ] Regenerate + format the six multi-panel figures in Illustrator.
@@ -212,11 +213,12 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 ### Figure
 **Figure:** `Manuscript/figures/rnase.pdf`
 
-- Panel a: RNA isoform distribution for gene 0154/lap with more 5' erosion.
-- Panel b: RNA isoform distribution for gene 0178 with more 3' erosion.
-- Panel c: RNA isoform truncation categories.
-- Panel d: Biased RNA Processing schematics: endo and exo from 3'.
-- Panel e: RNA isoform distributions for ATP synthase operon.
+- Panel a: Legends of erosions of RNA isoforms and of RNA processing molecules (shared top strip: 4 erosion categories + 5 RNase/ribosome/tmRNA icons). (7, 7/10) — `Syn1_RNase/R2_panels/R2a_legend_strip.pdf` (icons also as standalone `R2_icon_*.pdf`).
+- Panel b: RNA isoform distribution for gene 0154/lap with more 5' erosion. (7/2, 7/4)
+- Panel c: RNA isoform distribution for gene 0178 with more 3' erosion. (7/2, 7/4)
+- Panel d: RNA isoform truncation categories. (7/3, 7/3)
+- Panel e: Biased RNA Processing schematics: endo and exo from 3'. (14/3, 7/3)
+- Panel f: RNA isoform distributions for ATP synthase operon — isoforms split into two regions at atpA/α (0792) where RNase III cuts; coloured by 5'-block (a,c,b,δ; teal) vs 3'-block (γ,β,ε; orange), gene arrows tinted by block, depth steps down at the α cut. (7, 7/3) — `Syn1_RNase/R2_panels/R2f_atp_synthase.pdf` (matplotlib: gene arrows + isoforms + depth only; the F1/F0 scheme, SD strengths, subunit labels, "RNase III on α" scissors are added in Illustrator).
 
 ### Chain of Logics
 
@@ -226,7 +228,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Analysis:** None
 - **Outputs:** None
 - **Numbers to cite:**  None
-- **Figure panels:** a,b
+- **Figure panels:** b,c
 - **Conclusion:** None
 - **Caveats:** None
 - **Notes for LLM:** None
@@ -239,7 +241,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - `Syn1_RNase/RNA_Processing.txt`
   - plots + tables in `Syn1_RNase/RNase/`
 - **Numbers to cite:** (current clustering, n_reads>=10, 20,885 isoforms) full-length/unprocessed 8.3% isoforms / 27.0% reads; 3'-intragenic-only 30.3% iso / 47.5% reads (the dominant non-canonical class); both-eroded 41.9% iso; 5'-intragenic-only 19.5% iso; 5'/3' intragenic ratio 0.40 by reads (3' erosion dominates); 42.2% of contained ORFs have a start codon but no stop codon (read-weighted 38.9%).
-- **Figure panels:** c
+- **Figure panels:** d
 - **Conclusion:** Most full-length isoforms are processed; endpoints fall inside ORFs far more often at the 3' end, evidence of biased 3'-directed erosion.
 - **Caveats:** intragenic-endpoint logic counts a 3' end inside a gene body as processing (cannot be a terminator); does not distinguish endo- from exo-nucleolytic origin.
 - **Notes for LLM:** L2.2 ANALYSIS DONE (refreshed 2026-06-05 against the current Apr-23 clustering; the stale dead-path version is fixed). Still TODO: born-at-size **panel c** for figures/rnase.pdf, and the **RNA Processing Analysis** Methods subsection (M4).
@@ -250,7 +252,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Analysis:** None
 - **Outputs:** None
 - **Numbers to cite:**  None
-- **Figure panels:** d
+- **Figure panels:** e
 - **Conclusion:** None
 - **Caveats:** None
 - **Notes for LLM:** This analysis needs to be implemented by checking the order of RNA secondary structure at the 3' end.
@@ -258,14 +260,14 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 #### L2.4: ATP synthase operon is co-expressed in one-go but cut at $\alpha$ subunit.
 
 - **Logic:** Macromolecular complexes' gene co-expression can be altered by RNA processing. ATP synthase's RNA isoform distribution has a clear pattern of isolation at $\alpha$ subunits, which was identified as endo RNase III cleavage site. Comment on the other membrane complexes.
-- **Analysis:** 
+- **Analysis:** `Syn1_RNase/R2_figure_panels.py` (panel_f).
 - **Outputs:** 
-  - plot: `Syn1_Operon/ATP_Synthase_wdepth.pdf`
-- **Numbers to cite:**  None
-- **Figure panels:** e
+  - `Syn1_RNase/R2_panels/R2f_atp_synthase.pdf`
+- **Numbers to cite:** the atp operon (minus strand) is segmented into two overlapping operons that meet AT atpA/$\alpha$ (MMSYN1_0792): the 5'-block OP_00395 (0797–atpH/0793 + 5' of $\alpha$; 12 member isoforms, top isoform 1,161 reads) and the 3'-block OP_00394 (3' of $\alpha$ + atpG/atpD/atpC = 0791–0789; 6 members); the RNase III cut at $\alpha$ (~933.78 kb) drops the minus-strand depth from ~9k to ~half across the junction.
+- **Figure panels:** f
 - **Conclusion:** The RNase complexifies the subunit synthesis of complexes.
 - **Caveats:** None
-- **Notes for LLM:** Needs to check for other complexes; visualize the RNA secondary structure at $\alpha$
+- **Notes for LLM:** Panel-f matplotlib (gene arrows + 2-region-coloured isoforms + depth) DONE 2026-06-07; the F1/F0 scheme, SD strengths, subunit labels and "RNase III on $\alpha$" scissors are Illustrator. Still TODO: check OTHER membrane complexes for the same pattern; visualize the RNA secondary structure at $\alpha$.
 
 ---
 

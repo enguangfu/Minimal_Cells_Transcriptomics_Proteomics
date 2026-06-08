@@ -1,38 +1,25 @@
 \subsubsection{Ribonucleases in Syn1 and Syn3A}
 
-% \begin{table}[H]
-% \centering
-% \caption{Ribonucleases and \textit{trans}-Translation Rescue System in Syn1}
-% \begin{tabular}{C{2cm} C{3cm} C{2.0cm} C{3.0cm} C{4.0cm}}
-% \toprule
-% LocusNum & Gene Product & Abundance & Function & Activity Signature\\
-% \midrule
+The ribonuclease complement of \syn~was read from the genome annotation and assigned activities from the characterised \textit{Bacillus subtilis} orthologues.
+Both \syn~and \syna~encode the same compact set: the endoribonucleases RNase~III, RNase~Y and RNase~M5, the 5$'\rightarrow$3$'$ exoribonucleases RNase~J1 and RNase~J2, the 3$'\rightarrow$5$'$ exoribonucleases RNase~R and YhaM, and the \textit{trans}-translation factors tmRNA and SmpB (Table~\ref{tbl:rnase_syn1_syn3a})~\cite{durand_rnases_2018, redko_minimal_2013}.
+Per-cell abundances were the proteomic copy numbers (Section on proteomics), and substrate signatures were taken from the corresponding \textit{B. subtilis} enzymes.
 
-% \textit{rnmV}/0003 & RNase M5 & 37 & Endo  & 5S rRNA\\
-% \textit{rny}/0359  & RNase Y & 70 & Endo & ssRNA \\
-% \textit{rnc}/0418  & RNase III & 67 & Endo  & dsRNA\\
+\subsubsection{RNA-processing endpoint analysis}
 
-% \hline
-
-% \textit{rnjB}/0257 & RNase J2 & 142 & Exo 5'$\rightarrow$3' & - \\
-% \textit{rnjA}/0600 & RNase J1 & 92 & Exo 5'$\rightarrow$3'  & 5' monophosphate \\
-% \textit{yhaM}/0437 & YhaM & 117 & Exo 3'$\rightarrow$5' & 3' OH \newline unstructured region \\
-% \textit{rnr}/0775  & RNase R & 36 & Exo 3'$\rightarrow$5' & 3' OH \newline unstructured region\\
-
-% \hline
-
-% \textit{ssrA}/0158 & tmRNA & 2.5\% of non-rRNA & Ribosome rescue & non-stop mRNA \\
-% \textit{smpB}/0776 & Small protein B & 14 & tmRNA cofactor & non-stop mRNA \\
-
-
-% \bottomrule
-% \label{tbl:rnase_syn1_syn3a}
-% \end{tabular}
-
-% \end{table}
-
+Post-transcriptional processing was quantified from the clustered PacBio isoforms.
+Isoforms supported by at least ten reads were retained, giving 20{,}885 isoforms.
+A per-strand mask of protein-coding gene bodies was built from the \syn~GFF3 annotation, and the 5$'$ and the 3$'$ genomic endpoint of each isoform was labelled intragenic when it fell inside a gene body and intergenic otherwise.
+Each isoform was assigned to one of four end-context categories --- unprocessed (both ends intergenic), 5$'$-eroded only, 3$'$-eroded only, or both-eroded --- and the composition was tabulated both by isoform count and by read.
+The erosion asymmetry was summarised as the ratio of the read weight carried by 5$'$-intragenic to that carried by 3$'$-intragenic isoforms.
+Independently, every annotated start and stop codon fully contained within an isoform was counted, and a reading frame that contained its start codon but not its stop codon was scored as 3$'$-truncated.
+For the single-gene panels, the isoforms contained within an operon were coloured by end-context and ordered into the erosion ladder; for the ATP-synthase panel the member isoforms of the two segmented operons were coloured by transcription block.
+Analyses were run in Python 3.11 with pandas 2.1, NumPy 1.26 and SciPy 1.11, and figures were drawn with Matplotlib 3.8.
 
 \subsubsection{Homology Comparison of RNase III and RNase Y between B. subtilis and Syn1}
+
+RNase~III and RNase~Y, the endoribonucleases that carry out most intra-operonic cleavage, were compared between \textit{B. subtilis} (NCBI NC\_000964.3) and \syn~to confirm conserved catalytic and RNA-binding architecture.
+Domain organisation was assigned with InterPro, and pairwise coverage and identity were taken from the protein alignment.
+Both enzymes retained their full domain architecture at 91--98\% coverage and 35--45\% identity (Table~\ref{tbl:rnase_III_Y}).
 
 \begin{table}[H]
 % \centering
@@ -54,5 +41,7 @@ Length & Domain \textsuperscript{\emph{b}} & Length & Domain & Coverage \% & Ide
 
 \end{table}
 
-\subsubsection{Mapping Endo-RNase Processing Sites from B. subtilis to Syn1}
-
+% \subsubsection{Mapping Endo-RNase Processing Sites from B. subtilis to Syn1}
+% TODO (analysis pending, see L2.3/L2.4): map characterised B. subtilis RNase III / RNase Y
+% cleavage sites onto Syn1 by homology, and test the 3'-end secondary-structure prediction for the
+% 3'->5' exonucleolytic bias (ViennaRNA). Prose to be written once the analysis is done.
