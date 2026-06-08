@@ -734,6 +734,12 @@ def parse_seq_line(line):
     stem3 = mid[2].replace("T", "U")
     return tail5, stem5, loop, stem3, tail3
 
+
+def rc_rna(s):
+    """Reverse-complement an RNA/DNA block, preserving '-' gap characters."""
+    return s.translate(str.maketrans("ACGUTacgut", "UGCAAugcaa"))[::-1]
+
+
 terms = []
 pending = None   # dict waiting for its sequence line
 
@@ -769,8 +775,14 @@ with open(TRANSTERM_TXT) as fh:
         if pending is not None and SEQ_RE.match(line):
             parsed = parse_seq_line(line)
             if parsed:
+                t5, s5, lp, s3, t3 = parsed
+                if pending["strand"] == "-":
+                    # TransTermHP prints minus-strand terminators in FORWARD-genome
+                    # orientation; reverse-complement to transcript 5'->3' so the poly-U
+                    # becomes the 3' tail (matches the minus-strand transcript & panel d).
+                    t5, s5, lp, s3, t3 = rc_rna(t3), rc_rna(s3), rc_rna(lp), rc_rna(s5), rc_rna(t5)
                 pending["tail5"], pending["stem5"], pending["loop"], \
-                    pending["stem3"], pending["tail3"] = parsed
+                    pending["stem3"], pending["tail3"] = t5, s5, lp, s3, t3
             terms.append(pending)
             pending = None
 
@@ -1300,8 +1312,9 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None, minimal=F
                 fontsize=9, color="#555555", transform=ax.transAxes)
 
     # ── 3' tail: stream from stem base down-and-right (poly-U region) ────────
-    tail3_show = tail3[:tail_show] if len(tail3) > tail_show else tail3
-    tail3_label = tail3_show + ("…" if len(tail3) > tail_show else "")
+    # The 3' tail is the terminator poly-U at the mRNA 3' END, so NO trailing "…"
+    # (the hidden part of tail3 is downstream genomic sequence past the transcript end).
+    tail3_label = tail3[:tail_show] if len(tail3) > tail_show else tail3
     n3 = len(tail3_label)
     for k, ch in enumerate(tail3_label):
         bx = x_R + (off + 1.7 * cw) + k * char_w

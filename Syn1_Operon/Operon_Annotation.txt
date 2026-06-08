@@ -53,32 +53,32 @@ max       7.0
 
 Poly-U tract length (leading consecutive U in the 3' tail):
 count    97.0
-mean      4.6
-std       2.4
+mean      6.1
+std       1.9
 min       0.0
-25%       3.0
-50%       5.0
-75%       6.0
+25%       5.0
+50%       6.0
+75%       7.0
 max      15.0
-  median poly-U tract length = 5 nt
+  median poly-U tract length = 6 nt
 
-Mean U fraction across the 15-nt 3' tail: 0.64
+Mean U fraction across the 15-nt 3' tail: 0.71
 3' tail per-position U fraction:
-1     0.94
-2     0.95
-3     0.81
-4     0.85
-5     0.66
-6     0.55
-7     0.70
-8     0.49
-9     0.58
-10    0.60
-11    0.52
-12    0.57
-13    0.43
-14    0.49
-15    0.44
+1     0.99
+2     0.99
+3     0.95
+4     0.97
+5     0.92
+6     0.78
+7     0.80
+8     0.47
+9     0.65
+10    0.53
+11    0.57
+12    0.54
+13    0.57
+14    0.43
+15    0.46
 
 Stem G+C content (%): median 43%, mean 44%  (genome G+C = 24%)
 count    97.0
@@ -92,11 +92,11 @@ max      83.3
 
 Signed distance from mapped TTS to 3' end of poly-U tract (nt; + = TTS beyond poly-U, 0 = coincident):
 count    97.0
-mean      2.9
-std       3.8
+mean      1.4
+std       3.4
 min      -7.0
-25%       1.0
-50%       3.0
-75%       4.0
-max      27.0
-  median = 3 nt; within +/-10 nt of the poly-U end: 98%
+25%       0.0
+50%       1.0
+75%       2.0
+max      23.0
+  median = 1 nt; within +/-10 nt of the poly-U end: 98%
