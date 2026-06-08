@@ -224,7 +224,7 @@ def panel_c(*_):
     reads = d.groupby("category")["n_reads"].sum()
     rows = [("Reads", reads, reads.sum()), ("Isoforms", kinds, len(d))]
 
-    fig, ax = plt.subplots(figsize=(7 / 3, 7 / 3), constrained_layout=True)
+    fig, ax = plt.subplots(figsize=(7 / 4, 7 / 4), constrained_layout=True)
     for yi, (lab, ser, tot) in enumerate(rows):
         left = 0.0
         for c in CATS:
