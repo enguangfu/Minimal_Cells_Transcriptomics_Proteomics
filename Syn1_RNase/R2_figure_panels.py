@@ -40,7 +40,7 @@ OUT   = f"{ROOT}/Syn1_RNase/R2_panels"
 os.makedirs(OUT, exist_ok=True)
 
 CATS = ["unprocessed", "5p_intragenic_only", "3p_intragenic_only", "both_intragenic"]
-CLAB = ["Unprocessed", "5$'$ eroded", "3$'$ eroded", "Both eroded"]
+CLAB = ["Unprocessed", "5′ eroded", "3′ eroded", "Both eroded"]
 CCOL = {"unprocessed": "#9e9e9e", "5p_intragenic_only": "#3b6db3",
         "3p_intragenic_only": "#c0392b", "both_intragenic": "#7a4fa3"}
 KB = FuncFormatter(lambda x, _: f"{x/1000:.1f}")
@@ -243,7 +243,7 @@ def panel_c(*_):
     r5 = reads.get("5p_intragenic_only", 0) + reads.get("both_intragenic", 0)
     r3 = reads.get("3p_intragenic_only", 0) + reads.get("both_intragenic", 0)
     ratio = r5 / r3
-    ax.text(50, 1.5, f"3$'$ erosion dominates  (5$'$/3$'$ eroded reads = {ratio:.2f})",
+    ax.text(50, 1.5, f"3′ erosion dominates  (5′/3′ eroded reads = {ratio:.2f})",
             ha="center", va="bottom", fontsize=5, color="#444", fontstyle="italic")
     fig.savefig(f"{OUT}/R2d_truncation_categories.pdf", dpi=300)    # figure panel d
     plt.close(fig)
@@ -292,8 +292,8 @@ ATP = dict(op5="OP_00395", op3="OP_00394", cut=933780, win=(929400, 936600),
                   "MMSYN1_0793", "MMSYN1_0794", "MMSYN1_0795", "MMSYN1_0796", "MMSYN1_0797"])
 R5_COL, R3_COL = "#1b9e77", "#d95f02"            # 5' block (teal) / 3' block (orange)
 R5_TINT, R3_TINT, CUT_GENE = "#b7e0d4", "#fcd2ad", "#dddddd"   # gene-arrow fills
-SUBUNIT = {"0796": "a", "0795": "c", "0794": "b", "0793": r"$\delta$", "0792": r"$\alpha$",
-           "0791": r"$\gamma$", "0790": r"$\beta$", "0789": r"$\epsilon$", "0797": ""}
+SUBUNIT = {"0796": "a", "0795": "c", "0794": "b", "0793": "δ", "0792": "α",
+           "0791": "γ", "0790": "β", "0789": "ε", "0797": ""}
 
 
 def load_genes(loci):
@@ -349,8 +349,8 @@ def panel_f(iso, mask=None):
     axi.set_ylabel("RNA isoforms", fontsize=6)
     for sp in ("top", "right", "bottom"):
         axi.spines[sp].set_visible(False)
-    h = [plt.Line2D([0], [0], color=R5_COL, lw=3, label=r"5$'$ block (a,c,b,$\delta$)"),
-         plt.Line2D([0], [0], color=R3_COL, lw=3, label=r"3$'$ block ($\gamma$,$\beta$,$\epsilon$)")]
+    h = [plt.Line2D([0], [0], color=R5_COL, lw=3, label="5′ block (a,c,b,δ)"),
+         plt.Line2D([0], [0], color=R3_COL, lw=3, label="3′ block (γ,β,ε)")]
     axi.legend(handles=h, fontsize=5, frameon=False, loc="upper left",
                handlelength=1.3, labelspacing=0.3, borderaxespad=0.3)
 

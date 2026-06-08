@@ -145,10 +145,10 @@ def make_strip():
         t = ax.text(0, -1, lab, fontsize=fs); w = t.get_window_extent(rend).width / fig.dpi
         t.remove(); return w
 
-    cats = [("Unprocessed", GREY), ("5$'$ eroded", BLUE), ("3$'$ eroded", RED), ("Both eroded", PURPLE)]
+    cats = [("Unprocessed", GREY), ("5′ eroded", BLUE), ("3′ eroded", RED), ("Both eroded", PURPLE)]
     mols = [("endo_scissors", "Endo", "RNase III, Y"),
-            ("exo3to5_pacman", r"Exo 3$'\!\rightarrow\!$5$'$", "RNase R, YhaM"),
-            ("exo5to3_pacman", r"Exo 5$'\!\rightarrow\!$3$'$", "RNase J1, J2"),
+            ("exo3to5_pacman", "Exo 3′→5′", "RNase R, YhaM"),
+            ("exo5to3_pacman", "Exo 5′→3′", "RNase J1, J2"),
             ("ribosome_triangle", "Ribosome", ""),
             ("tmrna_key", "tmRNA", "SmpB")]
 
