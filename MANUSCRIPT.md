@@ -268,12 +268,13 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Logic:** Macromolecular complexes' gene co-expression can be altered by RNA processing. ATP synthase's RNA isoform distribution has a clear pattern of isolation at $\alpha$ subunits, which was identified as endo RNase III cleavage site. Comment on the other membrane complexes.
 - **Analysis:** `Syn1_RNase/R2_figure_panels.py` (panel_f).
 - **Outputs:** 
-  - `Syn1_RNase/R2_panels/R2f_atp_synthase.pdf`
-- **Numbers to cite:** the atp operon (minus strand) is segmented into two overlapping operons that meet AT atpA/$\alpha$ (MMSYN1_0792): the 5'-block OP_00395 (0797–atpH/0793 + 5' of $\alpha$; 12 member isoforms, top isoform 1,161 reads) and the 3'-block OP_00394 (3' of $\alpha$ + atpG/atpD/atpC = 0791–0789; 6 members); the RNase III cut at $\alpha$ (~933.78 kb) drops the minus-strand depth from ~9k to ~half across the junction.
+  - `Syn1_RNase/R2_panels/R2g_atp_synthase.pdf`
+  - `Syn1_RNase/RNase_Site_Mapping/output/rnaseIII/stems/R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf` (the α RNase III stem with both cuts)
+- **Numbers to cite:** the atp operon (minus strand) is segmented into two overlapping operons that meet AT atpA/$\alpha$ (MMSYN1_0792): the 5'-block OP_00395 (0797–atpH/0793 + 5' of $\alpha$; 12 member isoforms, top isoform 1,161 reads) and the 3'-block OP_00394 (3' of $\alpha$ + atpG/atpD/atpC = 0791–0789; 6 members); the minus-strand depth drops from ~9k to ~half across the junction. The cleavage is assigned to RNase III by homology to B. subtilis atpA (BSU_36830; 60.3% protein identity, reciprocal best hit): the two B. subtilis RNase III cuts project into Syn1 atpA at **932,769 and 932,881** (1-based, − strand), the two staggered cuts of a single dsRNA stem (932,769 pairs with 932,882, and 932,881 pairs with 932,770; ~2-nt 3′ overhang; local Syn1 stem MFE −25 kcal/mol, B. subtilis homolog −56). Source: `Syn1_RNase/RNase_Site_Mapping/output/rnaseIII/rnaseIII_syn1_anchored_cleavage_sites.tsv`.
 - **Figure panels:** g
 - **Conclusion:** The RNase complexifies the subunit synthesis of complexes.
 - **Caveats:** None
-- **Notes for LLM:** Panel-f matplotlib (gene arrows + 2-region-coloured isoforms + depth) DONE 2026-06-07; the F1/F0 scheme, SD strengths, subunit labels and "RNase III on $\alpha$" scissors are Illustrator. Still TODO: check OTHER membrane complexes for the same pattern; visualize the RNA secondary structure at $\alpha$.
+- **Notes for LLM:** Panel-g matplotlib (gene arrows + 2-region-coloured isoforms + depth + the two RNase III cut lines at 932,769/932,881 + shaded zone) DONE; the F1/F0 scheme, SD strengths, subunit labels and "RNase III on $\alpha$" scissors are Illustrator. RNA 2° structure at $\alpha$ DONE (the dsRNA stem with both staggered cuts, `R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf`). Still TODO: check OTHER membrane complexes for the same pattern.
 
 ---
 

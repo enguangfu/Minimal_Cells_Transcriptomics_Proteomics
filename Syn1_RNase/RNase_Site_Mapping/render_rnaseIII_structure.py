@@ -182,7 +182,10 @@ def render_one(df, locus, flank, let_fs):
     paired = draw_stem(ax, rna, struct, [idx[c] for c in cuts], letters=True, let_fs=let_fs,
                        backbone=False, rotate=True, letter_rot=0)
     out = STEMDIR / f"R2_{locus}_{gene}_rnaseIII_stem.pdf"
-    fig.savefig(out, dpi=300, transparent=True)
+    # crop the PDF box tight to the drawn structure (no blank margins) so it can be
+    # placed and scaled freely in Illustrator -- this is a free-floating graphic, not an
+    # assembled born-at-size panel, so the tight bbox is intentional here.
+    fig.savefig(out, dpi=300, transparent=True, bbox_inches="tight", pad_inches=0.01)
     plt.close(fig)
     tag = "duplex pair" if (len(cuts) == 2 and paired) else f"{len(cuts)} cut(s)"
     print(f"  {locus:14s} {gene:8s} {tag:12s} MFE {mfe:6.1f}  cuts={cuts}  -> {out.name}")
