@@ -95,31 +95,49 @@ def _pairs0(struct):
     return [(i - 1, pt[i] - 1) for i in range(1, pt[0] + 1) if pt[i] > i], pt
 
 
-def draw_stem(ax, rna, struct, cut_idxs, letters=True, let_fs=LET_FS):
+def _align_horizontal(xs, ys):
+    """Rotate coordinates so the structure's principal (long-stem) axis is horizontal,
+    i.e. parallel to the figure width."""
+    pts = np.column_stack([xs, ys]).astype(float)
+    pts -= pts.mean(0)
+    _, _, vt = np.linalg.svd(pts, full_matrices=False)      # vt[0] = principal axis
+    theta = -np.arctan2(vt[0, 1], vt[0, 0])                 # rotate that axis onto x
+    rot = pts @ np.array([[np.cos(theta), -np.sin(theta)],
+                          [np.sin(theta),  np.cos(theta)]]).T
+    return rot[:, 0], rot[:, 1]
+
+
+def draw_stem(ax, rna, struct, cut_idxs, letters=True, let_fs=LET_FS,
+              backbone=True, rotate=False, letter_rot=0):
     """Render one folded window onto ax; mark the cut base(s) red, and connect a
-    base-pairing cut pair with a dashed line (the dsRNA double cut)."""
+    base-pairing cut pair with a dashed line (the dsRNA double cut).
+    backbone=False drops the chain trace (it blurs the letters); rotate=True lays
+    the long stem along the width; letter_rot rotates the A/G/C/U glyphs."""
     xs, ys = _layout(struct)
+    if rotate:
+        xs, ys = _align_horizontal(xs, ys)
     pairs, pt = _pairs0(struct)
     ci = list(cut_idxs)
     ci_set = set(ci)
 
     for i, j in pairs:
         ax.plot([xs[i], xs[j]], [ys[i], ys[j]], color=BP_COL, lw=0.4, zorder=1)
-    ax.plot(xs, ys, color=BB_COL, lw=0.5, zorder=2)
+    if backbone:
+        ax.plot(xs, ys, color=BB_COL, lw=0.5, zorder=2)
 
     if letters:
         for k, ch in enumerate(rna):
             if k in ci_set:
                 continue
             ax.text(xs[k], ys[k], ch, fontsize=let_fs, color=BASE_TXT,
-                    ha="center", va="center", zorder=3)
+                    ha="center", va="center", rotation=letter_rot, zorder=3)
     else:
         ax.scatter(xs, ys, s=2.5, color="#e6e6e6", edgecolors=BB_COL, linewidths=0.1, zorder=3)
 
-    ax.annotate("5′", (xs[0], ys[0]), fontsize=5, color=BB_COL, ha="right", va="center",
-                xytext=(-3, 0), textcoords="offset points")
-    ax.annotate("3′", (xs[-1], ys[-1]), fontsize=5, color=BB_COL, ha="left", va="center",
-                xytext=(3, 0), textcoords="offset points")
+    ax.annotate("5′", (xs[0], ys[0]), fontsize=5, color="#666", ha="center", va="center",
+                xytext=(-4, 0), textcoords="offset points")
+    ax.annotate("3′", (xs[-1], ys[-1]), fontsize=5, color="#666", ha="center", va="center",
+                xytext=(4, 0), textcoords="offset points")
 
     # dashed connector only when the two cuts truly base-pair across one stem
     paired = False
@@ -134,7 +152,7 @@ def draw_stem(ax, rna, struct, cut_idxs, letters=True, let_fs=LET_FS):
     for k in ci:
         if letters:
             ax.text(xs[k], ys[k], rna[k], fontsize=let_fs + 1.2, color=CUT_COL,
-                    ha="center", va="center", fontweight="bold", zorder=5)
+                    ha="center", va="center", fontweight="bold", rotation=letter_rot, zorder=5)
         else:
             ax.scatter([xs[k]], [ys[k]], s=12, color=CUT_COL, edgecolors="white", linewidths=0.25, zorder=5)
 
@@ -160,7 +178,9 @@ def render_one(df, locus, flank, let_fs):
     rna, struct, mfe, idx, _ = fold_gene_window(cuts, strand, flank)
     fig = plt.figure(figsize=(7 / 4, 7 / 4), constrained_layout=True)
     ax = fig.add_subplot(111)
-    paired = draw_stem(ax, rna, struct, [idx[c] for c in cuts], letters=True, let_fs=let_fs)
+    # backbone off (it blurs the letters); long stem laid along the width; letters kept horizontal
+    paired = draw_stem(ax, rna, struct, [idx[c] for c in cuts], letters=True, let_fs=let_fs,
+                       backbone=False, rotate=True, letter_rot=0)
     out = STEMDIR / f"R2_{locus}_{gene}_rnaseIII_stem.pdf"
     fig.savefig(out, dpi=300, transparent=True)
     plt.close(fig)

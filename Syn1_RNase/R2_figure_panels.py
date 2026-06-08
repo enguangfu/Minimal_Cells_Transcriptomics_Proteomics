@@ -2,16 +2,20 @@
 """
 R2 (RNase / RNA-processing) figure panels -- born-at-size per OUTPUT.md.
 
-  panel_a : lap/0154 (OP_00078, + strand) -- 5' erosion ladder; isoforms sorted by 5' end,
-            coloured by endpoint-context category; the complete-5' isoforms at the bottom are
-            given EXTRA vertical spacing so the candidate endo cut can be annotated in Illustrator.
-  panel_b : 0178/neopullulanase (OP_00099, - strand) -- 3' erosion ladder, drawn 5'->3'
-            (minus strand, high genome coord on the LEFT).
-  panel_c : isoform truncation categories (horizontal 100% stacked, Isoforms vs Reads).
+Output letters follow the Fig. 2 legend in MANUSCRIPT.md (the CLI keys a/b/c/f below are the
+function names, NOT the figure letters):
+  panel_a -> R2c_lap_5p_erosion.pdf      (figure panel c) : lap/0154 (OP_00078, + strand) 5' erosion
+            ladder; isoforms sorted by 5' end, coloured by endpoint-context category; complete-5'
+            isoforms at the bottom get EXTRA spacing so the candidate endo cut can be annotated.
+  panel_b -> R2b_0178_3p_erosion.pdf     (figure panel b) : 0178/neopullulanase (OP_00099, - strand)
+            3' erosion ladder, drawn 5'->3' (minus strand, high genome coord on the LEFT).
+  panel_c -> R2e_truncation_categories.pdf (figure panel e) : isoform truncation categories.
+  panel_f -> R2g_atp_synthase.pdf        (figure panel g) : ATP-synthase operon, split at atpA/alpha.
+(panel d = the 0178 3' secondary structure -> fold_3prime_terminator.py; panel f = Illustrator schematic.)
 
 Only isoforms CONTAINED within the operon span are shown. Categories / colours are shared
-across a, b, c and emitted once as a standalone legend (R2_legend.pdf):
-  unprocessed (grey) | 5p_intragenic_only (blue) | 3p_intragenic_only (red) | both (purple)
+across the erosion + truncation panels and emitted once as a standalone legend (R2_legend.pdf):
+  unprocessed (grey) | 5' eroded (blue) | 3' eroded (orange = Exo 3'->5' icon) | both (purple)
 Per-panel category percentages are written to R2_panels/R2_panels.txt.
 
 Run in base env (pandas + matplotlib):
@@ -209,12 +213,12 @@ def erosion_panel(out, cfg, iso, mask, min_reads=2, sort="5p",
 
 
 def panel_a(iso, mask):
-    erosion_panel(f"{OUT}/R2b_lap_5p_erosion.pdf", A, iso, mask,    # figure panel b (legend strip is a)
+    erosion_panel(f"{OUT}/R2c_lap_5p_erosion.pdf", A, iso, mask,    # figure panel c (lap, 5' erosion)
                   min_reads=2, sort="5p", space_bottom=True)
 
 
 def panel_b(iso, mask):
-    erosion_panel(f"{OUT}/R2c_0178_3p_erosion.pdf", B, iso, mask,    # figure panel c
+    erosion_panel(f"{OUT}/R2b_0178_3p_erosion.pdf", B, iso, mask,    # figure panel b (0178, 3' erosion)
                   min_reads=2, sort="3p", space_bottom=False)
 
 
@@ -245,9 +249,9 @@ def panel_c(*_):
     ratio = r5 / r3
     ax.text(50, 1.5, f"3′ erosion dominates  (5′/3′ eroded reads = {ratio:.2f})",
             ha="center", va="bottom", fontsize=5, color="#444", fontstyle="italic")
-    fig.savefig(f"{OUT}/R2d_truncation_categories.pdf", dpi=300)    # figure panel d
+    fig.savefig(f"{OUT}/R2e_truncation_categories.pdf", dpi=300)    # figure panel e
     plt.close(fig)
-    print(f"[R2c] reads 5'/3' eroded ratio = {ratio:.3f}")
+    print(f"[R2e] reads 5'/3' eroded ratio = {ratio:.3f}")
 
 
 def make_legend():
@@ -381,7 +385,7 @@ def panel_f(iso, mask=None):
         ax.set_xlim(hi, lo)
     axg.text(sum(cuts) / 2, 1.35, "RNase III", ha="center", va="bottom",
              fontsize=4.5, color="#c0392b", clip_on=False)
-    fig.savefig(f"{OUT}/R2f_atp_synthase.pdf", dpi=300)
+    fig.savefig(f"{OUT}/R2g_atp_synthase.pdf", dpi=300)
     plt.close(fig)
     n5 = (df["col"] == R5_COL).sum()
     print(f"[R2f] ATP synthase: {len(df)} member isoforms ({n5} 5'-block / {len(df)-n5} 3'-block)")

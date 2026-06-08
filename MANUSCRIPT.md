@@ -216,12 +216,12 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Figure:** `Manuscript/figures/rnase.pdf`
 
 - Panel a: Legends of erosions of RNA isoforms and of RNA processing molecules (shared top strip: 4 erosion categories + 5 RNase/ribosome/tmRNA icons). (7, 7/10) — `Syn1_RNase/R2_panels/R2a_legend_strip.pdf` (icons also as standalone `R2_icon_*.pdf`).
-- Panel b: RNA isoform distribution for gene 0178 with more 3' erosion. (7/2, 7/4)
-- Panel c: RNA isoform distribution for gene 0154/lap with more 5' erosion. (7/2, 7/4)
-- Panel d: 3' secondary structure for gene 0178 (7/4, 7/4)
-- Panel e: RNA isoform truncation categories. (7/4, 7/4)
-- Panel f: Biased RNA Processing schematics: endo and exo from 3'. (7/2, 7/4)
-- Panel g: RNA isoform distributions for ATP synthase operon — isoforms split into two regions at atpA/α (0792) where RNase III cuts; coloured by 5'-block (a,c,b,δ; teal) vs 3'-block (γ,β,ε; orange), gene arrows tinted by block, depth steps down at the α cut. (7, 7/3) — `Syn1_RNase/R2_panels/R2f_atp_synthase.pdf` (matplotlib: gene arrows + isoforms + depth only; the F1/F0 scheme, SD strengths, subunit labels, "RNase III on α" scissors are added in Illustrator).
+- Panel b: RNA isoform distribution for gene 0178 with more 3' erosion. (7/2, 7/4) — `Syn1_RNase/R2_panels/R2b_0178_3p_erosion.pdf`
+- Panel c: RNA isoform distribution for gene 0154/lap with more 5' erosion. (7/2, 7/4) — `Syn1_RNase/R2_panels/R2c_lap_5p_erosion.pdf`
+- Panel d: 3' secondary structure for gene 0178 (7/4, 7/4) — `Syn1_RNase/R2_panels/R2d_0178_3prime_structure.pdf` (from `fold_3prime_terminator.py`, mirrored from `terminator_3p/`)
+- Panel e: RNA isoform truncation categories. (7/4, 7/4) — `Syn1_RNase/R2_panels/R2e_truncation_categories.pdf`
+- Panel f: Biased RNA Processing schematics: endo and exo from 3'. (7/2, 7/4) — Illustrator (no matplotlib file)
+- Panel g: RNA isoform distributions for ATP synthase operon — isoforms split into two regions at atpA/α (0792) where RNase III cuts; coloured by 5'-block (a,c,b,δ; teal) vs 3'-block (γ,β,ε; orange), gene arrows tinted by block, depth steps down at the α cut. (7, 7/3) — `Syn1_RNase/R2_panels/R2g_atp_synthase.pdf` (matplotlib: gene arrows + isoforms + depth only; the F1/F0 scheme, SD strengths, subunit labels, "RNase III on α" scissors are added in Illustrator).
 
 ### Chain of Logics
 
