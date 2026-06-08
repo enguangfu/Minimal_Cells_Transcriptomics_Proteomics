@@ -794,26 +794,27 @@ print(terms_df[["term_id","strand","conf","tail5","stem5","loop","stem3","tail3"
 # We require same strand.
 TERM_WINDOW = 50   # bp search window past TTS
 
+def _term_3p(terms, strand):
+    """Terminator 3' boundary in transcription direction:
+    '+' strand -> end0 (larger coord); '-' strand -> start0 (smaller coord)."""
+    return terms["end0"] if strand == "+" else terms["start0"]
+
+
 def find_terminators_near_tts(op_row, terms_df, window=TERM_WINDOW):
     """
-    Return subset of terms_df that fall within [TTS, TTS + window] in
-    transcription direction and match the operon strand.
+    Return same-strand terminators whose 3' boundary is within +/- window bp of
+    the operon TTS.  The boundary must be strand-correct: for a '-' operon the
+    terminator's 3' end is its SMALLER coordinate (start0), not end0.  The old
+    rule tested end0 on both strands, which silently dropped almost every
+    '-'-strand terminator (its end0 = the 5' stem-start sits ~15-30 bp past the
+    TTS) -- e.g. OP_00099/0178 missed its conf-100 TransTermHP terminator.
     """
     chrom  = str(op_row["chrom"])
     strand = str(op_row["strand"])
     tts    = int(op_row["tts"])
     t = terms_df[(terms_df["chrom"] == chrom) & (terms_df["strand"] == strand)].copy()
-    t['midpoint'] = (t['start0'] + t['end0']) // 2  # for debugging; not used in filtering
-    
-    hit = t[t['midpoint'].between(tts - window, tts + window)]  # initial broad filter for debugging
-
-    # if strand == "+":
-    #     # terminator should start after TTS
-    #     hit = t[(t["start0"] >= tts - 10) & (t["start0"] <= tts + window)]
-    # else:
-    #     # terminator should end before TTS (TTS = start0, smaller genomic coord)
-    #     hit = t[(t["end0"] <= tts + 10) & (t["end0"] >= tts - window)]
-    return hit
+    t["term_3p"] = _term_3p(t, strand)
+    return t[(t["term_3p"] - tts).abs() <= window]
 
 tts_hits = []
 for _, o in op_canonical.iterrows():
@@ -861,11 +862,10 @@ def find_internal_terminators(op_row, terms_df, tts_window=TERM_WINDOW):
     tts    = int(op_row["tts"])
 
     t = terms_df[(terms_df["chrom"] == chrom) & (terms_df["strand"] == strand)].copy()
-    t["midpoint"] = (t["start0"] + t["end0"]) // 2
-    # Fully inside operon body (by midpoint)
-    inside = t[t["midpoint"].between(op_s, op_e)]
-    # Exclude those near TTS (same midpoint logic as find_terminators_near_tts)
-    internal = inside[~inside["midpoint"].between(tts - tts_window, tts + tts_window)]
+    t["term_3p"] = _term_3p(t, strand)
+    # 3' boundary inside the operon body, but not within the TTS window
+    inside = t[t["term_3p"].between(op_s, op_e)]
+    internal = inside[(inside["term_3p"] - tts).abs() > tts_window]
     return internal
 
 int_hits = []
@@ -1331,11 +1331,20 @@ def draw_terminator_hairpin(ax, term_row, title=None, operon_ids=None, minimal=F
 
 
 # -- Individual plots (hairpin only: born at 1x1 in, no title/5'/3' labels) ---
+# Clear stale TERM_*.pdf from earlier runs so the folder reflects the current set.
+_hp_dir = "annotation/canonical/tts_hairpins"
+for _f in os.listdir(_hp_dir):
+    if _f.startswith("TERM_") and _f.endswith(".pdf"):
+        os.remove(os.path.join(_hp_dir, _f))
+# Name each file by its operon(s) (and term_id) so it is findable by operon, e.g.
+# TERM_82_OP_00099.pdf for the 0178 operon.
 for _, t in tts_terms_canonical.iterrows():
     fig, ax = plt.subplots(figsize=(1, 1))
     fig.subplots_adjust(left=0, right=1, bottom=0, top=1)   # axes fills figure
     draw_terminator_hairpin(ax, t, minimal=True)
-    save_path = f"annotation/canonical/tts_hairpins/TERM_{int(t['term_id'])}.pdf"
+    _ops = term_to_operons.get(int(t["term_id"]), [])
+    op_tag = "_".join(_ops) if _ops else "noop"
+    save_path = f"{_hp_dir}/TERM_{int(t['term_id'])}_{op_tag}.pdf"
     plt.savefig(save_path)                                  # exact 1x1 in
     plt.close()
 

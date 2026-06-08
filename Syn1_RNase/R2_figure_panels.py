@@ -285,9 +285,16 @@ def write_stats():
 
 
 # ---------------------------------------------------------------- panel f: ATP synthase operon
-# The atp operon is segmented into two operons that OVERLAP at atpA(0792, alpha); the RNase III
-# cut at alpha splits transcription into a 5' block (a,c,b,delta) and a 3' block (gamma,beta,eps).
-ATP = dict(op5="OP_00395", op3="OP_00394", cut=933780, win=(929400, 936600),
+# The atp operon splits into a 5' block (a,c,b,delta) and a 3' block (gamma,beta,eps) at atpA
+# (0792, alpha).  The split lines are the HOMOLOGY-ANCHORED RNase III cleavage sites: the two
+# B. subtilis atpA (BSU_36830) RNase III cuts, projected into Syn1 atpA by transcript fraction
+# (60% protein id).  RNase III is a dsRNA enzyme: the two cuts are the staggered double-strand cut
+# of ONE conserved stem -- Syn1 932769 pairs with 932882 and 932881 pairs with 932770 (~2-nt 3'
+# overhang, stem MFE -25; B. subtilis homolog MFE -56).  The stem is drawn by RNase_Site_Mapping/
+# render_rnaseIII_structure.py -> output/rnaseIII/stems/R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf (overlay
+# on panel f); `render_rnaseIII_structure.py all` renders all 18 homology-hit genes + an overview grid.
+# Cut positions: rnaseIII_syn1_anchored_cleavage_sites.tsv (replaces a hand-placed 933780 boundary).
+ATP = dict(op5="OP_00395", op3="OP_00394", cuts=[932769, 932881], win=(929400, 936600),
            genes=["MMSYN1_0789", "MMSYN1_0790", "MMSYN1_0791", "MMSYN1_0792",
                   "MMSYN1_0793", "MMSYN1_0794", "MMSYN1_0795", "MMSYN1_0796", "MMSYN1_0797"])
 R5_COL, R3_COL = "#1b9e77", "#d95f02"            # 5' block (teal) / 3' block (orange)
@@ -313,7 +320,7 @@ def load_genes(loci):
 def panel_f(iso, mask=None):
     ops = pd.read_csv(OPS, sep="\t").set_index("operon_id")
     genes = load_genes(ATP["genes"])
-    lo, hi = ATP["win"]; cut = ATP["cut"]
+    lo, hi = ATP["win"]; cuts = ATP["cuts"]
     isoi = iso.set_index("isoform_id")
 
     rows = []
@@ -366,10 +373,14 @@ def panel_f(iso, mask=None):
     for sp in ("top", "right"):
         axd.spines[sp].set_visible(False)
 
-    # alpha cut (dashed) + minus-strand 5'->3' (high coord left) on every row
+    # two RNase III cuts (dashed) bracketing a shaded cleavage zone + minus-strand 5'->3' (high coord left)
     for ax in (axg, axi, axd):
-        ax.axvline(cut, color="#c0392b", lw=0.8, ls=(0, (3, 2)), zorder=1)
+        ax.axvspan(min(cuts), max(cuts), color="#c0392b", alpha=0.10, lw=0, zorder=0)
+        for cpos in cuts:
+            ax.axvline(cpos, color="#c0392b", lw=0.8, ls=(0, (3, 2)), zorder=1)
         ax.set_xlim(hi, lo)
+    axg.text(sum(cuts) / 2, 1.35, "RNase III", ha="center", va="bottom",
+             fontsize=4.5, color="#c0392b", clip_on=False)
     fig.savefig(f"{OUT}/R2f_atp_synthase.pdf", dpi=300)
     plt.close(fig)
     n5 = (df["col"] == R5_COL).sum()

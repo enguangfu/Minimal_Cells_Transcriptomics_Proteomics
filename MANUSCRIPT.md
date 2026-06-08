@@ -8,11 +8,13 @@ expand them into prose, quoting numbers verbatim from the files you list.
 TO DO Reminder:
 
 **A. Pending analyses (these block their Results text + figure panels):**
-- [~] R2 / M4 — RNA-processing/RNase analysis. DONE: L2.2 transcriptome-wide 3' vs 5' erosion (panel d) + L2.4 ATP-synthase α cleavage (panel f); R2 prose (`RNase.tex`) + M4 Methods (`RNA_processing.tex`) DRAFTED 2026-06-07. PENDING (tomorrow): L2.3 3'→5' exo via 3'-end RNA 2° structure (ViennaRNA), other-membrane-complex scan, and the B.subtilis→Syn1 RNase-site mapping (M4 last subsubsection is a TODO comment).
+- [~] R2 / M4 — RNA-processing/RNase analysis. DONE: L2.2 erosion (panel d) + L2.4 ATP-synthase α cleavage (panel f); R2 prose (`RNase.tex`) + M4 Methods (`RNA_processing.tex`) drafted. **L2.3 SCOPED 2026-06-08** to ship with: (1) 2° structures of 3 examples — lap 5', 0178 3', atpA/α RNase III site (user-built, ViennaRNA); (2) panel e proposed-hypothesis schematic (proteomics capacity + kinetic argument); (3) the B.subtilis→Syn1 homology / α RNase III site visualization (user). These three are mostly user-built → then wrap R2. The other-membrane-complex scan is also deferred (optional).
+  - **DEFERRED (backlog) — genome-wide 3'-end 2°-structure test (L2.3 future work):** test the 3'→5'-exo signature transcriptome-wide. **Design is SETTLED — do NOT use the confounded version:** do NOT compare intragenic vs intergenic 3' ends (terminators are trivially structured → no evidence). Use within-class controls instead: (i) **terminal accessibility** — mean base-pairing prob of the last ~5 nt (ViennaRNA partition function) at intragenic 3' ends vs **dinucleotide-shuffled** windows (composition-matched null) → predict the 3' termini are more single-stranded (a loadable 3'-OH); (ii) **3'-vs-5' mirror-asymmetry meta-profile** — pairing probability aligned at the endpoint for intragenic 3' vs 5' ends → predict a structure peak just UPSTREAM (5') of 3' ends (the YhaM-stall stem) mirrored DOWNSTREAM (3') of 5' ends, both with accessible termini. N = 6,302 intragenic 3' / 9,992 5' unique positions (from `Syn1_RNase/RNase/isoform_endpoint_context.tsv`); ViennaRNA 2.6.4 in the RNAseq env; inputs ready.
 - [ ] R5 L5.5 (panel e) — **DEFERRED** essentiality × trace-expression script; supply the syn3A essentiality source. 
 - [ ] R6 L6.5 (no panel) — ATP/GTP flux comparison; supply the metabolic model/source. (panel d/e now = rPtn operon + tRNA junction, L6.3.)
 - [x] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
 - [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
+- [x] R1 L1.4 (panel e,f,g) - RESOLVED 2026-06-08: the "canonical operons with no TransTermHP terminator" were a matching bug in `Operon_Annotation.py:find_terminators_near_tts` — the commented strict rule tested the terminator `end0` on BOTH strands, so '-'-strand terminators (whose 3' boundary is `start0`) were dropped (e.g. OP_00099/0178 missed its conf-100 TERM 82). Fixed to a strand-correct 3'-boundary window (`_term_3p`), re-ran: 97/127 canonical operons have a TTS terminator (was 98 via a midpoint hack; OP_00061 correctly dropped, OP_00099 now mapped). operons.tex L25 updated (97/127, 98% within 10 nt); term_* figures regenerated. Biology: a 3' terminator hairpin does NOT preclude 3' erosion (RNase R reads through structure) → L2.1/L2.3 reframe from "unstructured 3' end" to "limiting 3'→5' read-through capacity."
 
 **B. Methods still to write:**
 - [~] M4 — "RNA processing and ribonucleases" DRAFTED (ribonuclease inventory + RNA-processing endpoint analysis + RNase III/Y homology table; versions pinned). Pending: the B.subtilis→Syn1 RNase-site-mapping + 3'-end 2°-structure subsubsection (commented TODO, after tomorrow's analysis).
@@ -214,21 +216,22 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **Figure:** `Manuscript/figures/rnase.pdf`
 
 - Panel a: Legends of erosions of RNA isoforms and of RNA processing molecules (shared top strip: 4 erosion categories + 5 RNase/ribosome/tmRNA icons). (7, 7/10) — `Syn1_RNase/R2_panels/R2a_legend_strip.pdf` (icons also as standalone `R2_icon_*.pdf`).
-- Panel b: RNA isoform distribution for gene 0154/lap with more 5' erosion. (7/2, 7/4)
-- Panel c: RNA isoform distribution for gene 0178 with more 3' erosion. (7/2, 7/4)
-- Panel d: RNA isoform truncation categories. (7/4, 7/4)
-- Panel e: Biased RNA Processing schematics: endo and exo from 3'. (14/3, 7/3)
-- Panel f: RNA isoform distributions for ATP synthase operon — isoforms split into two regions at atpA/α (0792) where RNase III cuts; coloured by 5'-block (a,c,b,δ; teal) vs 3'-block (γ,β,ε; orange), gene arrows tinted by block, depth steps down at the α cut. (7, 7/3) — `Syn1_RNase/R2_panels/R2f_atp_synthase.pdf` (matplotlib: gene arrows + isoforms + depth only; the F1/F0 scheme, SD strengths, subunit labels, "RNase III on α" scissors are added in Illustrator).
+- Panel b: RNA isoform distribution for gene 0178 with more 3' erosion. (7/2, 7/4)
+- Panel c: RNA isoform distribution for gene 0154/lap with more 5' erosion. (7/2, 7/4)
+- Panel d: 3' secondary structure for gene 0178 (7/4, 7/4)
+- Panel e: RNA isoform truncation categories. (7/4, 7/4)
+- Panel f: Biased RNA Processing schematics: endo and exo from 3'. (7/2, 7/4)
+- Panel g: RNA isoform distributions for ATP synthase operon — isoforms split into two regions at atpA/α (0792) where RNase III cuts; coloured by 5'-block (a,c,b,δ; teal) vs 3'-block (γ,β,ε; orange), gene arrows tinted by block, depth steps down at the α cut. (7, 7/3) — `Syn1_RNase/R2_panels/R2f_atp_synthase.pdf` (matplotlib: gene arrows + isoforms + depth only; the F1/F0 scheme, SD strengths, subunit labels, "RNase III on α" scissors are added in Illustrator).
 
 ### Chain of Logics
 
 #### L2.1: Distinct RNA isoforms distributions found for operons.
 
-- **Logic:** Truncated isoforms compared to the full transcription units exist for operons because of the RNA processing. Distinct patterns of truncations can be found, using genes 0154 and 0178 as examples.
+- **Logic:** Truncated isoforms compared to the full transcription units exist for operons because of the RNA processing. Distinct patterns of truncations can be found, using genes 0154 and 0178 as examples. 0178 has structured 3' end as shown in d, but RNase R can digest through the dsRNA structured region.
 - **Analysis:** None
 - **Outputs:** None
 - **Numbers to cite:**  None
-- **Figure panels:** b,c
+- **Figure panels:** b,c,d
 - **Conclusion:** None
 - **Caveats:** None
 - **Notes for LLM:** None
@@ -241,21 +244,24 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - `Syn1_RNase/RNA_Processing.txt`
   - plots + tables in `Syn1_RNase/RNase/`
 - **Numbers to cite:** (current clustering, n_reads>=10, 20,885 isoforms) full-length/unprocessed 8.3% isoforms / 27.0% reads; 3'-intragenic-only 30.3% iso / 47.5% reads (the dominant non-canonical class); both-eroded 41.9% iso; 5'-intragenic-only 19.5% iso; 5'/3' intragenic ratio 0.40 by reads (3' erosion dominates); 42.2% of contained ORFs have a start codon but no stop codon (read-weighted 38.9%).
-- **Figure panels:** d
+- **Figure panels:** e
 - **Conclusion:** Most full-length isoforms are processed; endpoints fall inside ORFs far more often at the 3' end, evidence of biased 3'-directed erosion.
 - **Caveats:** intragenic-endpoint logic counts a 3' end inside a gene body as processing (cannot be a terminator); does not distinguish endo- from exo-nucleolytic origin.
-- **Notes for LLM:** L2.2 ANALYSIS DONE (refreshed 2026-06-05 against the current Apr-23 clustering; the stale dead-path version is fixed). Still TODO: born-at-size **panel c** for figures/rnase.pdf, and the **RNA Processing Analysis** Methods subsection (M4).
+- **Notes for LLM:** Make this logic short and to the point.
 
-#### L2.3: 3' Exo ribonucleases can contribute to the biased RNA digestion. (Putative)
+#### L2.3 (HYPOTHESIS): The 3'-bias reflects an asymmetric exonucleolytic *clearance* bottleneck — limited 3'→5' read-through (scarce RNase R, stalling YhaM) and ribosome trapping on non-stop ends — not biased endonucleolytic cutting.
 
-- **Logic:** RNA digestion can be initiated not only by endo-ribonuclease, but also 3'~5' exo-ribonucleases.
-- **Analysis:** None
-- **Outputs:** None
-- **Numbers to cite:**  None
-- **Figure panels:** e
-- **Conclusion:** None
-- **Caveats:** None
-- **Notes for LLM:** This analysis needs to be implemented by checking the order of RNA secondary structure at the 3' end.
+- **Logic (the chain):** Endonucleolytic cleavage (RNase Y/III) is *symmetric* — each cut yields one upstream fragment (intact 5' + a NEW intragenic 3' end) and one downstream fragment (NEW intragenic 5' end + intact 3' terminator) — so endo cutting alone cannot create a 3'/5' asymmetry; equal numbers of each are born. The observed bias must therefore arise from differential *clearance* of these fragments. (i) Downstream / 5'-eroded fragments are cleared rapidly by the abundant 5'→3' machinery (RNase J1 + J2) → low steady state → rarely captured. (ii) Upstream / 3'-eroded fragments can only be *fully* erased by RNase R — the lone 3'→5' exo that reads THROUGH structure (it needs an unstructured ss 3' overhang to load, then unwinds via intrinsic helicase activity); the abundant YhaM is a "generator not finisher" — it trims the ss 3' tail but STALLS at the first stem base, manufacturing 3' ends rather than removing them. So 3'-eroded intermediates are both over-produced (YhaM stalls) and under-cleared (RNase R scarce) → they accumulate and dominate the steady-state long-read pool. **Two reinforcing mechanisms:** (A) **lower 3'→5' read-through capacity** (RNase R 36 vs RNase J1+J2 ~234 copies; YhaM 117 stalls at structure); (B) **ribosome trapping** at non-stop 3' ends (the 42% start-but-no-stop ORFs from L2.2) physically blocks exo entry until tmRNA–SmpB rescue, which is limiting (SmpB 14).
+- **Analysis — SCOPED 2026-06-08:** the genome-wide structure test is DEFERRED (full design parked in TODO §A); R2 ships with three worked examples + the kinetic argument. Three strands of support:
+  1. **2° structure of the three examples** (user-built, ViennaRNA 2.6.4 in RNAseq env): the 5' erosion region of the lap operon (panel b), the 3' erosion region of the 0178 operon (panel c), and the atpA/α RNase III cleavage site (panel f) — qualitative illustration that the eroded 3' ends sit at accessible / stall-competent structures.
+  2. **Ribonuclease capacity asymmetry (proteomics, in hand, Table S1):** 5'→3' (RNase J1+J2 ~234) vs 3'→5' read-through (RNase R 36); YhaM 117 (stalls), SmpB 14 → panel e proposed-hypothesis schematic.
+  3. **Non-stop / ribosome-trapping link (in hand):** the L2.2 42%-no-stop ORFs × the limiting tmRNA–SmpB capacity.
+- **Outputs:** Table S1 ribonuclease abundances (in hand); the three example 2° structures (user-built); genome-wide ViennaRNA test DEFERRED.
+- **Numbers to cite:** 5'→3' RNase J2 142 + J1 92 = ~234 copies vs 3'→5' read-through RNase R **36**; YhaM 117 (Mn2+-dependent, stalls at stem base); SmpB 14; tmRNA 2.5% of non-rRNA. RNase R loads on a ss 3' overhang ≥7 nt (optimal ≥10). [structure-enrichment numbers PENDING]
+- **Figure panels:** f (biased-processing schematic).
+- **Conclusion:** The 3'-erosion bias is best explained by a 3'→5' clearance bottleneck (scarce read-through RNase R; abundant but structure-stalling YhaM) compounded by ribosome trapping on non-stop products under limiting trans-translation — not by biased endonucleolytic cutting.
+- **Caveats:** copy number is a capacity *proxy*, not measured flux (RNase R is processive, so 36 copies aren't negligible); repeated endo cuts can substitute for RNase R in clearing structured RNA; the ribosome-trapping arm applies only to translated (CDS) 3' ends; long-read capture biases.
+- **Notes for LLM:** Literature backing (web-searched, verified): **RNase R** requires an unstructured ss 3' overhang to LOAD but then degrades THROUGH structure via intrinsic helicase activity (Chu et al. 2017 PubMed 29036353; "How RNase R Degrades Structured RNA" JBC 2016) — so its "unstructured 3'" requirement is at INITIATION only; **YhaM** is Mn2+-dependent, prefers a ss 3' docking site and STALLS at the base of secondary structure (Oussenko et al. 2002, J Bacteriol 184:6250); RNase R is also a principal nuclease of non-stop mRNA decay with trans-translation (need a citation before asserting in text). **Table S1 RNase R row should be nuanced** to "needs ss 3' overhang to load, then reads through structure" (not "only unstructured"). The tex L2.3 paragraph can now state the capacity-asymmetry + ribosome-trapping HYPOTHESIS with the Table S1 numbers; the structure evidence is the three example folds (qualitative), with the genome-wide test framed as future work. Candidate bib keys: durand_rnases_2018, durand_three_2012, redko_minimal_2013, janssen_tmrna_2012.
 
 #### L2.4: ATP synthase operon is co-expressed in one-go but cut at $\alpha$ subunit.
 
@@ -264,7 +270,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Outputs:** 
   - `Syn1_RNase/R2_panels/R2f_atp_synthase.pdf`
 - **Numbers to cite:** the atp operon (minus strand) is segmented into two overlapping operons that meet AT atpA/$\alpha$ (MMSYN1_0792): the 5'-block OP_00395 (0797–atpH/0793 + 5' of $\alpha$; 12 member isoforms, top isoform 1,161 reads) and the 3'-block OP_00394 (3' of $\alpha$ + atpG/atpD/atpC = 0791–0789; 6 members); the RNase III cut at $\alpha$ (~933.78 kb) drops the minus-strand depth from ~9k to ~half across the junction.
-- **Figure panels:** f
+- **Figure panels:** g
 - **Conclusion:** The RNase complexifies the subunit synthesis of complexes.
 - **Caveats:** None
 - **Notes for LLM:** Panel-f matplotlib (gene arrows + 2-region-coloured isoforms + depth) DONE 2026-06-07; the F1/F0 scheme, SD strengths, subunit labels and "RNase III on $\alpha$" scissors are Illustrator. Still TODO: check OTHER membrane complexes for the same pattern; visualize the RNA secondary structure at $\alpha$.
