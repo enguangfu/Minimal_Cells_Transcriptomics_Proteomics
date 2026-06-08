@@ -145,7 +145,8 @@ def make_strip():
         t = ax.text(0, -1, lab, fontsize=fs); w = t.get_window_extent(rend).width / fig.dpi
         t.remove(); return w
 
-    cats = [("Unprocessed", GREY), ("5′ eroded", BLUE), ("3′ eroded", RED), ("Both eroded", PURPLE)]
+    cats = [("Unprocessed", GREY), ("5′ eroded", BLUE),
+            ("3′ eroded", PAC_O), ("Both eroded", PURPLE)]   # 3' eroded matches the Exo 3'->5' icon
     mols = [("endo_scissors", "Endo", "RNase III, Y"),
             ("exo3to5_pacman", "Exo 3′→5′", "RNase R, YhaM"),
             ("exo5to3_pacman", "Exo 5′→3′", "RNase J1, J2"),
@@ -168,7 +169,8 @@ def make_strip():
             ax.axvline(x + 0.01, color="#cccccc", lw=0.6)
         else:
             ICONS[b](ax, x + IC / 2, yc, 0.115)
-            ax.text(x + IC + GL, yc + 0.095, a, va="center", ha="left", fontsize=FS)
+            ylab = yc if not enz else yc + 0.095   # no enzyme sublabel (Ribosome) -> centre the role label
+            ax.text(x + IC + GL, ylab, a, va="center", ha="left", fontsize=FS)
             # enzyme names NOT drawn -- space below the role label is reserved (item width still
             # accounts for the enzyme string) so they can be added in Illustrator at the same spot
         x += w + gap

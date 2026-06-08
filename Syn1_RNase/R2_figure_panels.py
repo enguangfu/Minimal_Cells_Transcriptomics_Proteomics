@@ -42,7 +42,7 @@ os.makedirs(OUT, exist_ok=True)
 CATS = ["unprocessed", "5p_intragenic_only", "3p_intragenic_only", "both_intragenic"]
 CLAB = ["Unprocessed", "5′ eroded", "3′ eroded", "Both eroded"]
 CCOL = {"unprocessed": "#9e9e9e", "5p_intragenic_only": "#3b6db3",
-        "3p_intragenic_only": "#c0392b", "both_intragenic": "#7a4fa3"}
+        "3p_intragenic_only": "#f5901f", "both_intragenic": "#7a4fa3"}   # 3' eroded = Exo 3'->5' icon orange (PAC_O)
 KB = FuncFormatter(lambda x, _: f"{x/1000:.1f}")
 
 # example loci; op = operon span (0-based half-open), the display + containment window
