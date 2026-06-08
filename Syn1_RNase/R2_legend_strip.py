@@ -150,7 +150,7 @@ def make_strip():
             ("exo3to5_pacman", "Exo 3′→5′", "RNase R, YhaM"),
             ("exo5to3_pacman", "Exo 5′→3′", "RNase J1, J2"),
             ("ribosome_triangle", "Ribosome", ""),
-            ("tmrna_key", "tmRNA", "SmpB")]
+            ("tmrna_key", "Rescue", "SmpB")]
 
     elems = [("cat", lab, col, None, SW + GL + tw(lab, FS)) for lab, col in cats]
     elems += [("div", None, None, None, 0.02)]
