@@ -52,13 +52,8 @@ BASE_TXT = "#333333"     # nucleotide letters
 LET_FS = 3.2             # nucleotide-letter fontsize for individual PDFs
 FLANK_EACH_SIDE = 50     # nt on EACH side of the cleavage-site pair, RNAfold default parameters --
                          #   the exact Taggart/Li recipe (intervening RNA + 50 nt either side; ViennaRNA).
-                         #   (NB: at this width the global MFE prefers local hairpins over the long atpA
-                         #   stem, so the two cuts sit in separate dsRNA stems, not one staggered stem.)
-PERCUT_HALF = 20         # half-window when a gene's cuts are drawn SEPARATELY (one hairpin per cut).
-                         #   Used for paired-site genes whose two cuts do NOT form a confirmed duplex
-                         #   (e.g. atpA): a window spanning both cuts would either FORCE an artifactual
-                         #   shared stem (tight) or fold a busy multi-hairpin structure (wide), so each
-                         #   cut is shown honestly at its own local stem.
+                         #   At this width the two cuts fold into separate local stems within one connected
+                         #   structure (not a single duplex), drawn without a connector -- the honest atpA view.
 DEFAULT_FLANK = 10       # (legacy) tight flank that folds the single conserved atpA stem
 SINGLE_HALF = 45         # (legacy) half-window for a single-cut gene
 PAIR_TOL = 4             # nt: two cuts are one duplex if a cut's partner lands within this of the other cut
@@ -204,38 +199,6 @@ def render_one(df, locus, flank, let_fs):
     return cuts, mfe, paired
 
 
-def render_percut(df, locus, half=PERCUT_HALF, let_fs=LET_FS):
-    """Draw each homology-mapped cut in its OWN tight local window (one crisp hairpin
-    per cut), side by side.  For genes whose two cuts do not form one duplex (e.g.
-    atpA) this is the honest, legible depiction (see PERCUT_HALF)."""
-    STEMDIR.mkdir(parents=True, exist_ok=True)
-    cuts, strand, gene = get_cuts(df, locus)
-    n = len(cuts)
-    fig = plt.figure(figsize=(7 / 4 * n, 7 / 4), constrained_layout=True)
-    for k, c in enumerate(cuts):
-        ax = fig.add_subplot(1, n, k + 1)
-        rna, struct, mfe, idx, _ = fold_gene_window([c], strand, half)
-        draw_stem(ax, rna, struct, [idx[c]], letters=True, let_fs=let_fs,
-                  backbone=False, rotate=True, letter_rot=0)
-        ax.set_title(f"{c:,}", fontsize=5, color="#333", pad=1)
-    out = STEMDIR / f"R2_{locus}_{gene}_rnaseIII_stem.pdf"
-    fig.savefig(out, dpi=300, transparent=True, bbox_inches="tight", pad_inches=0.01)
-    plt.close(fig)
-    print(f"  {locus:14s} {gene:8s} per-cut ({n} stems @ half {half})  -> {out.name}")
-    return out
-
-
-def render_auto(df, locus, flank, let_fs):
-    """Route a gene to the right renderer: a PAIRED-site gene whose two cuts do NOT
-    form a confirmed duplex is drawn per-cut (each cut at its own local stem); every
-    other gene uses the single spanning-window fold."""
-    sub = df[df["syn1_locus_tag"] == locus]
-    if not sub.empty and str(sub.iloc[0].get("site_mode", "")) == "paired" \
-            and not bool(sub.iloc[0].get("duplex_confirmed", False)):
-        return render_percut(df, locus, let_fs=let_fs)
-    return render_one(df, locus, flank, let_fs)
-
-
 def render_grid(df, loci, flank):
     cols = 4
     rows = math.ceil(len(loci) / cols)
@@ -264,11 +227,11 @@ def main():
         loci = list(dict.fromkeys(df["syn1_locus_tag"]))   # preserve TSV order
         print(f"Rendering {len(loci)} homology-hit genes -> {STEMDIR}/")
         for locus in loci:
-            render_auto(df, locus, flank, let_fs)
+            render_one(df, locus, flank, let_fs)
         render_grid(df, loci, flank)
     else:
         locus = args[0] if args else "MMSYN1_0792"
-        render_auto(df, locus, flank, let_fs)
+        render_one(df, locus, flank, let_fs)
 
 
 if __name__ == "__main__":
