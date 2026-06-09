@@ -31,6 +31,11 @@
 \usepackage{hyperref}
 \usepackage[numbers]{natbib}
 
+% Typographic polish: microtype tightens justification and removes most overfull
+% boxes; emergencystretch absorbs the rest (long \texttt{} class-name tokens).
+\usepackage{microtype}
+\emergencystretch=2em
+
 % Macros
 \input{sections/macros}
 
