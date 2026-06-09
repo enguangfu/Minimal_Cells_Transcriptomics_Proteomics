@@ -19,8 +19,10 @@ Analyses were run in Python 3.11 with pandas 2.1, NumPy 1.26 and SciPy 1.11, and
 
 RNase~III and RNase~Y, the endoribonucleases that carry out most intra-operonic cleavage, were compared between \textit{B. subtilis} (NCBI NC\_000964.3) and \syn~to confirm conserved catalytic and RNA-binding architecture.
 Domain organisation was assigned with InterPro, and pairwise coverage and identity were taken from the protein alignment.
-Both enzymes retained their full domain architecture at 91--98\% coverage and 35--45\% identity (Table~\ref{tbl:rnase_III_Y}).
+Both enzymes retained their full \textit{B. subtilis} domain architecture in \syn: RNase~III (249 versus 232 residues) kept its RNase\_III and double-stranded-RNA-binding domains at 91\% coverage and 45\% identity, and RNase~Y (520 versus 509 residues) kept its RNase\_Y, KH and HD domains at 98\% coverage and 35\% identity.
 
+% --- Table S2 muted (kept, not deleted): its content is now stated in the prose above. ---
+\iffalse
 \begin{table}[H]
 % \centering
 \caption{RNase III and RNase Y Homology Comparison}
@@ -29,7 +31,7 @@ Both enzymes retained their full domain architecture at 91--98\% coverage and 35
 \multicolumn{2}{c}{B. subtilis \textsuperscript{\emph{a}}} & \multicolumn{2}{c}{Syn1} & \multicolumn{2}{c}{Alignment} \\  \hline
 Length & Domain \textsuperscript{\emph{b}} & Length & Domain & Coverage \% & Identity \%  \\
 \midrule
-249 & RNase\_III and dsDNA binding & 232 &  RNase\_III and dsDNA binding & 91 & 45 \\
+249 & RNase\_III and dsRNA binding & 232 &  RNase\_III and dsRNA binding & 91 & 45 \\
 \hline
 520 & RNase\_Y, KH, and HD & 509 & RNase\_Y, KH, and HD & 98 & 35 \\
 \bottomrule
@@ -40,6 +42,7 @@ Length & Domain \textsuperscript{\emph{b}} & Length & Domain & Coverage \% & Ide
 \textsuperscript{\emph{b}} Inferred by InterPro
 
 \end{table}
+\fi
 
 \subsubsection{Mapping B. subtilis Endoribonuclease Cleavage Sites onto Syn1}
 

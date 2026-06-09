@@ -666,14 +666,21 @@ Extended Figure:
 ## Interpretation of results to answer research questions
 operons identified with full-length RNA isoforms with matched transcription signatures
 Unexpected RNase processing biase can come from two mechanisms
+
 Mechanistic correlation between two omics shows that transcription alone determine the covairance of gene expression
+
 The novel transcription and translation in syn1 largely can be attributed to the poor annotation of genome, and also the synthetic traits; those abnormal genomic region were almost deleted from syn1 to syn3A
+
 Genes with promoter deleted or replaced has significantly lower transcription in syn3A, including rPtns and HupA
-Unexpectedly, upregulation of rPtns operons suppress the expression of transcription machinaries and glycolytic enzymes; which altogether explain the longer cell cycle of syn3A.
+
+Unexpectedly, upregulation of rPtns operons suppress the expression of transcription machinaries and glycolytic enzymes; which altogether explain the longer cell cycle of syn3A; misbalanced rPtn synthesis might lead to inefficient assembly and clustering of protein aggreates.
+
 
 ## Consideration of limitations
 
-hypothesis of two mechanisms could be tested
+hypothesis of two mechanisms could be further tested
+
+ONT isoforms reads in syn3A were largely truncated, thus a PacBio repetition can strength the investigation of operon changes upon genome reduction.
 
 mRNA pool share only, should quantify also rRNA
 
