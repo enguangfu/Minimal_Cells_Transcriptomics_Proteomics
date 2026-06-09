@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[11pt]{article}
 
 %%%%%%%% Packages and Macros %%%%%%%%
 % Authorships
@@ -28,7 +28,7 @@
 \renewcommand{\thetable}{S\arabic{table}}
 
 % Referencing
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[numbers]{natbib}
 
 % Typographic polish: microtype tightens justification and removes most overfull
@@ -36,10 +36,18 @@
 \usepackage{microtype}
 \emergencystretch=2em
 
+% Manuscript (review) formatting: 1.5 line spacing, continuous line numbers,
+% and unnumbered headings (Nature style; harmonises with the \section* back matter).
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{lineno}
+\setcounter{secnumdepth}{0}
+
 % Macros
 \input{sections/macros}
 
 \begin{document}
+\linenumbers
 
 %%%%%%%% Title and Authorship %%%%%%%%
 
