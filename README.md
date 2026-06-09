@@ -29,7 +29,6 @@ This repository holds the complete pipeline, from raw-read retrieval to the figu
 │
 ├── Genome_Reduction/         syn1 → syn3A comparison (deletions, operon remodeling, expression)
 │
-├── Manuscript/               LaTeX manuscript + figures + Supplementary Data assembly
 └── env/                      conda environment specification
 ```
 
@@ -52,7 +51,7 @@ It bundles the Python scientific stack (NumPy, pandas, SciPy, Matplotlib, Biopyt
 
 ## Workflow
 
-Data flows from raw reads (left/top) through per-organism processing and into the cross-organism comparison and the manuscript:
+Data flows from raw reads (left/top) through per-organism processing and into the cross-organism comparison:
 
 ```mermaid
 flowchart TD
@@ -84,12 +83,6 @@ flowchart TD
     TPM1 --> GR
     TPM3 --> GR
 
-    OPN --> MS["Manuscript<br/>figures + Supplementary Data S1–S4"]
-    RNASE --> MS
-    NOV --> MS
-    CORR --> MS
-    GR --> MS
-
     GEN -.-> SYN1
     GEN -.-> SYN3
     GEN -.-> OPN
@@ -120,7 +113,7 @@ Run the stages in this order; each folder's scripts read the outputs of the stag
 | **S1** | `operon.xlsx` — per-operon table (boundaries, signals, complexes) | `Syn1_Operon/build_operon_xlsx.py` |
 | **S2** | `syn1_omics.xlsx` — paired transcriptome + proteome for 911 syn1 genes | `Syn1_Corr_RNA_Proteins/` |
 | **S3** | `genome_reduction.xlsx` — deletions, junctions, per-gene expression change | `Genome_Reduction/` |
-| **S4** | `Supplementary_Data_S4_QC.zip` — RNA-sample QC reports | `Manuscript/SI/build_S4_qc.py` |
+| **S4** | `Supplementary_Data_S4_QC.zip` — RNA-sample QC reports | `build_S4_qc.py` |
 
 ---
 
