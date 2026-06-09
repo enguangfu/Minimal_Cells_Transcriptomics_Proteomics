@@ -17,7 +17,7 @@ TO DO Reminder:
 - [x] R1 L1.4 (panel e,f,g) - RESOLVED 2026-06-08: the "canonical operons with no TransTermHP terminator" were a matching bug in `Operon_Annotation.py:find_terminators_near_tts` — the commented strict rule tested the terminator `end0` on BOTH strands, so '-'-strand terminators (whose 3' boundary is `start0`) were dropped (e.g. OP_00099/0178 missed its conf-100 TERM 82). Fixed to a strand-correct 3'-boundary window (`_term_3p`), re-ran: 97/127 canonical operons have a TTS terminator (was 98 via a midpoint hack; OP_00061 correctly dropped, OP_00099 now mapped). operons.tex L25 updated (97/127, 98% within 10 nt); term_* figures regenerated. Biology: a 3' terminator hairpin does NOT preclude 3' erosion (RNase R reads through structure) → L2.1/L2.3 reframe from "unstructured 3' end" to "limiting 3'→5' read-through capacity."
 
 **B. Methods still to write:**
-- [~] M4 — "RNA processing and ribonucleases" DRAFTED (ribonuclease inventory + RNA-processing endpoint analysis + RNase III/Y homology table; versions pinned). Pending: the B.subtilis→Syn1 RNase-site-mapping + 3'-end 2°-structure subsubsection (commented TODO, after tomorrow's analysis).
+- [x] M4 — "RNA processing and ribonucleases" DONE (ribonuclease inventory + RNA-processing endpoint analysis + RNase III/Y homology table + the B.subtilis→Syn1 RNase-site-mapping subsubsection [RBH BLASTP + ViennaRNA, 18 RNase III matches, atpA exemplar, cites taggart_high-resolution_2025]; versions pinned). Optional remaining: genome-wide 3'-end 2°-structure test (deferred, §A backlog).
 
 **C. Results prose (draft from logics, §0 style — one section at a time):**
 - [x] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) drafted (L6.1–L6.5, 459-era numbers; L6.3 = the 11 kb rPtn operon + tRNA-junction paragraph, panels d/e). Only blocked items remain: R5-L5.5 (panel e essentiality) and R6-L6.5 flux (no panel) — both await analyses A.
@@ -269,12 +269,12 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Analysis:** `Syn1_RNase/R2_figure_panels.py` (panel_f).
 - **Outputs:** 
   - `Syn1_RNase/R2_panels/R2g_atp_synthase.pdf`
-  - `Syn1_RNase/RNase_Site_Mapping/output/rnaseIII/stems/R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf` (the α RNase III stem with both cuts)
-- **Numbers to cite:** the atp operon (minus strand) is segmented into two overlapping operons that meet AT atpA/$\alpha$ (MMSYN1_0792): the 5'-block OP_00395 (0797–atpH/0793 + 5' of $\alpha$; 12 member isoforms, top isoform 1,161 reads) and the 3'-block OP_00394 (3' of $\alpha$ + atpG/atpD/atpC = 0791–0789; 6 members); the minus-strand depth drops from ~9k to ~half across the junction. The cleavage is assigned to RNase III by homology to B. subtilis atpA (BSU_36830; 60.3% protein identity, reciprocal best hit): the two B. subtilis RNase III cuts project into Syn1 atpA at **932,769 and 932,881** (1-based, − strand), the two staggered cuts of a single dsRNA stem (932,769 pairs with 932,882, and 932,881 pairs with 932,770; ~2-nt 3′ overhang; local Syn1 stem MFE −25 kcal/mol, B. subtilis homolog −56). Source: `Syn1_RNase/RNase_Site_Mapping/output/rnaseIII/rnaseIII_syn1_anchored_cleavage_sites.tsv`.
+  - `Syn1_RNase/RNase_Site_Mapping/output/rnaseIII/stems/R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf` (local structure at the two homology-mapped α cuts; each at a stem, no duplex connector)
+- **Numbers to cite:** the atp operon (minus strand) is segmented into two overlapping operons that meet AT atpA/$\alpha$ (MMSYN1_0792): the 5'-block OP_00395 (0797–atpH/0793 + 5' of $\alpha$; 12 member isoforms, top isoform 1,161 reads) and the 3'-block OP_00394 (3' of $\alpha$ + atpG/atpD/atpC = 0791–0789; 6 members); the minus-strand depth drops from ~9k to ~half across the junction. The cleavage is assigned to RNase III by homology to B. subtilis atpA (BSU_36830; 60.3% identity, reciprocal best hit). The two B. subtilis RNase III sites are transferred onto Syn1 by **homology mapping** (NOT a structurally confirmed duplex): the whole Syn1 gene is folded ONCE (RNAfold default), each B. subtilis cut is projected by transcript fraction, and the base-pairing is read from that single fold without re-folding; a duplex is "confirmed" only if the two cuts FACE across one helix (both cross-distances ≤ 4 nt — calibrated on B. subtilis atpA, whose two cuts pair ~105 nt apart yet face at cross-dist 3/3). **Mapped Syn1 cut sites = 932,767 / 932,881.** RESULT: **0/5 paired-site genes (incl. atpA) reproduce a clean cross-paired duplex** — Syn1 atpA's two cuts fold into SEPARATE local stem-loops (cross-dist 104/104), so the B. subtilis long stem is NOT structurally conserved. Each mapped cut still sits at a (local) stem, so the inset shows the local structure at the two mapped sites, not a staggered duplex. Source: `Syn1_RNase/RNase_Site_Mapping/output/rnaseIII/rnaseIII_syn1_predicted_cleavage_pairs.tsv`.
 - **Figure panels:** g
 - **Conclusion:** The RNase complexifies the subunit synthesis of complexes.
 - **Caveats:** None
-- **Notes for LLM:** Panel-g matplotlib (gene arrows + 2-region-coloured isoforms + depth + the two RNase III cut lines at 932,769/932,881 + shaded zone) DONE; the F1/F0 scheme, SD strengths, subunit labels and "RNase III on $\alpha$" scissors are Illustrator. RNA 2° structure at $\alpha$ DONE (the dsRNA stem with both staggered cuts, `R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf`). Still TODO: check OTHER membrane complexes for the same pattern.
+- **Notes for LLM:** FRAMING (decided 2026-06-09): Results = "highlighted the homology-mapped cleavage sites, each at a stem" (no clean-duplex claim); Methods = the algorithm found NO conserved clean duplex (0/5 paired). Panel-g matplotlib (gene arrows + 2-region-coloured isoforms + depth + the two RNase III cut lines at 932,767/932,881 + shaded zone) DONE; the F1/F0 scheme, SD strengths, subunit labels and "RNase III on $\alpha$" scissors are Illustrator. RNA 2° structure at $\alpha$ DONE (`R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf` = local structure, two cuts each at a stem, NO duplex connector — honest). Still TODO: check OTHER membrane complexes for the same pattern.
 
 ---
 
@@ -659,6 +659,33 @@ Extended Figure:
 - **Conclusion:** Central-carbon and acetate-pathway enzymes drop in concert, predicting suppressed ATP/GTP output (flux quantification pending).
 - **Caveats:** the flux claim is currently inferred from enzyme abundance only.
 - **Notes for LLM:** FLUX ANALYSIS NOT YET DONE (needs a metabolic model) — prose stops at the prediction with NO panel. Panel d is now the giant ribosomal-protein operon OP_00341 (belongs to L6.2). Update gapDH→GapA in the numbers above if reused.
+
+---
+# Discussion
+
+## Interpretation of results to answer research questions
+operons identified with full-length RNA isoforms with matched transcription signatures
+Unexpected RNase processing biase can come from two mechanisms
+Mechanistic correlation between two omics shows that transcription alone determine the covairance of gene expression
+The novel transcription and translation in syn1 largely can be attributed to the poor annotation of genome, and also the synthetic traits; those abnormal genomic region were almost deleted from syn1 to syn3A
+Genes with promoter deleted or replaced has significantly lower transcription in syn3A, including rPtns and HupA
+Unexpectedly, upregulation of rPtns operons suppress the expression of transcription machinaries and glycolytic enzymes; which altogether explain the longer cell cycle of syn3A.
+
+## Consideration of limitations
+
+hypothesis of two mechanisms could be tested
+
+mRNA pool share only, should quantify also rRNA
+
+ribosomal and membrane proteins;s abundances are less reliable, ribosomal profiling can be used to ...
+
+## Relationship to previous literature and broader implication
+
+we can skip this part for now
+
+## Prospects for future progress
+
+Gene-coexpresssion model into 4D WCM of the minimal cell;
 
 ---
 

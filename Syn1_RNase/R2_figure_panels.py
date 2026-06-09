@@ -290,15 +290,15 @@ def write_stats():
 
 # ---------------------------------------------------------------- panel f: ATP synthase operon
 # The atp operon splits into a 5' block (a,c,b,delta) and a 3' block (gamma,beta,eps) at atpA
-# (0792, alpha).  The split lines are the HOMOLOGY-ANCHORED RNase III cleavage sites: the two
-# B. subtilis atpA (BSU_36830) RNase III cuts, projected into Syn1 atpA by transcript fraction
-# (60% protein id).  RNase III is a dsRNA enzyme: the two cuts are the staggered double-strand cut
-# of ONE conserved stem -- Syn1 932769 pairs with 932882 and 932881 pairs with 932770 (~2-nt 3'
-# overhang, stem MFE -25; B. subtilis homolog MFE -56).  The stem is drawn by RNase_Site_Mapping/
-# render_rnaseIII_structure.py -> output/rnaseIII/stems/R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf (overlay
-# on panel f); `render_rnaseIII_structure.py all` renders all 18 homology-hit genes + an overview grid.
-# Cut positions: rnaseIII_syn1_anchored_cleavage_sites.tsv (replaces a hand-placed 933780 boundary).
-ATP = dict(op5="OP_00395", op3="OP_00394", cuts=[932769, 932881], win=(929400, 936600),
+# (0792, alpha), assigned to RNase III by homology to B. subtilis atpA (BSU_36830).  The two
+# B. subtilis RNase III sites were transferred onto Syn1 by protein homology (whole-gene fold +
+# transcript-fraction projection; map_bsub_rnase_to_syn1.py) -> Syn1 mapped cut sites 932767 / 932881.
+# These are the HOMOLOGY-MAPPED cleavage sites (NOT a structurally confirmed duplex): in Syn1 the two
+# cuts fold into separate local stem-loops (cross-dist 104 nt), so the long B. subtilis stem is not
+# conserved -- each mapped cut still sits at a stem.  Source: rnaseIII_syn1_predicted_cleavage_pairs.tsv.
+# Local structure drawn by RNase_Site_Mapping/render_rnaseIII_structure.py ->
+# output/rnaseIII/stems/R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf (overlay as the panel-g inset).
+ATP = dict(op5="OP_00395", op3="OP_00394", cuts=[932767, 932881], win=(929400, 936600),
            genes=["MMSYN1_0789", "MMSYN1_0790", "MMSYN1_0791", "MMSYN1_0792",
                   "MMSYN1_0793", "MMSYN1_0794", "MMSYN1_0795", "MMSYN1_0796", "MMSYN1_0797"])
 R5_COL, R3_COL = "#1b9e77", "#d95f02"            # 5' block (teal) / 3' block (orange)

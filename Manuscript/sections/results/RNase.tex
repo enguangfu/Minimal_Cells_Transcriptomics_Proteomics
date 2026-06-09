@@ -25,7 +25,9 @@ RNA processing also remodels co-expression within a single operon.
 The ATP-synthase operon (\locus{0789}--\locus{0797}) is transcribed as one unit on the reverse strand, yet its isoforms separated into two non-overlapping populations that met at the $\alpha$-subunit gene \gene{atpA}{0792} (Fig.~\ref{fig:rnase}g).
 A 5$'$ population spanned the F$_0$ subunits $a$, $c$ and $b$ (\gene{atpB}{0796}, \gene{atpE}{0795}, \gene{atpF}{0794}) together with $\delta$ (\gene{atpH}{0793}) and ended at \gene{atpA}{0792}, while a 3$'$ population began at \gene{atpA}{0792} and ran through the F$_1$ subunits $\gamma$, $\beta$ and $\epsilon$ (\gene{atpG}{0791}, \gene{atpD}{0790}, \gene{atpC}{0789}).
 The read depth fell from about 9{,}000 reads to roughly half that value across the boundary, the signature of an internal endonucleolytic cut at \gene{atpA}{0792} that the operon segmentation resolved as two adjoining transcription units.
-A cut at this structured, intra-operonic position is consistent with RNase~III, so a single primary transcript is processed into separately decaying 5$'$ and 3$'$ blocks that can set the membrane F$_0$ sector and the soluble F$_1$ sector on different post-transcriptional fates~\cite{redko_minimal_2013}.
+This cut was assigned to RNase~III by homology to the orthologous \textit{B. subtilis} \gene{atpA}{0792}, which carries two characterised RNase~III cleavage sites~\cite{taggart_high-resolution_2025}.
+The two sites were transferred onto the \syn~transcript by protein homology and highlighted on its local RNA secondary structure, where each fell within a stem (Fig.~\ref{fig:rnase}g), although the extended stem that pairs the two cut sites in \textit{B. subtilis} was not conserved in \syn~(Methods).
+A single primary transcript is thereby processed into separately decaying 5$'$ and 3$'$ blocks that can set the membrane F$_0$ sector and the soluble F$_1$ sector on different post-transcriptional fates~\cite{redko_minimal_2013}.
 
 \begin{figure}[H]
     \centering
@@ -36,8 +38,8 @@ A cut at this structured, intra-operonic position is consistent with RNase~III, 
     (c) Isoforms at \gene{lap}{0154} share a 3$'$ terminator and erode at the 5$'$ end.
     (d) Secondary structure of the \locus{0178} 3$'$ terminus, a stem-loop hairpin closed by a uridine-rich tail (a canonical intrinsic terminator), through which RNase~R degrades processively.
     (e) Transcriptome-wide composition of isoform end-context categories, by isoform and by read; 3$'$ erosion dominates.
-    (f) Model of biased processing: endonucleolytic initiation (RNase~III or RNase~Y) followed by 3$'\rightarrow$5$'$ exonucleolytic trimming, leaving stop-codon-less messages that are rescued by trans-translation.
-    (g) The ATP-synthase operon is cleaved at \gene{atpA}{0792} into a 5$'$ block (F$_0$ plus $\delta$) and a 3$'$ block (F$_1$ $\gamma$, $\beta$, $\epsilon$); read depth steps down at the cut.}
+    (f) Model of biased processing: endonucleolytic initiation (RNase~III or RNase~Y) followed by 3$'\rightarrow$5$'$ exonucleolytic trimming, leaving stop-codon-less messages that are rescued by trans-translation; the 3$'\rightarrow$5$'$ ribonucleases can also initiate RNA digestion directly at an accessible 3$'$ end.
+    (g) The ATP-synthase operon is cleaved at \gene{atpA}{0792} into a 5$'$ block (F$_0$ plus $\delta$) and a 3$'$ block (F$_1$ $\gamma$, $\beta$, $\epsilon$); read depth steps down at the cut; inset, the local \syn~RNA secondary structure at the two homology-mapped RNase~III cleavage sites, each lying within a stem.}
     \label{fig:rnase}
 \end{figure}
 

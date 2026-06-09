@@ -9,9 +9,14 @@ endonuclease cleavage in Bacillus subtilis", Mol Cell 2025) onto JCVI-Syn1 via
 reciprocal-best-hit (RBH) protein homology, then predict the corresponding
 Syn1 cleavage geometry:
 
-  * RNase III -- folds the homologous Syn1 gene with ViennaRNA and scans for
-    paired cut sites carrying the canonical RNase III 2-nt 3' overhang
-    (RNase III is a dsRNA-specific endonuclease, so cuts must sit in a helix).
+  * RNase III -- folds the ENTIRE Syn1 gene span ONCE, then ANCHORS the readout
+    on the experimental B. subtilis cut(s) (projected by transcript fraction) and
+    reads the cut geometry out of that single structure WITHOUT re-folding.  A
+    real site is a PAIR of cuts that FACE across the duplex (partner(cut1) ~= cut2
+    AND partner(cut2) ~= cut1); the stem may be long/bulged (B. subtilis atpA's
+    cuts pair ~105 nt apart yet face with cross-distances of 3 nt).  Genes with two
+    B. subtilis sites are tested as the pair; one-site genes report the observed
+    cut plus its structural partner.
 
   * RNase Y -- projects each B. subtilis site by its transcript fraction into
     the Syn1 homolog, then scores the *downstream* secondary structure
@@ -92,22 +97,43 @@ BLAST_MAX_TARGET = "5"
 CANONICAL_HOM_DIR = PROJECT / "Genomes_Input" / "homology_syn1_bsub"
 USE_PREBUILT_HOMOLOGY = True
 
-# RNase III ViennaRNA cleavage scan (cell 61)
-R3_FLANK = 0          # fold the whole homologous gene
-R3_TEMPERATURE_C = 25
-R3_NO_LP = True
-R3_MIN_STEMRUN = 4
-R3_MIN_DIST = 20
-R3_MAX_DIST = 250
-R3_W = 6              # neighborhood half-window for cross-pair evaluation
-R3_DIRECT_OFFSET = 6
-R3_OVERHANG = 2
+# RNase III cleavage geometry -- whole-gene fold, homology-ANCHORED readout.
+# RNase III cuts BOTH strands of one helix leaving a 2-nt 3' overhang, so a real
+# site is a PAIR of cuts that FACE each other across a duplex (the stem itself may
+# be long and bulged -- e.g. B. subtilis atpA's cuts pair ~105 nt apart across the
+# central stem, yet face with cross-distances of 3 nt each).  Method:
+#   1. fold the ENTIRE gene span ONCE (RNAfold default params, 37 C / dangles 2 /
+#      lonely pairs allowed, Taggart/Li) -- one reference structure that preserves
+#      the long-range stem context a local window would truncate;
+#   2. project the experimental B. subtilis cut(s) into Syn1 by transcript fraction
+#      and ANCHOR the search there (homology says where, not the de-novo MFE);
+#   3. read the cut geometry out of THAT SAME fold -- never re-fold, because a
+#      second fold would change the structure (the bug that confirmed atpA before).
+# A real cut requires the two cuts to face across the duplex: BOTH
+# |partner(cut1) - cut2| and |partner(cut2) - cut1| <= R3_DUPLEX_TOL.  This passes
+# the real B. subtilis atpA site (3 / 3 nt) and rejects Syn1 atpA (101 / 107 nt =
+# two separate local hairpins, the long stem is not conserved).
+R3_TEMPERATURE_C = 37        # RNAfold default (Li)
+R3_NO_LP = False             # RNAfold default (lonely pairs allowed)
+R3_GENE_FLANK = 20           # nt added each side of the gene span before the single whole-gene fold
+R3_REFINE = 3                # slide each cut +/- this many nt to find the tightest cross-pairing
+                             #  (the fraction projection is good to a few nt, not exact)
+R3_MIN_STEMRUN = 4           # min contiguous helix length at each cut
+R3_MIN_DIST = 20             # min nt between the two cuts of a pair
+R3_MAX_DIST = 250            # max nt between the two cuts of a pair
+R3_OVERHANG = 2              # RNase III 2-nt 3' overhang
 R3_OVERHANG_WINDOW = 0
-R3_TOP_K_PER_REGION = 5
-R3_STORE_STRUCT = True   # keep the dot-bracket fold (needed to draw the structure later)
+R3_MAX_OVERHANG_DELTA = 2    # tolerance on the 2-nt-overhang register
+R3_DUPLEX_TOL = 4            # KEY cross-pairing gate (facing-duplex test).  Require BOTH
+                             #  |partner(cut1) - cut2| AND |partner(cut2) - cut1| <= this (nt).
+                             #  Calibrated by the real B. subtilis atpA site (3 / 3); 4 leaves a 1-nt
+                             #  margin for a bulge at the scissile pair.  This is the same-stem
+                             #  requirement the old register-sum test lacked (it passed atpA at 3 vs 7).
+R3_HOMOLOG_NEIGHBORHOOD_FRAC = 1 / 6   # (retained) gene-length fraction, only to annotate whether the
+                                       #  anchored cut sits in the homologous region
 
-# Homology-anchored RNase III cut finder (Stage 4b): project each B. subtilis cut
-# into Syn1 by transcript fraction, then read out the local fold at that position.
+# Homology-anchored per-site read-out (Stage 4b, anchor_rnaseIII_cleavage): project
+# each B. subtilis cut into Syn1 by transcript fraction, read out the local fold.
 R3_ANCHOR_UP = 60            # nt upstream of the projected cut to include in the local fold
 R3_ANCHOR_DOWN = 60          # nt downstream
 R3_ANCHOR_PARTNER_WIN = 5    # search +/- this many nt for the cut's base-paired partner
@@ -604,17 +630,6 @@ def _local_stemrun(struct, ptab, idx) -> int:
     return run
 
 
-def _pairing_metrics(ptab, rel1, rel2, n, w, direct_offset):
-    W1 = range(max(1, rel1 - w), min(n, rel1 + w) + 1)
-    W2 = range(max(1, rel2 - w), min(n, rel2 + w) + 1)
-    W1set, W2set = set(W1), set(W2)
-    direct = (ptab[rel1] != 0) and (abs(ptab[rel1] - rel2) <= direct_offset)
-    c12 = sum(1 for i in W1 if ptab[i] != 0 and ptab[i] in W2set)
-    c21 = sum(1 for j in W2 if ptab[j] != 0 and ptab[j] in W1set)
-    frac = 0.5 * (c12 / len(W1set) + c21 / len(W2set))
-    return direct, c12, c21, frac
-
-
 def _overhang_delta(ptab, i1, i2, overhang=2, window=0):
     n = len(ptab) - 1
     paired = lambda i: ptab[i] if 1 <= i <= n else 0
@@ -632,12 +647,79 @@ def _overhang_delta(ptab, i1, i2, overhang=2, window=0):
     return best_delta, best
 
 
-def predict_rnaseIII_cleavage(cand: pd.DataFrame):
+def _fold_window_local(genome, seqid, strand, lo, hi):
+    """Fold ONE local genomic window [lo, hi] (1-based, clamped) in transcript
+    orientation with RNAfold DEFAULT parameters (Taggart/Li).  Returns
+    (rna, struct, ptab, mfe, idx_fn, gof_fn, n) where idx_fn maps a genomic
+    coordinate to the 1-based fold index and gof_fn does the inverse."""
     import RNA
-    genome = load_fasta_as_dict(SYN1_FASTA)
+    seqid = _norm_seqid(seqid)
+    seq = genome[seqid]; G = len(seq)
+    lo = max(1, int(lo)); hi = min(G, int(hi))
+    orient = "minus" if str(strand).startswith("-") else "plus"
+    rna = to_rna(seq[lo - 1:hi] if orient == "plus" else revcomp(seq[lo - 1:hi]))
     md = RNA.md(); md.temperature = R3_TEMPERATURE_C
     if R3_NO_LP:
         md.noLP = 1
+    struct, mfe = RNA.fold_compound(rna, md).mfe()
+    ptab = _dotbracket_to_pairs(struct); n = len(struct)
+    idx = (lambda c: c - lo + 1) if orient == "plus" else (lambda c: hi - c + 1)
+    gof = (lambda r: lo + r - 1) if orient == "plus" else (lambda r: hi - r + 1)
+    return rna, struct, ptab, round(float(mfe), 1), idx, gof, n
+
+
+def _best_duplex(struct, ptab, idx, gof, n, c1, c2, refine):
+    """RNase III duplex test.  Slide each genomic cut within +/- `refine` nt and
+    return the assignment with the tightest SYMMETRIC cross-pairing, or None if
+    neither cut is paired in the local fold.  cross_dist1 = |partner(cut1) - cut2|,
+    cross_dist2 = |partner(cut2) - cut1|; a real single-duplex 2-nt-overhang cut has
+    BOTH small (the old register-only test could pass with one large -- atpA 3 vs 7)."""
+    best = None
+    for da in range(-refine, refine + 1):
+        for db in range(-refine, refine + 1):
+            g1, g2 = c1 + da, c2 + db
+            i1, i2 = idx(g1), idx(g2)
+            if not (1 <= i1 <= n and 1 <= i2 <= n):
+                continue
+            y1, y2 = ptab[i1], ptab[i2]
+            if y1 == 0 or y2 == 0:
+                continue
+            d1 = abs(gof(y1) - g2); d2 = abs(gof(y2) - g1)
+            s1 = _local_stemrun(struct, ptab, i1); s2 = _local_stemrun(struct, ptab, i2)
+            od, _ = _overhang_delta(ptab, min(i1, i2), max(i1, i2), R3_OVERHANG, R3_OVERHANG_WINDOW)
+            od = 99 if od is None else int(od)
+            key = (max(d1, d2), od, abs(da) + abs(db), -(s1 + s2))
+            if best is None or key < best["_key"]:
+                best = dict(genomic_cut1=int(g1), genomic_cut2=int(g2),
+                            partner_cut1=int(gof(y1)), partner_cut2=int(gof(y2)),
+                            cross_dist1=int(d1), cross_dist2=int(d2),
+                            cut1_stemrun=int(s1), cut2_stemrun=int(s2),
+                            overhang_delta=od, refine_shift=abs(da) + abs(db), _key=key)
+    return best
+
+
+def predict_rnaseIII_cleavage(cand: pd.DataFrame, sites_annot: pd.DataFrame = None):
+    """Whole-gene fold + homology-ANCHORED RNase III duplex readout (one row/gene).
+
+    For each Syn1 homolog of a B. subtilis RNase III substrate, fold the ENTIRE
+    gene span ONCE, project the experimental cut(s) into Syn1 by transcript
+    fraction, and read the duplex geometry out of that single structure (no
+    re-folding).
+
+      * PAIRED genes (>=2 B. subtilis sites within one stem span): the two cuts are
+        the staggered double cut of one stem -- require them to FACE across the
+        duplex in the whole-gene fold (BOTH cross-distances <= R3_DUPLEX_TOL ->
+        `duplex_confirmed`).  This exploits both observed cuts to locate the duplex.
+      * SINGLE genes (1 observed site): report that cut plus its structural partner
+        (the implied opposite arm); `cut_in_stem` flags whether it sits in a helix.
+        One observed 5' end cannot confirm a staggered double cut, so
+        `duplex_confirmed` is False for these.
+
+    The facing-duplex gate (R3_DUPLEX_TOL) fixes the old register-sum test that
+    confirmed atpA falsely.  In the whole-gene fold the two Syn1 atpA cuts pair into
+    SEPARATE local hairpins (cross-distances 101 / 107 nt), whereas the real
+    B. subtilis site faces across its long central stem (3 / 3 nt)."""
+    genome = load_fasta_as_dict(SYN1_FASTA)
 
     cand = cand.dropna(subset=["syn1_locus_tag"]).copy()
     cand["syn1_seqid"] = cand["syn1_seqid"].map(_norm_seqid)
@@ -645,81 +727,128 @@ def predict_rnaseIII_cleavage(cand: pd.DataFrame):
     cand["syn1_end_1b"] = cand["syn1_end_1b"].astype(int)
     cand["syn1_strand"] = cand["syn1_strand"].astype(str)
 
+    # B. subtilis sense-intragenic sites grouped by gene, to project Syn1 positions
+    proj_by_bloc = {}
+    if sites_annot is not None:
+        ss = sites_annot[sites_annot["context"] == "sense_intragenic"]
+        for bloc, grp in ss.groupby(ss["primary_locus_tag"].map(clean_str)):
+            proj_by_bloc[bloc] = grp
+
     optional_meta = ["syn1_gene", "syn1_locus_tag", "syn1_product",
                      "bsub_gene", "bsub_locus_tag", "primary_name", "primary_locus_tag"]
-    all_rows = []
-    for ridx, row in cand.reset_index(drop=True).iterrows():
+    rows = []
+    for _, row in cand.reset_index(drop=True).iterrows():
         seqid = _norm_seqid(row["syn1_seqid"])
-        g0, g1, strand = int(row["syn1_start_1b"]), int(row["syn1_end_1b"]), row["syn1_strand"]
-        seq = genome[seqid]; G = len(seq)
-        gs = max(1, g0 - R3_FLANK); ge = min(G, g1 + R3_FLANK)
-        frag = seq[gs - 1:ge]
-        orient = "minus" if str(strand).startswith("-") else "plus"
-        rna = to_rna(frag if orient == "plus" else revcomp(frag))
-
-        fc = RNA.fold_compound(rna, md)
-        struct, mfe = fc.mfe()
-        ptab = _dotbracket_to_pairs(struct)
-        n = len(rna)
-        g_from_rel = (lambda rel: gs + rel - 1) if orient == "plus" else (lambda rel: ge - rel + 1)
-        paired_positions = [i for i in range(1, n + 1) if ptab[i] != 0]
-
-        region_rows = []
-        for i in paired_positions:
-            for j in paired_positions:
-                if j <= i:
-                    continue
-                dist = j - i
-                if dist < R3_MIN_DIST or dist > R3_MAX_DIST:
-                    continue
-                sr_i = _local_stemrun(struct, ptab, i)
-                sr_j = _local_stemrun(struct, ptab, j)
-                if sr_i < R3_MIN_STEMRUN or sr_j < R3_MIN_STEMRUN:
-                    continue
-                direct, c12, c21, frac = _pairing_metrics(ptab, i, j, n, R3_W, R3_DIRECT_OFFSET)
-                if not (direct or c12 >= 5 or frac >= 0.25):
-                    continue
-                od, best = _overhang_delta(ptab, i, j, R3_OVERHANG, R3_OVERHANG_WINDOW)
-                if best is None:
-                    continue
-                x1, y1, x2, y2, a, b = best
-                score = ((10 if od == 0 else max(0, 8 - od)) + c12 + int(round(frac * 10))
-                         + sr_i + sr_j + (5 if direct else 0))
-                out = dict(candidate_region_id=ridx, syn1_seqid=seqid, syn1_strand=strand,
-                           fold_orient=orient, fold_g_start_1b=gs, fold_g_end_1b=ge, fold_len=n,
-                           mfe_kcal_mol=float(mfe), rel_cut1=i, rel_cut2=j,
-                           genomic_cut1=g_from_rel(i), genomic_cut2=g_from_rel(j), rel_distance=dist,
-                           partner_cut1=int(ptab[i]), partner_cut2=int(ptab[j]),
-                           cut1_stemrun=sr_i, cut2_stemrun=sr_j, direct_hit_pair=bool(direct),
-                           cross_pairs_12=int(c12), cross_pairs_21=int(c21), cross_pair_frac=float(frac),
-                           overhang=R3_OVERHANG, overhang_window=R3_OVERHANG_WINDOW,
-                           overhang_best_delta=int(od), best_shift_a=int(a), best_shift_b=int(b),
-                           best_rel_cut1=int(x1), best_rel_cut2=int(x2), best_partner1=int(y1),
-                           best_partner2=int(y2), best_genomic_cut1=int(g_from_rel(x1)),
-                           best_genomic_cut2=int(g_from_rel(x2)), composite_score=int(score))
-                for c in optional_meta:
-                    if c in row.index:
-                        out[c] = row[c]
-                if R3_STORE_STRUCT:
-                    out["dotbracket"] = struct
-                region_rows.append(out)
-        if not region_rows:
+        if seqid not in genome:
             continue
-        rdf = pd.DataFrame(region_rows).sort_values(
-            ["composite_score", "overhang_best_delta", "cross_pair_frac", "cross_pairs_12",
-             "cut1_stemrun", "cut2_stemrun"], ascending=[False, True, False, False, False, False]
-        ).reset_index(drop=True)
-        rdf["rank_within_region"] = range(1, len(rdf) + 1)
-        all_rows.append(rdf.head(R3_TOP_K_PER_REGION))
+        g0, g1, strand = int(row["syn1_start_1b"]), int(row["syn1_end_1b"]), row["syn1_strand"]
+        nbhd = int(round((g1 - g0 + 1) * R3_HOMOLOG_NEIGHBORHOOD_FRAC))
+
+        # project the B. subtilis cut(s) into this Syn1 gene by transcript fraction
+        bloc = clean_str(row.get("primary_locus_tag", ""))
+        proj = []
+        if bloc in proj_by_bloc:
+            for _, s in proj_by_bloc[bloc].iterrows():
+                fr = _tx_fraction(int(s["pos"]), int(s["primary_gene_start"]),
+                                  int(s["primary_gene_end"]), s["primary_gene_strand"])
+                pc = _project_fraction(g0, g1, strand, fr) if pd.notna(fr) else np.nan
+                if pd.notna(pc):
+                    proj.append(int(pc))
+        proj = sorted(set(proj))
+        if not proj:
+            continue
+
+        # exploit the paired B. subtilis sites: if two project within one stem span,
+        # test them as the staggered double cut; otherwise fall back to single-cut.
+        pair = None
+        if len(proj) >= 2:
+            cand_pairs = [(a, b) for a in proj for b in proj
+                          if R3_MIN_DIST <= b - a <= R3_MAX_DIST]
+            if cand_pairs:
+                pair = min(cand_pairs, key=lambda ab: ab[1] - ab[0])   # tightest plausible stem
+        if pair is not None:
+            site_mode = "paired"; c1, c2 = pair
+        else:
+            site_mode = "single"; c1 = proj[0]; c2 = np.nan
+
+        # fold the WHOLE gene span ONCE -- a single reference structure that keeps the
+        # long-range stem context (B. subtilis atpA pairs ~105 nt across it).  The cut
+        # geometry below is read out of THIS fold, anchored to the projected cut(s);
+        # we never re-fold (a second fold would change the structure).
+        rna, struct, ptab, mfe, idx, gof, n = _fold_window_local(
+            genome, seqid, strand, g0 - R3_GENE_FLANK, g1 + R3_GENE_FLANK)
+        win_lo, win_hi = min(gof(1), gof(n)), max(gof(1), gof(n))
+
+        out = dict(syn1_seqid=seqid, syn1_strand=strand, fold_orient=("minus" if strand.startswith("-") else "plus"),
+                   site_mode=site_mode, n_proj_sites=len(proj),
+                   proj_cut1=int(c1), proj_cut2=(int(c2) if pd.notna(c2) else np.nan),
+                   win_g_start_1b=int(win_lo), win_g_end_1b=int(win_hi), win_len=n,
+                   win_mfe_kcal_mol=mfe, neighborhood_radius=nbhd, in_homolog_neighborhood=True,
+                   fold_struct=struct, fold_seq=rna, rank_within_gene=1)
+
+        if site_mode == "paired":
+            best = _best_duplex(struct, ptab, idx, gof, n, c1, c2, R3_REFINE)
+            if best is None:                                # neither projected cut paired -> no duplex
+                out.update(genomic_cut1=int(c1), genomic_cut2=int(c2), partner_cut1=np.nan,
+                           partner_cut2=np.nan, cross_dist1=np.nan, cross_dist2=np.nan,
+                           cut1_stemrun=0, cut2_stemrun=0, overhang_delta=99, refine_shift=0)
+                duplex_confirmed = False
+            else:
+                out.update({k: v for k, v in best.items() if k != "_key"})
+                duplex_confirmed = (best["cross_dist1"] <= R3_DUPLEX_TOL
+                                    and best["cross_dist2"] <= R3_DUPLEX_TOL
+                                    and best["overhang_delta"] <= R3_MAX_OVERHANG_DELTA
+                                    and best["cut1_stemrun"] >= R3_MIN_STEMRUN
+                                    and best["cut2_stemrun"] >= R3_MIN_STEMRUN)
+            out.update(genomic_distance=int(abs(out["genomic_cut1"] - out["genomic_cut2"])),
+                       cut_in_stem=bool(out["cut1_stemrun"] >= R3_MIN_STEMRUN and out["cut2_stemrun"] >= R3_MIN_STEMRUN),
+                       duplex_confirmed=bool(duplex_confirmed))
+        else:                                               # single observed cut + structural partner
+            best = None
+            for da in range(-R3_REFINE, R3_REFINE + 1):
+                gc = c1 + da; i1 = idx(gc)
+                if not (1 <= i1 <= n) or ptab[i1] == 0:
+                    continue
+                s1 = _local_stemrun(struct, ptab, i1)
+                key = (-s1, abs(da))
+                if best is None or key < best["_key"]:
+                    best = dict(genomic_cut1=int(gc), genomic_cut2=int(gof(ptab[i1])),
+                                partner_cut1=int(gof(ptab[i1])), partner_cut2=int(gc),
+                                cross_dist1=0, cross_dist2=0, cut1_stemrun=int(s1),
+                                cut2_stemrun=int(s1), overhang_delta=0,
+                                refine_shift=abs(da), _key=key)
+            if best is None:                                # observed cut is single-stranded in the fold
+                out.update(genomic_cut1=int(c1), genomic_cut2=np.nan, partner_cut1=np.nan,
+                           partner_cut2=np.nan, cross_dist1=np.nan, cross_dist2=np.nan,
+                           cut1_stemrun=0, cut2_stemrun=0, overhang_delta=99, refine_shift=0,
+                           genomic_distance=np.nan, cut_in_stem=False, duplex_confirmed=False)
+            else:
+                out.update({k: v for k, v in best.items() if k != "_key"})
+                out.update(genomic_distance=int(abs(out["genomic_cut1"] - out["genomic_cut2"])),
+                           cut_in_stem=bool(out["cut1_stemrun"] >= R3_MIN_STEMRUN),
+                           duplex_confirmed=False)            # one observed 5' end cannot confirm a double cut
+
+        for c in optional_meta:
+            if c in row.index:
+                out[c] = row[c]
+        rows.append(out)
 
     out_tsv = OUT_R3 / "rnaseIII_syn1_predicted_cleavage_pairs.tsv"
-    if all_rows:
-        outdf = pd.concat(all_rows, ignore_index=True)
-        outdf.to_csv(out_tsv, sep="\t", index=False)
-        print(f"[RNase III] regions scanned={len(cand)}  predicted cleavage pairs={len(outdf)}")
-        return outdf
-    print("[RNase III] no cleavage pairs passed structural filters")
-    return pd.DataFrame()
+    if not rows:
+        print("[RNase III] no candidate genes to anchor")
+        pd.DataFrame().to_csv(out_tsv, sep="\t", index=False)
+        return pd.DataFrame()
+    outdf = pd.DataFrame(rows)
+    outdf.to_csv(out_tsv, sep="\t", index=False)
+    npair = int((outdf["site_mode"] == "paired").sum())
+    nconf = int(outdf["duplex_confirmed"].sum())
+    nsingle = int((outdf["site_mode"] == "single").sum())
+    nstem = int(((outdf["site_mode"] == "single") & outdf["cut_in_stem"]).sum())
+    print(f"[RNase III] homology-anchored duplex finder: {len(outdf)} genes "
+          f"({npair} paired-site, {nsingle} single-site); "
+          f"cross-paired duplexes CONFIRMED {nconf}/{npair} paired; "
+          f"single observed cuts landing in a stem {nstem}/{nsingle}")
+    return outdf
 
 
 # ----------------------------------------------------------------------------
@@ -1151,7 +1280,7 @@ def main():
 
     # Stage 3+4: RNase III transfer + cleavage prediction (de-novo + homology-anchored)
     r3_coords = transfer_rnaseIII(r3_sites, r3_genes, rbh, syn1_ann)
-    predict_rnaseIII_cleavage(r3_coords)
+    predict_rnaseIII_cleavage(r3_coords, r3_sites)
     anchor_rnaseIII_cleavage(r3_sites, r3_coords)
 
     # Stage 5+6: RNase Y projection + downstream-structure scoring

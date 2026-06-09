@@ -37,7 +37,7 @@ import RNA
 
 HERE = Path(__file__).resolve().parent
 PROJECT = Path("/data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics")
-ANCHOR = HERE / "output" / "rnaseIII" / "rnaseIII_syn1_anchored_cleavage_sites.tsv"
+CUTS_TSV = HERE / "output" / "rnaseIII" / "rnaseIII_syn1_predicted_cleavage_pairs.tsv"   # structure-derived cut (rank-1 per gene)
 SYN1_FASTA = PROJECT / "Genomes_Input" / "syn1_genome.fasta"
 OUTDIR = HERE / "output" / "rnaseIII"
 STEMDIR = OUTDIR / "stems"
@@ -50,8 +50,17 @@ BP_COL = "#cccccc"       # base-pair rungs
 BASE_TXT = "#333333"     # nucleotide letters
 
 LET_FS = 3.2             # nucleotide-letter fontsize for individual PDFs
-DEFAULT_FLANK = 10       # flank for multi-cut spanning window (tight -> conserved stem, not local hairpins)
-SINGLE_HALF = 45         # half-window for a single-cut gene
+FLANK_EACH_SIDE = 50     # nt on EACH side of the cleavage-site pair, RNAfold default parameters --
+                         #   the exact Taggart/Li recipe (intervening RNA + 50 nt either side; ViennaRNA).
+                         #   (NB: at this width the global MFE prefers local hairpins over the long atpA
+                         #   stem, so the two cuts sit in separate dsRNA stems, not one staggered stem.)
+PERCUT_HALF = 20         # half-window when a gene's cuts are drawn SEPARATELY (one hairpin per cut).
+                         #   Used for paired-site genes whose two cuts do NOT form a confirmed duplex
+                         #   (e.g. atpA): a window spanning both cuts would either FORCE an artifactual
+                         #   shared stem (tight) or fold a busy multi-hairpin structure (wide), so each
+                         #   cut is shown honestly at its own local stem.
+DEFAULT_FLANK = 10       # (legacy) tight flank that folds the single conserved atpA stem
+SINGLE_HALF = 45         # (legacy) half-window for a single-cut gene
 PAIR_TOL = 4             # nt: two cuts are one duplex if a cut's partner lands within this of the other cut
 
 _GENOME = None
@@ -68,18 +77,16 @@ def revcomp(s):
     return s.translate(str.maketrans("ACGTacgt", "TGCAtgca"))[::-1]
 
 
-def fold_gene_window(cuts, strand, flank):
-    """Fold the transcript-oriented window around the cut(s); return seq, struct,
-    mfe, {genomic_cut: fold_idx}, (window_start, window_end)."""
+def fold_gene_window(cuts, strand, flank=None):
+    """Fold the intervening RNA between the cut(s) plus FLANK_EACH_SIDE nt on either
+    side, with RNAfold default parameters -- the exact Taggart/Li recipe.  Returns
+    seq, struct, mfe, {genomic_cut: fold_idx}, (window_start, window_end)."""
     g = genome()
-    if len(cuts) == 1:
-        gs, ge = cuts[0] - SINGLE_HALF, cuts[0] + SINGLE_HALF
-    else:
-        gs, ge = min(cuts) - flank, max(cuts) + flank
-    gs, ge = max(1, gs), min(len(g), ge)
+    flank = FLANK_EACH_SIDE if flank is None else int(flank)
+    gs, ge = max(1, min(cuts) - flank), min(len(g), max(cuts) + flank)
     frag = g[gs - 1:ge]
     rna = (frag if strand == "+" else revcomp(frag)).replace("T", "U")
-    struct, mfe = RNA.fold(rna)
+    struct, mfe = RNA.fold(rna)   # default parameters (37 C, dangles=2, lonely pairs allowed)
     idx = {c: (c - gs if strand == "+" else ge - c) for c in cuts}
     return rna, struct, mfe, idx, (gs, ge)
 
@@ -163,12 +170,17 @@ def draw_stem(ax, rna, struct, cut_idxs, letters=True, let_fs=LET_FS,
 
 
 def get_cuts(df, locus):
-    sub = df[df["syn1_locus_tag"] == locus].sort_values("syn1_projected_cut_1b")
-    cuts = [int(x) for x in sub["syn1_projected_cut_1b"]]
-    strand = str(sub["syn1_strand"].iloc[0])
-    gene = sub["syn1_gene"].iloc[0]
+    """The structure-derived rank-1 RNase III cut pair for a gene (genomic cuts)."""
+    sub = df[(df["syn1_locus_tag"] == locus) & (df["rank_within_gene"] == 1)]
+    if sub.empty:
+        sub = df[df["syn1_locus_tag"] == locus]
+    r = sub.iloc[0]
+    c2 = r.get("genomic_cut2", np.nan)
+    cuts = sorted([int(r["genomic_cut1"]), int(c2)]) if pd.notna(c2) else [int(r["genomic_cut1"])]
+    strand = str(r["syn1_strand"])
+    gene = r["syn1_gene"]
     if not (isinstance(gene, str) and gene.strip()):
-        gene = str(sub["bsub_gene"].iloc[0])
+        gene = str(r["bsub_gene"])
     return cuts, strand, (gene or locus)
 
 
@@ -192,6 +204,38 @@ def render_one(df, locus, flank, let_fs):
     return cuts, mfe, paired
 
 
+def render_percut(df, locus, half=PERCUT_HALF, let_fs=LET_FS):
+    """Draw each homology-mapped cut in its OWN tight local window (one crisp hairpin
+    per cut), side by side.  For genes whose two cuts do not form one duplex (e.g.
+    atpA) this is the honest, legible depiction (see PERCUT_HALF)."""
+    STEMDIR.mkdir(parents=True, exist_ok=True)
+    cuts, strand, gene = get_cuts(df, locus)
+    n = len(cuts)
+    fig = plt.figure(figsize=(7 / 4 * n, 7 / 4), constrained_layout=True)
+    for k, c in enumerate(cuts):
+        ax = fig.add_subplot(1, n, k + 1)
+        rna, struct, mfe, idx, _ = fold_gene_window([c], strand, half)
+        draw_stem(ax, rna, struct, [idx[c]], letters=True, let_fs=let_fs,
+                  backbone=False, rotate=True, letter_rot=0)
+        ax.set_title(f"{c:,}", fontsize=5, color="#333", pad=1)
+    out = STEMDIR / f"R2_{locus}_{gene}_rnaseIII_stem.pdf"
+    fig.savefig(out, dpi=300, transparent=True, bbox_inches="tight", pad_inches=0.01)
+    plt.close(fig)
+    print(f"  {locus:14s} {gene:8s} per-cut ({n} stems @ half {half})  -> {out.name}")
+    return out
+
+
+def render_auto(df, locus, flank, let_fs):
+    """Route a gene to the right renderer: a PAIRED-site gene whose two cuts do NOT
+    form a confirmed duplex is drawn per-cut (each cut at its own local stem); every
+    other gene uses the single spanning-window fold."""
+    sub = df[df["syn1_locus_tag"] == locus]
+    if not sub.empty and str(sub.iloc[0].get("site_mode", "")) == "paired" \
+            and not bool(sub.iloc[0].get("duplex_confirmed", False)):
+        return render_percut(df, locus, let_fs=let_fs)
+    return render_one(df, locus, flank, let_fs)
+
+
 def render_grid(df, loci, flank):
     cols = 4
     rows = math.ceil(len(loci) / cols)
@@ -212,19 +256,19 @@ def render_grid(df, loci, flank):
 
 def main():
     args = sys.argv[1:]
-    flank = int(args[1]) if len(args) > 1 and args[1].isdigit() else DEFAULT_FLANK
+    flank = int(args[1]) if len(args) > 1 and args[1].isdigit() else FLANK_EACH_SIDE
     let_fs = float(args[2]) if len(args) > 2 else LET_FS
 
-    df = pd.read_csv(ANCHOR, sep="\t")
+    df = pd.read_csv(CUTS_TSV, sep="\t")
     if args and args[0] == "all":
         loci = list(dict.fromkeys(df["syn1_locus_tag"]))   # preserve TSV order
         print(f"Rendering {len(loci)} homology-hit genes -> {STEMDIR}/")
         for locus in loci:
-            render_one(df, locus, flank, let_fs)
+            render_auto(df, locus, flank, let_fs)
         render_grid(df, loci, flank)
     else:
         locus = args[0] if args else "MMSYN1_0792"
-        render_one(df, locus, flank, let_fs)
+        render_auto(df, locus, flank, let_fs)
 
 
 if __name__ == "__main__":
