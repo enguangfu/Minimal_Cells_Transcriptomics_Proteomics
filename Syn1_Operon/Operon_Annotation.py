@@ -831,7 +831,7 @@ def find_terminators_near_tts(op_row, terms_df, window=TERM_WINDOW):
 tts_hits = []
 for _, o in op_canonical.iterrows():
     hit = find_terminators_near_tts(o, terms_df, window=TERM_WINDOW)
-    tts_hits.append({
+    rec = {
         "operon_id": o["operon_id"],
         "strand":    o["strand"],
         "n_sense_genes": o["sense_gene_count"],
@@ -840,9 +840,31 @@ for _, o in op_canonical.iterrows():
         "n_tts_terms": len(hit),
         "best_conf":   hit["conf"].max() if len(hit) > 0 else np.nan,
         "best_hp":     hit["hp_score"].min() if len(hit) > 0 else np.nan,
-    })
+    }
+    # geometry of the highest-confidence TTS terminator -- the intrinsic-terminator
+    # signature exported to the SI operon workbook (build_operon_xlsx.py)
+    if len(hit) > 0:
+        best = hit.loc[hit["conf"].idxmax()]
+        rec.update({
+            "term_id":        int(best["term_id"]),
+            "term_stem_bp":   len(str(best["stem5"])),
+            "term_loop_nt":   len(str(best["loop"])),
+            "term_polyU_nt":  len(str(best["tail3"])),
+            "term_stem5_seq": str(best["stem5"]),
+            "term_loop_seq":  str(best["loop"]),
+            "term_tail3_seq": str(best["tail3"]),
+        })
+    else:
+        rec.update({"term_id": np.nan, "term_stem_bp": np.nan, "term_loop_nt": np.nan,
+                    "term_polyU_nt": np.nan, "term_stem5_seq": "",
+                    "term_loop_seq": "", "term_tail3_seq": ""})
+    tts_hits.append(rec)
 
 tts_df = pd.DataFrame(tts_hits)
+# persist the per-operon terminator signature (single source of truth, read by
+# build_operon_xlsx.py); symmetric with promoter_minus10_classification.tsv above
+tts_df.to_csv("annotation/canonical/terminator_tts_classification.tsv", sep="\t", index=False)
+print("Saved: annotation/canonical/terminator_tts_classification.tsv")
 n_total = len(tts_df)
 n_with  = tts_df["has_tts_term"].sum()
 print(f"\nQ1 — Terminator within {TERM_WINDOW} bp of TTS:")

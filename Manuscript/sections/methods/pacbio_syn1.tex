@@ -13,7 +13,7 @@ The resulting libraries were pooled at equimolar concentrations, and the pool wa
 
 \subsubsection{RNA Sample Quality Control Analysis}\label{sec:methods-pacbio-qc}
 QC was conducted in the same manner as in~\refsec{methods-ill-qc}.
-Quality controls plots of RNA libraries have been included in~\nameref{SI}, \fig{qc-pacbio}.%\cmt{Add QC Plots?}
+Quality controls plots of RNA libraries have been included in \sdqc.
 
 \subsubsection{PacBio Iso-Seq Read Processing, Mapping to the Genome, and Quality Control}
 
@@ -75,5 +75,5 @@ Each cluster was annotated against the Syn1 gene model (GFF3) as sense, antisens
 
 \subsubsection{Quantification of TPM from Sequencing Depth}
 
-Per-gene sense and antisense TPM were computed from the PacBio HQ per-strand depth tracks (\texttt{syn1.PacBio.FLNC.HQ.\{plus,minus\}.bedGraph}) using the same depth-based definition applied to the Illumina data, namely the gene-length-normalized mean per-base depth scaled to transcripts per million against a single sense-plus-antisense denominator.
-Because the three technical replicates were pooled into a single library before mapping, no replicate averaging was applied, yielding one~\syn~PacBio TPM profile (available in SI file \texttt{syn1\_omics.xlsx}).
+Per-gene sense and antisense TPM were computed from the PacBio HQ per-strand depth tracks using the same depth-based definition applied to the Illumina data, namely the gene-length-normalized mean per-base depth scaled to transcripts per million against a single sense-plus-antisense denominator.
+Because the three technical replicates were pooled into a single library before mapping, no replicate averaging was applied, yielding one~\syn~PacBio TPM profile (available in \sdomics).

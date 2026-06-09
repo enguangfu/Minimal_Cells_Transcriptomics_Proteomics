@@ -46,7 +46,7 @@ Following another bead cleanup along with necessary quality control analysis on 
 For the JCVI-syn3A samples, both a Qubit RNA HS fluorometer assay and an Agilent TapeStation 2200 were used for assessing RNA concentration post-extraction from minimal cells.
 Initial Qubit values post RNA extraction were 1890 ng/$\mu$L for JCVI-syn3A.
 The Agilent TapeStation 2200 was used throughout the extraction and rRNA depletion steps to assess the quality of the RNA and depletion.
-TapeStation results gave an estimate of depletion through the absence of 16S and 23S peaks (Figure SXX).
+TapeStation results gave an estimate of depletion through the absence of 16S and 23S peaks (\sdqc).
 The corresponding graphs can be found in rRNA Supplemental Data.
 A Qubit RNA HS fluorometer was used to detect final quantitation of RNA.
 
@@ -99,7 +99,7 @@ A further 7.3~k supplementary alignments (split-read mappings) were retained.
 
 \subsubsection{Mapping Illumina Reads to Syn3A Genome}
 
-Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase from~\cite{sandberg_adaptive_2023} were retrieved from NCBI SRA database and assessed with \texttt{FastQC} and aggregated with \texttt{MultiQC}~\cite{ewels_multiqc_2016}.
+Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase from~\cite{sandberg_adaptive_2023} were retrieved from NCBI SRA database.
 Per-base and per-read quality scores passed all checks and no Illumina adapters were detected, so no trimming was applied.
 
 % The FastQC \emph{sequence duplication} and \emph{per-base sequence content} flags failed in both mates as expected for RNA-seq on a 543~kb bacterial genome (the same transcript fragment is sequenced many times, and the first $\sim$10~nt show the canonical random-hexamer priming bias); neither was treated as a quality issue. A small fraction of overrepresented sequences mapped to the 16S/23S/5S ribosomal operons, indicating residual rRNA after Ribo-Zero depletion, but these were retained for downstream strand-split depth analysis.
@@ -112,6 +112,6 @@ Strand-specific BAMs were generated using the dUTP / fr-firststrand flag convent
 \subsubsection{Quantification of TPM from Sequencing Depth}
 
 Per-gene sense and antisense TPM were computed for~\syna~from the strand-specific depth tracks, using the same depth-based definition applied to the~\syn~Illumina data, namely a gene-length-normalized mean per-base depth scaled to transcripts per million against a single sense-plus-antisense denominator per dataset.
-Genes were taken from the~\syna~annotation (\texttt{syn3a\_genome.gff3}), parsing both the \texttt{gene} and \texttt{pseudogene} feature types so that the three annotated pseudogenes were retained, for a total of 496 loci.
-TPM was computed independently from the Illumina and the ONT depth tracks; the single biological replicate of each platform required no replicate averaging, and the two profiles were merged into one table (\texttt{syn3A\_TPM\_Illumina\_ONT.tsv}).
+Genes were taken from the~\syna~annotation, parsing both the \texttt{gene} and \texttt{pseudogene} feature types so that the three annotated pseudogenes were retained, for a total of 496 loci.
+TPM was computed independently from the Illumina and the ONT depth tracks; the single biological replicate of each platform required no replicate averaging, and the two profiles were merged into one table.
 The Illumina profile served as the quantitative transcript-abundance track, with the long-read ONT profile retained as an orthogonal check, and it reproduced the per-gene TPM reported for the same wild-type~\syna~library by~\cite{sandberg_adaptive_2023} (Pearson $r = 0.998$ on $\log_{10}$ TPM), validating the depth-based pipeline.

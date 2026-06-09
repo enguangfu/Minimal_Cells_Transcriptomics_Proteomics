@@ -15,6 +15,7 @@ TO DO Reminder:
 - [x] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
 - [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
 - [x] R1 L1.4 (panel e,f,g) - RESOLVED 2026-06-08: the "canonical operons with no TransTermHP terminator" were a matching bug in `Operon_Annotation.py:find_terminators_near_tts` — the commented strict rule tested the terminator `end0` on BOTH strands, so '-'-strand terminators (whose 3' boundary is `start0`) were dropped (e.g. OP_00099/0178 missed its conf-100 TERM 82). Fixed to a strand-correct 3'-boundary window (`_term_3p`), re-ran: 97/127 canonical operons have a TTS terminator (was 98 via a midpoint hack; OP_00061 correctly dropped, OP_00099 now mapped). operons.tex L25 updated (97/127, 98% within 10 nt); term_* figures regenerated. Biology: a 3' terminator hairpin does NOT preclude 3' erosion (RNase R reads through structure) → L2.1/L2.3 reframe from "unstructured 3' end" to "limiting 3'→5' read-through capacity."
+- [ ] R4 L4.x RNA polymerase confilict revealed in Xiangwu Ju,... Shixin Liu, Nature Microbiology paper
 
 **B. Methods still to write:**
 - [x] M4 — "RNA processing and ribonucleases" DONE (ribonuclease inventory + RNA-processing endpoint analysis + RNase III/Y homology table + the B.subtilis→Syn1 RNase-site-mapping subsubsection [RBH BLASTP + ViennaRNA, 18 RNase III matches, atpA exemplar, cites taggart_high-resolution_2025]; versions pinned). Optional remaining: genome-wide 3'-end 2°-structure test (deferred, §A backlog).
@@ -68,7 +69,7 @@ TO DO Reminder:
 - hedging-as-polteness such as "I think", "I feel"  
 
 **Line Breaking in Latex:** One sentence per line for easier tracking  
-**Referring to files:** For now, use files names in the Git repo; replaced with SI file names later.
+**Referring to files (DONE):** cite the three Supplementary Data workbooks by macro (defined in `sections/macros.tex`), never by repo path: `\sdoperon` = Supplementary Data S1 (operon.xlsx), `\sdomics` = S2 (syn1_omics.xlsx), `\sdreduction` = S3 (genome_reduction.xlsx), `\sdqc` = S4 (the experimentalists' RNA-sample QC PDFs — Qubit + TapeStation — for the Syn1 PacBio/Illumina and Syn3A ONT/Illumina libraries; to be delivered as a single zip indexed by a README.txt). In-silico read-QC (FastQC/MultiQC) was DROPPED from Methods (those reports are not in the SI); the meaningful "no adapter/quality trimming" statement was kept. Repo working-filenames (`*.tsv/.bed/.bedGraph/.gff3`) and internal pipeline script names were stripped from Results/Methods; each section's "SI:" pointer is now bold "Supplementary Data S#." All three are described in `sections/SI.tex` (holds `\label{SI}`; the library QC plots fold in there too, so the old `\fig{qc-*}` refs were removed). `isoform_endpoint_context.tsv` is NOT an SI file (pointer removed). Build the actual `.xlsx` workbooks from the repo tables before submission.
 
 ---
 
@@ -104,7 +105,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 **Tex file:** `Manuscript/sections/results/operons.tex`  
 
-**SI file:** operons.xlsx (boundaries, promoters, terminators, gene coverage, protein complex annotation)
+**SI file:** `\sdoperon` = operon.xlsx (boundaries, member genes + coverage, TSS/TTS, promoter/terminator signatures, macromolecular-complex annotation) — cited in-text as "Supplementary Data S1". **Built by `Syn1_Operon/build_operon_xlsx.py`** (pure assembly, no recompute): joins `operons.candidate_blocks.tsv` + the promoter (`promoter_minus10_classification.tsv`) and terminator (`terminator_tts_classification.tsv`) signature tsvs + `protein_complexes.xlsx`. Promoter/terminator are filled for the **127 canonical operons only** (TSS+TTS intergenic); non-canonical rows blank. `Operon_Annotation.py` now also persists the per-operon terminator table (with stem/loop/poly-U geometry), symmetric with the promoter table — re-run it before rebuilding. Sheets: `Operons` (459 rows) + `Protein_complexes` (26).
 
 ### One-sentence Summary
 **459 operons were identified using PacBio long-read RNAseq, with transcription signatures located.**
@@ -282,7 +283,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 **Tex file:** `Manuscript/sections/results/corr_RNA_ptn.tex`
 
-**SI file:** `Syn1_Corr_RNA_Proteins/syn1_omics.xlsx` (all 911 genes; columns: locusTag, gene_name, rna_type, gene_product, protein_localization, TPM_illumina, TPM_PacBio, iPM_mean, protein_copy_number, TIR, CAI, protein_halflife_h; gene name/product taken from the syn3A proteome where an ortholog exists). Built by `Syn1_Corr_RNA_Proteins/R3_figure_panels.py`.
+**SI file (Supplementary Data S2, `\sdomics`):** `Syn1_Corr_RNA_Proteins/syn1_omics.xlsx` (all 911 genes; columns: locusTag, gene_name, rna_type, gene_product, protein_localization, TPM_illumina, TPM_PacBio, iPM_mean, protein_copy_number, TIR, CAI, protein_halflife_h; gene name/product taken from the syn3A proteome where an ortholog exists). Built by `Syn1_Corr_RNA_Proteins/R3_figure_panels.py`.
 
 ### One-sentence Summary
 **High correlation found between transcriptome and proteome.**
@@ -661,38 +662,37 @@ Extended Figure:
 - **Notes for LLM:** FLUX ANALYSIS NOT YET DONE (needs a metabolic model) — prose stops at the prediction with NO panel. Panel d is now the giant ribosomal-protein operon OP_00341 (belongs to L6.2). Update gapDH→GapA in the numbers above if reused.
 
 ---
+# Introduction
+
+**Tex file:** `Manuscript/sections/introduction.tex` — DRAFTED (180 words). "we" allowed (banned only in Results/Methods).
+Funnel written as a PAIR with the Discussion: every gap raised here is answered there, and nothing is answered that was not first asked.
+1. Broad: bacterial genes run in operons and RNA processing organizes the transcriptome above the single gene (Jacob-Monod lineage).
+2. Gap: syn1.0 / syn3A are defined at the genome-design + protein-essentiality level; their RNA-level organization (operons, processing, RNA→protein) is uncharted.
+3. Three questions = the three Discussion clusters: (a) how is expression organized at the RNA level; (b) does transcription predict the proteome at minimal complexity; (c) what does minimization do to the expression program.
+4. What we did: PacBio (syn1) + ONT (syn3A) + Illumina + matched proteomics → operon-resolved map for both organisms + the reduction comparison; foundation for whole-cell modeling.
+Cites: `jacob_genetic_1961`, `gibson_creation_2010`, `hutchison_design_2016`, `breuer_essential_2019`, `thornburg_fundamental_2022`.
+
 # Discussion
 
-## Interpretation of results to answer research questions
-operons identified with full-length RNA isoforms with matched transcription signatures
-Unexpected RNase processing biase can come from two mechanisms
+**Tex file:** `Manuscript/sections/discussion.tex` — DRAFTED (285 words; Intro + Discussion = 465, under the 500 budget). Unheaded flowing prose, 5 short paragraphs; de-recapped into 3 cross-cutting ideas (NOT one bullet per R-section, the recap anti-pattern).
 
-Mechanistic correlation between two omics shows that transcription alone determine the covairance of gene expression
+Complementarity map (Intro gap → Discussion answer):
 
-The novel transcription and translation in syn1 largely can be attributed to the poor annotation of genome, and also the synthetic traits; those abnormal genomic region were almost deleted from syn1 to syn3A
+| Intro raises | Discussion answers | from |
+|---|---|---|
+| transcriptome architecture uncharted | 459-operon map + pervasive 3′-biased processing | R1+R2 |
+| does transcription predict the proteome | yes, dominant; residual partly = elongation; syn1 oddities are artifacts AND were deleted first | R3+R4 |
+| what minimization does to expression | structurally conservative, functionally reallocates toward translation machinery; RNAP + central metabolism down; coherent w/ slow growth | R5+R6 |
 
-Genes with promoter deleted or replaced has significantly lower transcription in syn3A, including rPtns and HupA
+5 paragraphs:
+1. Take-home: transcription = primary layer shaping the proteome; processing + minimization = modifiers.
+2. Architecture (R1+R2): 459 operons w/ matched promoters/terminators; pervasive 3′>5′ erosion; 3′→5′ exonucleolytic clearance-bottleneck HYPOTHESIS (awaits cleavage-site mapping).
+3. Transcription→proteome + the loop (R3+R4): transcript level dominant, elongation explains part of residual; antisense/intergenic = mis-annotation + synthetic artifacts, and those regions were deleted first in the reduction.
+4. Reduction reallocates (R5+R6): gene-order-preserving, whole-operon excision, promoter-loss decapitation (HupA showcase); retained pool shifts to translation machinery (11 kb rProtein operon triples its share), RNAP + central metabolism down, coherent w/ longer cell cycle; rProtein-imbalance→aggregates = SPECULATIVE.
+5. Limitations + outlook: homology sites await direct cleavage-site mapping (conserved enzyme ≠ conserved RNA structure); ONT truncation → PacBio confirmation; mRNA-pool-share excludes rRNA; rProtein/membrane abundances least reliable (ribosome profiling); closer = gene-coexpression into a 4D whole-cell model of the minimal cell.
 
-Unexpectedly, upregulation of rPtns operons suppress the expression of transcription machinaries and glycolytic enzymes; which altogether explain the longer cell cycle of syn3A; misbalanced rPtn synthesis might lead to inefficient assembly and clustering of protein aggreates.
-
-
-## Consideration of limitations
-
-hypothesis of two mechanisms could be further tested
-
-ONT isoforms reads in syn3A were largely truncated, thus a PacBio repetition can strength the investigation of operon changes upon genome reduction.
-
-mRNA pool share only, should quantify also rRNA
-
-ribosomal and membrane proteins;s abundances are less reliable, ribosomal profiling can be used to ...
-
-## Relationship to previous literature and broader implication
-
-we can skip this part for now
-
-## Prospects for future progress
-
-Gene-coexpresssion model into 4D WCM of the minimal cell;
+Claims SOFTENED vs the raw outline (do not revert): "transcription alone determines covariance" → "dominant determinant"; "explain the longer cell cycle" → "coherent with"; rProtein→aggregation flagged SPECULATIVE.
+Standalone "Relationship to previous literature" section dropped; literature woven into the interpretation (Heard: that return-to-the-Intro is what makes the two complementary).
 
 ---
 

@@ -2,39 +2,21 @@
 
 \section{Discussion}
 
-First genome-scale full-length transcriptomics of synthetic bacteria Syn1 and Syn3A
+Full-length sequencing produced an operon-resolved transcriptome and proteome for both flagship synthetic cells, and showed that transcription is the primary layer shaping protein output, with RNA processing and genome minimization as modifiers.
 
-Complete and standard pipeline to infer operon from full-length RNA sequencing. Chris suggests publishing a toolkit. Why not since not so difficult to do and it will sell the paper better?
+The transcriptome proved richer than the reduced gene count implies.
+We mapped 459 operons whose full-length isoforms carried matched promoters and terminators, and their primary transcripts were pervasively reshaped, with markedly more 3$'$ than 5$'$ erosion.
+We interpret this asymmetry as a 3$'\rightarrow$5$'$ exonucleolytic clearance bottleneck rather than biased endonucleolytic cutting, a hypothesis direct cleavage-site mapping will test.
 
-Leverage bioinformatics to largely explain transcription initiation, termination and the downstream RNA processing processes
+Across \syn, transcript level was the dominant determinant of protein abundance, with translation-elongation features explaining part of the residual variance.
+The antisense and intergenic transcription we detected traced largely to inherited mis-annotation and synthetic-construction artifacts, and those regions were among the first removed during minimization to \syna.
 
-Hints on differential protein synthesis via polysomes translation of polycistronic transcripts
+Minimization was structurally conservative yet functionally transformative.
+It preserved gene order and excised whole operons, decapitating only a few retained operons by deleting their own promoters, with the nucleoid protein HupA the clearest case.
+The retained transcriptome reallocated toward the translation machinery, a single 11~kb ribosomal-protein operon tripling its mRNA-pool share, while RNA polymerase and central-metabolic enzymes declined, coherent with \syna's longer cell cycle; whether imbalanced ribosomal-protein synthesis burdens assembly remains speculative.
 
-abnormal transcription and translation identified by Long-read Pacbio transcriptomics and proteomics are likely the inadequate annoation of Syn1's genome, which inherited from Mycoplasma mycoides; Interestingly, all presented abnormal were deleted during the genome reduction to syn3A.
-
-The single starkest case of this reallocation is the $\sim$11~kb ribosomal-protein and translation-machinery operon \locus{0652}--\locus{0672}: this 21-gene polycistron, transcribed as one unit with no internal terminator, already supplied 12\% of the \syn~coding transcriptome and rose to 34\% in \syna, so that more than a third of all messenger RNA in the minimal cell originates from this one transcription unit (a $\sim$1.5-fold increase in relative output even after the reduced gene complement is accounted for); its primary transcript is further shaped by an internal endonucleolytic cleavage that leaves a highly abundant, stable 5$'$ fragment over the promoter-proximal genes.
-
-why rPtn upregulated? No DNA supercoiling? upstream tRNA operon increases RNAP proximity
-
-misbalanced rPtn synthesis might lead to inefficient assembly and clustering of protein aggreates.
-
-
-Limitation:
-
-hypothesis of two machanism can contribute to 3' biased RNA processing should be further investigated
-
-RNase III and RNase Y cleavage sites in \syn~were nominated by protein homology to \textit{B. subtilis}, but homology transfers the enzyme, not its RNA substrate: the cleaved structures are not conserved, as the long \textit{B. subtilis} \gene{atpA}{0792} cleavage stem folds into separate short hairpins in \syn, so the precise cut coordinates and whether each homologous site is genuinely processed in the minimal cell remain to be established by direct cleavage-site mapping (5$'$-monophosphate / degradome sequencing) in \syn.
-
-only consider mRNA pool share; rRNA depletion
-
-Ribosomal and membrane protein's abundances are less reliable than cytosolic ones
-
-Outlook:
--> Do ribosome profiling
-
-ONT isoforms reads largely truncated thus cannot do de novo operon call in syn3A
-
-pave the way to incorporate gene-coexpression model into 4DWCM of the minimal cell; Pave the road to simulate gene co-expression via RNA convoy on the bacterial circular genome
-
+Several limitations remain.
+The homology-mapped processing sites await direct cleavage-site mapping in \syn, since conserved ribonucleases need not act on conserved RNA structures; the truncated \syna~nanopore reads leave operon-level changes to be confirmed by PacBio; expression was framed as mRNA-pool share and excludes rRNA; and ribosomal and membrane-protein abundances are the least reliable, which ribosome profiling could resolve.
+Together these data establish a gene-coexpression foundation for incorporation into a four-dimensional whole-cell model of the minimal cell~\cite{thornburg_fundamental_2022}.
 
 \newpage
