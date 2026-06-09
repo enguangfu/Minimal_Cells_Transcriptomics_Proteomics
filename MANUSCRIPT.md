@@ -5,44 +5,15 @@ Results paragraphs. Each subsection here mirrors a `.tex` file under
 `Manuscript/sections/{results,methods}/`. Fill in the bullets; the LLM will
 expand them into prose, quoting numbers verbatim from the files you list.
 
-TO DO Reminder:
+## Deferred / future work
 
-**A. Pending analyses (these block their Results text + figure panels):**
-- [~] R2 / M4 — RNA-processing/RNase analysis. DONE: L2.2 erosion (panel d) + L2.4 ATP-synthase α cleavage (panel f); R2 prose (`RNase.tex`) + M4 Methods (`RNA_processing.tex`) drafted. **L2.3 SCOPED 2026-06-08** to ship with: (1) 2° structures of 3 examples — lap 5', 0178 3', atpA/α RNase III site (user-built, ViennaRNA); (2) panel e proposed-hypothesis schematic (proteomics capacity + kinetic argument); (3) the B.subtilis→Syn1 homology / α RNase III site visualization (user). These three are mostly user-built → then wrap R2. The other-membrane-complex scan is also deferred (optional).
-  - **DEFERRED (backlog) — genome-wide 3'-end 2°-structure test (L2.3 future work):** test the 3'→5'-exo signature transcriptome-wide. **Design is SETTLED — do NOT use the confounded version:** do NOT compare intragenic vs intergenic 3' ends (terminators are trivially structured → no evidence). Use within-class controls instead: (i) **terminal accessibility** — mean base-pairing prob of the last ~5 nt (ViennaRNA partition function) at intragenic 3' ends vs **dinucleotide-shuffled** windows (composition-matched null) → predict the 3' termini are more single-stranded (a loadable 3'-OH); (ii) **3'-vs-5' mirror-asymmetry meta-profile** — pairing probability aligned at the endpoint for intragenic 3' vs 5' ends → predict a structure peak just UPSTREAM (5') of 3' ends (the YhaM-stall stem) mirrored DOWNSTREAM (3') of 5' ends, both with accessible termini. N = 6,302 intragenic 3' / 9,992 5' unique positions (from `Syn1_RNase/RNase/isoform_endpoint_context.tsv`); ViennaRNA 2.6.4 in the RNAseq env; inputs ready.
-- [ ] R5 L5.5 (panel e) — **DEFERRED** essentiality × trace-expression script; supply the syn3A essentiality source. 
-- [ ] R6 L6.5 (no panel) — ATP/GTP flux comparison; supply the metabolic model/source. (panel d/e now = rPtn operon + tRNA junction, L6.3.)
-- [x] R4 L4.5 — synthetic-element transcription script (yeast gene 0918 antisense; watermarks).
-- [ ] R1 L1.5 (panel e) — decide which polycistronic operon to showcase (r-protein operon vs another complex).
-- [x] R1 L1.4 (panel e,f,g) - RESOLVED 2026-06-08: the "canonical operons with no TransTermHP terminator" were a matching bug in `Operon_Annotation.py:find_terminators_near_tts` — the commented strict rule tested the terminator `end0` on BOTH strands, so '-'-strand terminators (whose 3' boundary is `start0`) were dropped (e.g. OP_00099/0178 missed its conf-100 TERM 82). Fixed to a strand-correct 3'-boundary window (`_term_3p`), re-ran: 97/127 canonical operons have a TTS terminator (was 98 via a midpoint hack; OP_00061 correctly dropped, OP_00099 now mapped). operons.tex L25 updated (97/127, 98% within 10 nt); term_* figures regenerated. Biology: a 3' terminator hairpin does NOT preclude 3' erosion (RNase R reads through structure) → L2.1/L2.3 reframe from "unstructured 3' end" to "limiting 3'→5' read-through capacity."
-- [ ] R4 L4.x RNA polymerase confilict revealed in Xiangwu Ju,... Shixin Liu, Nature Microbiology paper
+Intentionally deferred analyses; the manuscript already ships without them.
 
-**B. Methods still to write:**
-- [x] M4 — "RNA processing and ribonucleases" DONE (ribonuclease inventory + RNA-processing endpoint analysis + RNase III/Y homology table + the B.subtilis→Syn1 RNase-site-mapping subsubsection [RBH BLASTP + ViennaRNA, 18 RNase III matches, atpA exemplar, cites taggart_high-resolution_2025]; versions pinned). Optional remaining: genome-wide 3'-end 2°-structure test (deferred, §A backlog).
-
-**C. Results prose (draft from logics, §0 style — one section at a time):**
-- [x] Generate all six Results sections. R5 (`reduction_operons.tex`) drafted (L5.1–L5.4, 459-operon numbers); R6 (`reduction_omics.tex`) drafted (L6.1–L6.5, 459-era numbers; L6.3 = the 11 kb rPtn operon + tRNA-junction paragraph, panels d/e). Only blocked items remain: R5-L5.5 (panel e essentiality) and R6-L6.5 flux (no panel) — both await analyses A.
-- [x] R2 (`RNase.tex`) DRAFTED 2026-06-07 (L2.1–L2.4 prose, panels a–f, ribonuclease table; L2.3 exo mechanism kept as a hedged prediction pending tomorrow's 2°-structure analysis). Compiles clean (durand_rnases_2018, redko_minimal_2013, janssen_tmrna_2012). **ALL SIX RESULTS SECTIONS + R2 NOW DRAFTED.**
-
-**D. Figures:**
-- [ ] Regenerate + format the six multi-panel figures in Illustrator.
-
-**E. Numbers to re-verify (flagged during Methods drafting):**
-- [x] M7 — recounted on revised (post Apr-22) clusters: 837 abnormal isoforms -> 29,443 candidate ORFs -> top-100 -> 48 unique / 47 proteotypic; 2 MS peptides reproduced (NOVEL_PEP_002; NOVEL_PEP_043 = old 030).
-- [x] M8 — RE-VERIFIED (Syn3A_TPM.py rerun): the r=0.998 is **our depth-based Illumina TPM vs Palsson/Sandberg reported Illumina TPM** (n=458; Spearman 0.998), NOT Illumina vs ONT. Illumina vs ONT agreement is only Pearson r=0.570 / Spearman 0.558 (n=496). The earlier note conflated the two. syn3A Illumina alignment % still not locally re-verifiable (no logs).
-
-**F. Style / front-and-back matter:**
-- [x] §0 — fill the "Exemplar paragraph" field and the "Things to NEVER do" list.
-- [ ] Draft Abstract, Introduction, and Discussion (~500 words each; not yet in this file).
-- [x] Reorganize the Operon_Visual Jupyter notebook before publication. (Progress: `Operon_Annotation.py` cleaned to analysis-only and confirmed to run end-to-end; the per-operon `plot_one_operon` driver was split out into a new `Operon_Visualization.ipynb`.)
-- [ ] Final LaTeX pass (resolve overfull \hbox lines / typesetting).
-
-**H. Operon segmentation — RESOLVED (new segmentation finalized 2026-06-04):**
-- [x] Reproducibility: the current `Operon_Segmentation.py`, run in conda env `RNAseq` (has pysam), reproduces the canonical `operons.candidate_blocks.tsv` (**459 operons**) byte-for-byte. The earlier 480-vs-483 gap is gone — the finalized map is 459 operons. Stage-by-stage counts are now persisted to `Syn1_Operon/Operon_Segmentation.txt` (mirrors `Operon_Annotation.txt`).
-- [x] Dedup bug fixed: `dedup_operon_gene_lists` runs as the final pass before `to_csv`, so the tsv's `sense_gene_count` already equals the unique-loci count (max 21, 0 mismatches across all 459 operons). No consumption-time recount needed.
-- [x] Co-transcription merge: the Step-5a overlap / coverage-hole merge is now read-evidence based (≥50 strand-specific PacBio bridging reads across the junction AND ≥0.5 gap/flank depth continuity), so the 11 kb rPtn supercluster (0652–0672) stays intact (61 candidate junctions → 43 pass → 37 merged operons). Running the script from `Syn1_Operon/` is safe — it regenerates the identical canonical map.
-- [ ] Could use promoter and terminator predictions to judge the merging of truncated operons; then we can expand the statistics of transcription signatures to all operons; tell if internal promoter and terminator.
-- [ ] Also checking the operon gene coverage.
+- **L2.3 genome-wide 3'-end 2°-structure test.** Settled design (do NOT use the confounded intragenic-vs-intergenic comparison, since terminators are trivially structured): (i) terminal accessibility = mean base-pairing probability of the last ~5 nt (ViennaRNA partition function) at intragenic 3' ends vs dinucleotide-shuffled, composition-matched windows; (ii) a 3'-vs-5' mirror-asymmetry meta-profile of pairing probability aligned at the endpoint. N = 6,302 intragenic 3' / 9,992 5' unique positions (`Syn1_RNase/RNase/isoform_endpoint_context.tsv`); ViennaRNA 2.6.4 in the RNAseq env.
+- **R5 L5.5 (panel e).** Essentiality × trace-expression: write the script and supply a syn3A essentiality source.
+- **R6 L6.5 (no panel).** ATP/GTP flux comparison: needs a metabolic model.
+- **R1 L1.5 (panel e).** Decide which polycistronic operon to showcase.
+- **R4.** RNA-polymerase-conflict angle (Ju et al., Nat. Microbiol.).
 
 ---
 
@@ -69,7 +40,7 @@ TO DO Reminder:
 - hedging-as-polteness such as "I think", "I feel"  
 
 **Line Breaking in Latex:** One sentence per line for easier tracking  
-**Referring to files (DONE):** cite the three Supplementary Data workbooks by macro (defined in `sections/macros.tex`), never by repo path: `\sdoperon` = Supplementary Data S1 (operon.xlsx), `\sdomics` = S2 (syn1_omics.xlsx), `\sdreduction` = S3 (genome_reduction.xlsx), `\sdqc` = S4 (the experimentalists' RNA-sample QC PDFs — Qubit + TapeStation — for the Syn1 PacBio/Illumina and Syn3A ONT/Illumina libraries; to be delivered as a single zip indexed by a README.txt). In-silico read-QC (FastQC/MultiQC) was DROPPED from Methods (those reports are not in the SI); the meaningful "no adapter/quality trimming" statement was kept. Repo working-filenames (`*.tsv/.bed/.bedGraph/.gff3`) and internal pipeline script names were stripped from Results/Methods; each section's "SI:" pointer is now bold "Supplementary Data S#." All three are described in `sections/SI.tex` (holds `\label{SI}`; the library QC plots fold in there too, so the old `\fig{qc-*}` refs were removed). `isoform_endpoint_context.tsv` is NOT an SI file (pointer removed). Build the actual `.xlsx` workbooks from the repo tables before submission.
+**Referring to files:** cite the three Supplementary Data workbooks by macro (defined in `sections/macros.tex`), never by repo path: `\sdoperon` = Supplementary Data S1 (operon.xlsx), `\sdomics` = S2 (syn1_omics.xlsx), `\sdreduction` = S3 (genome_reduction.xlsx), `\sdqc` = S4 (the experimentalists' RNA-sample QC PDFs — Qubit + TapeStation — for the Syn1 PacBio/Illumina and Syn3A ONT/Illumina libraries; to be delivered as a single zip indexed by a README.txt). In-silico read-QC (FastQC/MultiQC) was DROPPED from Methods (those reports are not in the SI); the meaningful "no adapter/quality trimming" statement was kept. Repo working-filenames (`*.tsv/.bed/.bedGraph/.gff3`) and internal pipeline script names were stripped from Results/Methods; each section's "SI:" pointer is now bold "Supplementary Data S#." All three are described in `sections/SI.tex` (holds `\label{SI}`; the library QC plots fold in there too, so the old `\fig{qc-*}` refs were removed). `isoform_endpoint_context.tsv` is NOT an SI file (pointer removed). Build the actual `.xlsx` workbooks from the repo tables before submission.
 
 ---
 
@@ -84,7 +55,6 @@ TO DO Reminder:
 **Figure panels:** which panels of which manuscript figure this maps to.
 **Conclusion:** what we conclude, and what we explicitly do *not* claim.
 **Caveats / hedges:** limitations the prose must acknowledge.
-**Notes for LLM:** anything special (e.g. "cite Sandberg 2023 here", "do not call ONT quantitative").
 ```
 
 The **Numbers to cite** line is the single most important field — if listed, they get quoted; if absent, the LLM may pick the wrong column from the output table.
@@ -133,7 +103,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** a
 - **Conclusion:** None
 - **Caveats:** None
-- **Notes for LLM:** This is a descriptive part. DONE — L1.1 drafted in `operons.tex`.
 
 #### L1.2: 2.6 M full-length PacBio RNA seq clustered into 267k isoform clusters.
 
@@ -148,7 +117,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** None
 - **Conclusion:** 267k isoform clusters with sharp ends serve as solid foundation for operon calling.
 - **Caveats:** None
-- **Notes for LLM:** More details presented in Methods M2. DONE — L1.2 drafted in `operons.tex`.
 
 #### L1.3: 459 operons were mapped by full-length PacBio RNA seq.
 
@@ -168,8 +136,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - Nine operons cover only anti-sense genes or intergenic regions (0 sense genes)
 - **Figure panels:** b,c
 - **Conclusion:** None
-- **Caveats:** RESOLVED — the segmentation now applies `dedup_operon_gene_lists` so `sense_gene_count` equals the unique-loci count (max 21, 0 mismatches across all 459 operons); panel b / mean are no longer inflated.
-- **Notes for LLM:** More details are in Methods M3. DONE — L1.3 drafted in `operons.tex` (segmentation-algorithm paragraph + size-statistics paragraph).
+- **Caveats:** the segmentation now applies `dedup_operon_gene_lists` so `sense_gene_count` equals the unique-loci count (max 21, 0 mismatches across all 459 operons); panel b / mean are no longer inflated.
 
 #### L1.4: Transcription signatures located for operons.
 
@@ -192,7 +159,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** d (promoter + terminator logos), e (terminator stat strips: stem length, loop length, poly-U tail logo, stem G+C, TTS→poly-U distance)
 - **Conclusion:** Signatures are both consistent with previous knowledge: -10 box of TSS has TANAAT, -35 just AT rich; TTS as intrinsic terminators (G+C-enriched hairpin + poly-U) whose 3' poly-U end coincides with the mapped TTS.
 - **Caveats:** The TSS, TTS sites are only for canonical operons; we might need to refine for all cases. Stem G+C 40% is enriched relative to the AT-rich genome but not "GC-rich" in absolute terms — phrase as G+C-enriched.
-- **Notes for LLM:** Corresponding Method finished (M3). DONE — L1.4 drafted in `operons.tex` (promoter sentence + terminator sentences with stem G+C and TTS→poly-U distance). Panel d: -35 / -10 promoter logos regenerated to OUTPUT.md spec (1×1 in, x-tick labels removed, enlarged ATCG). Panel e candidate = the five terminator stat strips (user is assembling); tex keeps Fig. d refs until panel letters are fixed.
 
 #### L1.5: One instance of polycistronic operons
 
@@ -203,7 +169,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** e
 - **Conclusion:** 
 - **Caveats:** 
-- **Notes for LLM:** Use for instance to catch eyes of readers
 
 ---
 
@@ -235,7 +200,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** b,c,d
 - **Conclusion:** None
 - **Caveats:** None
-- **Notes for LLM:** None
 
 #### L2.2: Transcriptome-wide, significantly more 3' erosion found.
 
@@ -248,12 +212,11 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** e
 - **Conclusion:** Most full-length isoforms are processed; endpoints fall inside ORFs far more often at the 3' end, evidence of biased 3'-directed erosion.
 - **Caveats:** intragenic-endpoint logic counts a 3' end inside a gene body as processing (cannot be a terminator); does not distinguish endo- from exo-nucleolytic origin.
-- **Notes for LLM:** Make this logic short and to the point.
 
 #### L2.3 (HYPOTHESIS): The 3'-bias reflects an asymmetric exonucleolytic *clearance* bottleneck — limited 3'→5' read-through (scarce RNase R, stalling YhaM) and ribosome trapping on non-stop ends — not biased endonucleolytic cutting.
 
 - **Logic (the chain):** Endonucleolytic cleavage (RNase Y/III) is *symmetric* — each cut yields one upstream fragment (intact 5' + a NEW intragenic 3' end) and one downstream fragment (NEW intragenic 5' end + intact 3' terminator) — so endo cutting alone cannot create a 3'/5' asymmetry; equal numbers of each are born. The observed bias must therefore arise from differential *clearance* of these fragments. (i) Downstream / 5'-eroded fragments are cleared rapidly by the abundant 5'→3' machinery (RNase J1 + J2) → low steady state → rarely captured. (ii) Upstream / 3'-eroded fragments can only be *fully* erased by RNase R — the lone 3'→5' exo that reads THROUGH structure (it needs an unstructured ss 3' overhang to load, then unwinds via intrinsic helicase activity); the abundant YhaM is a "generator not finisher" — it trims the ss 3' tail but STALLS at the first stem base, manufacturing 3' ends rather than removing them. So 3'-eroded intermediates are both over-produced (YhaM stalls) and under-cleared (RNase R scarce) → they accumulate and dominate the steady-state long-read pool. **Two reinforcing mechanisms:** (A) **lower 3'→5' read-through capacity** (RNase R 36 vs RNase J1+J2 ~234 copies; YhaM 117 stalls at structure); (B) **ribosome trapping** at non-stop 3' ends (the 42% start-but-no-stop ORFs from L2.2) physically blocks exo entry until tmRNA–SmpB rescue, which is limiting (SmpB 14).
-- **Analysis — SCOPED 2026-06-08:** the genome-wide structure test is DEFERRED (full design parked in TODO §A); R2 ships with three worked examples + the kinetic argument. Three strands of support:
+- **Analysis:** the genome-wide structure test is deferred (design in Deferred / future work above); R2 ships with three worked examples + the kinetic argument. Three strands of support:
   1. **2° structure of the three examples** (user-built, ViennaRNA 2.6.4 in RNAseq env): the 5' erosion region of the lap operon (panel b), the 3' erosion region of the 0178 operon (panel c), and the atpA/α RNase III cleavage site (panel f) — qualitative illustration that the eroded 3' ends sit at accessible / stall-competent structures.
   2. **Ribonuclease capacity asymmetry (proteomics, in hand, Table S1):** 5'→3' (RNase J1+J2 ~234) vs 3'→5' read-through (RNase R 36); YhaM 117 (stalls), SmpB 14 → panel e proposed-hypothesis schematic.
   3. **Non-stop / ribosome-trapping link (in hand):** the L2.2 42%-no-stop ORFs × the limiting tmRNA–SmpB capacity.
@@ -262,7 +225,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** f (biased-processing schematic).
 - **Conclusion:** The 3'-erosion bias is best explained by a 3'→5' clearance bottleneck (scarce read-through RNase R; abundant but structure-stalling YhaM) compounded by ribosome trapping on non-stop products under limiting trans-translation — not by biased endonucleolytic cutting.
 - **Caveats:** copy number is a capacity *proxy*, not measured flux (RNase R is processive, so 36 copies aren't negligible); repeated endo cuts can substitute for RNase R in clearing structured RNA; the ribosome-trapping arm applies only to translated (CDS) 3' ends; long-read capture biases.
-- **Notes for LLM:** Literature backing (web-searched, verified): **RNase R** requires an unstructured ss 3' overhang to LOAD but then degrades THROUGH structure via intrinsic helicase activity (Chu et al. 2017 PubMed 29036353; "How RNase R Degrades Structured RNA" JBC 2016) — so its "unstructured 3'" requirement is at INITIATION only; **YhaM** is Mn2+-dependent, prefers a ss 3' docking site and STALLS at the base of secondary structure (Oussenko et al. 2002, J Bacteriol 184:6250); RNase R is also a principal nuclease of non-stop mRNA decay with trans-translation (need a citation before asserting in text). **Table S1 RNase R row should be nuanced** to "needs ss 3' overhang to load, then reads through structure" (not "only unstructured"). The tex L2.3 paragraph can now state the capacity-asymmetry + ribosome-trapping HYPOTHESIS with the Table S1 numbers; the structure evidence is the three example folds (qualitative), with the genome-wide test framed as future work. Candidate bib keys: durand_rnases_2018, durand_three_2012, redko_minimal_2013, janssen_tmrna_2012.
 
 #### L2.4: ATP synthase operon is co-expressed in one-go but cut at $\alpha$ subunit.
 
@@ -275,7 +237,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** g
 - **Conclusion:** The RNase complexifies the subunit synthesis of complexes.
 - **Caveats:** None
-- **Notes for LLM:** FRAMING (decided 2026-06-09): Results = "highlighted the homology-mapped cleavage sites, each at a stem" (no clean-duplex claim); Methods = the algorithm found NO conserved clean duplex (0/5 paired). Panel-g matplotlib (gene arrows + 2-region-coloured isoforms + depth + the two RNase III cut lines at 932,767/932,881 + shaded zone) DONE; the F1/F0 scheme, SD strengths, subunit labels and "RNase III on $\alpha$" scissors are Illustrator. RNA 2° structure at $\alpha$ DONE (`R2_MMSYN1_0792_atpA_rnaseIII_stem.pdf` = local structure, two cuts each at a stem, NO duplex connector — honest). Still TODO: check OTHER membrane complexes for the same pattern.
 
 ---
 
@@ -313,7 +274,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** a
 - **Conclusion:** Poor coverage of membrane proteins because of the protease digestion; 
 - **Caveats:** None
-- **Notes for LLM:** Method M5 done (Relative/Absolute Protein Quantification + Localization). DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.1 copy-number paragraph).
 
 #### L3.2: Using Illumina TPM as standard of transcriptome quantification
 
@@ -324,7 +284,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** c
 - **Conclusion:** As convention, Illumina TPMs were used to do correlation.
 - **Caveats:** Do NOT say "Illumina TPM used since correlate with iPM better."
-- **Notes for LLM:** Methods M1/M2/M8 done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.2). r=0.62 verified = the panel-c figure value (TPM≥0.5); all-feature r=0.61, mRNA-only r=0.68.
 
 #### L3.3: Decent correlation found between transcriptome and proteome for syn1
 
@@ -336,7 +295,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** b
 - **Conclusion:** Decent correlation.
 - **Caveats:** None
-- **Notes for LLM:** DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.3). The old tex heading's "0.67 for cytosolic" was STALE — cytosolic Pearson is 0.70 (0.6971); corrected in the prose.
 
 #### L3.4: Predicted TIR had low correlation with residuals between two omics
 
@@ -349,7 +307,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** d
 - **Conclusion:** No improvement on correlations, could be because the prediction itself was inaccurate.
 - **Caveats:** None
-- **Notes for LLM:** Method M6 (TIR) done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.4); cite OSTIR `roots_ostir_2021`.
 
 #### L3.5: Translation elongation factor improved the correlations
 
@@ -362,7 +319,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** e,f
 - **Conclusion:** Translation elongation affected the protein biosynthesis.
 - **Caveats:** None
-- **Notes for LLM:** Method M6 (CAI) done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.5); cite CAI `sharp_codon_1987`.
 
 #### L3.6: Protein degradation had low correlation with residuals.
 
@@ -378,7 +334,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** g,h
 - **Conclusion:** Intrinsic protein degradation is way slower than protein synthesis and doubling in syn1, thus having a minor effect on proteome abundances.
 - **Caveats:** Only a subset of proteins found reciprocal homologs; the intrinsic half-lives were corrected by protease (Lon or FtsH) abundances.
-- **Notes for LLM:** Method M6 (degradation) done. DONE — Results prose drafted in `corr_RNA_ptn.tex` (L3.6); cite Mpn half-lives `burgos_protein_2020`.
 
 ---
 
@@ -420,7 +375,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** a
 - **Conclusion:** Full-length RNA isoforms reveal new cases of anti-sense transcription as read-throughs.
 - **Caveats:** None
-- **Notes for LLM:** DONE — `novel.tex` drafted (L4.1–L4.6) against the final 8-panel figure (`R4_dist_panels.py` b/c/e/f + `R4_track_panels.py` a/d/g/h). Cites gibson_creation_2010, llorens-rico_bacterial_2016, roots_ostir_2021.
 
 #### L4.2: Spurious promoter has highest isoform read support out of three cases, but still minor compared to sense-transcription.
 
@@ -434,7 +388,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** b,c
 - **Conclusion:** All three antisense classes are minor versus sense transcription; read-through has the highest typical (median) support, embedded the longest isoforms, and one spurious-promoter locus (his3/0918) is the sole high-abundance exception.
 - **Caveats:** None
-- **Notes for LLM:** Panel a,b, and c are in the same row. DONE.
 
 #### L4.3: Unexpected transcription of yeast vector gene 0918.
 
@@ -444,7 +397,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Numbers to cite:** his3/0918 antisense depth >30,000; 28 antisense isoforms (top 16.6k reads); the driving spurious-promoter region deleted in syn3A; the antisense TSS (pos5p0 27522) carries a perfect -10 hexamer TAAAAT (TANAAT consensus, 0 mismatch; core_6mer tier) with an AT-rich -35 (CTTTGAA), confirming a genuine spurious promoter. Watermarks W1-W4 (located by exact sequence): length-weighted mean PacBio depth ~283/+ , ~360/- vs genome-wide average ~2133/2051 (6-8x lower); covered ORFs all hypothetical/watermark calls (plus real 0590) -> minimally transcribed noise.
 - **Figure panels:** d
 - **Conclusion:** The yeast marker his3 is heavily transcribed antisense yet untranslated, and its driving spurious promoter (which carries a canonical TAAAAT -10 box, i.e. a real but mislocated sigma-factor promoter) is deleted in syn3A; the four watermarks are only minimally transcribed (noise).
-- **Notes for LLM:** DONE. his3 itself is RETAINED at the deletion boundary -- only its upstream promoter region is deleted, so do not claim the gene is deleted. Watermark expression quantified in `Abnormal_Transcripts.py` -> `watermark_expression.txt` (located by sequence, not in panel d); one sentence added to L4.3 in novel.tex.
 
 #### L4.4: RNA isoforms has much more intergenic coverage than anti-sense.
 
@@ -457,7 +409,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** e,f
 - **Conclusion:** Median values were consistent with previous papers; high outliers are due to the anti-sense transcription or truncations.
 - **Caveats:** None
-- **Notes for LLM:**  Panel d,e and f in the same row.
 
 #### L4.5: One truly isolated intergenic transcription.
 
@@ -470,7 +421,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** g
 - **Conclusion:** A single genuinely intergenic transcript exists (between lap/0154 and pseudo/0155, ~980 reads, 199,379-200,123); it lies in a syn3A-deleted region, while lap occupies the retained gap and was relocated. Unlike the his3 spurious promoter, its TSS lacks a recognizable -10 box (1 mismatch from TANAAT), consistent with pervasive rather than promoter-driven transcription.
 - **Caveats:** None
-- **Notes for LLM:** Panel g and h in the same row. DONE.
 
 
 #### L4.6: Two novel peptides identified by enumerating all possible ORFs in isoforms having high abnormal fraction.
@@ -484,7 +434,6 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - **Figure panels:** h
 - **Conclusion:** Two predicted ORFs were identified in Mass-spec proteome, and both were located near less annotated genes. Also, these two regions were deleted in syn3A.
 - **Caveats:** Only top 100 ORFs were selected to do the new proteomics search, thus we cannot assure if all ORFs were translated or not (leave this question to the reviewers); the new canonical cluster isoforms gave new ORF candidiates, which were highly similar to the old ones that searched against raw proteoimcs.
-- **Notes for LLM:** See Method **Novel Open-Reading Frames from Full-length RNA Isoforms** for details; the Analysis Jupyter Notebook can be cleaned up.
 
 ---
 
@@ -521,7 +470,6 @@ Extended Figure:
 - **Figure panels:** a
 - **Conclusion:** Half the genome was excised in discrete cuts while retained DNA stayed essentially identical and gene order was preserved; expression differences at retained genes are therefore not attributable to sequence divergence.
 - **Caveats:** dnadiff reports 118 raw reference-side "insertion" events; the filtered >= 50 bp BED set (95) is the authoritative deletion list.
-- **Notes for LLM:** Method M9. Use this to frame the whole section as a structural/regulatory (not sequence-level) story.
 
 #### L5.2: Deletions overlaid on syn1's 459 operons show whole-operon excision dominating over partial truncation.
 
@@ -532,7 +480,6 @@ Extended Figure:
 - **Figure panels:** a
 - **Conclusion:** Reduction preferentially removed entire operons; the minority of partial truncations (5' vs 3') sets up the junction taxonomy.
 - **Caveats:** the two axes (span-level truncation vs gene-level deletion) differ by design; 162 vs 172 "intact" reflects operons whose genes are all kept but whose UTR/flank was nicked.
-- **Notes for LLM:** None.
 
 #### L5.3: Same-strand deletion junctions can fuse new transcription units, but true fusion is rare.
 
@@ -547,7 +494,6 @@ Extended Figure:
 - **Figure panels:** b,c in the same column
 - **Conclusion:** Operon fusion is real but rare (3 events); the dominant junction outcome is clean excision of whole operon(s) between intact neighbors.
 - **Caveats:** ONT depth is low, so most positive calls are loose-bridge rather than strict-spanning; convergent/divergent junctions are opposite-strand and not expected to co-transcribe.
-- **Notes for LLM:** This logic, not "all new operons fused," supports the reworded one-sentence summary. The weak-fused-promoter expression story (rpsT/0082, rpsO/0294 both crash despite structural fusion) lives HERE in L5.3, not L5.4, so the two paragraphs do not overlap; L5.4 covers only pure decapitation (hupA).
 
 #### L5.4: Decapitated operons that lost their own promoter are the one class that robustly drops in expression; HupA is the showcase.
 
@@ -562,7 +508,6 @@ Extended Figure:
 - **Figure panels:** d,e in the same row
 - **Conclusion:** Promoter-source loss drives the largest expression decreases; promoter_lost is the only impact class robustly down in TPM.
 - **Caveats:** the class is assigned at operon level; 8 junctions lose only UTR (genes intact); the 05-vs-04 consistency check flags 2 flank operons as all_deleted.
-- **Notes for LLM:** HupA's true promoter sits inside deleted gene MMSYN1_0349 (panel e); HupA (promoter_lost) is pure decapitation, no replacement promoter, and is the ONLY decapitation gene featured in L5.4. The weak-fused-promoter r-proteins (rpsT/0082, rpsO/0294) are covered in L5.3, not here. rpmE/L31 and rpsU/S21 were NOT affected by any deletion (operon structure intact), so do not cite them as decapitated.
 
 #### L5.5: A few trace-expressed retained genes remain essential.
 
@@ -573,7 +518,6 @@ Extended Figure:
 - **Figure panels:** e
 - **Conclusion:** TBD
 - **Caveats:** essentiality calls are inherited from the syn3A design literature, not measured here.
-- **Notes for LLM:** ANALYSIS NOT YET DONE. Keep the logic; an essentiality x trace-expression script must be written and the essentiality source supplied before this can be drafted.
 
 ---
 
@@ -605,7 +549,6 @@ Extended Figure:
 - **Figure panels:** a
 - **Conclusion:** Minimization removed ~1/5 of the coding transcriptome and proteome, concentrated in dispensable metabolism, leaving pool capacity that syn3A redistributes.
 - **Caveats:** shares are raw syn1 TPM/iPM; cross-organism comparisons in L6.2-L6.4 are mean-normalized and deletion-corrected to the retained-gene pool.
-- **Notes for LLM:** "Non-essential" in the heading is shorthand for syn3A-deleted loci; Do NOT mention the deleted share of all-RNA TPM since rRNA were depleted during RNA sample preparation.
 
 #### L6.2: The retained mRNA pool reallocates toward the translation machinery.
 
@@ -618,7 +561,6 @@ Extended Figure:
 - **Figure panels:** a, b
 - **Conclusion:** The transcriptome shifts toward translation/ribosome biogenesis at the expense of central metabolism.
 - **Caveats:** the shift is a pool-level reallocation, not uniform. Two routes make some r-proteins buck the up-trend: (i) the fusion-affected rpsT/S20 (0082) and rpsO/S15 (0294) crash because their deleted promoter was replaced by a weak fused one (gene_impact_class new_promoter_fusion; links to L5.3/L5.4); (ii) three structurally-INTACT r-proteins rpmF/L32 (0526), rpmE/L31 (0137), rpsU/S21 (0482) also drop sharply in transcript (TPM FC 0.126 / 0.010 / 0.044) yet are gene_impact_class **unaffected — NOT decapitated** (their operon structure is untouched), and their protein is in fact maintained or up (iPM FC 36.2 / 1.37 / 1.98). [CORRECTION 2026-06-05: the earlier "decapitated rpmF/rpmE/rpsU" claim was wrong — none are decapitation cases; rpsT/rpsO are the only deletion-hit r-proteins, both new_promoter_fusion.]
-- **Notes for LLM:** The 11~kb rPtn operon now has its own paragraph (L6.3) — do NOT fold it back in here.
 
 #### L6.3: A single 11 kb ribosomal-protein operon (OP_00341) triples its mRNA-pool share and dominates syn3A transcription, expressed from its own retained promoter despite a newly adjacent tRNA operon.
 
@@ -631,7 +573,6 @@ Extended Figure:
 - **Figure panels:** d, e
 - **Conclusion:** The 11 kb r-protein operon, expressed from its own retained promoter as one endonucleolytically processed transcript, carries about a third of the syn3A coding mRNA pool; the deletion that parked a tRNA operon within ~770 bp upstream changed its neighbour but not its regulation, and the two operons stay transcriptionally independent — so the upregulation is the intact promoter plus the L6.2 pool reallocation, NOT tRNA read-through.
 - **Caveats:** the ~11 kb full-length isoform is undersampled by PacBio read-length, so single-unit structure is inferred from continuous depth + no internal terminator, not from many full-span reads; the internal step is a depth/3'-end signature consistent with RNase Y cleavage, not a mapped cut site.
-- **Notes for LLM:** This is the separate rPtn paragraph promised in L6.2. The tRNA-upstream result is a NEGATIVE co-expression finding — state plainly the operons stay independent (no read-through). Panels d (operon structure) and e (tRNA junction) both belong here.
 
 #### L6.4: RNA polymerase is downregulated while the degradosome is upregulated in syn3A.
 
@@ -644,7 +585,6 @@ Extended Figure:
 - **Figure panels:** c
 - **Conclusion:** Lower transcription capacity plus higher RNA turnover is coherent with slower growth.
 - **Caveats:** limiting-subunit estimate; PTR is a steady-state proxy, not Ribo-seq TE; r-proteins excluded from PTR (digestion bias).
-- **Notes for LLM:** Degradosome is RNase Y, the endo-ribonucleases based, not RNase-J based; No need to mention the caveates at the end of this logic.
 
 #### L6.5: Central-metabolism enzymes are coordinately downgraded, predicting lower ATP/GTP generation.
 
@@ -659,7 +599,6 @@ Extended Figure:
 - **Figure panels:** (none — flux is text-only; the metabolic-flux panel was dropped and panel d reassigned to the giant rPtn operon, see L6.2)
 - **Conclusion:** Central-carbon and acetate-pathway enzymes drop in concert, predicting suppressed ATP/GTP output (flux quantification pending).
 - **Caveats:** the flux claim is currently inferred from enzyme abundance only.
-- **Notes for LLM:** FLUX ANALYSIS NOT YET DONE (needs a metabolic model) — prose stops at the prediction with NO panel. Panel d is now the giant ribosomal-protein operon OP_00341 (belongs to L6.2). Update gapDH→GapA in the numbers above if reused.
 
 ---
 # Introduction
@@ -706,7 +645,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Key params to mention:** 3 SRA datasets (SRR35996296/297 = technical reps of one RNA sample, SRR35996298 = second biological sample), 2x251 nt MiSeq, Kapa Hyper Stranded mRNA kit (dUTP / fr-firststrand, R2 = transcript strand); FastQC + MultiQC, no trimming; bowtie2 v2.5.5 default paired-end (99.49-99.56% overall alignment); samtools v1.22.1; per-strand bedGraph; depth-based TPM = length-normalized mean depth / (sense+antisense total) x 1e6, two-step replicate averaging (tech reps r=0.98; bio samples r=0.92-0.94).  
 **Inputs:** SRA accessions in `Syn1_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh` 
 **Outputs:** `Illumina_Processing/depth_bedgraph/SRR3599629{6,7,8}.{plus,minus}.bedGraph`; `Gene_TPM/syn1_illumina_TPM_profiles.tsv`, `syn1_Illumina_PacBio_TPM_profiles.csv`  
-**Notes for LLM:** DONE — both subsubsections written (Illumina MiSeq read processing/mapping; TPM from sequencing depth). Stale commented NextFlow/BWA-MEM block removed (actual pipeline is bowtie2). RNA prep, QC, and library-prep subsubsections were already drafted. 
 
 ---
 
@@ -716,7 +654,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Key params:** 3 technical reps (SRR36012641/642/643) pooled to 2.95 M HiFi reads; custom FLNC recovery (reorientation via H1/BCRC, primer trim, polyA trim) -> 2.62 M; `minimap2 -ax map-hifi --secondary=no` v2.30 (CP002027.1); pysam per-read HQ filter (MAPQ>=20, aln-frac>=0.7, clip<=0.3, |qlen-refspan|<=100, concatemer flag) -> 99.3% retained (2.60 M HQ); samtools v1.22.1 per-strand bedGraph; clustering (`Cluster_Isoform.py`, complete-linkage Chebyshev eps=10 bp): 621 k tuples -> 267 k clusters; depth-based TPM as in M1 (single pooled library, no replicate averaging).  
 **Outputs:** `PacBio_Processing/syn1.PacBio.FLNC.sorted.HQ.bam`, `depth_bedgraph/syn1.PacBio.FLNC.HQ.{plus,minus,total}.bedGraph`; `Isoforms_PacBio/isoform_clusters_annotated.tsv`; `Gene_TPM/syn1_pacbio_TPM_profiles.tsv`  
 **Inputs:** SRA accessions in `Syn1_Transcriptomics/PacBio/PacBio_Raw/00_retrieve_fastq.sh`  
-**Notes for LLM:** DONE — polished. Fixed wrong/inconsistent numbers (retention 99.6->99.3%, min MAPQ 36->20, 612->621 k tuples, n>=10 discard 990 k/38%->874 k/34%, n>=50 1.4->1.5 M/+29->+22%), typos (Quanlity, missing space), added minimap2+samtools citations, and wrote the empty TPM subsubsection. Left untouched: sub-percent before/after-filter rounding (aligned-fraction 0.998/0.994, soft-clip 0.2%/0.6%, read length 3.07/3.93 kb) — negligible, flag if you want them aligned to the after-filter log.  
 
 ---
 
@@ -725,7 +662,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Analysis:** `Syn1_Transcriptomics/Isoforms_PacBio/Cluster_Isoform.py`, `Syn1_Operon/…`  
 **Key params:** clustering thresholds, min reads, TSS/TTS calling rule.  
 **Outputs:** `isoform_clusters_annotated.tsv`, `operons.candidate_blocks.tsv`  
-**Notes for LLM:** Subsubsection **Locate Transcription Promoter and Terminator Signatures** finished.  
 
 ---
 
@@ -733,7 +669,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Tex file:** `Manuscript/sections/methods/RNA_processing.tex`  
 **Analysis:** _<scripts>_  
 **Inputs:** `Genomes_Input/Motif_Identifications.xlsx`  
-**Notes for LLM:** The whole section needs my further analysis.  
 
 ---
 
@@ -742,7 +677,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Analysis / source:** `Syn1_Syn3A_Proteomics/` — `syn1_proteomics_localization_2026.csv`, `syn3a_proteomics_summary_2026.csv`, `syn3A_proteome_annotated.xlsx`.  
 **Key params:** Spectronaut iBAQ -> iPM (iPM_i = 1e6 * iBAQ_i / sum iBAQ_j) per rep, mean across 3 reps; absolute copy number = (iPM/1e6) x total proteins/cell (syn1 ~127 k from dry mass 12.8 fg x 58.2% protein / avg MW); localization via DeepTMHMM (TMRs) + SignalP 6, priority signal-peptide > TMR > cytoplasmic; 2019 vs 2026 measurements; tertiary function annotation built by `report_annotation_stats_syn3A.py`.  
 **Numbers to cite:** syn1 detected 721/828 (87.1%); median copy number cytoplasmic 47, lipoprotein 21, membrane 10, extracellular 3 (n = 516/68/126/11).  
-**Notes for LLM:** DONE — wrote **Relative Protein Quantification** (iBAQ->iPM) and **Localization of Proteome** (DeepTMHMM+SignalP, cytoplasmic/membrane/lipoprotein/extracellular), polished **Absolute Intracellular Protein Quantification** (fixed detected 735->721, "weght"->"weight", removed empty "(see )" ref). Added DeepTMHMM (`hallgren_deeptmhmm_2022`) + SignalP (`teufel_signalp_2022`) citations. Sample-prep / LC-MS-MS subsubsections were already drafted. Verified syn3A 2026 detection = 446/455 (the old 449 was wrong); per author, the syn3A 2019-vs-2026 comparison paragraph (measured-vs-reused) was deleted from the tex (not discussed for now).
 
 ---
 
@@ -752,7 +686,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Key params:** Illumina sense TPM vs iPM, log10 OLS, residual = log10(iPM) − fit; TIR via OSTIR (anti-SD ACCUCCUUU, 30-nt windows, read-weighted); CAI (Sharp & Li, ref set = top 20% by iPM); Mpn half-lives (Burgos 2020) via reciprocal-best-hit blastp, protease-abundance correction (Lon 0.84 / FtsH 2.08, Mpn from Maier 2011).  
 **Outputs:** `syn1_genes_transcriptomics_proteomics.csv`, `residual_analysis/`  
 **Numbers to cite:** correlation all r=0.61 (R²=0.38, n=717) / cytoplasmic r=0.70 (R²=0.49, n=512); ΔR²: TIR +0.020 (2%), CAI +0.080 (+21%), degradation ≤0.01; shortest Mpn-mapped half-life 4.7 h (median 32 h) vs ~1 h doubling.  
-**Notes for LLM:** DONE — intro (base correlation + residual definition) + 3 subsubsections written (TIR, CAI, degradation). Per author, **tAI left out** of Methods (sensitivity check only). Citations added: OSTIR `roots_ostir_2021`, CAI `sharp_codon_1987`, Burgos `burgos_protein_2020`, Maier `maier_quantification_2011`. CAI is the one layer that improved the fit; TIR and degradation explained little.  
 
 ---
 
@@ -761,7 +694,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Analysis:** `Syn1_Novel_ORF/Abnormal_Transcripts.py` (antisense classes), `Syn1_Novel_ORF/Novel_translation.ipynb` (novel ORFs).  
 **Key params:** antisense labeling base-by-base vs gene model, 3 classes (spurious-promoter / read-through / embedded); OSTIR all-start-codon scan (anti-SD ACCUCCUUU, genetic code 4 / UGA=Trp, ORFs >=15 aa); synthesis-rate rank (reads x TIR), top 100, in-silico trypsin (1 missed cleavage, 7-25 aa), Spectronaut re-search of augmented DB.  
 **Numbers to cite:** 1.4% antisense (267 isoforms -> 89 clusters); spurious-promoter 59 (66%), read-through 30 (34%, incl. 4 embedded); 837 abnormal isoforms -> ~29,000 candidate ORFs -> top 100 -> 48 unique -> 47 with proteotypic peptides; 2 ORFs confirmed by MS (near MMSYN1_0592 [revised NOVEL_PEP_002] and the 54-aa N-term extension of MMSYN1_0768 [revised NOVEL_PEP_043, = NOVEL_PEP_030 in the old-cluster MS search Excel]), both deleted in syn3A. NOTE: the Spectronaut MS search ran on the old-cluster candidate DB; both confirmed peptides are reproduced in the revised top-100.  
-**Notes for LLM:** DONE (polished + renumbered on revised clusters). Added antisense subsubsection (L4.1, 3 classes) + polished novel-ORF subsubsection. anti-SD ACCTCCTTT->ACCUCCUUU. RECOUNTED on the revised (post Apr-22) clusters via Novel_translation.py: 837 abnormal isoforms -> 29,443 candidate ORFs -> top-100 -> 48 unique / 47 proteotypic (no longer "~26,000 / 44"). The "2 confirmed in MS" is the R4-L4.6 result (kept out of Methods); both peptides reproduced in the revised top-100 (NOVEL_PEP_002; NOVEL_PEP_043 = old 030). NOTE: the Spectronaut search itself ran on the old-cluster DB.  
 
 ---
 
@@ -770,7 +702,6 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 **Analysis:** `Syn3A_Transcriptomics/ONT/ONT_Processing/` (ONT) + `Syn3A_Transcriptomics/Illumina/Illumina_Processing/` (Illumina)  
 **Key params:** ONT direct-RNA, `minimap2 -ax map-ont` (NOT splice, bacteria are intron-less), per-strand depth; Illumina syn3A paired-end bowtie2 (dUTP / fr-firststrand), per-strand bedGraph.  
 **Inputs:** ONT raw `Syn3A_Transcriptomics/ONT/ONT_Raw/`; Illumina syn3A SRA accessions (SRR19432056/57 mate pair) via `Syn3A_Transcriptomics/Illumina/Illumina_Raw/00_retrive_fastq.sh`.  
-**Notes for LLM:** DONE (polished). Seven subsubsections: ONT RNA sample prep, RNA QC, ONT library prep + direct sequencing, raw-read processing/base-calling, ONT→syn3A mapping, Illumina→syn3A mapping, and "Quantification of TPM from Sequencing Depth" (added; mirrors M1/M2). TPM subsubsection: depth-based TPM (same definition as M1) computed for both Illumina + ONT per-strand bedGraphs over 496 loci (493 gene + 3 pseudogene, both feature types parsed); single replicate each → no averaging; output `syn3A_TPM_Illumina_ONT.tsv`; Illumina = quantitative track, ONT = orthogonal check. RE-VERIFIED (Syn3A_TPM.py rerun): our depth-based Illumina TPM validated against Palsson/Sandberg-reported Illumina TPM at Pearson r=0.998 / Spearman 0.998 on log10 (n=458); the Illumina-vs-ONT cross-platform agreement is only Pearson r=0.570 / Spearman 0.558 (n=496). Do NOT report 0.998 as the Illumina/ONT correlation. (script: `Syn3A_Transcriptomics/Gene_TPM/Syn3A_TPM.py`; 496 loci re-counted from the GFF3.) ONT mapping numbers re-verified against `syn3A.ONT.rep1.sorted.bam.qc_report.txt`: 734.08k reads → 559k (76.2%) primary mapped, mean 383 nt (49--2,858), Q31.2, 98.2% ≥Q20; 175k unmapped (23.9%, mean Q20.7, 42.0% <Q15, 61.0% <300nt); 20.2k secondary (3.6%) at the two rRNA operons (~55,460 & ~343,267 bp); 7.3k supplementary. minimap2 v2.30 `-ax map-ont -p 0.99 --MD` (NOT splice; old splice-preset numbers kept commented). Illumina syn3A: bowtie2 v2.5.5 default paired-end, 98.88% overall (83.55% concordant-once, 10.43% multi = rRNA operons, 6.02% discordant/unpaired), dUTP/fr-firststrand strand split — alignment % not locally re-verifiable (no logs/ in OneDrive copy; trusted from prior run). Polish pass: units → mL/$\mu$L, centrifugal force → `$\times$g` (matches M1), removed a double space. Compiles clean (24 pp).  
 
 ---
 
@@ -788,6 +719,5 @@ Standalone "Relationship to previous literature" section dropped; literature wov
 - PTR definition: relIPM/relTPM; `PTR_fold_change = iPM_FC / TPM_FC`; explicitly a steady-state proxy, not Ribo-seq TE.
 - Co-expression test (06/07): ONT spanning/bridging reads + Illumina gap depth; thresholds in `coexpression_common.py`.
 
-**Notes for LLM:** DONE — polished. This is the longest Methods subsection, drafted in the same order as the pipeline; More details were recorded in the CLAUDE.md file.
 
 ---
