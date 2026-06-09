@@ -41,8 +41,11 @@ The tree is grouped by organism / platform / role.
 ├── Syn1_Syn3A_Proteomics/                proteomics tables for both organisms
 ├── Syn1_Corr_RNA_Proteins/               syn1 RNA × protein correlation analysis
 ├── Syn1_Novel_ORF/                      novel-ORF discovery from syn1 PacBio isoforms
+├── Syn1_RNase/                          R2: RNA-processing / ribonuclease analysis + B.subtilis→syn1 RNase-site mapping
 │
-└── Genome_Reduction/                    syn1 → syn3A comparison; the central downstream layer
+├── Genome_Reduction/                    syn1 → syn3A comparison; the central downstream layer
+│
+└── Manuscript/                          LaTeX manuscript (sections/, figures/, SI/) + references.bib
 ```
 
 ### Genomes_Input
@@ -88,8 +91,10 @@ Reference genomes for both organisms. The Mycoplasma genetic code applies to bot
 ### Syn1_Operon
 
 Operon segmentation + annotation + visualization for syn1, driven by PacBio isoforms.
-- **Operons:** `operons.candidate_blocks.tsv` with columns `operon_id, chrom, strand, start0, end0, n_isoforms, n_reads_total, member_ids, tss, tts, sense_gene_names, ...`. Operon IDs use `OP_*` prefix.
-- Visualization: `Operon_Visualization.py` produces `operon_plots/OP_*.pdf` and `_wdepth.pdf` variants.
+- `Operon_Segmentation.py` — containment clustering + read-evidence co-transcription merge → **`operons.candidate_blocks.tsv`** (canonical **459-operon** map; `operon_id, chrom, strand, start0, end0, n_isoforms, n_reads_total, member_ids, tss, tts, sense_gene_names, segmentation_type, ...`; `OP_*` IDs).
+- `Operon_Annotation.py` — analysis-only: canonical-operon promoter (−10/−35, via `promoter_motif.py`) and terminator (TransTermHP) signatures + R1 figures; persists `annotation/canonical/{promoter_minus10_classification,terminator_tts_classification,operon_utr}.tsv`.
+- `build_operon_xlsx.py` — pure assembly → **`operon.xlsx`** (SI Supplementary Data S1): joins the operon map + the promoter/terminator signature tsvs + `protein_complexes.xlsx` (curated complex→loci); promoter/terminator filled for the 127 canonical operons only.
+- `Operon_Visualization.py` — `operon_plots/OP_*.pdf` (+ `_wdepth.pdf`).
 
 ### Syn3A_Operon
 
@@ -117,6 +122,16 @@ Syn1 RNA × protein correlation.
 
 Abnormal-transcription / novel-ORF discovery from PacBio isoforms.
 
+### Syn1_RNase
+
+R2 (RNA-processing / ribonuclease) analysis: endpoint-context erosion + ribonuclease inventory + B.subtilis→syn1 cleavage-site mapping.
+- `RNA_Processing.py` — endpoint-context erosion from PacBio isoforms (per-isoform 5′/3′ intragenic-vs-intergenic labelling → 4 categories; ORF start-without-stop pass). Output → `RNase/isoform_endpoint_context.tsv`, `RNA_Processing.txt`.
+- `R2_figure_panels.py` + `R2_legend_strip.py` → `R2_panels/` (Fig 2 born-at-size panels).
+- `fold_3prime_terminator.py` — 3′-terminus 2° structure (ViennaRNA) for the 0178 intrinsic terminator (panel d).
+- `RNase_Site_Mapping/` — self-contained B.subtilis→syn1 RNase-site transfer (inputs in `inputs/`; run in the **RNAseq** conda env — needs ViennaRNA `RNA`, biopython, BLAST+):
+  - `map_bsub_rnase_to_syn1.py` — reciprocal-best-hit BLASTP homology (reuses `Genomes_Input/homology_syn1_bsub/`) transfers Taggart RNase III/Y sites; whole-gene ViennaRNA fold + homology-anchored facing-duplex test (18 RNase III genes; 0/5 paired confirm a conserved duplex). → `output/rnaseIII/rnaseIII_syn1_predicted_cleavage_pairs.tsv`.
+  - `render_rnaseIII_structure.py` — local 2° structure at the homology-mapped cuts → `output/rnaseIII/stems/`.
+
 ### Genome_Reduction
 
 Compare how the syn1 → syn3A reduction reshapes transcription. The pipeline is
@@ -126,24 +141,14 @@ central concept is the **deletion junction** (05): every deletion is reframed as
 a junction between the two retained operon fragments it joins, and the
 co-expression scripts (06, 07) validate that structure against syn3A reads.
 
-- `01_align.sh` — nucmer + dnadiff aligns syn3A to syn1 → `aln/raw/`
-- `02_analyze.py` — `aln/analysis/genome_reduction_summary.{xlsx,txt}` (canonical event table: deletions, insertions, relocations)
-- `03_visualize.py` — interactive Plotly circular map
-- `04_deletion_overlaid_operon.py` — overlaps the 95 deletions with `Syn1_Operon/operons.candidate_blocks.tsv` at single-bp resolution. Two per-operon classifications:
-  - **Truncation pattern (span level):** `overlap_class` / `per_hit_classes` ∈ {fully_deleted, 5'_truncation_gene, 5'_truncation_UTR, 3'_truncation_gene, 3'_truncation_UTR, intra_truncated} or `multi:…`
-  - **Deletion pattern (gene level):** `gene_deletion_pattern` ∈ {intact, all_deleted, leading_deleted, lagging_deleted, intra_deleted}.
-  - Output → `deletion_overlaid_operon/operon_deletion_classification.tsv` + per-category PDFs.
-- `05_deletion_junction.py` — **the junction taxonomy.** Each deletion = a junction between `operon_L` (nearest syn3A-retained operon left) and `operon_R` (right; antisense-only flank genes map to the covering operon on its strand). Classifies:
-  - `strand_relationship` ∈ {tandem (same strand, fusion-capable), convergent (L=+,R=−; terminators face), divergent (L=−,R=+; promoters face), intra_operon (L==R)}.
-  - `junction_type` (tandem only, from facing-regulator loss) ∈ {fusion (upstream lost terminator AND downstream lost promoter → new chimeric unit), decapitation (downstream lost promoter → predict expression drop), readthrough_extension (upstream lost terminator), clean_excision (both regulators kept → whole operon(s) excised between intact operons)}.
-  - Runs a **consistency check vs 04** every run (folded into the summary). Output → `deletion_junction/deletion_junctions.tsv`, `deletion_junction_summary.txt`, `plots/<strand_relationship>/<scar_id>.pdf` (tandem plots prefixed by junction_type).
-- `06_single_operon_coexpression.py` — single-operon internal co-transcription in syn3A (read-based: ONT spanning/bridging + Illumina gap depth). Routed from 05: **pristine** operons (intact + not a junction flank → control baseline) and **intra_operon** operons. Output → `single_operon_coexpression/` (pairs/verdicts TSVs, summary, `plots/<category>/`).
-- `07_operon_pair_coexpression.py` — operon **pairs** at inter-operon junctions (tandem/convergent/divergent). Tests the new cross-junction gene pair for co-transcription, stratified by `junction_type` (fusion = predict yes; clean_excision = negative control). Read-based. Output → `operon_pair_coexpression/` (TSV, summary, `plots/<junction_type>/`).
-- `08_delete_gene.py` — for each retained syn1 gene: same-strand transcription-direction + cw/ccw neighbors in both genomes, `unaltered_cw_bps`/`unaltered_ccw_bps` (syn1 frame, circular), and **`gene_impact_class`** — the gene's transcriptional impact classified by *promoter-source change*, integrating 04/05/06/07. Classes by precedence: `promoter_lost` > `promoter_disconnected` > `new_promoter_fusion` > `readthrough_exposed` > `promoter_proximity_changed` > `context_only` > `unaffected` (promoter_lost is operon-level; `unaffected` = operon's own structure intact even if a neighbor was deleted; `context_only` = operon's own 3′ truncated, promoter intact). Read/structure-only — expression effects are tested in 09. Output → `delete_gene/`.
-- `09_Compare_RNA_Protein.py` — builds the paired RNA (TPM) + protein (iPM) change table `Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv` and owns the **RNA/TPM** analysis + figures. Values are **mean-normalized** (`rel*` = value ÷ per-gene mean over detected genes in each coding/non-coding subset, so an unchanged gene has FC≈1 despite the syn1→syn3A gene-count drop). Each layer carries both **fold change** (ratio) and **absolute change** (`*_abs_change` = rel_syn3A − rel_syn1). **TPM platform policy:** ONT is poor for quantification, so the standard TPM comparison + the coding CSV use **Illumina** for both organisms; ONT is kept only for two QC scatters (`TPM_ONT_syn3A_vs_Illumina_{syn1,syn3A}.pdf`). The **non-coding** CSV falls back to ONT for syn3A (Ribo-Zero Illumina detects no rRNA/tRNA). Also computes **PTR** (protein-to-transcript ratio = relIPM/relTPM per organism; `PTR_fold_change = iPM_FC / TPM_FC` — a steady-state translation-efficiency *proxy*, not Ribo-seq TE) into the CSV. Writes: `deleted_gene_occupancy.txt` (share of syn1 transcriptome **and proteome** carried by syn3A-deleted genes, classified by RNA type — kept whole here), `Compare_RNA_Protein.txt` (TPM outliers + ribosomal-protein TPM+iPM table), `TPM_FC_vs_absChange.pdf` (+ `_rprotein` highlight), `TPM_FC_by_impact_class.pdf` (TPM fold change boxplot by `gene_impact_class` from 08 — promoter_lost is the one robustly-down class), and `rprotein_share_stackedbar.pdf` (2-bar syn1/syn3A mRNA-pool composition: r-protein share + hatched deleted block). **Also writes per-curated-category outputs** driven by `syn3A_proteome_annotated.xlsx` (Primary/Secondary/Tertiary): `TPM_change_by_{secondary,tertiary}.tsv` (retained-pool shares + median FCs + Mann-Whitney p), `TPM_FC_by_{secondary,tertiary}_function.pdf` boxplots, `mRNA_pool_share_change_by_{secondary,tertiary}.pdf` diverging bars, plus two **story plots**: `mRNA_pool_composition_by_secondary.pdf` (full-pool stacked, hatched deleted block, Roman-indexed by Primary family) and `tertiary_share_change_dumbbell.pdf` (retained-pool / deletion-corrected, broken x-axis).
-- `10_Compare_Ptn.py` — the **protein (iPM)** counterpart of 09. Reads 09's combined CSV (does not recompute) and writes the protein figures + outliers to the same `Compare_RNA_Protein/` folder: `iPM_{fold_change,log10FC}_distribution.pdf`, `iPM_correlation_syn1_vs_syn3a.pdf`, `iPM_FC_vs_absChange.pdf` (+ `_rprotein`), `protein_{upgrade,downgrade}/` operon summaries, and `Compare_Ptn.txt` (iPM outliers + ribosomal-protein table). **PTR analysis is now driven by curated Secondary categories** (was: keyword groups glycolysis/chaperone/protease/ribosomal/other): `PTR_TPMfc_vs_iPMfc.pdf` (TPM-FC vs iPM-FC scatter, dots colored by Primary family) and `PTR_by_category_boxplot.pdf` (PTR_FC per Secondary, n≥3, colored by Primary, MWU vs all-genes baseline). r-proteins are excluded throughout the PTR analysis (digestion-biased iPM). **Proteome story plots** mirror 09's: `iPM_pool_composition_by_secondary.pdf` and `iPM_tertiary_share_change_dumbbell.pdf` — block order/colors driven by syn1 TPM share, so the Roman index is identical to 09 for side-by-side composition in Illustrator. **`macromolecule_complex_abundance.tsv`** — limiting-subunit MIN estimate for RNA polymerase `MIN(rpoA/2, rpoC, rpoB)` and the degradosome `MIN(rny, rnjA, yhaM+rnr)` in both rel-TPM and rel-IPM; in syn3A vs syn1 RNAP is down ~21–35% and the degradosome is up ~36–68% (compound effect coherent with syn3A's longer 105-min cell cycle). Run after 09.
-- `coexpression_common.py` — shared primitives for 06/07 (GFF/bedGraph loaders, ONT spanning/bridging counters, depth helpers, thresholds, the `test_pair` decision).
-- `Operon_Comparison_Syn1_Syn3A.py` — syn1↔syn3A plotters (importable; absolute paths). `plot_one_operon_comparison` (06), `plot_operon_pair_comparison` (07, broken-axis syn1 + joined syn3A).
+- `01_align.sh` → `02_analyze.py` → `03_visualize.py` — nucmer/dnadiff align syn3A→syn1, build the canonical event table (`aln/analysis/genome_reduction_summary.{xlsx,txt}`; `events` sheet, filter `Change Case == deleted`), and a circular Plotly map.
+- `04_deletion_overlaid_operon.py` — overlap the 95 deletions with the 459 operons at single-bp resolution → per-operon truncation (`overlap_class`) and gene-deletion (`gene_deletion_pattern`) classes.
+- `05_deletion_junction.py` — **the junction taxonomy**: `strand_relationship` ∈ {tandem, convergent, divergent, intra_operon} and (tandem only) `junction_type` ∈ {fusion, decapitation, readthrough_extension, clean_excision}, from facing-regulator loss; consistency-checked vs 04.
+- `06_single_operon_coexpression.py` / `07_operon_pair_coexpression.py` — read-based co-transcription tests (ONT spanning/bridging + Illumina gap depth): operon-internal pairs (06; pristine controls + intra_operon) and cross-junction operon pairs (07; stratified by `junction_type`, fusion = predict yes, clean_excision = negative control).
+- `08_delete_gene.py` — per retained gene: neighbors + unaltered-bp context + **`gene_impact_class`** (transcriptional impact by promoter-source change, integrating 04–07; precedence `promoter_lost > promoter_disconnected > new_promoter_fusion > readthrough_exposed > promoter_proximity_changed > context_only > unaffected`).
+- `09_Compare_RNA_Protein.py` — builds the paired **mean-normalized** RNA(TPM)+protein(iPM) change table and owns the RNA/TPM figures + outliers; computes PTR (relIPM/relTPM proxy) and per-curated-category (Primary/Secondary/Tertiary) shares + story plots. **TPM policy:** Illumina for both organisms (ONT only QC scatters + non-coding syn3A fallback).
+- `10_Compare_Ptn.py` — protein(iPM) counterpart (reads 09's CSV, no recompute): iPM figures, PTR-by-Secondary, proteome story plots, and `macromolecule_complex_abundance.tsv` (limiting-subunit RNAP + degradosome estimates). Run after 09.
+- `coexpression_common.py` — shared 06/07 primitives (loaders, ONT spanning/bridging counters, `test_pair`); `Operon_Comparison_Syn1_Syn3A.py` — importable syn1↔syn3A comparison plotters.
 
 #### Key outputs (cross-referenced often)
 
@@ -156,6 +161,14 @@ co-expression scripts (06, 07) validate that structure against syn3A reads.
 - `Genome_Reduction/{single_operon_coexpression,operon_pair_coexpression}/` — ONT read-evidence for operon-internal and cross-junction co-transcription.
 
 > **Run note:** 06/07 import `Operon_Comparison_Syn1_Syn3A.py`; run them with `Genome_Reduction/` as the working directory.
+
+---
+
+## Manuscript
+
+LaTeX manuscript (`Manuscript/main.tex`, Nature Microbiology); per-section sources in `sections/{results,methods}/`. `MANUSCRIPT.md` (project root) is the drafting guide. SI assembly under `Manuscript/SI/`:
+- `build_S4_qc.py` — zips the four library RNA-QC PDFs + a README → `Supplementary_Data_S4_QC.zip`.
+- `gather_SI_excel.sh` — copies the three data workbooks (operon / syn1_omics / genome_reduction `.xlsx`) → `Supplementary_Data_S{1,2,3}_*.xlsx`.
 
 
 ---
