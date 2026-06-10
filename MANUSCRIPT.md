@@ -194,9 +194,9 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 #### L2.1: Distinct RNA isoforms distributions found for operons.
 
 - **Logic:** Truncated isoforms compared to the full transcription units exist for operons because of the RNA processing. Distinct patterns of truncations can be found, using genes 0154 and 0178 as examples. 0178 has structured 3' end as shown in d, but RNase R can digest through the dsRNA structured region.
-- **Analysis:** None
+- **Analysis:** per-operon erosion-category composition from `Syn1_RNase/R2_panels/R2_panels.txt` (`R2_figure_panels.py`; operon-contained isoforms, n_reads≥2) — these are the figure-panel numbers, NOT the isoform_endpoint_context.tsv n≥10 set.
 - **Outputs:** None
-- **Numbers to cite:**  None
+- **Numbers to cite:** **0178/OP_00099 (−, neopullulanase): 85 isoforms / 3,056 reads** — 4 unprocessed (2,001 reads, 65.5%), 49 iso 3′-eroded-only (29.5% reads), 27 iso 5′-eroded-only (4.6%); 5′/3′ eroded-read ratio 0.17. **lap/0154/OP_00078 (+, leucyl-aminopeptidase): 134 isoforms / 2,035 reads** — 10 unprocessed (1,011 reads, 49.7%), 92 iso 5′-eroded-only (41.8% reads), 29 iso 3′-eroded-only (8.2%); ratio 4.95. Opposite polarities.
 - **Figure panels:** b,c,d
 - **Conclusion:** None
 - **Caveats:** None
@@ -371,7 +371,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - `Syn1_Novel_ORF/Abnormal_Transcripts.py`
 - **Outputs:** 
   - Same name Txt file
-- **Numbers to cite:** 1.4% antisense (267 isoforms -> 89 clusters); spurious 59 (66%), read-through 30 (34%, incl. 4 embedded)
+- **Numbers to cite:** 1.4% antisense (267 isoforms -> 89 clusters); spurious 59 (66%), read-through 30 (34%, incl. 4 embedded). **Cluster↔operon link:** 38/89 clusters transcribe an antisense gene enclosed by R1's 69 antisense-containing operons; R1's 9 sense-gene-less operons = 8 antisense-only (all match a spurious-promoter cluster, his3 the largest) + 1 purely intergenic (OP_00079 = the L4.5 isolated unit). Source: `Syn1_Novel_ORF/novel_tex_todos.py` → `novel_tex_todos.txt`.
 - **Figure panels:** a
 - **Conclusion:** Full-length RNA isoforms reveal new cases of anti-sense transcription as read-throughs.
 - **Caveats:** None
@@ -391,10 +391,10 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 
 #### L4.3: Unexpected transcription of yeast vector gene 0918.
 
-- **Logic:** Yeast vector elements were carried into syn1's synthetic genome during assembly. Strikingly, the yeast selection marker his3/0918 was heavily transcribed antisense (depth >30k) but not translated. The antisense isoforms initiate from a spurious promoter just upstream, which is itself deleted in syn3A; the his3 body sits at the deletion boundary, so the non-coding transcription is removed by minimization.
+- **Logic:** Yeast vector elements were carried into syn1's synthetic genome during assembly. Strikingly, the yeast selection marker his3/0918 was heavily transcribed antisense (depth >30k) but not translated. The antisense isoforms initiate from a spurious promoter just upstream. **his3/0918 is RETAINED in syn3A** (JCVISYN3A_0918; gene_impact_class context_only); its conspicuous antisense over-transcription collapses to background, the spurious upstream promoter evidently removed when an adjacent deletion truncated the operon's 3' end (the over-transcription, not the gene, is what minimization eliminates).
 - **Analysis:** `Syn1_Novel_ORF/R4_track_panels.py` (panel d): isoform table + PacBio plus-strand depth + deletion overlay from `Genome_Reduction/aln/raw/syn1_deleted_regions.bed`. -10 box at the antisense TSS scored by `R4_track_panels.py:quantify_novel_promoters()` (same algorithm as canonical operons, via `Syn1_Operon/promoter_motif.py`).
 - **Outputs:** `R4_panels/panel_d_his3_antisense.pdf`; `R4_panels/novel_promoter_minus10.txt`
-- **Numbers to cite:** his3/0918 antisense depth >30,000; 28 antisense isoforms (top 16.6k reads); the driving spurious-promoter region deleted in syn3A; the antisense TSS (pos5p0 27522) carries a perfect -10 hexamer TAAAAT (TANAAT consensus, 0 mismatch; core_6mer tier) with an AT-rich -35 (CTTTGAA), confirming a genuine spurious promoter. Watermarks W1-W4 (located by exact sequence): length-weighted mean PacBio depth ~283/+ , ~360/- vs genome-wide average ~2133/2051 (6-8x lower); covered ORFs all hypothetical/watermark calls (plus real 0590) -> minimally transcribed noise.
+- **Numbers to cite:** his3/0918 antisense depth >30,000; 28 antisense isoforms (top 16.6k reads); **syn3A Illumina at JCVISYN3A_0918 (18,716-19,378): antisense 0.23× / sense 0.28× genome mean — his3 RETAINED, the syn1 antisense standout gone** (`novel_tex_todos.txt`); the antisense TSS (pos5p0 27522) carries a perfect -10 hexamer TAAAAT (TANAAT consensus, 0 mismatch; core_6mer tier) with an AT-rich -35 (CTTTGAA), confirming a genuine spurious promoter. Watermarks W1-W4 (located by exact sequence): length-weighted mean PacBio depth ~283/+ , ~360/- vs genome-wide average ~2133/2051 (6-8x lower); covered ORFs all hypothetical/watermark calls (plus real 0590) -> minimally transcribed noise.
 - **Figure panels:** d
 - **Conclusion:** The yeast marker his3 is heavily transcribed antisense yet untranslated, and its driving spurious promoter (which carries a canonical TAAAAT -10 box, i.e. a real but mislocated sigma-factor promoter) is deleted in syn3A; the four watermarks are only minimally transcribed (noise).
 
@@ -430,7 +430,7 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
   - `Syn1_Novel_ORF/Novel_translation.ipynb`
 - **Outputs:** 
   - `Syn1_Operon/operons.candidate_blocks.tsv`
-- **Numbers to cite:** 837 abnormal isoforms -> ~29,000 candidate ORFs -> top 100 -> 48 unique / 47 proteotypic; 2 MS-confirmed (NOVEL_PEP_002, 118 aa intergenic near 0592; NOVEL_PEP_043 = old 030, 225 aa, 54-aa N-term extension of 0768), both deleted in syn3A
+- **Numbers to cite:** 837 abnormal isoforms -> ~29,000 candidate ORFs -> top 100 -> 48 unique / 47 proteotypic; 2 MS-confirmed (NOVEL_PEP_002, 118 aa intergenic near 0592; NOVEL_PEP_043 = old 030, 225 aa, 54-aa N-term extension of 0768), both deleted in syn3A. **Context:** NOVEL_PEP_002 (728,399-728,756) flanked by the 0591 mmyCImod PSEUDOGENE + function-unknown 0592 cdsf; NOVEL_PEP_043 extends mmyCIVR/0768 within the mmyCIV restriction-modification cluster (`novel_tex_todos.py`)
 - **Figure panels:** h
 - **Conclusion:** Two predicted ORFs were identified in Mass-spec proteome, and both were located near less annotated genes. Also, these two regions were deleted in syn3A.
 - **Caveats:** Only top 100 ORFs were selected to do the new proteomics search, thus we cannot assure if all ORFs were translated or not (leave this question to the reviewers); the new canonical cluster isoforms gave new ORF candidiates, which were highly similar to the old ones that searched against raw proteoimcs.
@@ -547,7 +547,7 @@ Extended Figure:
   - `Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv`
 - **Numbers to cite:** 418 deleted loci (911 -> 496); by RNA type mRNA 382, pseudo 33, ncRNA 2, tRNA 1; deleted share = 21.78% of the syn1 mRNA pool, 22.25% of the iPM proteome; top deleted by TPM lacZ, pdhA/pdhB, ald; unclear-function proteins occupy only ~3%.
 - **Figure panels:** a
-- **Conclusion:** Minimization removed ~1/5 of the coding transcriptome and proteome, concentrated in dispensable metabolism, leaving pool capacity that syn3A redistributes.
+- **Conclusion:** Minimization removed ~1/5 of the coding transcriptome and proteome, yet the deleted loci are nearly half (418/911) of the genes, so the removed genes were well below average in expression; the loss is concentrated in dispensable metabolism, leaving pool capacity that syn3A redistributes.
 - **Caveats:** shares are raw syn1 TPM/iPM; cross-organism comparisons in L6.2-L6.4 are mean-normalized and deletion-corrected to the retained-gene pool.
 
 #### L6.2: The retained mRNA pool reallocates toward the translation machinery.

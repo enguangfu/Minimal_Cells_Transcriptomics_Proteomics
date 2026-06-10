@@ -1,0 +1,46 @@
+======================================================================
+TODO 7 -- antisense clusters vs R1 operon antisense structure
+======================================================================
+operons enclosing >=1 antisense gene (R1):        69
+antisense/intergenic-only operons, sense_gene_count==0 (R1): 9
+antisense isoform clusters (R4):                  89
+
+antisense genes enclosed by operons (distinct): 79
+clusters whose antisense gene is enclosed by an operon: 38 / 89
+
+clusters by antisense_category (R4) x enclosed-by-operon:
+  embedded           4 clusters,   2 enclosed by an operon
+  read_through      26 clusters,  15 enclosed by an operon
+  spurious_prom     59 clusters,  21 enclosed by an operon
+
+R1's 9 sense-gene-less operons = 8 antisense-only + 1 purely intergenic
+  antisense-only operons matched by >=1 antisense cluster: 8 / 8 (his3/0918 the largest)
+  the single intergenic operon (OP_00079, 199379-200123) has no antisense cluster; it is R4's isolated genuinely-intergenic transcript
+
+======================================================================
+TODO 16 -- syn3A Illumina depth at his3/0918 (JCVISYN3A_0918)
+======================================================================
+his3/0918 retained in syn3A (JCVISYN3A_0918, 18,716-19,378, - strand); not deleted.
+syn3A Illumina genome-wide mean depth: total 2355 (plus 1003, minus 1352)
+  his3 SENSE     (minus): 656  = 0.28x genome mean
+  his3 ANTISENSE (plus) : 540  = 0.23x genome mean
+  his3 total            : 1195  = 0.51x genome mean
+INTERPRETATION: the syn1 conspicuous antisense over-transcription (~30,000 depth,
+the single exceptional locus) collapses to background in syn3A (antisense 0.23x the
+genome-wide average); the his3 ORF is retained but unremarkably expressed.
+
+======================================================================
+TODO 31 -- genomic context of the two MS-confirmed novel peptides
+======================================================================
+
+NOVEL_PEP_002 (118 aa)  ORF 728,399-728,756  [intergenic near 0592]
+   flank    MMSYN1_0590 - 726,553-727,071  (no name) | type III restriction enzyme_ res subunit  <-- function-unknown
+   flank    MMSYN1_0591 - 727,058-728,260  mmyCImod | PSEUDOGENE - Type III restriction-modification system (MmyCI  <-- PSEUDOGENE
+   flank    MMSYN1_0592 - 729,115-730,587  (no name) | cdsf  <-- function-unknown
+
+NOVEL_PEP_043 (225 aa)  ORF 905,181-905,859  [5' extension of mmyCIVR/0768]
+   flank    MMSYN1_0766 - 903,530-904,828  purA | adenylosuccinate synthase
+   overlaps MMSYN1_0767 - 905,049-905,201  (no name) | ribonucleoside-diphosphate reductase subunit alpha (Ribonucl  <-- function-unknown
+   overlaps MMSYN1_0768 - 905,182-905,697  mmyCIVR | GANTC--recognizing Type II restriction modification system (
+   overlaps MMSYN1_0769 - 905,859-906,578  mmyCIVM | GANTC--recognizing Type II restriction modification system (
+   flank    MMSYN1_0770 - 906,639-907,484  (no name) | conserved hypothetical protein  <-- function-unknown
