@@ -17,6 +17,7 @@ Each of the 95 deletions was intersected at single-base resolution with the 459~
 Every operon was described along two orthogonal axes.
 The truncation axis classified each overlapping deletion on its own as \texttt{fully\_deleted} (both operon boundaries removed), \texttt{5'\_truncation\_gene} or \texttt{5'\_truncation\_UTR}, \texttt{3'\_truncation\_gene} or \texttt{3'\_truncation\_UTR} (a boundary cut that reached a sense-gene coding sequence, CDS, or stopped in the untranslated region, UTR, respectively), or \texttt{intra\_truncated} (lying strictly inside the operon, neither boundary touched).
 The 5$'$ versus 3$'$ assignment was strand-aware, and an operon hit by more than one deletion took the sorted union of its per-hit cases.
+By this span-level classification 181 operons were fully deleted and 162 untouched, with boundary truncations reaching a coding sequence more often at the 3$'$ end (47 operons) than the 5$'$ end (28), in agreement with the gene-level pattern.
 The gene-deletion axis classified the operon by which of its sense genes were lost as \texttt{intact}, \texttt{all\_deleted}, \texttt{leading\_deleted}, \texttt{lagging\_deleted}, or \texttt{intra\_deleted}.
 The resulting per-operon table (sheet Operon\_classification of \sdreduction) was the structural input to the junction, co-transcription, and gene-impact analyses below.
 

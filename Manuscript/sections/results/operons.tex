@@ -1,28 +1,24 @@
 \subsection{Full-length PacBio sequencing resolves 459 operons and their transcription signals in \syn}
 
-Bacterial genes are frequently organized into operons, in which adjacent genes on the same strand are co-transcribed.
-Several transcription start and termination sites layered over one gene cluster generate overlapping transcription units, and endo- and exoribonucleases cleave and trim these primary transcripts into a spectrum of shorter RNA isoforms (Fig.~\ref{fig:operon}a).
-Full-length transcripts were captured by PacBio HiFi sequencing of the \syn~cDNA library to resolve the combinatorial interplay of co-transcription and post-transcriptional processing in the synthetic bacterium \jsyn~(\syn).
+Bacterial genes are co-transcribed in operons, and multiple transcription start and termination sites over one gene cluster, together with endo- and exoribonucleolytic processing, generate a spectrum of overlapping, truncated RNA isoforms (Fig.~\ref{fig:operon}a).
+To resolve this interplay in the synthetic bacterium \jsyn~(\syn), full-length transcripts were captured by PacBio HiFi sequencing of its cDNA library.
 
-After full-length non-chimeric (FLNC) read recovery and quality filtering, 2.6~M high-quality full-length reads were obtained to give an average coverage (sequencing depth) of 2.1~k (Methods).
-Because the \fiveprime\ and \threeprime\ ends of individual reads carry residual reverse-transcription and sequencing noise, reads sharing their transcript ends within 10~bp were clustered into 267~k isoform clusters, each a distinct transcript species with sharply defined boundaries.
-% These boundary-resolved isoform clusters, rather than raw reads, provided the evidence of gene connectivity from which operons were called.
+After full-length non-chimeric (FLNC) recovery and filtering, 2.6~M high-quality reads gave an average sequencing depth of 2.1~k (Methods).
+To remove residual end noise, reads sharing transcript ends within 10~bp were clustered into 267~k isoform clusters, each a distinct transcript species with sharply defined boundaries.
 
-Operons were segmented from the isoform clusters in three stages (Methods).
-The 4~k isoform clusters supported by at least 50 reads were first grouped into candidate operons by containment clustering, which joins clusters whenever one transcript is fully nested within another, yielding 313 initial operons.
-Adjacent same-strand operons that either overlapped or flanked a same-strand gene left in a clustering coverage hole were then tested for read-level co-transcription (continuous PacBio coverage across the junction), merging fragments split by RNase processing while keeping genuine boundaries apart and collapsing the set to 275 isoform-derived operons.
-Finally, genes left uncovered were rescued by recovering reads that spanned consecutive uncovered genes, by adding the two highly structured rRNA operons that long reads capture poorly, and by assigning the remaining isolated genes as monocistronic operons.
-This produced a final map of 459 operons that achieved complete sense-strand coverage of all 911 annotated \syn~genes.
+Operons were segmented from these clusters in three stages (Methods).
+The 4~k clusters supported by at least 50 reads were grouped into candidate operons by containment clustering, yielding 313 initial operons.
+Adjacent same-strand operons that overlapped, or flanked a same-strand gene in a coverage hole, were tested for read-level co-transcription and merged where continuous PacBio coverage bridged the junction, collapsing the set to 275.
+Finally, genes left uncovered were rescued from spanning reads, the two highly structured rRNA operons were added directly, and remaining isolated genes were assigned as monocistronic operons.
+This produced a final map of 459 operons covering all 911 annotated \syn~genes on the sense strand.
 
-An average operon spanned 1{,}650~bp (median; mean 2{,}049~bp) with the 911 genes distributed across 459 operons giving a mean of 2.0 sense genes per operon (Fig.~\ref{fig:operon}b,c).
-The size distribution had a long polycistronic tail that culminated in the $\sim$11~kb ribosomal-protein supercluster (\locus{0652}--\locus{0672}), the largest operon in the genome, which co-transcribes the bulk of the small- and large-subunit ribosomal-protein and translation-machinery genes.
-Beyond their sense-strand content, 69 operons (15.0\%) also enclosed at least one gene transcribed from the opposite strand, and nine operons covered only antisense genes or intergenic regions, so that operonal boundaries frequently captured antisense transcription alongside the sense genes.
+An operon spanned a median 1{,}650~bp (mean 2{,}049~bp) and a mean of 2.0 sense genes (Fig.~\ref{fig:operon}b,c), with a long polycistronic tail culminating in the $\sim$11~kb ribosomal-protein supercluster (\locus{0652}--\locus{0672}), the largest operon in the genome.
+Beyond their sense genes, 69 operons (15.0\%) also enclosed a gene transcribed from the opposite strand and nine covered only antisense or intergenic regions, so operon boundaries frequently captured antisense transcription as well.
 
-Transcription start sites (TSS) and termination sites (TTS) were read from the operon boundaries for the 127 canonical operons whose start and end both fell in intergenic regions, where the mapped ends reflect genuine regulatory positions rather than RNase-processed transcript termini (Methods).
-Upstream of these start sites the bacterial $-10$ promoter element was clearly recovered: the \texttt{TANAAT} hexamer matched 87 of the 127 operons (69\%) and the extended \texttt{TNNTANAAT} motif matched 52 (41\%), whereas the $-35$ region carried no fixed hexamer and was only broadly AT-rich (Fig.~\ref{fig:operon}d).
-At the TTS, rho-independent terminators predicted with TransTermHP~\cite{kingsford_rapid_2007} were found at the operon end in 97 of the 127 operons (76\%), and the mapped TTS coincided with the \threeprime\ end of the poly-U tract, lying a median of 1~nt beyond it with 98\% of operons within 10~nt.
-These terminators showed the canonical intrinsic architecture of a stem-loop hairpin followed by a uridine-rich \threeprime\ tail, with a median stem of 8~bp, a median loop of 4~nt, and a median poly-U tract of 6~nt, and with stems enriched in G+C relative to the AT-rich genome (median 43\% versus 24\%) (Fig.~\ref{fig:operon}d--g).
-The $-10$ box and the intrinsic terminators are consistent with the promoter and terminator elements of other bacteria, indicating that the reduced genome retains a conventional transcription-signal architecture, although these assignments are so far limited to operons with intergenic boundaries.
+Transcription start and termination sites (TSS, TTS) were read from the 127 canonical operons whose boundaries both fall in intergenic regions, where the ends reflect genuine regulatory positions rather than processed termini (Methods).
+Upstream of the TSS the bacterial $-10$ element was clearly recovered, with the \texttt{TANAAT} hexamer matching 87 of 127 operons (69\%) and the extended \texttt{TNNTANAAT} motif 52 (41\%), whereas the $-35$ region carried no fixed hexamer and was only broadly AT-rich (Fig.~\ref{fig:operon}d).
+At the TTS, rho-independent terminators~\cite{kingsford_rapid_2007} were found in 97 of 127 operons (76\%), the mapped TTS lying a median of 1~nt beyond the poly-U tract (98\% within 10~nt), with the canonical architecture of a stem-loop (median stem 8~bp, loop 4~nt) and a uridine-rich tail (median 6~nt), the stems enriched in G+C against the AT-rich genome (43\% versus 24\%) (Fig.~\ref{fig:operon}d--g).
+These conventional $-10$ and intrinsic-terminator elements indicate that the reduced genome retains a standard transcription-signal architecture, though the assignment is limited to operons with intergenic boundaries.
 
 % \textit{Protein complexes in operons}
 
