@@ -55,6 +55,7 @@ IN         = "syn3A_proteome_fully_annotated_Revised.xlsx"
 IN_SHEET   = 0     # first sheet (robust to sheet renames in the curation master)
 FASTA      = "../Genomes_Input/syn3A_ptns.fasta"   # protein sequences (locus-tag headers)
 PROT2026   = "syn3a_proteomics_summary_2026.csv"   # has copy_number_2026 per locus_tag
+RNA_ABUND  = "../Syn3A_Corr_RNA_Proteins/syn3A_rna_abundances.tsv"  # mRNA copies/cell + Illumina TPM per locus (Calc_Abundances.py)
 HIER       = "Syn3A_annotation/function_hierachy.tsv"
 OUT_REPORT = "syn3A_annotation_stats.txt"
 OUT_TABLE  = "syn3A_function_hierarchy_counts.tsv"
@@ -68,7 +69,8 @@ OUT_XLSX   = "syn3A_proteome_annotated.xlsx"        # derived: reordered + Prote
 # is the 2019 measurement -> renamed "Exp. Ptn Cnt 2019"; "Exp. Ptn Cnt 2026"
 # (copy_number_2026 from PROT2026, rounded up) is inserted right after it.
 TABLE_COLS = ["Locus Tag", "Gene Name", "Gene Product", "Exp. Ptn Cnt 2019",
-              "Exp. Ptn Cnt 2026", "Sim. Initial Ptn Cnt", "Localization",
+              "Exp. Ptn Cnt 2026", "Sim. Initial Ptn Cnt",
+              "mRNA Copies/Cell", "Illumina TPM", "Localization",
               "Essentiality", "Primary Function", "Secondary Function",
               "Tertiary Function", "Protein Sequence", "Protein Length",
               "Review Flag", "Mismatch Solved"]
@@ -120,6 +122,12 @@ _missing_seq = int((d[SEQCOL] == "").sum())
 _cn26 = pd.read_csv(PROT2026).set_index("locus_tag")["copy_number_2026"]
 d["Exp. Ptn Cnt 2026"] = np.ceil(d["Locus Tag"].map(_cn26)).astype("Int64")
 _missing_2026 = int(d["Exp. Ptn Cnt 2026"].isna().sum())
+
+# attach Syn3A transcription (absolute mRNA copies/cell + Illumina sense TPM) by locus tag
+_rna = pd.read_csv(RNA_ABUND, sep="\t").set_index("locus_tag")
+d["mRNA Copies/Cell"] = d["Locus Tag"].map(_rna["copies_per_cell"]).round(2)
+d["Illumina TPM"] = d["Locus Tag"].map(_rna["Illumina_sense_TPM"]).round(1)
+_missing_rna = int(d["mRNA Copies/Cell"].isna().sum())
 
 # resolve the requested column order to those actually present
 ORDER_COLS = [c for c in TABLE_COLS if c in d.columns]
