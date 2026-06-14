@@ -9,11 +9,13 @@ expand them into prose, quoting numbers verbatim from the files you list.
 
 Intentionally deferred analyses; the manuscript already ships without them.
 
+- **L1.4** Annotate promoter, terminator and RNA processing signatures for non-canonical operons; Mannual search for more examples of 3' and 5' digestions
 - **L2.3 genome-wide 3'-end 2°-structure test.** Settled design (do NOT use the confounded intragenic-vs-intergenic comparison, since terminators are trivially structured): (i) terminal accessibility = mean base-pairing probability of the last ~5 nt (ViennaRNA partition function) at intragenic 3' ends vs dinucleotide-shuffled, composition-matched windows; (ii) a 3'-vs-5' mirror-asymmetry meta-profile of pairing probability aligned at the endpoint. N = 6,302 intragenic 3' / 9,992 5' unique positions (`Syn1_RNase/RNase/isoform_endpoint_context.tsv`); ViennaRNA 2.6.4 in the RNAseq env.
 - **R5 L5.5 (panel e).** Essentiality × trace-expression: write the script and supply a syn3A essentiality source.
 - **R6 L6.5 (no panel).** ATP/GTP flux comparison: needs a metabolic model.
 - **R1 L1.5 (panel e).** Decide which polycistronic operon to showcase.
 - **R4.** RNA-polymerase-conflict angle (Ju et al., Nat. Microbiol.).
+- Make **deliverables** for following 4DWCM: omics in syn3A (Done); Genome Visualization of Operons (TSS, TTS), ORFs
 
 ---
 
@@ -550,6 +552,18 @@ Extended Figure:
 - **Conclusion:** Minimization removed ~1/5 of the coding transcriptome and proteome, yet the deleted loci are nearly half (418/911) of the genes, so the removed genes were well below average in expression; the loss is concentrated in dispensable metabolism, leaving pool capacity that syn3A redistributes.
 - **Caveats:** shares are raw syn1 TPM/iPM; cross-organism comparisons in L6.2-L6.4 are mean-normalized and deletion-corrected to the retained-gene pool.
 
+#### L6.1b: The retained-gene expression hierarchy is strongly conserved across both layers, so the reallocation is concentrated in a few discrete movers.
+
+- **Logic:** Before detailing the reallocation, the overall similarity of the retained-gene expression landscape between organisms is quantified, to show minimization preserved the ancestral program globally and that the changes below are concentrated exceptions (HupA down, the rPtn operon up), not a genome-wide drift.
+- **Analysis:** `Genome_Reduction/09_Compare_RNA_Protein.py`
+- **Outputs:**
+  - `Compare_RNA_Protein/Compare_RNA_Protein.txt` (section "CROSS-ORGANISM CONSERVATION OF THE RETAINED-GENE EXPRESSION LANDSCAPE")
+  - `Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv`
+- **Numbers to cite:** transcriptome relTPM syn1 vs syn3A Pearson(log10) r=0.841 (Spearman 0.876), n=443 protein-coding (rna_type==mRNA); proteome relIPM syn1 vs syn3A Pearson(log10) r=0.867 (Spearman 0.890), n=423. Mean-normalized relative units, genes retained in both cells.
+- **Figure panels:** none (text-only).
+- **Conclusion:** The relative expression hierarchy of retained genes is largely conserved at both the RNA (r=0.84) and protein (r=0.87) layers; the reallocation in L6.2-L6.4 rides on this conserved backdrop as a small number of large, discrete shifts, chiefly HupA's collapse (L5.4) and the 11 kb r-protein operon's rise (L6.3).
+- **Caveats:** the correlation is dominated by the bulk of unchanged genes; pool-composition shifts (L6.2) are driven by a minority of high-abundance loci, so high global conservation and concentrated reallocation are consistent.
+
 #### L6.2: The retained mRNA pool reallocates toward the translation machinery.
 
 - **Logic:** After renormalizing to retained genes, per-function mRNA-pool shares are compared between organisms to test whether the freed capacity is taken up by ribosome/translation operons rather than spread evenly.
@@ -613,7 +627,7 @@ Cites: `jacob_genetic_1961`, `gibson_creation_2010`, `hutchison_design_2016`, `b
 
 # Discussion
 
-**Tex file:** `Manuscript/sections/discussion.tex` — DRAFTED (285 words; Intro + Discussion = 465, under the 500 budget). Unheaded flowing prose, 5 short paragraphs; de-recapped into 3 cross-cutting ideas (NOT one bullet per R-section, the recap anti-pattern).
+**Tex file:** `Manuscript/sections/discussion.tex` — DRAFTED (425 words; Intro + Discussion = 602, over the 500 budget after the evolution paragraph was added). Unheaded flowing prose, 6 short paragraphs; de-recapped into 3 cross-cutting ideas (NOT one bullet per R-section, the recap anti-pattern).
 
 Complementarity map (Intro gap → Discussion answer):
 
@@ -623,14 +637,15 @@ Complementarity map (Intro gap → Discussion answer):
 | does transcription predict the proteome | yes, dominant; residual partly = elongation; syn1 oddities are artifacts AND were deleted first | R3+R4 |
 | what minimization does to expression | structurally conservative, functionally reallocates toward translation machinery; RNAP + central metabolism down; coherent w/ slow growth | R5+R6 |
 
-5 paragraphs:
+6 paragraphs:
 1. Take-home: transcription = primary layer shaping the proteome; processing + minimization = modifiers.
 2. Architecture (R1+R2): 459 operons w/ matched promoters/terminators; pervasive 3′>5′ erosion; 3′→5′ exonucleolytic clearance-bottleneck HYPOTHESIS (awaits cleavage-site mapping).
 3. Transcription→proteome + the loop (R3+R4): transcript level dominant, elongation explains part of residual; antisense/intergenic = mis-annotation + synthetic artifacts, and those regions were deleted first in the reduction.
-4. Reduction reallocates (R5+R6): gene-order-preserving, whole-operon excision, promoter-loss decapitation (HupA showcase); retained pool shifts to translation machinery (11 kb rProtein operon triples its share), RNAP + central metabolism down, coherent w/ longer cell cycle; rProtein-imbalance→aggregates = SPECULATIVE.
-5. Limitations + outlook: homology sites await direct cleavage-site mapping (conserved enzyme ≠ conserved RNA structure); ONT truncation → PacBio confirmation; mRNA-pool-share excludes rRNA; rProtein/membrane abundances least reliable (ribosome profiling); closer = gene-coexpression into a 4D whole-cell model of the minimal cell.
+4. Reduction reallocates (R5+R6): gene-order-preserving, whole-operon excision, promoter-loss decapitation (HupA showcase); retained pool shifts to translation machinery (11 kb rProtein operon triples its share), RNAP + central metabolism down, coherent w/ longer cell cycle. [rProtein-imbalance→aggregates sentence CUT 2026-06 to save words; overlapped the new ribosome-profiling limitation.]
+5. Evolution of the minimal cell (Sandberg ALE, `sandberg_adaptive_2023`): our \syna~Illumina = the wild-type exponential ancestor = the evolutionary starting point; under selection for growth \syna~raises rProteins further still (ribosome content → protein-synthetic capacity → growth rate, the growth law); evolution also prunes synthetic baggage — the dispensable tetM/0913 resistance cassette (top tenth of the transcriptome, Illumina sense TPM 5,299, rank 49/496) is silenced under selection, echoing the his3/0918 over-transcription minimization had already silenced. Moger-Reischer (Nature 2023, fitness cost + recovery) deliberately NOT cited (no expression data). The ribosome-profiling caveat (do elevated rProtein transcripts → proportionally more ribosomes?) lives in the limitations paragraph, not here.
+6. Limitations + outlook: homology sites await direct cleavage-site mapping (conserved enzyme ≠ conserved RNA structure); ONT truncation → PacBio confirmation; mRNA-pool-share excludes rRNA; rProtein/membrane abundances least reliable (ribosome profiling, which also tests whether elevated rProtein transcripts → ribosomes); closer = gene-coexpression into a 4D whole-cell model of the minimal cell.
 
-Claims SOFTENED vs the raw outline (do not revert): "transcription alone determines covariance" → "dominant determinant"; "explain the longer cell cycle" → "coherent with"; rProtein→aggregation flagged SPECULATIVE.
+Claims SOFTENED vs the raw outline (do not revert): "transcription alone determines covariance" → "dominant determinant"; "explain the longer cell cycle" → "coherent with"; rProtein→aggregation sentence CUT (had been flagged SPECULATIVE).
 Standalone "Relationship to previous literature" section dropped; literature woven into the interpretation (Heard: that return-to-the-Intro is what makes the two complementary).
 
 ---

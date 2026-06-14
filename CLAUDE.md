@@ -40,6 +40,7 @@ The tree is grouped by organism / platform / role.
 │
 ├── Syn1_Syn3A_Proteomics/                proteomics tables for both organisms
 ├── Syn1_Corr_RNA_Proteins/               syn1 RNA × protein correlation analysis
+├── Syn3A_Corr_RNA_Proteins/              syn3A absolute RNA abundance (TPM → copies/cell); feeds the proteomics HTML
 ├── Syn1_Novel_ORF/                      novel-ORF discovery from syn1 PacBio isoforms
 ├── Syn1_RNase/                          R2: RNA-processing / ribonuclease analysis + B.subtilis→syn1 RNase-site mapping
 │
@@ -109,7 +110,7 @@ Proteomics tables for both organisms (used by `Syn1_Corr_RNA_Proteins/` and `Gen
 - **Syn1 (absolute copy numbers):** `syn1_proteomics_localization_2026.csv` — use only when absolute quantities are explicitly needed.
 - **Syn3A (relative iPM + absolute copy numbers in 2026):** `syn3a_proteomics_summary_2026.csv`.
 - **syn3A (tertiary function annotation + proteomics number in 2019 and 2026):** `syn3A_proteome_annotated.xlsx` sheet Syn3A_Proteome
-- **Annotation report:** `report_annotation_stats_syn3A.py` → builds `syn3A_proteome_annotated.xlsx` (derived, reordered + Protein Sequence + Exp. Ptn. Cnt 2019/2026) and `syn3A_tertiary_function_composition.html` (self-contained interactive: clickable composition bars → filterable/sortable protein table with sticky first 3 cols + CSV/Excel download). Pairs validate against `Syn3A_annotation/function_hierachy.tsv` (controlled vocab).
+- **Annotation report:** `report_annotation_stats_syn3A.py` → builds `syn3A_proteome_annotated.xlsx` (derived, reordered + Protein Sequence + Exp. Ptn. Cnt 2019/2026) and `syn3A_tertiary_function_composition.html` (self-contained interactive: clickable composition bars → filterable/sortable protein table with sticky first 3 cols + CSV/Excel download), now also carrying Syn3A transcription columns (`mRNA Copies/Cell` + `Illumina TPM`) joined by locus tag from `Syn3A_Corr_RNA_Proteins/syn3A_rna_abundances.tsv`. Pairs validate against `Syn3A_annotation/function_hierachy.tsv` (controlled vocab).
 
 ### Syn1_Corr_RNA_Proteins
 
@@ -117,6 +118,13 @@ Syn1 RNA × protein correlation.
 - `Transcription_Translation.py` joins syn1 PacBio/Illumina TPMs with proteomics.
 - `Translation_Residual_L2_elongation.py` explains residuals.
 - **Combined table:** `syn1_genes_transcriptomics_proteomics.csv` — relative iPM values only.
+
+### Syn3A_Corr_RNA_Proteins
+
+Syn3A absolute RNA abundance: converts relative TPM into copies per cell for all RNA classes, the intuitive companion to the proteomics copy numbers.
+- `Calc_Abundances.py` — mass balance after Breuer *et al.* eLife 2019: cell dry weight from radius/density/water model → RNA dry mass = gDW × RNA mass fraction → partition rRNA/tRNA/mRNA/ncRNA (Ribo-Zero rRNA depletion applied) → per type, total copies = type_mass / TPM-weighted average MW → per gene by within-type TPM share. mRNA distribution from Illumina sense TPM, non-coding from ONT sense TPM. All scaling assumptions are named constants at the top (radius, density, mass fractions, type split, depletion efficiency); replace with a measured Syn3A dry mass directly. Run in the **RNAseq** env (needs biopython).
+  - **Outputs:** `syn3A_rna_abundances.tsv` (per gene: `RNA Type`, Illumina/ONT TPM, `MW_g_per_mol`, `copies_per_cell`, `mRNA_pool_share_pct`) + `Calc_Abundances.txt` (assumptions block, RNA-mass partition by type, per-type copy totals, top mRNAs). Headline: ~191 mRNA, ~5,600 tRNA, ~63 rRNA, ~73 ncRNA per cell; EF-Tu (`JCVISYN3A_0151`) the top mRNA at ~7 copies.
+  - **Feeds** `Syn1_Syn3A_Proteomics/report_annotation_stats_syn3A.py`, which joins `copies_per_cell` + Illumina TPM into the proteome HTML/xlsx by locus tag.
 
 ### Syn1_Novel_ORF
 

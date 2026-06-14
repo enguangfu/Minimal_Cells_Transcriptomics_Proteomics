@@ -24,6 +24,7 @@ This repository holds the complete pipeline, from raw-read retrieval to the figu
 │
 ├── Syn1_Syn3A_Proteomics/    proteomics tables (relative iPM + absolute copy numbers) for both
 ├── Syn1_Corr_RNA_Proteins/   syn1 transcriptome × proteome correlation
+├── Syn3A_Corr_RNA_Proteins/  syn3A absolute RNA abundance (TPM → copies per cell)
 ├── Syn1_RNase/               RNA-processing / ribonuclease analysis (3' erosion, RNase-site mapping)
 ├── Syn1_Novel_ORF/           novel-ORF / antisense / intergenic transcription discovery
 │
@@ -78,6 +79,8 @@ flowchart TD
     ISO --> NOV["Syn1_Novel_ORF"]
     TPM1 --> CORR["Syn1_Corr_RNA_Proteins"]
     PROT --> CORR
+    TPM3 --> S3C["Syn3A_Corr_RNA_Proteins<br/>copies per cell"]
+    S3C --> PROT
     OPN --> GR["Genome_Reduction<br/>syn1 → syn3A"]
     PROT --> GR
     TPM1 --> GR
@@ -99,7 +102,7 @@ Run the stages in this order; each folder's scripts read the outputs of the stag
 4. **Per-gene TPM** — `Gene_TPM/` computes sense/antisense TPM per gene from the depth tracks.
 5. **Proteome** — `Syn1_Syn3A_Proteomics/` builds the per-protein relative (iPM) and absolute abundance tables.
 6. **Operons** — `Syn1_Operon/` (and `Syn3A_Operon/`) segment and annotate operons from the isoforms, with promoter and terminator signatures.
-7. **Per-organism analyses** — `Syn1_Corr_RNA_Proteins/` (RNA↔protein correlation), `Syn1_RNase/` (RNA processing + ribonuclease cleavage-site mapping), `Syn1_Novel_ORF/` (antisense / intergenic / novel ORFs).
+7. **Per-organism analyses** — `Syn1_Corr_RNA_Proteins/` (RNA↔protein correlation), `Syn3A_Corr_RNA_Proteins/` (absolute RNA copies per cell, fed into the proteome browser), `Syn1_RNase/` (RNA processing + ribonuclease cleavage-site mapping), `Syn1_Novel_ORF/` (antisense / intergenic / novel ORFs).
 8. **Genome reduction** — `Genome_Reduction/` runs scripts `01`→`10` in numeric order to recast the syn1→syn3A deletions as operon junctions and quantify the transcriptome/proteome reallocation. Run with `Genome_Reduction/` as the working directory.
 
 > Most Python scripts carry their full method, parameters, and a result summary in a header docstring, and write a companion `.txt` log next to their outputs.

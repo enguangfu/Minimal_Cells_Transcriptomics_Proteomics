@@ -60,6 +60,14 @@ Top 15 deleted genes by syn1 iPM
 ##############################################################################
 # TPM = Illumina (syn1 & syn3A). rel* = mean-normalized. iPM is in 10_Compare_Ptn.
 
+
+##############################################################################
+# CROSS-ORGANISM CONSERVATION OF THE RETAINED-GENE EXPRESSION LANDSCAPE
+##############################################################################
+# Pearson on log10 of mean-normalized relative units, genes retained in both cells.
+transcriptome  relTPM syn1 vs syn3A (mRNA): Pearson(log10) r=0.841  Spearman=0.876  n=443
+proteome       relIPM syn1 vs syn3A:        Pearson(log10) r=0.867  Spearman=0.890  n=423
+
 ==============================================================================
 ## TPM fold change (Illumina)
    Tukey fences (log10 1.5*IQR): low < 0.0547, high > 9.16

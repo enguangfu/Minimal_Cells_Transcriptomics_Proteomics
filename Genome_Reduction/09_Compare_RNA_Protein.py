@@ -1286,6 +1286,27 @@ report = [OCCUPANCY_TEXT,
           "\n\n", "#" * 78, "\n# TPM FOLD-CHANGE AND ABSOLUTE-CHANGE OUTLIERS (coding genes)\n",
           "#" * 78, "\n",
           "# TPM = Illumina (syn1 & syn3A). rel* = mean-normalized. iPM is in 10_Compare_Ptn.\n"]
+# --- cross-organism conservation of the retained-gene expression landscape ---
+# How well the relative expression hierarchy of genes kept in BOTH cells is
+# preserved through minimization (Pearson on log10 of mean-normalized rel units).
+def _conservation_r(df, a, b):
+    d = df[[a, b]].replace([np.inf, -np.inf], np.nan).dropna()
+    d = d[(d[a] > 0) & (d[b] > 0)]
+    pr = float(np.corrcoef(np.log10(d[a]), np.log10(d[b]))[0, 1])
+    sr = float(d[a].corr(d[b], method="spearman"))
+    return pr, sr, len(d)
+
+_tpr, _tsr, _tn = _conservation_r(coding[coding["rna_type"] == "mRNA"], "relTPM_syn1", "relTPM_syn3a")
+_ipr, _isr, _in = _conservation_r(coding, "relIPM_syn1", "relIPM_syn3a")
+print(f"[conservation] transcriptome (mRNA) r={_tpr:.3f} Spearman={_tsr:.3f} n={_tn}; "
+      f"proteome r={_ipr:.3f} Spearman={_isr:.3f} n={_in}")
+report += ["\n\n", "#" * 78,
+           "\n# CROSS-ORGANISM CONSERVATION OF THE RETAINED-GENE EXPRESSION LANDSCAPE\n",
+           "#" * 78, "\n",
+           "# Pearson on log10 of mean-normalized relative units, genes retained in both cells.\n",
+           f"transcriptome  relTPM syn1 vs syn3A (mRNA): Pearson(log10) r={_tpr:.3f}  Spearman={_tsr:.3f}  n={_tn}\n",
+           f"proteome       relIPM syn1 vs syn3A:        Pearson(log10) r={_ipr:.3f}  Spearman={_isr:.3f}  n={_in}\n"]
+
 report.append(_outlier_section("TPM fold change (Illumina)", "TPM_fold_change", True,  TPM_SHOW))
 report.append(_outlier_section("TPM absolute change (relTPM delta)", "TPM_abs_change", False, TPM_SHOW))
 

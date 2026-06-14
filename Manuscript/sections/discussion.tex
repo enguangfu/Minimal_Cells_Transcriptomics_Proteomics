@@ -12,13 +12,16 @@ Across \syn, transcript level was the dominant determinant of protein abundance,
 The antisense and intergenic transcription we detected traced largely to inherited mis-annotation and synthetic-construction artifacts, and those regions were among the first removed during minimization to \syna.
 
 Minimization was structurally conservative yet functionally transformative.
-It preserved gene order and excised whole operons, decapitating only a few retained operons by deleting their own promoters, with the nucleoid protein HupA the clearest case.
+It preserved gene order and excised whole operons, decapitating only a few retained operons by deleting their own promoters, with the nucleoid protein HupA the clearest case, whose depletion may have contributed to the lack of persistent supercoiling in \syna~\cite{gilbert_dynamics_2023,gilbert_generating_2021}.
 The retained transcriptome reallocated toward the translation machinery, especially a single 11~kb ribosomal-protein operon tripling its mRNA-pool share, while RNA polymerase and central-metabolic enzymes declined and the RNA degradosome rose, coherent with \syna's longer cell cycle.
 Two non-exclusive effects could underlie this operon's rise: the tRNA operon that minimization brought adjacent to it may raise the local availability of RNA polymerase without read-through, and the loss of the nucleoid protein HupA may have shifted genome-wide supercoiling toward strong promoters.
-Whether imbalanced ribosomal-protein synthesis burdens assembly remains speculative.
+
+These reallocations also frame how the minimal cell evolves.
+Our \syna~profiles describe the wild-type ancestor from which laboratory evolution begins (Methods), and under selection for growth \syna~raises its ribosomal proteins further still~\cite{sandberg_adaptive_2023}, as expected if ribosome content sets growth rate.
+Evolution also prunes synthetic baggage: the dispensable \gene{tetM}{0913} resistance cassette, in the top tenth of the \syna~transcriptome, is silenced under selection~\cite{sandberg_adaptive_2023}, echoing the \gene{his3}{0918} over-transcription that minimization had already silenced.
 
 Several limitations remain.
-The homology-mapped processing sites await direct cleavage-site mapping in \syn, since conserved ribonucleases need not act on conserved RNA structures; the truncated \syna~nanopore reads leave operon-level changes to be confirmed by PacBio; expression was framed as mRNA-pool share and excludes rRNA; and ribosomal and membrane-protein abundances are the least reliable, which ribosome profiling could resolve.
+The homology-mapped processing sites await direct cleavage-site mapping in \syn, since conserved ribonucleases need not act on conserved RNA structures; the truncated \syna~nanopore reads leave operon-level changes to be confirmed by PacBio (Methods); expression was framed as mRNA-pool share and excludes rRNA; and ribosomal and membrane-protein abundances are the least reliable, which ribosome profiling could sharpen while testing whether the elevated ribosomal-protein transcripts yield proportionally more ribosomes.
 Together these data establish a gene-coexpression foundation for incorporation into a four-dimensional whole-cell model of the minimal cell~\cite{thornburg_bringing_2026}.
 
 \newpage

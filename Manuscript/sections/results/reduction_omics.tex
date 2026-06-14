@@ -1,9 +1,13 @@
 \subsection{Minimization reallocates transcription toward translation at the expense of central metabolism}
 
-Minimization removed not only genes but a large share of the expression budget.
+Minimization removed not only genes but a share of the expression budget.
 Of the 911 \syn~loci, 418 are absent from \syna (382 protein-coding, 33 pseudogenes, 3 structural RNAs), together carrying 21.8\% of the messenger-RNA pool and 22.3\% of the proteome in \syn (Methods); nearly half the genes thus held only about a fifth of the output, so the removed genes were well below average in expression.
 Their most transcribed members, the yeast-vector marker \gene{lacZ}{0915}, the pyruvate-dehydrogenase subunits \gene{pdhA}{0225} and \gene{pdhB}{0226}, and alanine dehydrogenase \gene{ald}{0059}, are all dispensable in rich medium~\cite{breuer_essential_2019}.
 Because relative units sum to a fixed total, excising a fifth of the output frees an equal fraction for retained genes, so the comparisons below are mean-normalized to the retained-gene pool, leaving an unchanged gene reading as no change (Methods).
+
+Within this retained pool, the relative expression landscape was largely conserved across minimization.
+Per-gene relative transcript levels in \syn~and \syna~correlated at Pearson $r = 0.84$ on $\log_{10}$ relative TPM ($n = 443$ protein-coding genes), and the proteome was conserved to a similar degree ($r = 0.87$ on $\log_{10}$ relative iPM, $n = 423$), so the ancestral expression hierarchy was inherited largely intact at both layers.
+The reallocation described below therefore rode on this conserved backdrop as a small number of large, discrete shifts rather than a genome-wide drift, the clearest being the collapse of the decapitated nucleoid protein HupA (Fig.~\ref{fig:reduction_operons}) and the rise of the ribosomal-protein operon dissected here.
 
 The freed capacity was taken up overwhelmingly by the translation machinery rather than spread across functions (Fig.~\ref{fig:reduction_omics}a).
 Translation, already the largest consumer in \syn, rose from 53.1\% to 64.9\% of the retained messenger-RNA pool (an 11.8-point gain over its 131 genes), the largest increases all ribosomal proteins (\gene{rpsK}{0646}, \gene{rplO}{0653}, \gene{rplX}{0660}, \gene{rplN}{0661}, each gaining 4.3 to 6.0 relative units).
