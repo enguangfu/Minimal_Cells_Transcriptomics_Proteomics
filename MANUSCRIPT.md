@@ -5,6 +5,24 @@ Results paragraphs. Each subsection here mirrors a `.tex` file under
 `Manuscript/sections/{results,methods}/`. Fill in the bullets; the LLM will
 expand them into prose, quoting numbers verbatim from the files you list.
 
+## Manuscript Revision
+
+Intro: [DONE 2026-06-28 — abstract.tex + introduction.tex]
+- [DONE] Para 1 + abstract now OPEN by NAMING syn1 + syn3A as "genetically modified and reduced versions of the naturally occurring bacterium M. mycoides". Do NOT open with a generic "minimized cells" statement (other minimization efforts exist — user feedback, see memory feedback_abstract_intro_framing).
+- [DONE] Para 1 ENDS with the three phenotype differences: slower cell division (pelletier_genetic_2021), denser cytosol, and loss of the persistent chromosome contacts syn1 keeps, the last linked to low HupA (gilbert_generating_2021).
+- [DONE, with deviation] The long-read framing was FOLDED INTO the approach paragraph (para 3), NOT used to replace the three-questions funnel (kept — it is paired with the Discussion; user chose "keep questions, expand approach"). Para 3: long-read resolves co-transcription/isoforms/antisense (byrne_realizing_2019, mattick_deciphering_2024), Illumina = short-read quantification standard (stark_rna_2019); PacBio for syn1, ONT for syn3A (yan_smrt-cappable-seq_2018, grunberger_nanopore_2022).
+
+Dicussion: [DONE 2026-06-28 — discussion.tex para 4]
+- [DONE] Para 4 OPENS with the explicit "the resulting expression changes point to molecular reasons for the phenotype differences between the two cells," then answers each: HupA decapitation → lost persistent chromosome contacts (gilbert_dynamics_2023, gilbert_generating_2021); RNAP + central-metabolism down / degradosome up → coherent w/ longer cell cycle (pelletier_genetic_2021); rPtn-operon up + several other rProteins down → imbalanced rProtein production → disrupted ribosome assembly → surplus subunits crowd cytosol → compact cytosol (gilbert_generating_2021).
+- Expand on the upregulation of rPtn operon: 1. it can suppre [PARTIAL: the imbalance → ribosome-assembly → compact-cytosol arm is DONE in para 4. The suppression arm (rPtn transcription crowding out central-metabolism enzymes, the R6 one-sentence summary) lives in reduction_omics.tex L6.5 — fold into the Discussion if wanted.]
+
+Results:
+- Always denote syn1 or syn3A in the operon plot
+- R2: revisit the atpA secondary strucutre, just to find a possible stem dsRNA for RNase III to act on
+- R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: a. Put several panels to Supplemental figures; b. repeat the analysis on syn3A, and report the values
+- R5: Add syn3A track to panel e to highligh how hupA not expressed: a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the left regions
+- R6: Fig 6 replace panel b with rPtn comparison since it overlap with panel a
+
 ## Deferred / future work
 
 Intentionally deferred analyses; the manuscript already ships without them.
@@ -620,14 +638,14 @@ Extended Figure:
 **Tex file:** `Manuscript/sections/introduction.tex` — DRAFTED (180 words). "we" allowed (banned only in Results/Methods).
 Funnel written as a PAIR with the Discussion: every gap raised here is answered there, and nothing is answered that was not first asked.
 1. Broad: bacterial genes run in operons and RNA processing organizes the transcriptome above the single gene (Jacob-Monod lineage).
-2. Gap: syn1.0 / syn3A are defined at the genome-design + protein-essentiality level; their RNA-level organization (operons, processing, RNA→protein) is uncharted.
+2. Organisms + gap: syn1 + syn3A NAMED up front as genetically modified and reduced versions of naturally occurring M. mycoides, defined at the genome-design + protein-essentiality level, their RNA-level organization (operons, processing, RNA→protein) uncharted; para 1 now ENDS with the three phenotype differences (slower division, denser cytosol, lost persistent chromosome contacts ← low HupA) the Discussion answers.
 3. Three questions = the three Discussion clusters: (a) how is expression organized at the RNA level; (b) does transcription predict the proteome at minimal complexity; (c) what does minimization do to the expression program.
-4. What we did: PacBio (syn1) + ONT (syn3A) + Illumina + matched proteomics → operon-resolved map for both organisms + the reduction comparison; foundation for whole-cell modeling.
-Cites: `jacob_genetic_1961`, `gibson_creation_2010`, `hutchison_design_2016`, `breuer_essential_2019`, `thornburg_fundamental_2022`.
+4. Approach (para 3, expanded 2026-06-28): long-read resolves co-transcription/isoforms/antisense, Illumina = quantification standard; PacBio (syn1) + ONT (syn3A) + matched proteomics → operon-resolved map for both organisms + the reduction comparison; foundation for whole-cell modeling.
+Cites: `jacob_genetic_1961`, `gibson_creation_2010`, `hutchison_design_2016`, `breuer_essential_2019`, `pelletier_genetic_2021`, `gilbert_generating_2021`, `stark_rna_2019`, `byrne_realizing_2019`, `mattick_deciphering_2024`, `yan_smrt-cappable-seq_2018`, `grunberger_nanopore_2022`, `thornburg_fundamental_2022`, `thornburg_bringing_2026`.
 
 # Discussion
 
-**Tex file:** `Manuscript/sections/discussion.tex` — DRAFTED (425 words; Intro + Discussion = 602, over the 500 budget after the evolution paragraph was added). Unheaded flowing prose, 6 short paragraphs; de-recapped into 3 cross-cutting ideas (NOT one bullet per R-section, the recap anti-pattern).
+**Tex file:** `Manuscript/sections/discussion.tex` — DRAFTED. Unheaded flowing prose, 6 short paragraphs; de-recapped into 3 cross-cutting ideas (NOT one bullet per R-section, the recap anti-pattern). NOTE 2026-06-28: Intro + Discussion now over the 500-word budget after the phenotype/long-read expansions (organisms framing + phenotype differences in Intro; phenotype-reasons + rProtein-imbalance in Discussion para 4); budget deferred for the first draft per author.
 
 Complementarity map (Intro gap → Discussion answer):
 
@@ -636,16 +654,17 @@ Complementarity map (Intro gap → Discussion answer):
 | transcriptome architecture uncharted | 459-operon map + pervasive 3′-biased processing | R1+R2 |
 | does transcription predict the proteome | yes, dominant; residual partly = elongation; syn1 oddities are artifacts AND were deleted first | R3+R4 |
 | what minimization does to expression | structurally conservative, functionally reallocates toward translation machinery; RNAP + central metabolism down; coherent w/ slow growth | R5+R6 |
+| phenotype diffs (genome contacts, cell cycle, dense cytosol) | HupA decapitation → lost chromosome contacts; RNAP+metabolism↓ / degradosome↑ → slower division; rProtein imbalance → disrupted ribosome assembly → compact cytosol | R5+R6 |
 
 6 paragraphs:
 1. Take-home: transcription = primary layer shaping the proteome; processing + minimization = modifiers.
 2. Architecture (R1+R2): 459 operons w/ matched promoters/terminators; pervasive 3′>5′ erosion; 3′→5′ exonucleolytic clearance-bottleneck HYPOTHESIS (awaits cleavage-site mapping).
 3. Transcription→proteome + the loop (R3+R4): transcript level dominant, elongation explains part of residual; antisense/intergenic = mis-annotation + synthetic artifacts, and those regions were deleted first in the reduction.
-4. Reduction reallocates (R5+R6): gene-order-preserving, whole-operon excision, promoter-loss decapitation (HupA showcase); retained pool shifts to translation machinery (11 kb rProtein operon triples its share), RNAP + central metabolism down, coherent w/ longer cell cycle. [rProtein-imbalance→aggregates sentence CUT 2026-06 to save words; overlapped the new ribosome-profiling limitation.]
+4. Reduction reallocates AND explains the phenotype differences (R5+R6): para OPENS with the explicit phenotype-reasons statement, then — gene-order-preserving, whole-operon excision, promoter-loss decapitation (HupA showcase) → lost chromosome contacts; retained pool shifts to translation machinery (11 kb rProtein operon triples its share), RNAP + central metabolism down + degradosome up → coherent w/ longer cell cycle; rProtein imbalance (operon up + several other rProteins down) → disrupted ribosome assembly → compact cytosol. [rProtein-imbalance sentence REINSTATED & reframed 2026-06-28 as imbalance→ribosome-assembly→compact-cytosol (NOT the old aggregation framing), to answer the syn3A denser-cytosol phenotype; hedged could/plausible.]
 5. Evolution of the minimal cell (Sandberg ALE, `sandberg_adaptive_2023`): our \syna~Illumina = the wild-type exponential ancestor = the evolutionary starting point; under selection for growth \syna~raises rProteins further still (ribosome content → protein-synthetic capacity → growth rate, the growth law); evolution also prunes synthetic baggage — the dispensable tetM/0913 resistance cassette (top tenth of the transcriptome, Illumina sense TPM 5,299, rank 49/496) is silenced under selection, echoing the his3/0918 over-transcription minimization had already silenced. Moger-Reischer (Nature 2023, fitness cost + recovery) deliberately NOT cited (no expression data). The ribosome-profiling caveat (do elevated rProtein transcripts → proportionally more ribosomes?) lives in the limitations paragraph, not here.
 6. Limitations + outlook: homology sites await direct cleavage-site mapping (conserved enzyme ≠ conserved RNA structure); ONT truncation → PacBio confirmation; mRNA-pool-share excludes rRNA; rProtein/membrane abundances least reliable (ribosome profiling, which also tests whether elevated rProtein transcripts → ribosomes); closer = gene-coexpression into a 4D whole-cell model of the minimal cell.
 
-Claims SOFTENED vs the raw outline (do not revert): "transcription alone determines covariance" → "dominant determinant"; "explain the longer cell cycle" → "coherent with"; rProtein→aggregation sentence CUT (had been flagged SPECULATIVE).
+Claims SOFTENED vs the raw outline (do not revert): "transcription alone determines covariance" → "dominant determinant"; "explain the longer cell cycle" → "coherent with". The rProtein-imbalance sentence (once CUT as the SPECULATIVE rProtein→aggregation line) was REINSTATED 2026-06-28 in a reframed, hedged form (imbalance → disrupted ribosome assembly → surplus subunits crowd cytosol → compact cytosol; "could"/"plausible"), now needed to answer the denser-cytosol phenotype raised in the new Intro.
 Standalone "Relationship to previous literature" section dropped; literature woven into the interpretation (Heard: that return-to-the-Intro is what makes the two complementary).
 
 ---
