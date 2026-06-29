@@ -6,22 +6,36 @@ Results paragraphs. Each subsection here mirrors a `.tex` file under
 expand them into prose, quoting numbers verbatim from the files you list.
 
 ## Manuscript Revision
-
-Intro: [DONE 2026-06-28 — abstract.tex + introduction.tex]
-- [DONE] Para 1 + abstract now OPEN by NAMING syn1 + syn3A as "genetically modified and reduced versions of the naturally occurring bacterium M. mycoides". Do NOT open with a generic "minimized cells" statement (other minimization efforts exist — user feedback, see memory feedback_abstract_intro_framing).
-- [DONE] Para 1 ENDS with the three phenotype differences: slower cell division (pelletier_genetic_2021), denser cytosol, and loss of the persistent chromosome contacts syn1 keeps, the last linked to low HupA (gilbert_generating_2021).
-- [DONE, with deviation] The long-read framing was FOLDED INTO the approach paragraph (para 3), NOT used to replace the three-questions funnel (kept — it is paired with the Discussion; user chose "keep questions, expand approach"). Para 3: long-read resolves co-transcription/isoforms/antisense (byrne_realizing_2019, mattick_deciphering_2024), Illumina = short-read quantification standard (stark_rna_2019); PacBio for syn1, ONT for syn3A (yan_smrt-cappable-seq_2018, grunberger_nanopore_2022).
-
-Dicussion: [DONE 2026-06-28 — discussion.tex para 4]
-- [DONE] Para 4 OPENS with the explicit "the resulting expression changes point to molecular reasons for the phenotype differences between the two cells," then answers each: HupA decapitation → lost persistent chromosome contacts (gilbert_dynamics_2023, gilbert_generating_2021); RNAP + central-metabolism down / degradosome up → coherent w/ longer cell cycle (pelletier_genetic_2021); rPtn-operon up + several other rProteins down → imbalanced rProtein production → disrupted ribosome assembly → surplus subunits crowd cytosol → compact cytosol (gilbert_generating_2021).
-- Expand on the upregulation of rPtn operon: 1. it can suppre [PARTIAL: the imbalance → ribosome-assembly → compact-cytosol arm is DONE in para 4. The suppression arm (rPtn transcription crowding out central-metabolism enzymes, the R6 one-sentence summary) lives in reduction_omics.tex L6.5 — fold into the Discussion if wanted.]
+Intro:
+- Mention why yeast gene inserted
+- add genebank entry for both organisms
+- briefly mention how syn1 reduced to syn3A
 
 Results:
 - Always denote syn1 or syn3A in the operon plot
-- R2: revisit the atpA secondary strucutre, just to find a possible stem dsRNA for RNase III to act on
-- R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: a. Put several panels to Supplemental figures; b. repeat the analysis on syn3A, and report the values; c. discuss a little bit why R is not 1 as Abner emailed me
-- R5: Add syn3A track to panel e to highligh how hupA not expressed: a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the left regions
-- R6: Fig 6 replace panel b with rPtn comparison since it overlap with panel a; put syn1 and syn3A TPM and iPM correlation plot into Supplemental figure; expand the discussion on glycolytic enzymes
+- R2: 
+  - Remove panel d since secondary prediction and terminator signature not consistent
+  - Add a panel as f to show the spatial organization of ATP synthase
+  - Delete the atpA mRNA secondary structure prediction
+  - Compress panel g to size (7, 7/4)
+
+- R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: 
+  - a. Put several panels to Supplemental figures; 
+  - b. repeat the analysis on syn3A, and report the values; 
+  - c. discuss a little bit why R is not 1 as Abner emailed me
+
+- R5: 
+  - panel e: Add syn3A track to panel e to highligh how hupA not expressed a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the retained regions
+  - panel d: replace the violin plot with actual distribution of TPM fold of change and highlight cases other than hupA
+  - Do something with b and c: try to combine them together
+  
+- R6: 
+  - remove panel b since it overlap with panel a
+  - replace b with TPM correlation between two omics
+  - recheck the normalization scheme here to make sure fair comparison 
+  - expand the explanations on glycolytic enzymes
+  - Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression
+
 
 ## Deferred / future work
 
