@@ -19,9 +19,9 @@ Dicussion: [DONE 2026-06-28 — discussion.tex para 4]
 Results:
 - Always denote syn1 or syn3A in the operon plot
 - R2: revisit the atpA secondary strucutre, just to find a possible stem dsRNA for RNase III to act on
-- R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: a. Put several panels to Supplemental figures; b. repeat the analysis on syn3A, and report the values
+- R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: a. Put several panels to Supplemental figures; b. repeat the analysis on syn3A, and report the values; c. discuss a little bit why R is not 1 as Abner emailed me
 - R5: Add syn3A track to panel e to highligh how hupA not expressed: a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the left regions
-- R6: Fig 6 replace panel b with rPtn comparison since it overlap with panel a
+- R6: Fig 6 replace panel b with rPtn comparison since it overlap with panel a; put syn1 and syn3A TPM and iPM correlation plot into Supplemental figure; expand the discussion on glycolytic enzymes
 
 ## Deferred / future work
 
