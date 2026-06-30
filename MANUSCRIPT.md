@@ -6,34 +6,49 @@ Results paragraphs. Each subsection here mirrors a `.tex` file under
 expand them into prose, quoting numbers verbatim from the files you list.
 
 ## Manuscript Revision
+
+Now i have discussed the entire manuscript in details with PI; following is the final TODO list before sending to all co-authors. I will ask you to revise some analysis and redraw panels; the tex files now will be edited on overleaf.
+
 Intro:
-- Mention why yeast gene inserted
-- add genebank entry for both organisms
-- briefly mention how syn1 reduced to syn3A
+- Separate one paragraph to include the followings:
+  - Briefly mention how syn1 differ from M. mycoides and why synthetic yeast gene inserted
+  - add genebank entry for both organisms
+  - briefly mention how syn1 reduced to syn3A
+  - mention how the WCM enabling know much more about syn3A
 
 Results:
-- Always denote syn1 or syn3A in the operon plot
+- Always denote syn1 or syn3A in the operon plot; normalize depth to avg depth in each organism
 - R2: 
-  - Remove panel d since secondary prediction and terminator signature not consistent
-  - Add a panel as f to show the spatial organization of ATP synthase
-  - Delete the atpA mRNA secondary structure prediction
-  - Compress panel g to size (7, 7/4)
+  - X Remove panel d since secondary prediction and terminator signature not consistent
+  - X Add a panel as f to show the spatial organization of ATP synthase
+  - X Delete the atpA mRNA secondary structure prediction
+  - Compress panel g to size (7, 7/4); make depth track longer; denote thickness to isoform counts; color each gene/subunit; draw RNA isoforms in two colors, one for trans-membrane F0 and one for peripheral membrane F1; No internal stop in syn1 given no predicted terminator;
+  - RGB color for subunit: 0797 subunit black, a (61,132,181), c (174, 174, 174), b (202,112,199), delta (234, 52, 38), alpha (219, 120, 66), gamma (244, 193, 66), beta (158, 214, 126), epsilon (76, 124, 49) 
+  - RGB for trans-membrane part (74, 124, 179) for peripheral part (0, 146, 69)
+  - remove legends of 5' and 3' block
+  - No internal promoter predicted from TransTermHP within this region; depth drop from delta to alpha can from RNAP deattach or RNase III digestion; drop from gamma to beta can be from 
 
 - R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: 
   - a. Put several panels to Supplemental figures; 
   - b. repeat the analysis on syn3A, and report the values; 
   - c. discuss a little bit why R is not 1 as Abner emailed me
 
+- R4:
+  - panel a,b,c: move the isoform to the top
+  - panel b and c: Move xlables also to the top
+  - panel d: also dotted the his3/0198 since it is on the anti-sense strand
+  
 - R5: 
   - panel e: Add syn3A track to panel e to highligh how hupA not expressed a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the retained regions
   - panel d: replace the violin plot with actual distribution of TPM fold of change and highlight cases other than hupA
   - Do something with b and c: try to combine them together
-  
+
 - R6: 
+  - a: add title: mRNA pool share
   - remove panel b since it overlap with panel a
   - replace b with TPM correlation between two omics
   - recheck the normalization scheme here to make sure fair comparison 
-  - expand the explanations on glycolytic enzymes
+  - expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper
   - Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression
 
 

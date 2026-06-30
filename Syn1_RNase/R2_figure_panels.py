@@ -29,6 +29,7 @@ import matplotlib as mpl
 mpl.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
+import matplotlib.patheffects as pe
 
 mpl.rcParams.update({"font.size": 7, "font.family": "sans-serif", "font.sans-serif": ["Arial"],
                      "pdf.fonttype": 42, "ps.fonttype": 42})
@@ -301,10 +302,38 @@ def write_stats():
 ATP = dict(op5="OP_00395", op3="OP_00394", cuts=[932767, 932881], win=(929400, 936600),
            genes=["MMSYN1_0789", "MMSYN1_0790", "MMSYN1_0791", "MMSYN1_0792",
                   "MMSYN1_0793", "MMSYN1_0794", "MMSYN1_0795", "MMSYN1_0796", "MMSYN1_0797"])
-R5_COL, R3_COL = "#1b9e77", "#d95f02"            # 5' block (teal) / 3' block (orange)
-R5_TINT, R3_TINT, CUT_GENE = "#b7e0d4", "#fcd2ad", "#dddddd"   # gene-arrow fills
+def _rgb(*c):
+    return tuple(v / 255 for v in c)
+
 SUBUNIT = {"0796": "a", "0795": "c", "0794": "b", "0793": "δ", "0792": "α",
            "0791": "γ", "0790": "β", "0789": "ε", "0797": ""}
+# per-subunit gene-arrow fills (RGB); c subunit grey, 0797 (no subunit) black
+SUBUNIT_COLORS = {"0796": _rgb(61, 132, 181), "0795": _rgb(174, 174, 174),
+                  "0794": _rgb(202, 112, 199), "0793": _rgb(234, 52, 38),
+                  "0792": _rgb(219, 120, 66), "0791": _rgb(244, 193, 66),
+                  "0790": _rgb(158, 214, 126), "0789": _rgb(76, 124, 49),
+                  "0797": _rgb(0, 0, 0)}
+F0_COL, F1_COL = _rgb(74, 124, 179), _rgb(0, 146, 69)   # isoform colour: 5'/F0 vs 3'/F1 block
+GENOME_LEN = 1_078_809                                   # Syn1 (CP002027.1)
+_MEAN_DEPTH = {}
+
+
+def genome_mean_depth(strand):
+    """Genome-wide mean per-base PacBio depth on one strand (for x-mean normalisation)."""
+    if strand not in _MEAN_DEPTH:
+        tot = 0.0
+        for ln in open(DEPTH.format("plus" if strand == "+" else "minus")):
+            c = ln.split()
+            if not c or c[0] != CHROM:
+                continue
+            tot += (int(c[2]) - int(c[1])) * float(c[3])
+        _MEAN_DEPTH[strand] = tot / GENOME_LEN
+    return _MEAN_DEPTH[strand]
+
+
+def _lum_textcolor(rgb01):
+    r, g, b = (v * 255 for v in rgb01)
+    return "white" if 0.299 * r + 0.587 * g + 0.114 * b < 140 else "black"
 
 
 def load_genes(loci):
@@ -328,67 +357,72 @@ def panel_f(iso, mask=None):
     isoi = iso.set_index("isoform_id")
 
     rows = []
-    for opid, col in ((ATP["op5"], R5_COL), (ATP["op3"], R3_COL)):
+    for opid, blk in ((ATP["op5"], "F0"), (ATP["op3"], "F1")):
         for m in str(ops.loc[opid, "member_ids"]).split(","):
             if m in isoi.index:
                 r = isoi.loc[m]
-                rows.append((int(r.start0), int(r.end0), int(r.n_reads), col))
-    df = pd.DataFrame(rows, columns=["start0", "end0", "n_reads", "col"])
+                rows.append((int(r.start0), int(r.end0), int(r.n_reads), blk))
+    df = pd.DataFrame(rows, columns=["start0", "end0", "n_reads", "block"])
     df["p5"] = df["end0"] - 1                                  # minus strand: 5' = high coord
     df = df.sort_values("p5", ascending=False).reset_index(drop=True)
 
     fig = plt.figure(figsize=(7, 7 / 3), constrained_layout=True)
-    gs = fig.add_gridspec(3, 1, height_ratios=[0.8, 5.0, 1.2], hspace=0.10)
+    gs = fig.add_gridspec(3, 1, height_ratios=[0.7, 3.9, 1.7], hspace=0.10)
     axg, axi, axd = (fig.add_subplot(gs[r, 0]) for r in range(3))
 
-    # gene arrows (top), on a backbone line, filled by which block they belong to (atpA = split gene)
+    # gene arrows (top): one colour per subunit (atpA/alpha keeps its own colour; cut shown below)
     axg.hlines(0.5, lo, hi, color="#555", lw=0.7, zorder=0)
     for lt in ATP["genes"]:
         s0, e0, st = genes[lt]
         num = lt.split("_")[-1]
-        fc = CUT_GENE if num == "0792" else (R3_TINT if int(num) <= 791 else R5_TINT)
-        gene_arrow(axg, s0, e0, st, fc=fc, ec="#888")
-        lab = f"{num} {SUBUNIT.get(num, '')}".strip()
-        axg.text((s0 + e0) / 2, 0.5, lab, ha="center", va="center", fontsize=4.5, color="#333")
+        fc = SUBUNIT_COLORS.get(num, "#d9d9d9")
+        gene_arrow(axg, s0, e0, st, fc=fc, ec="#555")
+        sub = SUBUNIT.get(num, "")
+        lab = f"{num}\n{sub}" if sub else num
+        axg.text((s0 + e0) / 2, 0.5, lab, ha="center", va="center",
+                 fontsize=4.0, color="white", linespacing=0.9, zorder=3,
+                 path_effects=[pe.withStroke(linewidth=0.7, foreground="#333")])
     axg.set_ylim(0, 1); axg.axis("off")
 
-    # isoforms (middle), coloured by region, thickness ~ log reads
-    for i, r in df.iterrows():
-        lw = 0.4 + 0.6 * np.log10(r.n_reads + 1)
-        axi.plot([r.start0, r.end0], [i, i], color=r.col, lw=min(lw, 3.0), solid_capstyle="round")
-    axi.set_ylim(-1, len(df)); axi.set_yticks([]); axi.set_xticks([])
+    # isoforms (middle): one continuous stack ordered by 5' end (high coord first), 3' end as tiebreak;
+    # coloured by block (F0 trans-membrane / F1 peripheral). line width ~ sqrt(n_reads), not log
+    nmax = max(int(df["n_reads"].max()), 1)
+    LW_MIN, LW_MAX = 0.4, 3.3
+    order = df.sort_values(["p5", "start0"], ascending=[False, True]).reset_index(drop=True)
+    for i, r in enumerate(order.itertuples(index=False)):
+        lw = LW_MIN + (LW_MAX - LW_MIN) * (r.n_reads / nmax) ** 0.5
+        col = F0_COL if r.block == "F0" else F1_COL
+        axi.plot([r.start0, r.end0], [i, i], color=col, lw=lw, solid_capstyle="round")
+    axi.set_ylim(-1.0, len(order)); axi.set_yticks([]); axi.set_xticks([])
     axi.set_ylabel("RNA isoforms", fontsize=6)
     for sp in ("top", "right", "bottom"):
         axi.spines[sp].set_visible(False)
-    h = [plt.Line2D([0], [0], color=R5_COL, lw=3, label="5′ block (a,c,b,δ)"),
-         plt.Line2D([0], [0], color=R3_COL, lw=3, label="3′ block (γ,β,ε)")]
-    axi.legend(handles=h, fontsize=5, frameon=False, loc="upper left",
-               handlelength=1.3, labelspacing=0.3, borderaxespad=0.3)
+    axi.text(0.005, 0.98, "Syn1", transform=axi.transAxes, ha="left", va="top",
+             fontsize=6, color="#333")
 
-    # depth (bottom) -- minus strand, grey (not an erosion colour)
+    # depth (bottom): minus strand, normalised to genome-wide mean coverage (x-mean)
     xd, dd = load_depth("-", lo, hi)
+    dd = dd / genome_mean_depth("-")
     axd.fill_between(xd, dd, color="#dcdcdc", lw=0); axd.plot(xd, dd, color="#7a7a7a", lw=0.5)
     dmax = dd.max() if dd.max() else 1
     axd.set_ylim(0, dmax * 1.1)
-    kr = max(1, round(dmax / 1000)); axd.set_yticks([kr * 1000]); axd.set_yticklabels([f"{kr}k"])
-    axd.set_ylabel("depth (−)", fontsize=5, rotation=0, ha="right", va="center")
+    step = max(1, round(dmax / 2))
+    ticks = list(range(step, int(dmax) + 1, step)) or [round(dmax, 1)]
+    axd.set_yticks(ticks); axd.set_yticklabels([f"{t}×" for t in ticks])
+    axd.set_ylabel("Depth\n(× mean)", fontsize=5, rotation=0, ha="right", va="center")
     axd.set_xlabel("Syn1 Genome Position (kb)", fontsize=6)
     axd.xaxis.set_major_formatter(KB); axd.tick_params(labelsize=5, length=2, pad=1)
     for sp in ("top", "right"):
         axd.spines[sp].set_visible(False)
 
-    # two RNase III cuts (dashed) bracketing a shaded cleavage zone + minus-strand 5'->3' (high coord left)
+    # minus-strand 5'->3' runs from high coord (left) to low coord (right)
     for ax in (axg, axi, axd):
-        ax.axvspan(min(cuts), max(cuts), color="#c0392b", alpha=0.10, lw=0, zorder=0)
-        for cpos in cuts:
-            ax.axvline(cpos, color="#c0392b", lw=0.8, ls=(0, (3, 2)), zorder=1)
         ax.set_xlim(hi, lo)
-    axg.text(sum(cuts) / 2, 1.35, "RNase III", ha="center", va="bottom",
-             fontsize=4.5, color="#c0392b", clip_on=False)
     fig.savefig(f"{OUT}/R2g_atp_synthase.pdf", dpi=300)
     plt.close(fig)
-    n5 = (df["col"] == R5_COL).sum()
-    print(f"[R2f] ATP synthase: {len(df)} member isoforms ({n5} 5'-block / {len(df)-n5} 3'-block)")
+    n5 = int((df["block"] == "F0").sum())
+    print(f"[R2g] ATP synthase: {len(df)} isoforms ({n5} 5'/F0 / {len(df)-n5} 3'/F1); "
+          f"mean(-) depth={genome_mean_depth('-'):.0f}x, peak={dmax:.1f}x mean")
 
 
 PANELS = {"a": panel_a, "b": panel_b, "c": panel_c, "f": panel_f}
