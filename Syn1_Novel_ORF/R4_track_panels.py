@@ -39,6 +39,12 @@ CHROM = 'CP002027.1'
 ISO_TSV = '../Syn1_Transcriptomics/Isoforms_PacBio/isoform_clusters_annotated.tsv'
 GFF = '../Genomes_Input/syn1.genes.gff3'
 DEPTH_PLUS = '../Syn1_Transcriptomics/PacBio/PacBio_Processing/depth_bedgraph/syn1.PacBio.FLNC.HQ.plus.bedGraph'
+DEPTH_MINUS = '../Syn1_Transcriptomics/PacBio/PacBio_Processing/depth_bedgraph/syn1.PacBio.FLNC.HQ.minus.bedGraph'
+GENOME_LEN = 1_078_809   # Syn1 (CP002027.1)
+SYN3A_DEPTH_PLUS = '../Syn3A_Transcriptomics/Illumina/Illumina_Processing/depth_bedgraph/syn3A_rep1.plus.bedGraph'
+SYN3A_DEPTH_MINUS = '../Syn3A_Transcriptomics/Illumina/Illumina_Processing/depth_bedgraph/syn3A_rep1.minus.bedGraph'
+SYN3A_CHROM = 'CP016816.2'
+SYN3A_LEN = 543_379
 
 CASE_COLOR = {'spurious_prom': '#0072B2', 'read_through': '#D55E00', 'embedded': '#009E73'}
 
@@ -86,6 +92,59 @@ def load_depth_window(win_s, win_e):
         a, b = max(s, win_s) - win_s, min(e, win_e) - win_s
         cov[a:b] = v
     return cov
+
+
+_MEAN_TOTAL = [None]
+def genome_mean_depth_total():
+    """Genome-wide mean per-base (plus+minus) Syn1 PacBio depth (for x-mean normalisation)."""
+    if _MEAN_TOTAL[0] is None:
+        import subprocess
+        tot = 0.0
+        for path in (DEPTH_PLUS, DEPTH_MINUS):
+            cmd = ['awk', '-F', '\t', f'$1=="{CHROM}"{{s+=($3-$2)*$4}} END{{print s+0}}', path]
+            out = subprocess.run(cmd, capture_output=True, text=True).stdout.strip()
+            tot += float(out) if out else 0.0
+        _MEAN_TOTAL[0] = tot / GENOME_LEN
+    return _MEAN_TOTAL[0]
+
+
+def _nice_top(m):
+    """Smallest 'nice' tick >= m (1/1.5/2/3/5/7 x 10^k)."""
+    if m <= 0:
+        return 1.0
+    mag = 10.0 ** np.floor(np.log10(m))
+    for k in (1, 1.5, 2, 3, 5, 7, 10):
+        if k * mag >= m - 1e-9:
+            return k * mag
+    return 10 * mag
+
+
+def load_syn3a_depth_plus(q_s, q_e):
+    """Per-base Syn3A Illumina plus-strand depth over [q_s, q_e) via awk slice."""
+    import subprocess
+    cov = np.zeros(q_e - q_s)
+    cmd = ['awk', '-F', '\t', f'$1=="{SYN3A_CHROM}" && $3>{q_s} && $2<{q_e}', SYN3A_DEPTH_PLUS]
+    out = subprocess.run(cmd, capture_output=True, text=True).stdout
+    for line in out.splitlines():
+        _, s, e, v = line.split('\t')
+        s, e, v = int(s), int(e), float(v)
+        a, b = max(s, q_s) - q_s, min(e, q_e) - q_s
+        cov[a:b] = v
+    return cov
+
+
+_SYN3A_MEAN_TOTAL = [None]
+def syn3a_mean_depth_total():
+    """Genome-wide mean per-base (plus+minus) Syn3A Illumina depth (for x-mean normalisation)."""
+    if _SYN3A_MEAN_TOTAL[0] is None:
+        import subprocess
+        tot = 0.0
+        for path in (SYN3A_DEPTH_PLUS, SYN3A_DEPTH_MINUS):
+            cmd = ['awk', '-F', '\t', f'$1=="{SYN3A_CHROM}"{{s+=($3-$2)*$4}} END{{print s+0}}', path]
+            out = subprocess.run(cmd, capture_output=True, text=True).stdout.strip()
+            tot += float(out) if out else 0.0
+        _SYN3A_MEAN_TOTAL[0] = tot / SYN3A_LEN
+    return _SYN3A_MEAN_TOTAL[0]
 
 
 def gene_label(r):
@@ -156,7 +215,10 @@ def draw_gene_track(ax, win_s, win_e, strand, orf=None, label_genes=True):
             tip, base = xl, xl + head
             v = [(xr, 0.6 - H/2), (base, 0.6 - H/2), (base, 0.6 - TRI/2), (tip, 0.6),
                  (base, 0.6 + TRI/2), (base, 0.6 + H/2), (xr, 0.6 + H/2)]
-        ax.add_patch(Polygon(v, closed=True, facecolor=col, edgecolor='black', lw=0.3, zorder=2))
+        anti = (r.strand != strand)                          # antisense to the shown transcription
+        ax.add_patch(Polygon(v, closed=True, facecolor=col, edgecolor='black',
+                             lw=0.5 if anti else 0.3, alpha=0.45 if anti else 1.0,
+                             linestyle='--' if anti else '-', zorder=2))
         vis_l, vis_r = max(0, xl), min(win_len, xr)        # clipped span for label
         if label_genes and (vis_r - vis_l) > 0.04 * win_len:
             ax.text((vis_l + vis_r) / 2, 0.6 + H/2 + 0.08, gene_label(r), ha='center', va='bottom',
@@ -200,7 +262,7 @@ def draw_isoform_track(ax, iso, win_s, win_e, strand, color='#1b6ca8', max_iso=7
 
 
 def draw_depth_track(ax, win_s, win_e, strand, color='#9ecae1'):
-    cov = load_depth_window(win_s, win_e)
+    cov = load_depth_window(win_s, win_e) / genome_mean_depth_total()   # x genome-mean (both strands)
     win_len = win_e - win_s
     xg = np.arange(win_len)
     if strand == '-':
@@ -208,22 +270,22 @@ def draw_depth_track(ax, win_s, win_e, strand, color='#9ecae1'):
     ax.fill_between(xg, 0, cov, color=color, lw=0, zorder=1)
     ax.plot(xg, cov, color='#3182bd', lw=0.4, zorder=2)
     m = float(cov.max())
-    if m > 0:                                              # top tick = max rounded to 1 sig fig
-        mag = 10 ** int(np.floor(np.log10(m)))
-        T = int(round(m / mag) * mag)
+    if m > 0:
+        T = _nice_top(m)                                   # top tick = nice x-mean value
         ax.set_yticks([0, T])
-        ax.set_ylim(0, max(m, T) * 1.06)
+        ax.set_yticklabels(['0', f'{T:.0f}×' if T >= 1 else f'{T:g}×'])
+        ax.set_ylim(0, T * 1.02)
     else:
         ax.set_ylim(0, 1)
     ax.set_xlim(0, win_len)
-    ax.set_ylabel('depth', fontsize=5)
+    ax.set_ylabel('Depth\n(× mean)', fontsize=5)
     ax.tick_params(labelsize=5)
     ax.spines[['top', 'right']].set_visible(False)
     # genomic x ticks
     ticks = np.linspace(0, win_len, 5)
     ax.set_xticks(ticks)
     ax.set_xticklabels([f'{tx_to_genome(int(t), win_s, win_e, strand)/1000:.1f}' for t in ticks])
-    ax.set_xlabel('Genome position (kb)', fontsize=6)
+    ax.set_xlabel('Syn1 Genome Position (kb)', fontsize=6)
 
 
 def locus_panel(fname, win_s, win_e, strand, iso_sel, iso_color, orf=None, depth=True, seq=None):
@@ -254,7 +316,7 @@ def draw_isoform_xaxis(ax, win_s, win_e, strand):
                        fontsize=5)
     ax.tick_params(labelsize=5)
     ax.spines['bottom'].set_visible(True)
-    ax.set_xlabel('Genome position (kb)', fontsize=6)
+    ax.set_xlabel('Syn1 Genome Position (kb)', fontsize=6)
 
 
 # ====================================================================== panel a
@@ -294,14 +356,19 @@ def panel_a():
             schematic_gene(ax, 6.6, 9.0, y, points_right=True,  color=col, antisense=False)
         ax.text(X0 - 0.3, y, f'{label}\n(n={n})', ha='right', va='center',
                 fontsize=6, color=col)
-    # one gray isoform-span arrow at the bottom
-    yb = -1.05
-    ax.add_patch(FancyArrowPatch((X0, yb), (X1, yb), arrowstyle='-|>',
-                 lw=2.2, color='#808080', shrinkA=0, shrinkB=0, mutation_scale=10, zorder=2))
-    ax.text((X0 + X1) / 2, yb - 0.45, r"Isoform span (5'$\to$3')",
-            ha='center', va='top', fontsize=6, color='#808080')
-    ax.set_xlim(-4.2, 10.3); ax.set_ylim(-1.9, 2.6)
-    ax.axis('off')
+    # isoform-span arrow drawn in the bottom margin (panel a's "x-axis"); the span
+    # label is a real xlabel so its font matches panels b/c
+    ax.annotate('', xy=(X1, -0.08), xytext=(X0, -0.08),
+                xycoords=('data', 'axes fraction'), annotation_clip=False,
+                arrowprops=dict(arrowstyle='-|>', color='#808080', lw=2.2,
+                                shrinkA=0, shrinkB=0, mutation_scale=10))
+    # cases stay at y=2/1/0; ylim -0.2..2.9 maps them to the b/c ridge-baseline
+    # heights, so the three cases align row-for-row with panels b and c
+    ax.set_xlim(-4.2, 10.3); ax.set_ylim(-0.2, 2.9)
+    ax.set_xticks([]); ax.set_yticks([])
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    ax.set_xlabel(r"Isoform span (5'$\to$3')", labelpad=18)
     fig.savefig(f'{OUT}/panel_a_schematic.pdf', dpi=300); plt.close(fig)
 
 
@@ -359,16 +426,56 @@ def quantify_novel_promoters(out_txt=f'{OUT}/novel_promoter_minus10.txt'):
     print(f"Saved: {out_txt}")
 
 
+def panel_d_his3():
+    """his3/0918 antisense over-transcription, Syn1 vs Syn3A, on a deletion-junction
+    relative axis: rel = syn1_pos - deletion_end (his3 positive, deleted upstream negative).
+    Tracks: genes | Syn1 + isoforms | Syn1 + depth (x-mean, blue) | Syn3A + depth (x-mean, red)."""
+    D1, D3 = 27638, 18715              # junction: Syn1 deletion end <-> Syn3A his3 start0
+    win_s, win_e = 26900, 29000
+    win_len = win_e - win_s
+    his_s, his_e = 27639, 28301
+    sel = ISO[(ISO.strand == '+') & (ISO.start0 < his_e) & (ISO.end0 > his_s) & (ISO.n_reads >= 10)]
+
+    fig, axes = plt.subplots(4, 1, figsize=(HALF, 7 / 3),
+                             height_ratios=[1.0, 2.2, 1.05, 1.05], constrained_layout=True)
+    draw_gene_track(axes[0], win_s, win_e, '+')
+    draw_isoform_track(axes[1], sel, win_s, win_e, '+', color=CASE_COLOR['spurious_prom'])
+    draw_depth_track(axes[2], win_s, win_e, '+')                      # Syn1 PacBio + depth (blue)
+    axes[2].set_xticks([]); axes[2].set_xlabel('')
+    axes[2].set_ylabel('Syn1\n(× mean)', fontsize=5, color='#3182bd')
+
+    # Syn3A Illumina + depth, aligned by the junction, normalised to its own mean (red)
+    q_s = D3 + (win_s - D1)
+    cov3 = load_syn3a_depth_plus(q_s, q_s + win_len) / syn3a_mean_depth_total()
+    ax3, xg = axes[3], np.arange(win_len)
+    ax3.fill_between(xg, 0, cov3, color='#f3b0ad', lw=0, zorder=1)
+    ax3.plot(xg, cov3, color='#c0392b', lw=0.4, zorder=2)
+    m = float(cov3.max())
+    if m > 0:
+        T = _nice_top(m)
+        ax3.set_yticks([0, T]); ax3.set_yticklabels(['0', f'{T:.0f}×' if T >= 1 else f'{T:g}×'])
+        ax3.set_ylim(0, T * 1.02)
+    else:
+        ax3.set_ylim(0, 1)
+    ax3.set_xlim(0, win_len)
+    ax3.set_ylabel('Syn3A\n(× mean)', fontsize=5, color='#c0392b')
+    ax3.tick_params(labelsize=5)
+    ax3.spines[['top', 'right']].set_visible(False)
+    off = D1 - win_s                                                  # rel -> tx: tx = rel + off
+    rel_ticks = [-500, 0, 500, 1000]
+    ax3.set_xticks([r + off for r in rel_ticks])
+    ax3.set_xticklabels([str(r) for r in rel_ticks], fontsize=5)
+    ax3.set_xlabel('Relative genome position (bp)', fontsize=6)
+
+    fig.savefig(f'{OUT}/panel_d_his3_antisense.pdf', dpi=300); plt.close(fig)
+
+
 # ====================================================================== main
 def main():
     panel_a()
 
-    # d: his3 / 0918 antisense (gene - strand; + strand isoforms overlapping his3)
-    his_s, his_e = 27639, 28301
-    win_s, win_e = 26900, 29000
-    sel = ISO[(ISO.strand == '+') & (ISO.start0 < his_e) & (ISO.end0 > his_s) & (ISO.n_reads >= 10)]
-    locus_panel('panel_d_his3_antisense.pdf', win_s, win_e, '+', sel,
-                iso_color=CASE_COLOR['spurious_prom'], depth=True)
+    # d: his3 / 0918 antisense over-transcription -- Syn1 vs Syn3A, deletion-junction axis
+    panel_d_his3()
 
     # g: intergenic transcript between lap/0154 and 0155 (+ strand)
     win_s, win_e = 197500, 201700

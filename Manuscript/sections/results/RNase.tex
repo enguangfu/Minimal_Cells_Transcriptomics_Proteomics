@@ -22,23 +22,24 @@ Second, the processive enzymes differ in abundance: RNase~J1 (92 copies, with RN
 Consistently, the same gene set encodes the trans-translation system, tmRNA (\gene{ssrA}{0158}) and SmpB (\gene{smpB}{0776}), which rescues ribosomes stalled on exactly the stop-codon-less messages 3$'$ erosion produces~\cite{janssen_tmrna_2012}, yet is itself low in abundance (SmpB at 14 copies), so this rescue capacity may also be limited.
 
 RNA processing also remodels co-expression within an operon.
-The conserved membrane complex ATP synthase of subunit composition $\alpha_3\beta_3\gamma\epsilon\delta ac_{10}b_{2}$~\cite{fu_assembly_2026} has the spatial organization of transmembrane F$_0$ sector $ac_{10}b_{2}$ and peripheral membrane F$_{1}$ sector $\delta\alpha_3\beta_3\gamma\epsilon$ as shown in Fig.~\ref{fig:rnase}f. The ATP-synthase operon (\locus{0789}--\locus{0797}) split into two non-overlapping isoform populations meeting at the $\alpha$-subunit gene \gene{atpA}{0792} (Fig.~\ref{fig:rnase}g).
-A 5$'$ population covered the F$_0$ subunits and $\delta$ (\locus{0793}--\locus{0796}) and ended at \gene{atpA}{0792}, while a 3$'$ population began there and ran through the F$_1$ subunits (\locus{0789}--\locus{0791}).
-Read depth fell from about 4$\times$ genome-mean coverage to roughly half across the boundary, the signature of an internal endonucleolytic cut at \gene{atpA}{0792} that the segmentation resolved as two adjoining blocks.
-The cut was assigned to RNase~III by homology to the orthologous \textit{B. subtilis} \gene{atpA}{0792}, which carries two characterised RNase~III sites~\cite{taggart_high-resolution_2025}; transferred onto the \syn~transcript, each site fell within a local stem, although the extended stem pairing the two cuts in \textit{B. subtilis} was not conserved (Methods).
-A single primary transcript is thereby processed into separately decaying 5$'$ and 3$'$ blocks that can set the membrane F$_0$ and soluble F$_1$ sectors on different post-transcriptional fates~\cite{redko_minimal_2013}.
+ATP synthase, a conserved membrane complex of subunit composition $\alpha_3\beta_3\gamma\epsilon\delta ac_{10}b_{2}$~\cite{fu_assembly_2026}, is organized into a transmembrane F$_0$ sector ($ac_{10}b_{2}$) and a peripheral-membrane F$_1$ sector ($\delta\alpha_3\beta_3\gamma\epsilon$) (Fig.~\ref{fig:rnase}f).
+The ATP-synthase operon (\locus{0797}--\locus{0789}) split into two non-overlapping isoform populations meeting at the $\alpha$-subunit gene \gene{atpA}{0792} (Fig.~\ref{fig:rnase}g).
+A 5$'$ population covered the F$_0$ subunits and $\delta$ (\locus{0797}--\locus{0793}) and ended at \gene{atpA}{0792}, while a 3$'$ population began there and ran through the F$_1$ subunits (\locus{0791}--\locus{0798}).
+Read depth fell from about 4$\times$ the genome-mean coverage of $\sim$2{,}100 to roughly half across the boundary, indicating a possible internal termination event, though no intrinsic terminator was predicted.
+A similar drop recurred between $\gamma$ and $\beta$.
+More interestingly, the isoforms spanning the $\alpha$ and $\gamma$ subunits had varying 5$'$ ends inside \gene{atpA}{0792}, the same gene whose ortholog in the Gram-positive \textit{B. subtilis} carries two characterised RNase~III sites~\cite{taggart_high-resolution_2025}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/rnase.pdf}
     \caption{\textbf{Pervasive and 3$'$-biased RNA processing reshapes the \syn~transcriptome.}
-    (a) Shared legend: isoform end-context categories (left) and the ribonucleases, ribosome and trans-translation factors drawn in the schematic (right).
+    (a) Shared legend for panel b to e: isoform end-context categories (left) and the ribonucleases, ribosome and trans-translation factors drawn in the schematic (right).
     (b) Isoforms at \locus{0178} share the 5$'$ start and erode at the 3$'$ end (gene arrows, isoforms coloured by end-context, read depth).
     (c) Isoforms at \gene{lap}{0154} share a 3$'$ terminator and erode at the 5$'$ end.
-    (d) Secondary structure of the \locus{0178} 3$'$ terminus, a stem-loop hairpin closed by a uridine-rich tail (a canonical intrinsic terminator), through which RNase~R degrades processively.
-    (e) Transcriptome-wide composition of isoform end-context categories, by isoform and by read; 3$'$ erosion dominates.
-    (f) Model of biased processing: endonucleolytic initiation (RNase~III or RNase~Y) followed by 3$'\rightarrow$5$'$ exonucleolytic trimming, leaving stop-codon-less messages that are rescued by trans-translation; the 3$'\rightarrow$5$'$ ribonucleases can also initiate RNA digestion directly at an accessible 3$'$ end.
-    (g) The ATP-synthase operon is cleaved at \gene{atpA}{0792} into a 5$'$ block (F$_0$ plus $\delta$) and a 3$'$ block (F$_1$ $\gamma$, $\beta$, $\epsilon$); read depth steps down at the cut; inset, the local \syn~RNA secondary structure at the two homology-mapped RNase~III cleavage sites, each lying within a stem. \cmt{EFU: add ATPsynthase structure at left of panel g}}
+    (d) Transcriptome-wide composition of isoform end-context categories, by isoform kind and by isoform read; 3$'$ erosion dominates.
+    (e) Model of biased processing: endonucleolytic initiation (RNase~III or RNase~Y) followed by 3$'\rightarrow$5$'$ exonucleolytic trimming, leaving stop-codon-less messages that are rescued by trans-translation; the 3$'\rightarrow$5$'$ ribonucleases can also initiate RNA digestion directly at an accessible 3$'$ end.
+	(f) Subunit composition and spatial arrangement of the membrane complex ATP synthase in ~\syn.
+    (g) The ATP-synthase operon isoforms are organized as a 5$'$ block (F$_0$ plus $\delta$) and a 3$'$ block (F$_1$ $\gamma$, $\beta$, $\epsilon$) with clear separation in \gene{atpA}{0792}.}
     \label{fig:rnase}
 \end{figure}
 

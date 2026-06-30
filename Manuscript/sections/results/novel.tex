@@ -5,10 +5,10 @@ Three structural classes were distinguished by the arrangement of sense and anti
 These clusters are the isoform-level counterpart of the antisense coverage already captured by the operon segmentation: read-through and embedded clusters fall within the 69 operons that enclose an antisense gene, while the spurious-promoter clusters account for the eight antisense-only operons, leaving the single genuinely intergenic unit (below) as the ninth.
 The classes differed in length and abundance yet all stayed minor against sense transcription (Fig.~\ref{fig:novel}b,c): embedded transcripts were longest (median 2.2~kb, versus 1.5--1.6~kb for the others) and read-through carried the highest typical support (median 111 reads), but every antisense cluster bar one ($\sim$31{,}700 reads) was far less abundant than the sense transcripts it overlapped, consistent with transcriptional noise from the AT-rich genome rather than a regulated small-RNA program~\cite{llorens-rico_bacterial_2016}.
 
-The one exception was the yeast selection marker \gene{his3}{0918}, a vector element carried into the synthetic \syn~genome during assembly~\cite{gibson_creation_2010}, transcribed almost entirely antisense at a depth exceeding 30{,}000 yet yielding no protein (Fig.~\ref{fig:novel}d).
+The one exception was the yeast selection marker \gene{his3}{0918}, a vector element carried into the synthetic \syn~genome during assembly~\cite{gibson_creation_2010}, transcribed almost entirely antisense at a depth exceeding 30{,}000 ($\sim$ 16 times the genome-wide average) yet yielding no protein (Fig.~\ref{fig:novel}d).
 The antisense isoforms initiated from a spurious promoter just upstream carrying a perfect \texttt{TANAAT} hexamer (\texttt{TAAAAT}), a genuine if mislocated $\sigma$-factor promoter.
 The \gene{his3}{0918} reading frame was retained in \syna, but its conspicuous antisense transcription did not survive minimization, falling to a \syna~Illumina antisense depth of 0.23 times the genome-wide average, consistent with loss of that upstream promoter when an adjacent deletion truncated the operon.
-The four genomic watermarks were similarly only minimally transcribed (mean PacBio depth $\sim$280--360 per strand, six- to eightfold below the genome-wide $\sim$2{,}100), spurious noise over hypothetical reading frames.
+The four genomic watermarks as synthetic signatures~\cite{gibson_creation_2010} were similarly only minimally transcribed (mean PacBio depth $\sim$280--360 per strand, six- to eightfold below the genome-wide average $\sim$2{,}100), spurious noise over hypothetical reading frames.
 
 Intergenic coverage was far more pervasive than antisense but overwhelmingly benign (Fig.~\ref{fig:novel}e): across isoforms the intergenic fraction had a median of only 2.1\%, contributed almost entirely by operon-flanking untranslated regions and short intra-operon gaps.
 The \fiveprime~and \threeprime~untranslated regions of canonical operons had median lengths of 37 and 41~nt (Fig.~\ref{fig:novel}f), with a minority of long-UTR outliers from antisense read-through or boundary truncation.
@@ -17,7 +17,7 @@ Only one transcription unit was genuinely intergenic along its length: a cluster
 Unlike the \gene{his3}{0918} promoter, its start site carried no recognizable $-10$ box (closest \texttt{TANAAT} match \texttt{TAAAAA}), consistent with pervasive low-level transcription rather than a defined promoter.
 Both this unit and \locus{0155} fell within a region deleted in \syna, whereas \gene{lap}{0154} occupied the narrow retained gap and was relocated elsewhere.
 
-To test for translation, every open reading frame within the 837 most abnormal isoforms was scored for initiation with \texttt{OSTIR}~\cite{roots_ostir_2021}, giving $\sim$29{,}000 candidates of which the 100 highest-scoring collapsed to 48 unique peptides (47 proteotypic).
+To test for translation of the abnormal transcription, every open reading frame within the 837 most abnormal isoforms ranked by fraction of antisense and intergenic coverage was scored for initiation with \texttt{OSTIR}~\cite{roots_ostir_2021}, giving $\sim$29{,}000 candidates of which the 100 highest-scoring collapsed to 48 unique peptides (47 proteotypic).
 Re-searching the \syn~mass spectra confirmed two novel products, a 118-residue ORF near \locus{0592} (Fig.~\ref{fig:novel}h) and a 54-residue \fiveprime~extension of \gene{mmyCIVR}{0768}, both in restriction-modification loci beside uncharacterized features, the first downstream of the \gene{mmyCImod}{0591} pseudogene and the function-unknown \locus{0592}, the second within the \textit{mmyCIV} cluster.
 Both lay in regions deleted in \syna, so these cryptic products, like the antisense and intergenic transcription above, were incidental features of the unminimized synthetic genome rather than activities retained in the minimal cell.
 
@@ -25,10 +25,9 @@ Both lay in regions deleted in \syna, so these cryptic products, like the antise
     \centering
     \includegraphics[width=1\linewidth]{figures/novel.pdf}
     \caption{\textbf{Non-canonical transcription and translation in \syn.}
-    \cmt{EFU: ALWAYS denote syn1 or syn3A in the plots}
     (a) The three classes of antisense transcription, spurious promoter, read-through, and embedded, relative to the sense isoform span.
     (b) Isoform length and (c) cluster-read support for each class, with the median marked.
-    (d) Antisense transcription of the yeast marker \gene{his3}{0918}: gene track, antisense isoforms, and read depth, with the shaded band marking sequence deleted in \syna.
+    (d) Antisense transcription of the yeast vector gene \gene{his3}{0918} in~\syn1 and~\syn3A: gene track, antisense isoforms in~\syn1, and read depth in both, with the shaded band marking sequence deleted in \syna.
     (e) Distribution of the intergenic coverage fraction across all isoforms.
     (f) \fiveprime~and \threeprime~untranslated-region lengths of canonical operons.
     (g) An isolated intergenic transcript between \gene{lap}{0154} and \locus{0155}.

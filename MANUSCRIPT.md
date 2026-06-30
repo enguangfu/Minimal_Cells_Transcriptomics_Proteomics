@@ -22,6 +22,7 @@ Results:
   - X Remove panel d since secondary prediction and terminator signature not consistent
   - X Add a panel as f to show the spatial organization of ATP synthase
   - X Delete the atpA mRNA secondary structure prediction
+  - X DONE 2026-06-30 — panel g remade (R2_figure_panels.py -> R2_panels/R2g_atp_synthase.pdf): per-subunit gene colours + locusNum/subunit two-line labels, F0/F1 isoform colours, sqrt-of-reads line thickness, depth normalised to x-mean, RNase III cut removed, single 5'-sorted isoform stack; final size 7/3 (not 7/4).
   - Compress panel g to size (7, 7/4); make depth track longer; denote thickness to isoform counts; color each gene/subunit; draw RNA isoforms in two colors, one for trans-membrane F0 and one for peripheral membrane F1; No internal stop in syn1 given no predicted terminator;
   - RGB color for subunit: 0797 subunit black, a (61,132,181), c (174, 174, 174), b (202,112,199), delta (234, 52, 38), alpha (219, 120, 66), gamma (244, 193, 66), beta (158, 214, 126), epsilon (76, 124, 49) 
   - RGB for trans-membrane part (74, 124, 179) for peripheral part (0, 146, 69)
@@ -33,15 +34,17 @@ Results:
   - b. repeat the analysis on syn3A, and report the values; 
   - c. discuss a little bit why R is not 1 as Abner emailed me
 
-- R4:
-  - panel a,b,c: move the isoform to the top
-  - panel b and c: Move xlables also to the top
-  - panel d: also dotted the his3/0198 since it is on the anti-sense strand
+- R4: [DONE 2026-06-30 — R4_track_panels.py; b/c untouched]
+  - X panel a: matched the "Isoform span (5'->3')" label to the b/c xlabel font (real set_xlabel, 7pt) and lowered the case rows (ylim -0.2..2.9) so spurious/read-through/embedded align row-for-row with the b/c ridge baselines; isoform-span arrow moved into the bottom margin. (Earlier "move isoform/xlabels to top" idea dropped.)
+  - X panel d: dotted (dashed + lightened) every gene antisense to the shown isoforms (his3/0918 AND 0917) via the shared draw_gene_track (also applies to g/h). REBUILT as a dedicated panel_d_his3(): 4 tracks (genes | Syn1 + isoforms | Syn1 + depth | Syn3A Illumina + depth, RED) on a deletion-junction RELATIVE x-axis = syn1_pos - 27638 (deletion end; his3/0918 positive, deleted upstream negative); junction syn1 27638 <-> syn3A 18715; xlabel "Relative genome position (bp)". Story: Syn1 antisense over-transcription starts at the spurious promoter (rel ~-116, inside the deleted region) and runs across his3; in Syn3A it collapses to background.
+  - X depth normalization (Syn1 tracks d+g AND the Syn3A track): x TOTAL (plus+minus) genome-mean coverage, to match novel.tex's "genome-wide average" basis (Syn1 total 4184, Syn3A total 2355). his3 antisense = Syn1 ~8x vs Syn3A ~0.23x (== the 0.23x quoted in novel.tex L4.3); panel g now ~0.5x. NOTE for novel.tex: his3 Syn1 "depth exceeding 30,000" -> "~8x the genome mean".
+  - X panels g, h xlabel -> "Syn1 Genome Position (kb)".
   
 - R5: 
   - panel e: Add syn3A track to panel e to highligh how hupA not expressed a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the retained regions
   - panel d: replace the violin plot with actual distribution of TPM fold of change and highlight cases other than hupA
   - Do something with b and c: try to combine them together
+  - Add one sentence saying why shorter reads in ONT
 
 - R6: 
   - a: add title: mRNA pool share
@@ -51,6 +54,9 @@ Results:
   - expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper
   - Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression
 
+Discussion
+
+cleaner gene set in the synthetic minimal cell
 
 ## Deferred / future work
 
