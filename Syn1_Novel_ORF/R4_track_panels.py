@@ -436,10 +436,10 @@ def panel_d_his3():
     his_s, his_e = 27639, 28301
     sel = ISO[(ISO.strand == '+') & (ISO.start0 < his_e) & (ISO.end0 > his_s) & (ISO.n_reads >= 10)]
 
-    fig, axes = plt.subplots(4, 1, figsize=(HALF, 7 / 3),
-                             height_ratios=[1.0, 2.2, 1.05, 1.05], constrained_layout=True)
+    fig, axes = plt.subplots(4, 1, figsize=(HALF, QUART),
+                             height_ratios=[1.0, 0.75, 1.0, 1.0], constrained_layout=True)
     draw_gene_track(axes[0], win_s, win_e, '+')
-    draw_isoform_track(axes[1], sel, win_s, win_e, '+', color=CASE_COLOR['spurious_prom'])
+    draw_isoform_track(axes[1], sel, win_s, win_e, '+', color=CASE_COLOR['spurious_prom'], max_iso=10)
     draw_depth_track(axes[2], win_s, win_e, '+')                      # Syn1 PacBio + depth (blue)
     axes[2].set_xticks([]); axes[2].set_xlabel('')
     axes[2].set_ylabel('Syn1\n(× mean)', fontsize=5, color='#3182bd')
