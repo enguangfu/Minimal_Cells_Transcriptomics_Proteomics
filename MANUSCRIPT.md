@@ -45,9 +45,11 @@ Results:
   - X panels g, h xlabel -> "Syn1 Genome Position (kb)".
   
 - R5: 
+  - panel a: resize to 7/3, 7/3
+  - Add one panel (could be 14/3, 7/3) to visual the third paragraph in the result: how one junction can reform the operons at both ends
+  - Merge panel b and c: need more discussion here
   - panel e: Add syn3A track to panel e to highligh how hupA not expressed a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the retained regions
   - panel d: replace the violin plot with actual distribution of TPM fold of change and highlight cases other than hupA
-  - Do something with b and c: try to combine them together
   - Add one sentence saying why shorter reads in ONT
 
 - R6: 
@@ -61,6 +63,7 @@ Results:
 Discussion
 
 cleaner gene set in the synthetic minimal cell
+the reallocation of mRNA pool emphasize the balance of different subsystems, which is important issue for syncell
 
 ## Deferred / future work
 
@@ -517,12 +520,13 @@ For SI figure, each panel is (7/4, 7/4) except panel f and g.
 ### Figure
 **Figure:** `Manuscript/figures/genome_reduction.pdf`
 
-- Panel a: Schematics of genome reduction from syn1 to syn3A. (7/2, 7/2)
-- Panel b: 0083 and rpsT/0082 co-expressed in syn1. (7/2, 7/4)
-- Panel c: 0094 and 0082 co-expressed in syn3A. (7/2, 7/4)
-- Panel d: Box plot of gene expressions to highlight decapitated ones having lower values. (7/4, 7/4)
-- Panel e: the HupA operon, whose true promoter, located inside gene 0349, was deleted. (21/4, 7/4)
-- Panel f: Gene essentiality evaluation for those trace-expressed genes that are still essential.
+- Panel a: Schematics of genome reduction from syn1 to syn3A. (7/3, 7/3)
+- Panel b: 0083 and rpsT/0082 co-expressed in syn1 and 0094 and 0082 co-expressed in syn3A (14/3, 7/3)
+- Panel c: Gene deletion disrupted expression of enzymes in central-carbon metabolism (7, 7/3)
+- Panel d: the HupA operon, whose true promoter, located inside gene 0349, was deleted. (7, 7/4)
+<!-- - Panel f: Gene essentiality evaluation for those trace-expressed genes that are still essential. -->
+
+- NOTE [DONE 2026-07-01]: panels built by `Genome_Reduction/R5_figure_panels.py` (RNAseq env). a=panel_a; b=panel_b (rpsT/0082 partner switch — old syn1-b + syn3A-c merged onto the shared rpsT/0082 5' transcript axis; PacBio+ONT isoforms, the lone 2-read ONT isoform spanning 0094+0082 highlighted, Illumina depth both); c=panel_c (**two decapitated central-carbon operons**: pdh/acetate OP_00121 + PTS OP_00122; PacBio operon-spanning isoforms only, so each operon reads as a separate co-transcribed stack; **log-y Illumina depth** so the low PTS operon shows alongside the high pdh operon; per-region + per-gene avg depths exported to `R5_panels/R5_panel_stats.txt`); d=panel_d (hupA). The impact-class violin (former panel d) is kept as `panel_impact` for the SI. Depth = Illumina for both organisms (PacBio under-samples short genes, ONT is 3'-biased); syn3A depth mapped through retained blocks so deletions read as gaps. Shared 4-track junction plotter `_junction_panel(logy=)`. Stale panel PDFs (R5b_rpsT_operon_syn1, R5c_fusion_DEL014, R5d_pdh_operon, R5e_hupA_operon, R5bc_rpsT_fusion, R5d_TPM_FC_by_impact_class) are superseded.
 
 Extended Figure:
 
@@ -562,7 +566,7 @@ Extended Figure:
   - `Genome_Reduction/deletion_junction/deletion_junctions.tsv`, `deletion_junction_summary.txt`
   - `Genome_Reduction/operon_pair_coexpression/`, `single_operon_coexpression/`
 - **Numbers to cite:** 95 junctions: tandem 53, convergent 19, divergent 15, intra_operon 8; tandem junction_type: fusion 3, decapitation 9, readthrough_extension 11, clean_excision 30; cross-junction co-transcription (loose): fusion 67% (2/3) vs clean_excision 10% (3/30, negative control); pristine single-operon baseline preserved_loose 60% (45 testable, 111 pairs); fusion exemplar DEL_014 OP_00043 -> OP_00050 (MMSYN1_0094 -> MMSYN1_0082 = rpsT/S20), n_span=2, n_bridge=37, however the TPM FC was still low as 0.074 for rpsT/0082 since the fused promoter of 0094 is weak (in syn1, 0082 was co-transcribed with 0083 instead); a second r-protein rpsO/S15 (MMSYN1_0294) followed the same route (lost its own promoter, gained a weak fused one) and likewise collapsed to TPM FC 0.036. Both rpsT/0082 and rpsO/0294 are gene_impact_class new_promoter_fusion (from 08).
-- **Figure panels:** b,c in the same column
+- **Figure panels:** b (rpsT/0082 partner switch; old syn1-b + syn3A-c merged onto the shared rpsT/0082 5' axis)
 - **Conclusion:** Operon fusion is real but rare (3 events); the dominant junction outcome is clean excision of whole operon(s) between intact neighbors.
 - **Caveats:** ONT depth is low, so most positive calls are loose-bridge rather than strict-spanning; convergent/divergent junctions are opposite-strand and not expected to co-transcribe.
 
@@ -576,7 +580,8 @@ Extended Figure:
   - `Genome_Reduction/delete_gene/retained_gene_context.tsv` (`gene_impact_class` column)
   - `Genome_Reduction/Compare_RNA_Protein/TPM_FC_by_impact_class.pdf`
 - **Numbers to cite:** gene_impact_class (retained genes): promoter_lost 42, promoter_disconnected 6, new_promoter_fusion 3, readthrough_exposed 24, promoter_proximity_changed 17, context_only 45, unaffected 360; promoter_lost is the only class robustly down in TPM (median FC 0.44, Mann-Whitney p=2.7e-4 vs unaffected median 0.76); HupA (MMSYN1_0350) relTPM 6.68 -> 0.13 (FC 0.020), relIPM 6.48 -> 0.092 (FC 0.014); HupA operon -10 box = perfect TANAAT (TATAAT), extended TNNTANAAT match, strong_9mer tier, -10 window 441019-441024 inside deleted DEL_050 (440092-441059) [from R5_panels/R5_panel_stats.txt via promoter_motif.scan_minus10]. NOTE: the weak-fused-promoter r-proteins rpsT/0082 and rpsO/0294 belong to L5.3 (new_promoter_fusion), NOT here. rpmE/L31 (0137) and rpsU/S21 (0482) are gene_impact_class unaffected (operon structure intact) with only mild TPM dips FC 0.198 and 0.413, so they are NOT decapitation cases either.
-- **Figure panels:** d,e in the same row
+- **Central-carbon showcase (panel c):** two adjacent decapitated operons. OP_00121 (pdhC/0227-lpdA/0228-pta/0229-ackA/0230): DEL 288391-292905 removed promoter (TSS 291897) + PDH E1 subunits pdhA/0225 & pdhB/0226; region avg depth syn1 9.5x -> syn3A 3.0x (FC 0.32), 5'->3' per-gene gradient FC 0.43/0.35/0.27/0.18. OP_00122 (ptsI/0233-crr/0234-0235): DEL 298422-300803 removed promoter (TSS 300106) + 0231 & coaD/0232; region avg 1.4x -> 0.6x (FC 0.45). No PacBio isoform spans both operons (separate co-transcribed units). Full per-gene depths in `R5_panels/R5_panel_stats.txt`.
+- **Figure panels:** c (two central-carbon operons), d (hupA). The impact-class violin (former panel d) moved to SI (`panel_impact`).
 - **Conclusion:** Promoter-source loss drives the largest expression decreases; promoter_lost is the only impact class robustly down in TPM.
 - **Caveats:** the class is assigned at operon level; 8 junctions lose only UTR (genes intact); the 05-vs-04 consistency check flags 2 flank operons as all_deleted.
 
@@ -586,7 +591,7 @@ Extended Figure:
 - **Analysis:** TBD (not produced by the 01-10 pipeline).
 - **Outputs:** TBD
 - **Numbers to cite:** TBD
-- **Figure panels:** e
+- **Figure panels:** deferred — no panel in the current a-d layout (was the dropped essentiality panel).
 - **Conclusion:** TBD
 - **Caveats:** essentiality calls are inherited from the syn3A design literature, not measured here.
 

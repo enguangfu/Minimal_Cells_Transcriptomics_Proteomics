@@ -90,9 +90,9 @@ def _stars(p):
     return "***" if p < 1e-3 else "**" if p < 1e-2 else "*" if p < 0.05 else "ns"
 
 
-# ============================================================ panel c: impact-class plot
-def panel_d(grouping="g3", kind="violin", figsize=(7 / 4, 7 / 4), min_n_star=5,
-            out_name="R5d_TPM_FC_by_impact_class.pdf"):
+# ================================================ impact-class plot (former panel d; SI/optional)
+def panel_impact(grouping="g3", kind="violin", figsize=(7 / 4, 7 / 4), min_n_star=5,
+                 out_name="R5_impact_class_TPM_FC.pdf"):
     """log10 Syn3A/Syn1 transcript fold change by gene_impact_class.
 
     Final R5 panel c = 3-group violin (Promoter lost / Other affected /
@@ -215,184 +215,384 @@ def _hupA_minus10():
     return res
 
 
-# ============================================================ panel d: HupA decapitation
-def panel_e(out_name="R5e_hupA_operon.pdf", fig_w=21 / 4, fig_h=7 / 4):
-    """HupA operon (OP_00187, + strand): decapitated because DEL_050 (440092-441059)
-    removed its promoter region inside the neighbouring gene gpsA/MMSYN1_0349.
-    Reuses the publication single-operon plotter (born-at-size, syn3A-deletion band);
-    forces the `hupA` label on MMSYN1_0350 and drops the large flanking pseudogene
-    MMSYN1_0354 (and tightens PAD so its deletion band stays out of frame)."""
-    syn1op = os.path.join(GR, "..", "Syn1_Operon")
-    if syn1op not in sys.path:
-        sys.path.insert(0, syn1op)
-    import Operon_Visualization as OV
+# ---- Syn1 Illumina depth (two-step replicate average, matches avg_sense_TPM) ----
+SYN1_ILL_DIR = os.path.join(GR, "..", "Syn1_Transcriptomics/Illumina/Illumina_Processing/depth_bedgraph")
+SYN1_ILL = [("SRR35996296", 0.25), ("SRR35996297", 0.25), ("SRR35996298", 0.5)]  # mean(96,97) then mean w/ 98
+SYN1_CHROM, SYN1_LEN_BP = "CP002027.1", 1_078_809
 
-    _gl, _genes, _pad = OV.gene_label, OV.GENES, OV.PAD_BP
-    def _force_hupA(r):
-        return "hupA" if str(r.get("locus_tag", "")) == "MMSYN1_0350" else _gl(r)
-    OV.gene_label = _force_hupA
-    OV.GENES = OV.GENES[OV.GENES["locus_tag"] != "MMSYN1_0354"].copy()
-    OV.PAD_BP = 60
+
+def _bg_window(path, chrom, win_s, win_e):
+    import subprocess
+    cov = np.zeros(win_e - win_s)
+    out = subprocess.run(["awk", "-F", "\t", f'$1=="{chrom}" && $3>{win_s} && $2<{win_e}', path],
+                         capture_output=True, text=True).stdout
+    for line in out.splitlines():
+        _, s, e, v = line.split("\t"); s, e, v = int(s), int(e), float(v)
+        cov[max(s, win_s) - win_s: min(e, win_e) - win_s] = v
+    return cov
+
+
+def load_syn1_illumina_plus(win_s, win_e):
+    cov = np.zeros(win_e - win_s)
+    for samp, w in SYN1_ILL:
+        cov += w * _bg_window(os.path.join(SYN1_ILL_DIR, f"{samp}.plus.bedGraph"), SYN1_CHROM, win_s, win_e)
+    return cov
+
+
+_SYN1_ILL_MEAN = [None]
+def syn1_illumina_mean_total():
+    """Genome-wide mean per-base (plus+minus) Syn1 Illumina depth, same replicate weights."""
+    if _SYN1_ILL_MEAN[0] is None:
+        import subprocess
+        tot = 0.0
+        for strand in ("plus", "minus"):
+            for samp, w in SYN1_ILL:
+                p = os.path.join(SYN1_ILL_DIR, f"{samp}.{strand}.bedGraph")
+                out = subprocess.run(["awk", "-F", "\t",
+                    f'$1=="{SYN1_CHROM}"{{a+=($3-$2)*$4}} END{{print a+0}}', p],
+                    capture_output=True, text=True).stdout.strip()
+                tot += w * (float(out) if out else 0.0)
+        _SYN1_ILL_MEAN[0] = tot / SYN1_LEN_BP
+    return _SYN1_ILL_MEAN[0]
+
+
+def _draw_depth(ax, xg, cov, fill_c, line_c, label, nice_top, logy=False):
+    """Depth fill+line on a linear (0..nice_top) or log y-axis. NaN in `cov` marks a
+    gap (e.g. a deleted region on the Syn3A track); on a log axis it stays blank, on a
+    linear axis it drops to the 0 baseline. A log axis lets a low-expressed operon show
+    alongside a high one in the same track."""
+    c = np.asarray(cov, dtype=float)
+    if logy:
+        floor = 0.05
+        cc = np.where(np.isfinite(c), np.clip(c, floor, None), np.nan)
+        ax.set_yscale("log")
+        ax.fill_between(xg, floor, cc, color=fill_c, lw=0, zorder=1)
+        ax.plot(xg, cc, color=line_c, lw=0.4, zorder=2)
+        mx = float(np.nanmax(cc)) if np.isfinite(cc).any() else 1.0
+        top = 10.0 ** np.ceil(np.log10(mx))
+        ax.set_ylim(floor, top)
+        ticks = [t for t in (0.1, 1, 10, 100) if floor <= t <= top]
+        ax.set_yticks(ticks); ax.set_yticklabels([f"{t:g}×" for t in ticks])
+    else:
+        cc = np.nan_to_num(c, nan=0.0)
+        ax.fill_between(xg, 0, cc, color=fill_c, lw=0, zorder=1)
+        ax.plot(xg, cc, color=line_c, lw=0.4, zorder=2)
+        m = float(cc.max())
+        T = nice_top(m) if m > 0 else 1.0
+        ax.set_yticks([0, T]); ax.set_yticklabels(["0", f"{T:.0f}×" if T >= 1 else f"{T:g}×"])
+        ax.set_ylim(0, T * 1.02)
+    ax.set_xlim(0, len(xg))
+    ax.set_ylabel(label, fontsize=5, color=line_c)
+    ax.tick_params(labelsize=5)
+    ax.spines[["top", "right"]].set_visible(False)
+
+
+# ================================= shared 4-track deletion-junction plotter (panels d, e)
+def _junction_panel(win_s, win_e, D1, iso_sel, rel_ticks, fig_w, fig_h,
+                    label_override=None, max_iso=8, logy=False):
+    """Four tracks on a deletion-junction RELATIVE axis (+ strand; rel = syn1_pos - D1), shared
+    by panel d (pdh/acetate operon) and panel e (hupA):
+      genes (syn3A deletions shaded across all tracks) | Syn1 PacBio isoforms |
+      Syn1 Illumina depth (blue) | Syn3A Illumina depth (red, mapped per-base through the
+      retained blocks so deletions read as gaps).
+    Isoforms are PacBio (transcript structure); depth is Illumina for BOTH organisms (the
+    quantitative standard; PacBio under-samples short genes), each x its own genome mean.
+    Returns (fig, axes, cov1, cov3); the caller saves so it can add annotations first."""
+    r4dir = os.path.join(GR, "..", "Syn1_Novel_ORF")
+    if r4dir not in sys.path:
+        sys.path.insert(0, r4dir)
+    import R4_track_panels as R4
+
+    win_len = win_e - win_s
+    _gl = R4.gene_label
+    if label_override is not None:
+        R4.gene_label = label_override
     try:
-        ops = pd.read_csv(os.path.join(syn1op, "operons.candidate_blocks.tsv"), sep="\t")
-        row = ops[ops["operon_id"] == "OP_00187"].iloc[0]
-        out = os.path.join(OUTDIR, out_name)
-        OV.plot_one_operon(row, out, PLOT_DEPTH=True, fig_w=fig_w, fig_h=fig_h)
+        fig, axes = plt.subplots(4, 1, figsize=(fig_w, fig_h),
+                                 height_ratios=[1.0, 0.75, 1.0, 1.0], constrained_layout=True)
+        R4.draw_gene_track(axes[0], win_s, win_e, '+')
+        R4.draw_isoform_track(axes[1], iso_sel, win_s, win_e, '+', color="#1b6ca8", max_iso=max_iso)
     finally:
-        OV.gene_label, OV.GENES, OV.PAD_BP = _gl, _genes, _pad
-    log(f"\n[panel e] HupA operon OP_00187 (decapitation, DEL_050) -> {out}")
+        R4.gene_label = _gl
+
+    xg = np.arange(win_len)
+    cov1 = load_syn1_illumina_plus(win_s, win_e) / syn1_illumina_mean_total()
+    _draw_depth(axes[2], xg, cov1, "#9ecae1", "#3182bd", "Syn1\n(× mean)", R4._nice_top, logy)
+    axes[2].set_xticks([])
+
+    # Syn3A depth mapped per-base through the retained blocks; deletions stay NaN (true gaps)
+    retained = pd.read_excel(os.path.join(GR, "aln/analysis/genome_reduction_summary.xlsx"))
+    retained = retained[retained["Change Case"] == "retained_ordered"]
+    cov3 = np.full(win_len, np.nan)
+    for _, b in retained.iterrows():
+        if pd.isna(b["S2"]):
+            continue
+        s1, e1, s2 = int(b["S1"]), int(b["E1"]), int(b["S2"])
+        lo, hi = max(s1, win_s), min(e1, win_e)
+        if lo >= hi:
+            continue
+        q0 = s2 + (lo - s1)
+        cov3[lo - win_s:hi - win_s] = R4.load_syn3a_depth_plus(q0, q0 + (hi - lo))
+    cov3 /= R4.syn3a_mean_depth_total()
+    _draw_depth(axes[3], xg, cov3, "#f3b0ad", "#c0392b", "Syn3A\n(× mean)", R4._nice_top, logy)
+    off = D1 - win_s                                                    # rel -> tx: tx = rel + off
+    axes[3].set_xticks([r + off for r in rel_ticks])
+    axes[3].set_xticklabels([str(r) for r in rel_ticks], fontsize=5)
+    axes[3].set_xlabel('Relative genome position (bp)', fontsize=6)
+
+    for d0, d1 in R4.DELETIONS:                          # deletion shading across all four tracks
+        if d1 <= win_s or d0 >= win_e:
+            continue
+        xa, xb = max(d0, win_s) - win_s, min(d1, win_e) - win_s
+        for a in (axes[1], axes[2], axes[3]):
+            a.axvspan(xa, xb, facecolor='#e8736a', alpha=0.17, lw=0, zorder=0)
+    return fig, axes, cov1, cov3
+
+
+# ================================================ panel c: two decapitated central-carbon operons
+def panel_c(out_name="R5c_central_carbon.pdf", fig_w=7, fig_h=7 / 3):
+    """Two adjacent, separately decapitated central-carbon operons on one deletion-junction axis
+    (both + strand; rel = syn1_pos - 292905):
+      OP_00121 (pdhC/0227-lpdA/0228-pta/0229-ackA/0230): DEL 288391-292905 (4,514 bp) removed the
+        promoter (TSS 291897) + 0223-0224 + the PDH E1 subunits pdhA/0225 & pdhB/0226.
+      OP_00122 (ptsP/0233-0234-0235; syn3A ptsI/crr): DEL 298422-300803 (2,381 bp) removed the
+        promoter (TSS 300106) + 0231 & coaD/0232.
+    Both retained gene sets are gene_impact_class promoter_lost and drop in Syn3A (OP_00121 FC
+    0.45-0.19; OP_00122 FC 0.41-0.80). PacBio isoforms are filtered to those that SPAN each operon,
+    so the two co-transcribed units read as two separate isoform stacks (no isoform crosses between
+    them, confirming they are distinct operons). 4-track format; Illumina depth both organisms."""
+    r4dir = os.path.join(GR, "..", "Syn1_Novel_ORF")
+    if r4dir not in sys.path:
+        sys.path.insert(0, r4dir)
+    import R4_track_panels as R4
+    D1 = 292905
+    win_s, win_e = 292300, 303600
+    plus = R4.ISO[(R4.ISO.chrom == "CP002027.1") & (R4.ISO.strand == '+')]
+    # isoforms that SPAN each operon (co-transcription evidence); top-N of each
+    span1 = plus[(plus.start0 <= 293500) & (plus.end0 >= 297500)].sort_values('n_reads', ascending=False).head(8)
+    span2 = plus[(plus.start0 <= 300200) & (plus.end0 >= 303200)].sort_values('n_reads', ascending=False).head(8)
+    sel = pd.concat([span1, span2], ignore_index=True)
+    rel_ticks = [0, 2000, 4000, 6000, 8000, 10000]
+    fig, axes, cov1, cov3 = _junction_panel(win_s, win_e, D1, sel, rel_ticks, fig_w, fig_h,
+                                            max_iso=len(sel), logy=True)
+    out = os.path.join(OUTDIR, out_name)
+    fig.savefig(out, dpi=300); plt.close(fig)
+
+    # average x-genome-mean depth per region (retained genes) and per gene, for Illustrator labels
+    def _avg(cov, g0, g1):
+        return float(np.nanmean(cov[g0 - win_s:g1 - win_s]))
+    reg = [("OP_00121 (pdhC-lpdA-pta-ackA)", 292934, 298352),   # retained 0227-0230
+           ("OP_00122 (ptsI-crr-0235)",      300901, 303460)]   # retained 0233-0235
+    genes_bc = [("pdhC/0227", 292934, 294260), ("lpdA/0228", 294278, 296168),
+                ("pta/0229", 296189, 297158), ("ackA/0230", 297170, 298352),
+                ("ptsI/0233", 300901, 302623), ("crr/0234", 302704, 303169),
+                ("0235", 303169, 303460)]
+    log(f"\n[panel c] central-carbon operons OP_00121 + OP_00122 decapitated (DEL 288391-292905 "
+        f"& 298422-300803); operon-spanning isoforms {len(span1)}+{len(span2)}; log-y depth -> {out}")
+    log("  average depth (x genome mean), retained genes; FC = Syn3A/Syn1:")
+    for nm, g0, g1 in reg:
+        s1v, s3v = _avg(cov1, g0, g1), _avg(cov3, g0, g1)
+        log(f"    REGION {nm:<30s} Syn1 {s1v:6.2f}x  Syn3A {s3v:6.2f}x  FC {s3v/s1v:.3f}")
+    for nm, g0, g1 in genes_bc:
+        s1v, s3v = _avg(cov1, g0, g1), _avg(cov3, g0, g1)
+        log(f"    gene   {nm:<30s} Syn1 {s1v:6.2f}x  Syn3A {s3v:6.2f}x  FC {s3v/s1v:.3f}")
+    return out
+
+
+# ============================================================ panel d: HupA decapitation
+def panel_d(out_name="R5d_hupA_operon.pdf", fig_w=7, fig_h=7 / 4):
+    """HupA operon (OP_00187, + strand), decapitated: DEL_050 (440092-441059) removed the operon
+    promoter (TSS 441031, -10 box 441019-441024) inside gpsA/MMSYN1_0349, so hupA collapses in
+    Syn3A. 4-track deletion-junction panel (rel = syn1_pos - deletion_end 441059); isoforms PacBio,
+    depth Illumina both organisms; window includes recU/0351 and 0353 for completeness."""
+    r4dir = os.path.join(GR, "..", "Syn1_Novel_ORF")
+    if r4dir not in sys.path:
+        sys.path.insert(0, r4dir)
+    import R4_track_panels as R4
+    D1 = 441059
+    win_s, win_e = 440000, 443000
+    hup_s, hup_e = 441113, 441386
+    sel = R4.ISO[(R4.ISO.strand == '+') & (R4.ISO.start0 < hup_e) & (R4.ISO.end0 > hup_s) &
+                 (R4.ISO.n_reads >= 10)]
+    _orig = R4.gene_label
+    override = lambda r: 'hupA' if str(r.locus_tag) == 'MMSYN1_0350' else _orig(r)
+    rel_ticks = [-1000, -500, 0, 500, 1000, 1500]
+    fig, axes, cov1, cov3 = _junction_panel(win_s, win_e, D1, sel, rel_ticks, fig_w, fig_h,
+                                            label_override=override)
+    hs, he = hup_s - win_s, hup_e - win_s
+    out = os.path.join(OUTDIR, out_name)
+    fig.savefig(out, dpi=300); plt.close(fig)
+    log(f"\n[panel d] HupA operon OP_00187 decapitated (DEL_050; TSS 441031 deleted); depth=Illumina "
+        f"both organisms; hupA syn1={np.nanmean(cov1[hs:he]):.1f}x vs syn3A={np.nanmean(cov3[hs:he]):.2f}x mean -> {out}")
     _hupA_minus10()
     return out
 
 
-def _draw_isoforms_highlight(ax, oc, others, highlight, gap_tx=20):
-    """Pack `others` isoforms into greedy rows (muted blue, width ~ log reads),
-    then draw `highlight` isoform(s) on top in vermillion with a label. Transcript
-    coords via oc.tx_of_genome_pos0 (handles the minus-strand flip)."""
-    def _txint(r):
-        a = oc.tx_of_genome_pos0(int(r["start0"]))
-        b = oc.tx_of_genome_pos0(int(r["end0"]))
-        return (min(a, b), max(a, b))
-    rows_end = []
-    for _, r in others.sort_values("start0").iterrows():
-        lo, hi = _txint(r)
-        row = next((ri for ri in range(len(rows_end)) if lo > rows_end[ri] + gap_tx), None)
-        if row is None:
-            rows_end.append(hi); row = len(rows_end) - 1
+# ---- transcript-relative (nt from rpsT/0082 5' end) drawers for the combined b+c panel ----
+SYN3A_ISO_TSV = os.path.join(GR, "..", "Syn3A_Transcriptomics/Isoform_Cluster/isoform_clusters_annotated.tsv")
+SYN3A_CHROM_BC = "CP016816.2"
+
+
+def _depth_on_tp(sources, chrom, anchor5p, tp_lo, tp_hi, mean):
+    """Per-base depth on the transcript axis (minus strand: genomic = anchor5p - tp).
+    `sources` = list of (bedGraph_path, weight) so replicate libraries can be averaged."""
+    xg = np.arange(tp_lo, tp_hi)
+    g = anchor5p - xg
+    g_lo, g_hi = int(g.min()), int(g.max()) + 1
+    cov_g = np.zeros(g_hi - g_lo)
+    for path, w in sources:
+        cov_g += w * _bg_window(path, chrom, g_lo, g_hi)
+    return xg, cov_g[g - g_lo] / mean
+
+
+def _genes_tp(ax, genes, anchor, tp_lo, tp_hi):
+    """Minus-strand gene arrows on the transcript axis (5'->3' left->right)."""
+    from matplotlib.patches import Polygon
+    ax.set_xlim(tp_lo, tp_hi); ax.set_ylim(0, 1.5)
+    ax.hlines(0.55, tp_lo, tp_hi, color="black", lw=0.8, zorder=1)
+    for g0, g1, name, col in genes:
+        xl, xr = anchor - g1, anchor - g0                # minus strand -> arrow points right
+        head = min(max(25, (xr - xl) * 0.22), xr - xl)
+        v = [(xl, 0.55 - 0.16), (xr - head, 0.55 - 0.16), (xr - head, 0.55 - 0.24), (xr, 0.55),
+             (xr - head, 0.55 + 0.24), (xr - head, 0.55 + 0.16), (xl, 0.55 + 0.16)]
+        ax.add_patch(Polygon(v, closed=True, facecolor=col, edgecolor="black", lw=0.3, zorder=2))
+        ax.text((xl + xr) / 2, 0.55 + 0.30, name, ha="center", va="bottom",
+                fontsize=5, color="#333", clip_on=True)
+    ax.set_yticks([]); ax.set_xticks([])
+    ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
+
+
+def _iso_tp(ax, iso, anchor, tp_lo, tp_hi, nice_top, pack_rows, color, max_iso=8, hl=None):
+    """Minus-strand isoform arrows on the transcript axis. The `max_iso` most-abundant
+    isoforms form the muted population; `hl` (a DataFrame, e.g. the junction-spanning
+    isoform, which may be too rare for the top-N) is force-drawn on top in vermillion
+    with a read-count label."""
+    from matplotlib.patches import FancyArrowPatch
+    iso = iso.sort_values("n_reads", ascending=False).head(max_iso)
+    ints, meta = [], []
+    for _, r in iso.iterrows():
+        a, b = anchor - int(r.end0), anchor - int(r.start0)   # 5'(end0) left, 3'(start0) right
+        ints.append((min(a, b), max(a, b))); meta.append(int(r.n_reads))
+    rows = pack_rows(ints) if ints else []
+    nmax = max(1, max(meta) if meta else 1)
+    for (xl, xr), ri, nr in zip(ints, rows, meta):
+        lw = float(np.clip(0.3 + 0.7 * np.log10(max(1, nr)), 0.5, 2.6))
+        ax.add_patch(FancyArrowPatch((xl, ri), (xr, ri), arrowstyle="-|>", lw=lw, color=color,
+                     alpha=min(1.0, 0.5 + 0.5 * nr / nmax), shrinkA=0, shrinkB=0,
+                     mutation_scale=4, zorder=2))
+    top = max(rows) if rows else 0
+    n_hl = 0
+    if hl is not None and len(hl):
+        for k, (_, r) in enumerate(hl.sort_values("n_reads", ascending=False).iterrows()):
+            xl, xr = anchor - int(r.end0), anchor - int(r.start0)
+            y = top + 1.3 + k
+            ax.add_patch(FancyArrowPatch((xl, y), (xr, y), arrowstyle="-|>", lw=1.7,
+                         color="#D55E00", shrinkA=0, shrinkB=0, mutation_scale=5, zorder=5))
+            ax.text((xl + xr) / 2, y + 0.5, f"{int(r.n_reads)} reads span 0094 & rpsT/0082",
+                    ha="center", va="bottom", fontsize=4.5, color="#D55E00")
+            n_hl += 1
+        top = top + 1.3 + len(hl)
+    ax.set_xlim(tp_lo, tp_hi); ax.set_ylim(-1, top + 1.6)
+    ax.set_yticks([]); ax.set_xticks([])
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    return n_hl
+
+
+# ============================================================ panel b: rpsT/0082 partner switch (fusion)
+def panel_b(out_name="R5b_rpsT_fusion.pdf", fig_w=14 / 3, fig_h=7 / 3):
+    """Combined old panels b + c. rpsT/0082's 5' partner switches from 0083 (Syn1,
+    co-transcribed, OP_00043) to 0094 (Syn3A, fused, OP_00050) after DEL_014 (111508-126973,
+    15,465 bp; 8 genes 0083-0093) removes the intervening span. Both organisms are aligned on
+    the retained rpsT/0082 5' end: x = transcript nt from that 5' end (0082 body positive/right,
+    5' partner negative/left; 5'->3' left->right), so 0083 (Syn1) and 0094 (Syn3A) fall in the
+    same slot -- the partner swap is a direct top/bottom comparison and the 15.5 kb deletion
+    needs no coordinate. Six tracks:
+      Syn1 genes (0083 + rpsT/0082) | Syn1 PacBio isoforms | Syn1 Illumina depth (x-mean, blue)
+      Syn3A genes (0094 + rpsT/0082) | Syn3A ONT isoforms (junction-spanning in orange) | Syn3A Illumina depth (x-mean, red)
+    Depth is Illumina for BOTH organisms (quantitative, shows the rpsT crash relTPM 1.5->0.11);
+    PacBio (short-gene under-sampling) and ONT (3'-bias on the 3' gene rpsT) each reverse the
+    trend, so they are used only for the isoform/bridging structure, not for depth.
+    """
+    r4dir = os.path.join(GR, "..", "Syn1_Novel_ORF")
+    if r4dir not in sys.path:
+        sys.path.insert(0, r4dir)
+    import R4_track_panels as R4
+
+    A1, A3 = 111369, 63530             # rpsT/0082 5' end (minus strand, high coord) in Syn1 / Syn3A
+    TP_LO, TP_HI = -900, 320
+    genes1 = [(111502, 112138, "0083", "#7a7a7a"), (111123, 111369, "rpsT/0082", "#7a7a7a")]
+    genes3 = [(63663, 64380, "0094", "#7a7a7a"),   (63284, 63530, "rpsT/0082", "#7a7a7a")]
+
+    i1 = R4.ISO[(R4.ISO.chrom == "CP002027.1") & (R4.ISO.strand == "-") &
+                (R4.ISO.start0 < 112138) & (R4.ISO.end0 > 111123) & (R4.ISO.n_reads >= 5)]
+    s3iso = pd.read_csv(SYN3A_ISO_TSV, sep="\t")
+    i3 = s3iso[(s3iso.chrom == SYN3A_CHROM_BC) & (s3iso.strand == "-") &
+               (s3iso.start0 < 64380) & (s3iso.end0 > 63284) & (s3iso.n_reads >= 2)]
+    # the lone ONT isoform that spans BOTH gene bodies (0094 64380 & rpsT/0082 63284) = the fusion read
+    span3 = i3[(i3.start0 <= 63284) & (i3.end0 >= 64380)]
+
+    fig, axes = plt.subplots(6, 1, figsize=(fig_w, fig_h),
+                             height_ratios=[0.55, 1.0, 0.85, 0.55, 1.0, 0.85],
+                             constrained_layout=True)
+    ag1, ai1, ad1, ag3, ai3, ad3 = axes
+
+    def _yax(ax, cov, color, label):
+        m = float(cov.max())
+        if m > 0:
+            T = R4._nice_top(m)
+            ax.set_yticks([0, T]); ax.set_yticklabels(["0", f"{T:.0f}×" if T >= 1 else f"{T:g}×"])
+            ax.set_ylim(0, T * 1.02)
         else:
-            rows_end[row] = hi
-        lw = float(np.clip(0.35 + 0.55 * np.log10(r["n_reads"] + 1), 0.35, 1.4))
-        ax.plot([lo, hi], [row, row], color="#9ecae1", lw=lw,
-                solid_capstyle="round", zorder=2)
-    base = max(1, len(rows_end))
-    for k, (_, r) in enumerate(highlight.sort_values("start0").iterrows()):
-        lo, hi = _txint(r)
-        y = base + 0.8 + k
-        # keep the thickness ~ abundance convention (this transcript has few reads);
-        # it is highlighted by colour + label + position, not by an inflated width
-        lw = float(np.clip(0.35 + 0.55 * np.log10(r["n_reads"] + 1), 0.35, 1.4))
-        ax.plot([lo, hi], [y, y], color="#D55E00", lw=lw,
-                solid_capstyle="round", zorder=6)
-        ax.text((lo + hi) / 2, y + 0.55, f"full-span transcript (n={int(r['n_reads'])})",
-                ha="center", va="bottom", fontsize=5, color="#D55E00")
-    ax.set_ylim(-1, base + 0.8 + len(highlight) + 1.4)
-    ax.set_yticks([])
+            ax.set_ylim(0, 1)
+        ax.set_xlim(TP_LO, TP_HI); ax.set_ylabel(label, fontsize=5, color=color)
+        ax.tick_params(labelsize=5); ax.spines[["top", "right"]].set_visible(False)
 
+    # depth = Illumina minus for both organisms (comparable; unbiased for the short 3' rpsT)
+    syn1_ill_minus = [(os.path.join(SYN1_ILL_DIR, f"{s}.minus.bedGraph"), w) for s, w in SYN1_ILL]
 
-# ============================================================ panel b: fusion DEL_014
-def panel_c(out_name="R5c_fusion_DEL014.pdf", figsize=(7 / 2, 7 / 4),
-            iso_min_reads=3):
-    """Fusion junction DEL_014: in Syn1, OP_00043 (rpsT/0082) and OP_00050 (0094)
-    sit ~15.5 kb apart across 8 deleted genes; in Syn3A they are adjacent on the
-    minus strand and co-transcribed (37 bridging ONT reads). Shows the Syn3A joined
-    locus (0082 and 0094 only; the +strand trmE/0081 is excluded): genes + spanning
-    ONT isoforms + depth, with a dashed marker at the new 0094|rpsT junction. Reuses
-    the comparison module's Syn3A data and primitives, compact / born-at-size."""
-    import Operon_Comparison_Syn1_Syn3A as OC
-    OC.GENE_LABEL_FONTSIZE = 6
-    OC.LABEL_FONTSIZE = 6
-    OC.MAX_ISOFORMS_TO_PLOT = 20
+    # --- Syn1 (PacBio isoforms, Illumina depth) ---
+    _genes_tp(ag1, genes1, A1, TP_LO, TP_HI)
+    ag1.axvspan(TP_LO, A1 - 111508, facecolor="#e8736a", alpha=0.17, lw=0, zorder=0)  # DEL_014: 0083+ deleted in syn3A
+    ag1.text((TP_LO + (A1 - 111508)) / 2, 1.18, "deleted in Syn3A", ha="center", va="top",
+             fontsize=4.5, color="#c0392b")
+    _iso_tp(ai1, i1, A1, TP_LO, TP_HI, R4._nice_top, R4._pack_rows, "#6baed6", max_iso=8)
+    xg1, c1 = _depth_on_tp(syn1_ill_minus, "CP002027.1", A1, TP_LO, TP_HI, syn1_illumina_mean_total())
+    ad1.fill_between(xg1, 0, c1, color="#9ecae1", lw=0, zorder=1)
+    ad1.plot(xg1, c1, color="#3182bd", lw=0.4, zorder=2)
+    _yax(ad1, c1, "#3182bd", "Syn1\n(× mean)"); ad1.set_xticks([])
 
-    # dedupe gene labels: "0094/JCVISYN3A_0094" -> "0094"; keep "0082/rpsT"
-    def _mk(locus_tag, gene_name):
-        gn = (gene_name or "").strip(); lt = (locus_tag or "").strip()
-        num = lt.split("_")[-1]
-        if gn and not gn.startswith("JCVISYN3A") and gn != lt and gn.lower() != "nan":
-            return f"{num}/{gn}"
-        return num
-    OC.make_gene_label = _mk
+    # --- Syn3A (ONT isoforms, Illumina depth) ---
+    _genes_tp(ag3, genes3, A3, TP_LO, TP_HI)
+    n_hl = _iso_tp(ai3, i3, A3, TP_LO, TP_HI, R4._nice_top, R4._pack_rows, "#bdbdbd",
+                   max_iso=8, hl=span3)
+    xg3, c3 = _depth_on_tp([(R4.SYN3A_DEPTH_MINUS, 1.0)], SYN3A_CHROM_BC, A3, TP_LO, TP_HI,
+                           R4.syn3a_mean_depth_total())
+    ad3.fill_between(xg3, 0, c3, color="#f3b0ad", lw=0, zorder=1)
+    ad3.plot(xg3, c3, color="#c0392b", lw=0.4, zorder=2)
+    _yax(ad3, c3, "#c0392b", "Syn3A\n(× mean)")
+    ad3.set_xticks([-750, -500, -250, 0, 250])
+    ad3.set_xticklabels(["-750", "-500", "-250", "0", "250"], fontsize=5)
+    ad3.set_xlabel("Transcript position from rpsT/0082 5′ (nt)", fontsize=6)
 
-    # OP_00043 -> 0082, OP_00050 -> 0094 (the cross-junction pair; 0083/0093 deleted)
-    s3_cand = {"JCVISYN3A_0082", "JCVISYN3A_0094"}
-    s3g = OC.syn3a_genes[OC.syn3a_genes["locus_tag"].astype(str).isin(s3_cand)].copy()
-    s3_chrom = str(s3g["chrom"].iloc[0]); s3_strand = "-"
-    s3_s0, s3_e0 = int(s3g["start0"].min()), int(s3g["end0"].max())
-    pad = int(OC.PAD_BP_FRAC * (s3_e0 - s3_s0)) + OC.PAD_BP
-    ps3, pe3 = s3_s0 - pad, s3_e0 + pad
-    oc3 = OC.OperonCoord(chrom=s3_chrom, strand=s3_strand,
-                         opid="fusion@syn3A", start0=s3_s0, end0=s3_e0)
-    # isoforms over the locus: show the population (muted) and HIGHLIGHT the
-    # transcript(s) spanning the entire body of BOTH genes (rpsT/0082 63285-63530
-    # and 0094 63664-64380) -- the n_span fusion cluster (ISO_075840).
-    G_LO, G_HI = 63285, 64380
-    over = ((OC.syn3a_isoforms["chrom"].astype(str) == s3_chrom) &
-            (OC.syn3a_isoforms["strand"].astype(str) == s3_strand) &
-            (OC.syn3a_isoforms["start0"] < s3_e0) & (OC.syn3a_isoforms["end0"] > s3_s0))
-    allf = OC.syn3a_isoforms[over].copy()
-    full = allf[(allf["start0"] <= G_LO) & (allf["end0"] >= G_HI)].copy()
-    others = allf[(~allf["isoform_id"].isin(full["isoform_id"])) &
-                  (allf["n_reads"] >= iso_min_reads)].copy()
-    others = others.sort_values("n_reads", ascending=False).head(30)
-    d3 = OC.subset_intervals(OC.syn3a_depth_minus, s3_chrom, ps3, pe3)
-
-    fig = plt.figure(figsize=figsize, constrained_layout=True)
-    gs = fig.add_gridspec(3, 1, height_ratios=[1.2, 2.4, 1.0])
-    axg = fig.add_subplot(gs[0])
-    axi = fig.add_subplot(gs[1], sharex=axg)
-    axd = fig.add_subplot(gs[2], sharex=axg)
-
-    # draw genes; draw_gene_arrows adds a Syn3A genomic-position secondary axis
-    # below the arrows -- keep it (relabel + shrink fonts to OUTPUT.md)
-    pre = set(fig.axes)
-    OC.draw_gene_arrows(axg, oc3, s3g)
-    gaxes = [x for x in fig.axes if x not in pre]          # the genome twiny axis
-    for gax in gaxes:
-        # put the Syn3A genome axis at the TOP of the gene track (as in panel d)
-        gax.spines["bottom"].set_visible(False)
-        gax.spines["top"].set_visible(True)
-        gax.spines["top"].set_position(("outward", 2))
-        gax.xaxis.set_ticks_position("top")
-        gax.xaxis.set_label_position("top")
-        gax.tick_params(axis="x", which="both", top=True, labeltop=True,
-                        bottom=False, labelbottom=False, labelsize=5)
-        gax.set_xlabel("Syn3A genome position (bp)", fontsize=6)
-    axg.spines["top"].set_visible(False)   # drop the gene panel's own top spine
-    _draw_isoforms_highlight(axi, oc3, others, full)
-    OC.draw_depth(axd, oc3, d3, ps3, pe3, s3_strand)
-    log(f"\n[panel c] isoforms shown: {len(others)} others + {len(full)} full-span "
-        f"highlighted (>= {iso_min_reads} reads for others)")
-
-    # headroom so the gene labels + deletion note (above the arrows) are not clipped
-    yl = axg.get_ylim()
-    axg.set_ylim(yl[0], yl[1] + 0.9 * (yl[1] - yl[0]))
-
-    # deletion scar at the new 0094|rpsT junction: the 8 genes (~15.5 kb) between
-    # them in Syn1 are absent from Syn3A (no coordinate here), so mark + label the
-    # excised block rather than drawing absent genes.
-    jx = oc3.tx_of_genome_pos0((63530 + 63664) // 2)
-    for a in (axg, axi, axd):
-        a.axvline(jx, color="#c0392b", linestyle="--", linewidth=0.7, zorder=6)
-    axg.text(jx, axg.get_ylim()[1] * 0.99, "8 genes, ~15.5 kb\ndeleted",
-             ha="center", va="top", fontsize=5, color="#c0392b", linespacing=0.9)
-
-    x_left = oc3.tx_of_genome_pos0(pe3)   # minus strand: high genome -> tx 0
-    x_right = oc3.tx_of_genome_pos0(ps3)
-    lo, hi = min(x_left, x_right), max(x_left, x_right)
-    for a in [axg, axi, axd] + gaxes:     # incl. genome twiny so it stays aligned
-        a.set_xlim(lo, hi)
-    # transcript ticks only on the bottom (depth) axis; the Syn3A genome axis sits
-    # under the gene arrows, so axg/axi carry no transcript ticks
-    for a in (axg, axi):
-        a.tick_params(axis="x", which="both", bottom=False, top=False,
-                      labelbottom=False, labeltop=False)
-        a.set_xlabel("")
-    axd.tick_params(axis="x", which="both", top=False, labeltop=False)
-    axd.set_xlabel("Transcript coordinate (nt)", fontsize=6)
-    axd.set_ylabel("ONT depth", fontsize=6)
-    axi.set_ylabel("ONT isoforms", fontsize=6)
-    for a in (axi, axd):
-        for sp in ("top", "right"):
-            a.spines[sp].set_visible(False)
+    # shared cues: shade the retained rpsT/0082 body across all tracks + 5'-end line;
+    # tag each organism block; note the fused partner.
+    for ax in axes:
+        ax.axvspan(0, 246, facecolor="#dddddd", alpha=0.35, lw=0, zorder=0)
+        ax.axvline(0, color="#888888", ls=":", lw=0.6, zorder=0)
+    ag1.text(TP_LO, 1.55, "Syn1.0", fontsize=6, fontweight="bold", color="#3182bd", va="bottom")
+    ag3.text(TP_LO, 1.55, "Syn3A", fontsize=6, fontweight="bold", color="#c0392b", va="bottom")
+    ai1.set_ylabel("PacBio\niso", fontsize=5); ai3.set_ylabel("ONT\niso", fontsize=5)
 
     out = os.path.join(OUTDIR, out_name)
-    fig.savefig(out, dpi=300)
-    plt.close(fig)
-    log(f"[panel c] fusion DEL_014 (Syn3A joined OP_00043|OP_00050) -> {out}")
+    fig.savefig(out, dpi=300); plt.close(fig)
+    log(f"\n[panel b] rpsT/0082 partner switch 0083(Syn1)->0094(Syn3A) via DEL_014 (15,465 bp); "
+        f"Syn1 iso={len(i1)}, Syn3A iso={len(i3)} ({n_hl} junction-spanning shown); "
+        f"rpsT depth syn1={float(c1[-TP_LO:-TP_LO+246].mean()):.1f}x vs syn3A={float(c3[-TP_LO:-TP_LO+246].mean()):.2f}x mean -> {out}")
     return out
 
 
 # ============================================================ panel a: genome-reduction map
-def panel_a(out_name="R5a_genome_reduction_map.pdf", figsize=(7 / 2, 7 / 2)):
+def panel_a(out_name="R5a_genome_reduction_map.pdf", figsize=(7 / 3, 7 / 3)):
     """Circular Syn1 -> Syn3A reduction map (matplotlib, born-at-size). Outer ring
     = Syn1 (retained gray, 95 deletions red with arc height ~ log length), inner
     ring = Syn3A (retained gray, novel insertion blue); the one relocated gene lap
@@ -465,20 +665,9 @@ def panel_a(out_name="R5a_genome_reduction_map.pdf", figsize=(7 / 2, 7 / 2)):
         ax.text(th, OUT_BASE + OUT_H + 0.08, f"{kb} kb", ha="center", va="center",
                 fontsize=5, color="black", fontweight="bold")
 
-    # center: headline count + deletion-length histogram
-    fig.text(0.5, 0.62, f"{n_del} deletions\n{delL.sum() / 1000:.0f} kb (~50%) removed",
+    # center: headline count, centred in the ring
+    fig.text(0.5, 0.5, f"{n_del} deletions\n{delL.sum() / 1000:.0f} kb (~50%) removed",
              ha="center", va="center", fontsize=6, fontweight="bold")
-    axh = fig.add_axes([0.405, 0.40, 0.19, 0.115])
-    edges = [50, 200, 1000, 5000, 20000, int(delL.max()) + 1]
-    labels = ["<0.2", "0.2-1", "1-5", "5-20", ">20"]
-    counts = [int(((delL >= edges[i]) & (delL < edges[i + 1])).sum()) for i in range(5)]
-    axh.bar(range(5), counts, color=RED, width=0.82)
-    axh.set_xticks(range(5)); axh.set_xticklabels(labels, fontsize=4)
-    axh.set_yticks([0, max(counts)]); axh.tick_params(labelsize=4, length=1.5, pad=1)
-    axh.set_xlabel("deletion size (kb)", fontsize=4.5, labelpad=1)
-    for sp in ("top", "right"):
-        axh.spines[sp].set_visible(False)
-    axh.spines["left"].set_linewidth(0.4); axh.spines["bottom"].set_linewidth(0.4)
 
     # compact legend (header removed; circle enlarged to fill the panel)
     handles = [mpatches.Patch(color=GRAY, label="retained"),
@@ -492,35 +681,17 @@ def panel_a(out_name="R5a_genome_reduction_map.pdf", figsize=(7 / 2, 7 / 2)):
     fig.savefig(out, dpi=300)
     plt.close(fig)
     log(f"\n[panel a] genome-reduction map: {n_del} deletions, "
-        f"{delL.sum() / 1000:.0f} kb; length bins {counts} -> {out}")
+        f"{delL.sum() / 1000:.0f} kb removed -> {out}")
     return out
 
 
-# ============================================================ panel b: syn1 rpsT operon (before)
-def panel_b(out_name="R5b_rpsT_operon_syn1.pdf", fig_w=7 / 2, fig_h=7 / 4):
-    """Syn1 operon OP_00043: rpsT/0082 co-transcribed with 0083 -- the 'before' of the
-    DEL_014 fusion shown in panel c. The +strand neighbour trmE/0081 is excluded and
-    the window tightened so only 0082+0083 show; 0083 (deleted in Syn3A) keeps its
-    deletion band. Reuses the publication single-operon plotter (as panel e)."""
-    syn1op = os.path.join(GR, "..", "Syn1_Operon")
-    if syn1op not in sys.path:
-        sys.path.insert(0, syn1op)
-    import Operon_Visualization as OV
-    _genes, _pad = OV.GENES, OV.PAD_BP
-    OV.GENES = OV.GENES[OV.GENES["locus_tag"] != "MMSYN1_0081"].copy()
-    OV.PAD_BP = 50
-    try:
-        ops = pd.read_csv(os.path.join(syn1op, "operons.candidate_blocks.tsv"), sep="\t")
-        row = ops[ops["operon_id"] == "OP_00043"].iloc[0]
-        out = os.path.join(OUTDIR, out_name)
-        OV.plot_one_operon(row, out, PLOT_DEPTH=True, fig_w=fig_w, fig_h=fig_h)
-    finally:
-        OV.GENES, OV.PAD_BP = _genes, _pad
-    log(f"\n[panel b] Syn1 operon OP_00043 (rpsT/0082 + 0083, before fusion) -> {out}")
-    return out
+# panel_b (syn1 rpsT operon) and panel_c (syn3A fusion) were merged into panel_bc
+# (rpsT/0082 partner switch on the shared-0082 transcript axis).
 
-
-PANELS = {"a": panel_a, "b": panel_b, "c": panel_c, "d": panel_d, "e": panel_e}
+# R5 panel map: a genome map | b rpsT/0082 partner switch (old syn1-b + syn3A-c merged) |
+# c two decapitated central-carbon operons (pdh/acetate + PTS) | d hupA decapitation.
+# The impact-class violin (former panel d) is kept as panel_impact for the SI / optional.
+PANELS = {"a": panel_a, "b": panel_b, "c": panel_c, "d": panel_d, "impact": panel_impact}
 
 if __name__ == "__main__":
     want = sys.argv[1:] or list(PANELS)

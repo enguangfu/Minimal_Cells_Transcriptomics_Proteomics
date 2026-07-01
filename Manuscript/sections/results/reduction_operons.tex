@@ -1,25 +1,29 @@
 \subsection{Genome minimization remodels operon structure rather than the retained sequence}
 
-\jsyna~(\syna) was derived from \jsyn~(\syn) by removing genes non-essential for growth in rich medium, halving the genome~\cite{hutchison_design_2016}.
-To map how this reshaped transcription, the \syna~genome was aligned back onto \syn, recasting the reduction as discrete deletions on one coordinate frame (Methods).
-The genome contracted from 1{,}078{,}809 to 543{,}379~bp through 95 deletions ($\geq 50$~bp) removing $\sim$536~kb (mean 5{,}647~bp, largest 71{,}578~bp), while the retained backbone stayed 99.90\% identical (36 single-nucleotide polymorphisms, 12 short indels, no inversions or translocations, gene order preserved apart from the relocated \gene{lap}{0154}).
-Minimization was therefore excision rather than sequence rewiring, so expression differences at retained genes reflect changed transcriptional context, not sequence divergence (Fig.~\ref{fig:reduction_operons}a).
-
+From \syn~to \syna~, the genome contracted from 1{,}078{,}809 to 543{,}379~bp through 95 deletions ($\geq 50$~bp) removing $\sim$536~kb (mean 5{,}647~bp, largest 71{,}578~bp) in Fig.~\ref{fig:reduction_operons}a. 
 Overlaying the 95 deletions onto the 459 operons at single-base resolution showed whole-operon excision dominating over partial truncation (Methods): 235 of the 459 operons (51.2\%) lost every sense gene and 172 (37.5\%) kept all of theirs, leaving only 52 partially deleted (21 leading-edge, 20 lagging-edge, 11 internal).
 The reduction thus preferentially removed entire operons, and it is the minority left partially truncated that create the regulatory effects examined next.
+
+% \jsyna~(\syna) was derived from \jsyn~(\syn) by removing genes non-essential for growth in rich medium, halving the genome~\cite{hutchison_design_2016}.
+% To map how this reshaped transcription, the \syna~genome was aligned back onto \syn, recasting the reduction as discrete deletions on one coordinate frame (Methods).
+% while the retained backbone stayed 99.90\% identical (36 single-nucleotide polymorphisms, 12 short indels, no inversions or translocations, gene order preserved apart from the relocated \gene{lap}{0154}).
+% Minimization was therefore excision rather than sequence rewiring, so expression differences at retained genes reflect changed transcriptional context, not sequence divergence (Fig.~\ref{fig:reduction_operons}a).
 
 Each deletion was reframed as a junction between the nearest retained operons on either side, whose orientation determines whether a new co-transcribed unit can form (Methods).
 Of the 95 junctions, 53 were tandem (co-oriented, the only configuration allowing read-through), 19 convergent, 15 divergent, and 8 internal.
 Among tandem junctions the loss of the facing terminator and promoter defined four outcomes: clean excision of whole operon(s) between intact neighbours was by far the commonest (30), followed by read-through extension (11), decapitation (9), and true fusion of both flanking operons (only 3).
 Testing the new cross-junction gene pair against \syna~reads confirmed the hierarchy: fusion junctions were co-transcribed in 2 of 3 cases, against 3 of 30 clean-excision controls and a pristine-operon baseline of 27 of 45.
-The clearest fusion (DEL\_014) placed \gene{rpsT}{0082} downstream of \locus{0094} in one unit (37 bridging reads), absent in \syn~where \locus{0082} and \locus{0083} are co-transcribed (Fig.~\ref{fig:reduction_operons}b,c), yet transcribed \gene{rpsT}{0082} only weakly (fold change 0.074) because the fused \locus{0094} promoter is itself weak; a second ribosomal-protein gene, \gene{rpsO}{0294}, took the same route and likewise collapsed (fold change 0.144).
+The clearest fusion (DEL\_014) placed \gene{rpsT}{0082} downstream of \locus{0094} in one unit (37 bridging reads), absent in \syn~where \locus{0082} and \locus{0083} are co-transcribed (Fig.~\ref{fig:reduction_operons}b), yet transcribed \gene{rpsT}{0082} only weakly (fold change 0.074) because the fused \locus{0094} promoter is itself weak; a second ribosomal-protein gene, \gene{rpsO}{0294}, took the same route and likewise collapsed (fold change 0.144).
 New fusion is therefore real but rare, and where it occurs the fused promoter is too weak to sustain the gene, so the dominant outcome remains clean removal of whole operons between neighbours that keep their own regulators.
 
 To resolve the effect on individual retained genes, every \syn~gene kept in \syna~was classified by how the reduction changed the source of its transcription (Methods).
 Most were structurally unaffected (360) or lost only downstream context (45), whereas 42 belonged to operons whose own promoter was deleted with no replacement (\texttt{promoter\_lost}), and smaller groups gained read-in from an upstream terminator loss (\texttt{readthrough\_exposed}, 24), shifted in promoter proximity (17), were disconnected by an internal split (6), or gained a fused promoter (3).
-Across these classes promoter loss was the single class that robustly dropped in expression (median fold change 0.44 against 0.76 for unaffected genes, two-sided Mann--Whitney $p = 2.7\times10^{-4}$), with no other class differing significantly (Fig.~\ref{fig:reduction_operons}d).
-The DNA-binding protein \gene{hupA}{0350} is the clearest case: its promoter lies within the upstream neighbour \locus{0349}, which the reduction deleted, decapitating the operon so that \gene{hupA}{0350} collapsed in transcript (6.68 to 0.13, fold change 0.020) and protein (6.48 to 0.092, fold change 0.014) (Fig.~\ref{fig:reduction_operons}e); the deleted segment carried a perfect \texttt{TANAAT} promoter (\texttt{TATAAT}) backed by the extended \texttt{TNNTANAAT} motif, confirming that a genuine strong promoter was removed rather than incidental sequence.
-Promoter-source loss, by outright deletion as in \gene{hupA}{0350} or by replacement with a weaker fused promoter as in the ribosomal-protein genes, rather than any change in retained sequence, is thus the structural event that most strongly suppresses a retained gene.
+Across these classes promoter loss was the single class that robustly dropped in expression (median fold change 0.44 against 0.76 for unaffected genes, two-sided Mann--Whitney $p = 2.7\times10^{-4}$), with no other class differing significantly.
+
+Two adjacent central-carbon operons show this collectively: one deletion stripped the promoter and the pyruvate-dehydrogenase E1 subunits (\gene{pdhA}{0225}, \gene{pdhB}{0226}) from the pyruvate-dehydrogenase/acetate operon and a second removed the promoter of the neighbouring PTS operon, so the retained \gene{pdhC}{0227}--\gene{ackA}{0230} and \gene{ptsI}{0233}--\locus{0235} genes lost their promoters and fell together in \syna~(Fig.~\ref{fig:reduction_operons}c).
+
+The DNA-binding protein \gene{hupA}{0350} is the clearest single case: its promoter lies within the upstream neighbour \locus{0349}, which the reduction deleted, decapitating the operon so that \gene{hupA}{0350} collapsed in transcript (6.68 to 0.13, fold change 0.020) and protein (6.48 to 0.092, fold change 0.014) (Fig.~\ref{fig:reduction_operons}d); the deleted segment carried a perfect \texttt{TANAAT} promoter (\texttt{TATAAT}) backed by the extended \texttt{TNNTANAAT} motif, confirming that a genuine strong promoter was removed rather than incidental sequence.
+Promoter-source loss, by outright deletion as in \gene{hupA}{0350} and the central-carbon operons or by replacement with a weaker fused promoter as in the ribosomal-protein genes, rather than any change in retained sequence, is thus the structural event that most strongly suppresses a retained gene.
 
 % L5.5 (panel e): essentiality x trace-expression -- analysis not yet done (essentiality source pending); draft once available.
 
@@ -27,11 +31,11 @@ Promoter-source loss, by outright deletion as in \gene{hupA}{0350} or by replace
     \centering
     \includegraphics[scale=1]{figures/reduction_operons.pdf}% born-at-size: native 177.8 mm, fits the 180 mm text block
     \caption{\textbf{Genome minimization remodels \syn~operon structure.}
-    (a) Schematic of the \syn~$\rightarrow$~\syna~reduction: 95 deletions overlaid on the operon map, classified by whether each operon was fully excised, partially truncated, or left intact.
-    (b) In \syn, \gene{rpsT}{0082} is co-transcribed with \locus{0083}.
-    (c) In \syna, deletion of the intervening span (DEL\_014) fuses operons OP\_00043 and OP\_00050, placing \gene{rpsT}{0082} downstream of \locus{0094} in a new transcription unit supported by 37 bridging reads.
-    (d) \syna/\syn~transcript fold change for retained genes grouped by transcriptional-impact class (promoter lost, other structural change, or unaffected); only the promoter-lost group is robustly reduced (two-sided Mann--Whitney vs unaffected).
-    (e) The \gene{hupA}{0350} operon, decapitated because its promoter lay within the deleted neighbouring gene \locus{0349}, with the shaded band marking sequence removed in \syna. \cmt{EFU: add syn3A track of seq depth (Illumina) to panel e to show hupA not expressed in syn3A}}
+    (a) The \syn~$\rightarrow$~\syna~reduction: 95 deletions on the operon map, coloured by whether each operon was excised, truncated, or kept.
+    (b) \gene{rpsT}{0082} switches partner: co-transcribed with \locus{0083} in \syn, then fused downstream of \locus{0094} in \syna~after DEL\_014 excises 15.5~kb (37 bridging ONT reads), both aligned on the shared \gene{rpsT}{0082} 5$'$ end.
+    (c) Two decapitated central-carbon operons: deletions took the promoters of the pyruvate-dehydrogenase/acetate operon (\gene{pdhC}{0227}--\gene{ackA}{0230}) and the adjacent PTS operon (\gene{ptsI}{0233}--\locus{0235}), which drop together in \syna.
+    (d) The \gene{hupA}{0350} operon, decapitated by deletion of the promoter inside its neighbour \locus{0349}, collapses in \syna.
+    Panels b--d share a deletion-junction relative axis with PacBio isoforms and Illumina depth (× genome-mean; log scale in c); the \syna~depth is mapped through the retained blocks, so deletions read as shaded gaps.}
     \label{fig:reduction_operons}
 \end{figure}
 

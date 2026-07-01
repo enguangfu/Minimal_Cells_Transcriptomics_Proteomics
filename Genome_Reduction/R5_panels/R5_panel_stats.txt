@@ -1,21 +1,12 @@
 
-[panel a] genome-reduction map: 95 deletions, 537 kb; length bins [1, 26, 38, 25, 5] -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5a_genome_reduction_map.pdf
-
-[panel b] Syn1 operon OP_00043 (rpsT/0082 + 0083, before fusion) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5b_rpsT_operon_syn1.pdf
-
-[panel c] isoforms shown: 30 others + 1 full-span highlighted (>= 3 reads for others)
-[panel c] fusion DEL_014 (Syn3A joined OP_00043|OP_00050) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5c_fusion_DEL014.pdf
-
-[panel d | grouping=g3 kind=violin] log10 TPM FC by group
-  Promoter lost              n= 42  median FC=0.438  p(vs Unaffected)=2.67e-04  star=***
-  Other affected             n= 85  median FC=0.672  p(vs Unaffected)=7.42e-01  star=ns
-  Unaffected                 n=324  median FC=0.762  p(vs Unaffected)=nan  star=-
-Saved: /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5d_TPM_FC_by_impact_class.pdf  (figsize=1.75 x 1.75 in)
-
-[panel e] HupA operon OP_00187 (decapitation, DEL_050) -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5e_hupA_operon.pdf
-
-[hupA -10 promoter] operon OP_00187  TSS=441031 (+ strand)
-  -10 hexamer (TANAAT)   : TATAAT  match=True mm=0 shift=0
-  -10 extended (TNNTANAAT): TTATATAAT  match=True mm=0 shift=0
-  motif_tier             : strong_9mer
-  -10 window 441019-441024 falls inside DEL_050 (440092-441059) -> the promoter was deleted in Syn3A (decapitation)
+[panel c] central-carbon operons OP_00121 + OP_00122 decapitated (DEL 288391-292905 & 298422-300803); operon-spanning isoforms 8+8; log-y depth -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5c_central_carbon.pdf
+  average depth (x genome mean), retained genes; FC = Syn3A/Syn1:
+    REGION OP_00121 (pdhC-lpdA-pta-ackA)  Syn1   9.51x  Syn3A   3.01x  FC 0.317
+    REGION OP_00122 (ptsI-crr-0235)       Syn1   1.41x  Syn3A   0.63x  FC 0.445
+    gene   pdhC/0227                      Syn1   8.51x  Syn3A   3.68x  FC 0.432
+    gene   lpdA/0228                      Syn1  10.34x  Syn3A   3.64x  FC 0.352
+    gene   pta/0229                       Syn1   9.65x  Syn3A   2.57x  FC 0.267
+    gene   ackA/0230                      Syn1   9.19x  Syn3A   1.65x  FC 0.180
+    gene   ptsI/0233                      Syn1   0.93x  Syn3A   0.40x  FC 0.434
+    gene   crr/0234                       Syn1   3.86x  Syn3A   1.53x  FC 0.396
+    gene   0235                           Syn1   0.45x  Syn3A   0.43x  FC 0.956
