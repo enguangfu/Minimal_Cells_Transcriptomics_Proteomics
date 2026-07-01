@@ -21,12 +21,12 @@ Intrinsic degradation therefore has little influence on steady-state protein abu
 
 Repeating the entire analysis in \syna~returned the same picture (Fig.~\ref{fig:si-correlation}f--l).
 Transcript and protein levels correlated at Pearson $r = 0.63$ across the detected proteome ($n = 446$) and $r = 0.65$ for cytoplasmic proteins ($n = 352$), codon adaptation again explained a comparable slice of the residual ($\Delta R^{2} = +0.13$), and predicted initiation stayed uninformative.
-The transferred half-lives were shorter than in \syn~(median 5.7~h versus 32~h, tracking \syna's higher protease concentration) yet still exceeded the 105-min \syna~doubling time for all but 6.5\% of proteins (Fig.~\ref{fig:si-correlation}j), so protein turnover remains dominated by dilution through growth.
+The transferred half-lives were shorter than in \syn~(median 5.7~h versus 32~h), tracking the 5.4-fold higher Lon and 1.2-fold higher FtsH concentration in \syna, yet still exceeded the 105-min \syna~doubling time for all but 6.5\% of proteins (Fig.~\ref{fig:si-correlation}j), so protein turnover remains dominated by dilution through growth.
 % The correlation falls short of unity in both cells not because transcript level fails to specify the proteome but because each layer is measured with finite reproducibility and a genuine post-transcriptional component, chiefly elongation efficiency, offsets individual proteins, so the attainable ceiling is set jointly by measurement noise and by the modest translational tuning resolved here.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{figures/correlation.pdf}
+    \includegraphics[scale=1]{figures/correlation.pdf}% born-at-size: render at native size (5.25 in), no scaling
     \caption{\textbf{Transcriptome--proteome correlation in \syn.}
     (a) Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular).
     (b) Illumina sense TPM versus proteome iPM ($\log_{10}$).
@@ -38,7 +38,7 @@ The transferred half-lives were shorter than in \syn~(median 5.7~h versus 32~h, 
 
 \begin{sifigure}
     \centering
-    \includegraphics[width=1\linewidth]{figures/si-correlation.pdf}
+    \includegraphics[scale=1]{figures/si-correlation.pdf}% born-at-size: native 177.8 mm, fits the 180 mm text block
     \caption{\textbf{Supporting transcriptome--proteome analysis for \syn~and \syna.}
     (a) Length dependence of the PacBio-to-Illumina sense-TPM ratio in \syn.
     (b) Abundance dependence of the same ratio (MA plot).

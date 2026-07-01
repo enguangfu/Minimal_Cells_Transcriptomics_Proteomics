@@ -20,6 +20,7 @@ h) TIR vs residual r=0.148 (n=446); R2 0.390->0.405 (dR2=+0.015)
 l) R barplot: all 0.625->0.719, cytosolic 0.653->0.730
 
 Half-life: 216 genes mapped by suffix; Cyto_factor=0.158 Mem_factor=1.775 (Syn3A_V=0.0335 fL)
+   protease concentration FC syn3A/syn1: Lon 5.39x, FtsH 1.19x
 j) half-life median=5.7 h, shortest=0.9 h, n=216; 6.5% below the 105-min doubling time
 k) half-life vs residual r=-0.101 (n=215)
 

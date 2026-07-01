@@ -84,11 +84,16 @@ LOC_COLORS = {'cytoplasmic': '#0072B2', 'lipoprotein': '#009E73',
 
 # --- half-life re-scaling constants (mirror Translation_Residual_L3_degradation.py) ---
 Lon_Mpn_Num, FtsH_Mpn_Num, Mpn_Volume = 122, 689, 0.05      # Maier 2011 (Mpn)
+Lon_Syn1_Num, FtsH_Syn1_Num = 128, 292                      # this study (L3 constants)
+Syn1_Volume    = (4.0 / 3.0) * np.pi * (0.22 ** 3)          # fL, r = 220 nm (matches L3 0.044)
 Lon_Syn3A_Num  = 518.44   # JCVISYN3A_0394, copy_number_2026
 FtsH_Syn3A_Num = 260.20   # JCVISYN3A_0039, copy_number_2026
 Syn3A_Volume   = (4.0 / 3.0) * np.pi * (0.20 ** 3)          # fL, r = 200 nm (Breuer 2019)
 Cyto_HL_factor = (Lon_Mpn_Num / Mpn_Volume) / (Lon_Syn3A_Num / Syn3A_Volume)
 Mem_HL_factor  = (FtsH_Mpn_Num / Mpn_Volume) / (FtsH_Syn3A_Num / Syn3A_Volume)
+# concentration fold change syn3A/syn1 = (copies/volume) ratio (drives the shorter half-lives)
+Lon_conc_FC  = (Lon_Syn3A_Num / Syn3A_Volume)  / (Lon_Syn1_Num / Syn1_Volume)
+FtsH_conc_FC = (FtsH_Syn3A_Num / Syn3A_Volume) / (FtsH_Syn1_Num / Syn1_Volume)
 
 log = []
 def say(s):
@@ -405,6 +410,7 @@ hl = hl.dropna(subset=['halflife_h_syn3A'])
 df = df.merge(hl[['locus_tag', 'halflife_h_syn3A']], on='locus_tag', how='left')
 say(f"\nHalf-life: {len(hl)} genes mapped by suffix; Cyto_factor={Cyto_HL_factor:.3f} "
     f"Mem_factor={Mem_HL_factor:.3f} (Syn3A_V={Syn3A_Volume:.4f} fL)")
+say(f"   protease concentration FC syn3A/syn1: Lon {Lon_conc_FC:.2f}x, FtsH {FtsH_conc_FC:.2f}x")
 
 hv = hl['halflife_h_syn3A']
 DOUBLING_H = 105.0 / 60.0            # syn3A cell cycle, 105 min = 1.75 h

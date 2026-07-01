@@ -13,7 +13,9 @@
 \usepackage{graphicx} % Required for inserting images
 
 % Page
-\usepackage[a4paper, portrait, margin=1in]{geometry}
+% A4 with 15 mm side margins => text block = 210 - 30 = 180 mm, Nature's max figure width,
+% so the born-at-size figures (up to 177.8 mm / 7 in wide) fit natively. Top/bottom kept at 1 in.
+\usepackage[a4paper, portrait, top=1in, bottom=1in, left=15mm, right=15mm]{geometry}
 
 % Numbers
 \usepackage{float}
