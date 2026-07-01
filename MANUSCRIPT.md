@@ -51,15 +51,18 @@ Results:
   - X panel e -> now panel d (panel_d, hupA): syn1 + syn3A depth tracks, renormalized to genome-mean coverage, Illumina both organisms, syn3A mapped through the retained blocks so deleted regions read as gaps.
   - X panel d (violin replacement): rather than a TPM-FC distribution, replaced with the two-decapitated-central-carbon-operons showcase -> panel c (pdh/acetate OP_00121 + PTS OP_00122; operon-spanning PacBio isoforms; log-y Illumina depth; highlights promoter_lost cases beyond hupA). The impact-class violin is kept as panel_impact -> SI.
   - X panels b/c/d x-axis unified to "Relative transcript position (nt)".
+  - X prose reframed 2026-07-01: section retitled "Genome reduction decapitates the operons of key proteins"; leads with promoter-loss -> key-protein suppression (HupA + central-carbon in two dedicated paragraphs), fusion (rpsT/rpsO) framed as the rare, ineffective reciprocal. The operon-truncation / junction-taxonomy / gene-impact-class COUNTS were moved out of Results into Methods (`genome_reduction.tex`: 235/172/52 operon overlay; 53/19/15/8 + 30/11/9/3 junctions; 2/3 vs 3/30, baseline 27/45 co-transcription; 360/45/42/24/17/6/3 impact classes) + full tables in `\sdreduction`. rpsO TPM FC restored to 0.144 (protein unchanged/up, transcript-only).
   - [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
 
 - R6: 
-  - a: add title: mRNA pool share
-  - remove panel b since it overlap with panel a
-  - replace b with TPM correlation between two omics
-  - recheck the normalization scheme here to make sure fair comparison 
-  - expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper
-  - Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression
+  - X New story line [prose DONE 2026-07-01, see the R6 Figure NOTE below]: P1 removed half genes + 1/5 pool (panel a); P2 correlation still high but majority genes lower since translation up, esp. the 21-rPtn operon (new panel b); P3 RNAP/degradosome/central-carbon (panel c); P4 21-rPtn operon intact yet upstream now a tRNA operon (panels d, e).
+  - X a: add title: mRNA pool share in Illustrator [Illustrator step — panel unchanged in code]
+  - X new panel b: FC-vs-absChange (14/3, 7/2), black base dots, 51 rPtns green, correlation inset top-left (r=0.84, 66% below diagonal). `R6_figure_panels.py::panel_b`.
+  - X panel c: flipped to landscape (7, 7/6) — vertical lollipop, entities on x, FC on log-y.
+  - X panel c: legend "Transcript" -> "mRNA".
+  - [ ] recheck the normalization scheme here to make sure fair comparison (retained-pool mean-normalization; NOT re-verified this pass)
+  - [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper (DEFERRED per author)
+  - Finished Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression (DEFERRED per author)
 
 Discussion
 
@@ -512,11 +515,13 @@ For SI figure, each panel is (7/4, 7/4) except panel f and g.
 
 ---
 
-## R5 — Operonal structure changes to the minimal cell, JCVI-syn3A
+## R5 — Genome reduction decapitates the operons of key proteins
 **Tex file:** `Manuscript/sections/results/reduction_operons.tex`
+**Section title (current):** "Genome reduction decapitates the operons of key proteins" [retitled 2026-07-01; was "Operonal structure changes to the minimal cell, JCVI-syn3A"]
 
 ### One-sentence Summary
-**Halving the genome was a gene-order-preserving deletion campaign that excised whole operons, decapitated some retained operons by deleting their promoters, and fused only a small number of new cross-junction transcription units.**
+**Because the retained backbone is 99.90% identical, the deletions that most strongly suppress syn3A's retained proteins act regulatorily, by deleting an operon's own promoter (decapitation) — silencing functionally central genes such as the nucleoid protein HupA and the central-carbon enzymes — while the reciprocal event, fusing two operons into one weakly-driven unit, is rare and ineffective (rpsT, rpsO).**
+<!-- Prose reframed 2026-07-01 to lead with promoter-loss -> key-protein suppression; the deletion/junction/impact-class taxonomy COUNTS were moved out of Results into Methods (genome_reduction.tex) + Supplementary Data S3. Old framing kept below for reference: "Halving the genome was a gene-order-preserving deletion campaign that excised whole operons, decapitated some retained operons by deleting their promoters, and fused only a small number of new cross-junction transcription units." -->
 
 ### Figure
 **Figure:** `Manuscript/figures/genome_reduction.pdf`
@@ -607,11 +612,12 @@ Extended Figure:
 ### Figure
 **Figure:** `Manuscript/figures/reduction_omics.pdf`
 
-- Panel a: mRNA pool compositions in syn1 and syn3A as secondary protein functions.
-- Panel b: Significant mRNA pool share changes from syn1 to syn3A as tertiary functions.
-- Panel c: Transcription and translation changes of RNAP, degradosome and enzymes in central metabolism.
-- Panel d: The giant ~11 kb ribosomal-protein operon OP_00341 (MMSYN1_0652–0672), one polycistron, no internal terminator; gene track + RNA isoforms + depth; supplies 12% of the syn1 → 34% of the syn3A coding mRNA pool. (14/3, 7/3). [L6.3. Replaces the blocked ATP/GTP flux panel; the flux prediction stays text-only in L6.5.]
-- Panel e: The syn3A tRNA operon (Thr/Val/Glu/Asn, MMSYN1_0678–0681) relocated by the flanking deletions to ~770 bp upstream of the rPtn operon; Illumina + ONT depth across the silent inter-operon gap show no read-through (the two operons stay independent). Broken minus-strand axis. (7/3, 7/3). [L6.3]
+- Panel a: mRNA pool compositions in syn1 and syn3A as secondary protein functions. [P1] (title "mRNA pool share" added in Illustrator)
+- Panel b [NEW 2026-07-01, replaces the old tertiary-share dumbbell]: mRNA fold change (syn3A/syn1, x, log) vs absolute change (y, symlog) for the retained coding pool; base dots BLACK (alpha ramped by syn1 baseline), the 51 ribosomal proteins GREEN; INSET top-left = syn1-vs-syn3A relative-mRNA log-log correlation with y=x diagonal (r=0.84, 66% of genes below the diagonal = "majority shift down"). Size (14/3, 7/2). Built by `R6_figure_panels.py::panel_b`. [P2]
+- Panel c: mRNA + protein fold change of RNAP, degradosome and central-carbon enzymes. FLIPPED 2026-07-01 from portrait (7/3, 7/2) to LANDSCAPE (7, 7/6): vertical lollipop, entities on x (rotated labels, family-coloured), fold change on log-y, ref line at 1; legend relabelled "Transcript" -> "mRNA". `R6_figure_panels.py::panel_c`. [P3]
+- Panel d [MERGED 2026-07-01: old d (operon structure) + old e (tRNA junction) → one panel; old `R6_panel_e_trna_rptn.py`/`R6e_trna_rptn_syn3A.pdf` SUPERSEDED]: the 21-gene ~11 kb rPtn operon (rpsJ/0672→secY/0652, minus) + its swapped upstream neighbour, both cells on ONE transcript axis anchored on the shared operon 5′ end / TSS (806176; rel 0; rpsJ starts at ~+77 after the 5′ UTR; operon body positive, upstream negative). [origin changed rpsJ-5′ → operon-TSS 2026-07-01; title "21-gene ribosomal-protein operon" removed] 4 tracks top→down: syn1 genes (upstream dhaK/0673) | syn1 Illumina depth (×mean) | syn3A genes (upstream 4-tRNA operon 0678–0681, pulled to ~770 bp) | syn3A Illumina depth (×mean). Retained operon aligns 1:1; only the upstream neighbour changed; silent inter-operon gap shaded (no read-through). Every gene arrow labelled by gene name, alternating above/below the axis; the operon-body gray shade was removed (2026-07-01 per author). The promoter −10 box and the mRNA-pool-share text were computed and then TAKEN OFF the plot per author (2026-07-01) — both are EXPORT/prose only, not annotated on the figure. Size (7, 7/3). `R6_figure_panels.py::panel_d`. Exports to `R6_panels/R6de_rPtn_operon_depth.txt`: mean normalized operon-body depth (rel 0..10853) **syn1 5.36× vs syn3A 8.45× genome-mean (FC 1.58)**; coding mRNA-pool share **syn1 12.49% → syn3A 34.06% (share FC 2.73)**; retained promoter **−10 box TAGAAT** (canonical TANAAT, core_6mer, OP_00341 TSS 806176, retained in both — DEL_074 starts 179 bp upstream). [P4]
+
+- NOTE [PROSE RESTRUCTURE 2026-07-01]: `reduction_omics.tex` reordered into 4 paragraph-blocks (P3 runs as 2 paras): **P1** removal + retained-pool composition leans to translation (Transl 53.1→64.9%, CCM 17.0→10.7%; panel a); **P2** hierarchy conserved (relTPM r=0.84 n=443; relIPM r=0.87 n=423) yet 66% of retained genes fell — freed capacity funnelled into ribosomal proteins (rpsK/rplO/rplX/rplN) + the one 21-gene operon (~1/3 of coding pool); selective exceptions rpsT/rpsO collapse + intact-but-down rpmF/rpmE/rpsU (panel b); **P3** RNAP↓ (0.65/0.79) vs degradosome↑ (1.68/1.36) coherent w/ 105-vs-60-min cell cycle, then the central-carbon enzyme cascade (glycolysis/pdh/acetate FCs) + ATP/GTP prediction (panel c); **P4** the 11 kb operon dominates from its own retained promoter, upstream neighbour swapped dhaK→tRNA operon, still no co-transcription (panel d, now the MERGED d+e). 66%-below-diagonal + r=0.84/0.87 now in `R6_panels/R6_stats.txt` ("[L6.1b / panel b]"); operon-body depth in `R6de_rPtn_operon_depth.txt`. Compiles clean. Deferred per author: fbaA/Cell-2022 glycolysis expansion. [d+e MERGED 2026-07-01 per author]
 
 ### Chain of Logics
 
@@ -658,7 +664,7 @@ Extended Figure:
 - **Outputs:**
   - `Compare_RNA_Protein/syn1_vs_syn3a_RNA_protein.tsv`
   - `R6_panels/R6_stats.txt`
-- **Numbers to cite:** OP_00341 = 21 genes, ~11 kb (10,954 bp), minus strand, one polycistron with NO internal terminator; coding mRNA-pool share 12.1% (syn1) → 34.0% (syn3A), share FC 2.80, per-gene relTPM FC 1.48; full-length ~11 kb reads rare (1–2, PacBio read-length limit); depth = 5' polarity gradient (~90k at 5') with a sharp internal step at tx~2100 (endonucleolytic cut, likely RNase Y/degradosome which is up in syn3A, L6.4). New upstream neighbour after DEL_074 (5,509 bp; dhaK/0673–0676) + DEL_075 (912 bp; 0677): co-directional 4-tRNA operon MMSYN1_0678–0681 = Thr/Val/Glu/Asn; TSS(806176)→nearest deletion 179 bp (promoter intact); TSS→tRNA-3' 7,193 bp (syn1) → 772 bp (syn3A). Co-expression test rpsJ/0672 ↔ tRNA cluster: ONT 0/3084 spanning reads; Illumina true inter-operon middle (419784–420350) mean depth 27 = 1.2% of flanking → SPLIT (not co-transcribed).
+- **Numbers to cite:** OP_00341 = 21 genes, ~11 kb (10,954 bp), minus strand, one polycistron with NO internal terminator; coding mRNA-pool share 12.1% (syn1) → 34.0% (syn3A), share FC 2.80, per-gene relTPM FC 1.48; full-length ~11 kb reads rare (1–2, PacBio read-length limit); depth = 5' polarity gradient (~90k at 5') with a sharp internal step at tx~2100 (endonucleolytic cut, likely RNase Y/degradosome which is up in syn3A, L6.4). New upstream neighbour after DEL_074 (5,509 bp; dhaK/0673–0676) + DEL_075 (912 bp; 0677): co-directional 4-tRNA operon MMSYN1_0678–0681 = Thr/Val/Glu/Asn; TSS(806176)→nearest deletion 179 bp (promoter intact); **−10 box = TAGAAT** (canonical TANAAT, core_6mer tier, 0 mm; via promoter_motif.scan_minus10; retained in both cells); panel-d operon-body mean Illumina depth 5.36× (syn1) → 8.45× (syn3A) genome-mean, FC 1.58; TSS→tRNA-3' 7,193 bp (syn1) → 772 bp (syn3A). Co-expression test rpsJ/0672 ↔ tRNA cluster: ONT 0/3084 spanning reads; Illumina true inter-operon middle (419784–420350) mean depth 27 = 1.2% of flanking → SPLIT (not co-transcribed).
 - **Figure panels:** d, e
 - **Conclusion:** The 11 kb r-protein operon, expressed from its own retained promoter as one endonucleolytically processed transcript, carries about a third of the syn3A coding mRNA pool; the deletion that parked a tRNA operon within ~770 bp upstream changed its neighbour but not its regulation, and the two operons stay transcriptionally independent — so the upregulation is the intact promoter plus the L6.2 pool reallocation, NOT tRNA read-through.
 - **Caveats:** the ~11 kb full-length isoform is undersampled by PacBio read-length, so single-unit structure is inferred from continuous depth + no internal terminator, not from many full-span reads; the internal step is a depth/3'-end signature consistent with RNase Y cleavage, not a mapped cut site.

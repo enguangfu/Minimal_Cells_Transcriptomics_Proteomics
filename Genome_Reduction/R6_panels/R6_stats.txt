@@ -10,6 +10,10 @@ R6 - Transcriptome & proteome reallocation in Syn3A : key numbers
   mRNA pool (coding only)       :  21.78%  (140,255 / 644,001 TPM)
   total proteome                :  22.25%  (222,479 / 999,890 iPM)
 
+[L6.1b / panel b] Retained-pool conservation vs downshift
+  relTPM Syn1 vs Syn3A  Pearson(log10) r = 0.841  (n = 443 mRNA)
+  genes below the y=x diagonal (relTPM_syn3A < relTPM_syn1): 66.1%  (most of the retained pool shifted down to fund the r-protein rise)
+
 [L6.2 / panels a,b] Function-category mRNA-pool share change (retained pool, deletion-corrected; FC=Syn3A/Syn1)
   Translation                 53.11% ->  64.95%  (d +11.83 pts)  medFC 1.16  p=1.75e-01
   Folding, Sorting and Degra   3.32% ->   4.46%  (d +1.14 pts)  medFC 1.37  p=9.71e-02

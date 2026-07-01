@@ -1,0 +1,15 @@
+21-gene rPtn operon OP_00341 (rpsJ/0672 -> secY/0652, minus strand)
+================================================================
+mean Illumina depth over the operon body (rel 0..10954 nt, TSS -> tts), normalized to genome-mean coverage (x mean):
+  Syn1  : 5.361x
+  Syn3A : 8.422x
+  fold change (Syn3A/Syn1): 1.571
+
+coding mRNA-pool share (sum relTPM of the 21 genes / total coding relTPM):
+  Syn1  : 12.49%
+  Syn3A : 34.06%   (share fold change 2.73)
+
+promoter -10 box (OP_00341 TSS 806176, minus strand; retained in both cells, nearest deletion DEL_074 starts 179 bp upstream):
+  -10 hexamer (TANAAT)    : TAGAAT  match=True mm=0 shift=0
+  -10 extended (TNNTANAAT): GTATAGAAT  match=False mm=1 shift=0
+  motif_tier              : core_6mer
