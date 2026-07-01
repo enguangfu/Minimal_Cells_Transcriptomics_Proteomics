@@ -28,7 +28,7 @@ Results:
   - X DoneRGB for trans-membrane part (74, 124, 179) for peripheral part (0, 146, 69)
   - X Done remove legends of 5' and 3' block
   - X Done No internal promoter predicted from TransTermHP within this region; depth drop from delta to alpha can from RNAP deattach or RNase III digestion; drop from gamma to beta can be from
-  - Remove corresponding Methods section of finding dsRNA stem on atpA gene
+  - X Remove corresponding Methods section of finding dsRNA stem on atpA gene
 
 - R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: [DONE 2026-07-01]
   - X a. Put several panels to Supplemental figures; main correlation.pdf trimmed to 5 syn1 panels (a copynum, b TPMvsiPM, c PacBiovsIllumina, d R±CAI, e half-life dist); the residual/bias panels moved to new Figure S1 (`si-correlation.pdf`, panels a-l), inserted right after Fig 3 via the `sifigure` env in macros.tex (numbers as S1, restores main counter; verified compile).
@@ -44,13 +44,14 @@ Results:
   - X depth normalization (Syn1 tracks d+g AND the Syn3A track): x TOTAL (plus+minus) genome-mean coverage, to match novel.tex's "genome-wide average" basis (Syn1 total 4184, Syn3A total 2355). his3 antisense = Syn1 ~8x vs Syn3A ~0.23x (== the 0.23x quoted in novel.tex L4.3); panel g now ~0.5x. NOTE for novel.tex: his3 Syn1 "depth exceeding 30,000" -> "~8x the genome mean".
   - X panels g, h xlabel -> "Syn1 Genome Position (kb)".
   
-- R5: 
-  - panel a: resize to 7/3, 7/3
-  - Add one panel (could be 14/3, 7/3) to visual the third paragraph in the result: how one junction can reform the operons at both ends
-  - Merge panel b and c: need more discussion here
-  - panel e: Add syn3A track to panel e to highligh how hupA not expressed a. renormalized the depth by dividing avg depth b. show syn3A depth using Illumina only in the retained regions
-  - panel d: replace the violin plot with actual distribution of TPM fold of change and highlight cases other than hupA
-  - Add one sentence saying why shorter reads in ONT
+- R5: [figures DONE 2026-07-01 — layout now a/b/c/d; details in the R5 figure-list NOTE below]
+  - X panel a: resize to 7/3, 7/3 (panel_a).
+  - X Add the junction-reformation panel (14/3, 7/3): the DEL_014 fusion where one junction reforms the operons at both ends -> panel b.
+  - X Merge panel b and c -> single panel b (panel_b): rpsT/0082 partner switch on the shared-0082 5' transcript axis (syn1 0083/0082 co-transcription + syn3A 0094/0082 fusion; the lone 2-read ONT isoform spanning 0094+0082 highlighted).
+  - X panel e -> now panel d (panel_d, hupA): syn1 + syn3A depth tracks, renormalized to genome-mean coverage, Illumina both organisms, syn3A mapped through the retained blocks so deleted regions read as gaps.
+  - X panel d (violin replacement): rather than a TPM-FC distribution, replaced with the two-decapitated-central-carbon-operons showcase -> panel c (pdh/acetate OP_00121 + PTS OP_00122; operon-spanning PacBio isoforms; log-y Illumina depth; highlights promoter_lost cases beyond hupA). The impact-class violin is kept as panel_impact -> SI.
+  - X panels b/c/d x-axis unified to "Relative transcript position (nt)".
+  - [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
 
 - R6: 
   - a: add title: mRNA pool share
@@ -565,7 +566,7 @@ Extended Figure:
 - **Outputs:**
   - `Genome_Reduction/deletion_junction/deletion_junctions.tsv`, `deletion_junction_summary.txt`
   - `Genome_Reduction/operon_pair_coexpression/`, `single_operon_coexpression/`
-- **Numbers to cite:** 95 junctions: tandem 53, convergent 19, divergent 15, intra_operon 8; tandem junction_type: fusion 3, decapitation 9, readthrough_extension 11, clean_excision 30; cross-junction co-transcription (loose): fusion 67% (2/3) vs clean_excision 10% (3/30, negative control); pristine single-operon baseline preserved_loose 60% (45 testable, 111 pairs); fusion exemplar DEL_014 OP_00043 -> OP_00050 (MMSYN1_0094 -> MMSYN1_0082 = rpsT/S20), n_span=2, n_bridge=37, however the TPM FC was still low as 0.074 for rpsT/0082 since the fused promoter of 0094 is weak (in syn1, 0082 was co-transcribed with 0083 instead); a second r-protein rpsO/S15 (MMSYN1_0294) followed the same route (lost its own promoter, gained a weak fused one) and likewise collapsed to TPM FC 0.036. Both rpsT/0082 and rpsO/0294 are gene_impact_class new_promoter_fusion (from 08).
+- **Numbers to cite:** 95 junctions: tandem 53, convergent 19, divergent 15, intra_operon 8; tandem junction_type: fusion 3, decapitation 9, readthrough_extension 11, clean_excision 30; cross-junction co-transcription (loose): fusion 67% (2/3) vs clean_excision 10% (3/30, negative control); pristine single-operon baseline preserved_loose 60% (45 testable, 111 pairs); fusion exemplar DEL_014 OP_00043 -> OP_00050 (MMSYN1_0094 -> MMSYN1_0082 = rpsT/S20), n_span=2, n_bridge=37, however the TPM FC was still low as 0.074 for rpsT/0082 since the fused promoter of 0094 is weak (in syn1, 0082 was co-transcribed with 0083 instead); a second r-protein rpsO/S15 (MMSYN1_0294) followed the same route (lost its own promoter, gained a weak fused one) and likewise dropped in transcript to **TPM FC 0.144** (relTPM 3.05 -> 0.44; its PROTEIN is unchanged/up, iPM FC 1.26 — so "collapse" is transcript-only). [CORRECTED 2026-07-01: earlier note said TPM FC 0.036, which was wrong; verified 0.144 from syn1_vs_syn3a_RNA_protein.tsv.] Both rpsT/0082 and rpsO/0294 are gene_impact_class new_promoter_fusion (from 08).
 - **Figure panels:** b (rpsT/0082 partner switch; old syn1-b + syn3A-c merged onto the shared rpsT/0082 5' axis)
 - **Conclusion:** Operon fusion is real but rare (3 events); the dominant junction outcome is clean excision of whole operon(s) between intact neighbors.
 - **Caveats:** ONT depth is low, so most positive calls are loose-bridge rather than strict-spanning; convergent/divergent junctions are opposite-strand and not expected to co-transcribe.

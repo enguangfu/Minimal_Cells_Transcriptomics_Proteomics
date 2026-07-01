@@ -338,7 +338,7 @@ def _junction_panel(win_s, win_e, D1, iso_sel, rel_ticks, fig_w, fig_h,
     off = D1 - win_s                                                    # rel -> tx: tx = rel + off
     axes[3].set_xticks([r + off for r in rel_ticks])
     axes[3].set_xticklabels([str(r) for r in rel_ticks], fontsize=5)
-    axes[3].set_xlabel('Relative genome position (bp)', fontsize=6)
+    axes[3].set_xlabel('Relative transcript position (nt)', fontsize=6)
 
     for d0, d1 in R4.DELETIONS:                          # deletion shading across all four tracks
         if d1 <= win_s or d0 >= win_e:
@@ -586,8 +586,10 @@ def panel_b(out_name="R5b_rpsT_fusion.pdf", fig_w=14 / 3, fig_h=7 / 3):
     out = os.path.join(OUTDIR, out_name)
     fig.savefig(out, dpi=300); plt.close(fig)
     log(f"\n[panel b] rpsT/0082 partner switch 0083(Syn1)->0094(Syn3A) via DEL_014 (15,465 bp); "
-        f"Syn1 iso={len(i1)}, Syn3A iso={len(i3)} ({n_hl} junction-spanning shown); "
-        f"rpsT depth syn1={float(c1[-TP_LO:-TP_LO+246].mean()):.1f}x vs syn3A={float(c3[-TP_LO:-TP_LO+246].mean()):.2f}x mean -> {out}")
+        f"Syn1 iso={len(i1)}, Syn3A iso={len(i3)} ({n_hl} junction-spanning shown) -> {out}")
+    rs, re = -TP_LO, -TP_LO + 246           # rpsT/0082 body (tp 0..246) on the transcript axis
+    s1v, s3v = float(np.nanmean(c1[rs:re])), float(np.nanmean(c3[rs:re]))
+    log(f"  rpsT/0082 mean depth (x genome mean): Syn1 {s1v:.2f}x, Syn3A {s3v:.3f}x, FC {s3v/s1v:.3f}")
     return out
 
 
