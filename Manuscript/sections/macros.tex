@@ -68,6 +68,16 @@
 %\newcommand{\figs}[3][]{\textcolor{magenta}{\textbf{Figs.}}~\ref{fig:#2}-\ref{fig:#3}#1}
 \newcommand{\figs}[3][]{\textbf{Figs.}~\ref{fig:#2}-\ref{fig:#3}#1}
 
+% Supplementary figure: numbered S1, S2, ... without disturbing the main figure counter.
+\newcounter{savedfigure}
+\newenvironment{sifigure}[1][H]
+  {\setcounter{savedfigure}{\value{figure}}%
+   \setcounter{figure}{0}%
+   \renewcommand{\thefigure}{S\arabic{figure}}%
+   \begin{figure}[#1]}
+  {\end{figure}%
+   \setcounter{figure}{\value{savedfigure}}}
+
 \newcommand{\ltbl}[1]{\label{tbl:#1}}
 %\newcommand{\tbl}[1]{\textcolor{magenta}{\textbf{Table}}~\ref{tbl:#1}}
 \newcommand{\tbl}[1]{\textbf{Table}~\ref{tbl:#1}}

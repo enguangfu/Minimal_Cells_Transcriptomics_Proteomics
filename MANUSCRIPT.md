@@ -23,16 +23,18 @@ Results:
   - X Add a panel as f to show the spatial organization of ATP synthase
   - X Delete the atpA mRNA secondary structure prediction
   - X DONE 2026-06-30 — panel g remade (R2_figure_panels.py -> R2_panels/R2g_atp_synthase.pdf): per-subunit gene colours + locusNum/subunit two-line labels, F0/F1 isoform colours, sqrt-of-reads line thickness, depth normalised to x-mean, RNase III cut removed, single 5'-sorted isoform stack; final size 7/3 (not 7/4).
-  - Compress panel g to size (7, 7/4); make depth track longer; denote thickness to isoform counts; color each gene/subunit; draw RNA isoforms in two colors, one for trans-membrane F0 and one for peripheral membrane F1; No internal stop in syn1 given no predicted terminator;
-  - RGB color for subunit: 0797 subunit black, a (61,132,181), c (174, 174, 174), b (202,112,199), delta (234, 52, 38), alpha (219, 120, 66), gamma (244, 193, 66), beta (158, 214, 126), epsilon (76, 124, 49) 
-  - RGB for trans-membrane part (74, 124, 179) for peripheral part (0, 146, 69)
-  - remove legends of 5' and 3' block
-  - No internal promoter predicted from TransTermHP within this region; depth drop from delta to alpha can from RNAP deattach or RNase III digestion; drop from gamma to beta can be from 
+  - X Done Compress panel g to size (7, 7/4); make depth track longer; denote thickness to isoform counts; color each gene/subunit; draw RNA isoforms in two colors, one for trans-membrane F0 and one for peripheral membrane F1; No internal stop in syn1 given no predicted terminator;
+  - X Done RGB color for subunit: 0797 subunit black, a (61,132,181), c (174, 174, 174), b (202,112,199), delta (234, 52, 38), alpha (219, 120, 66), gamma (244, 193, 66), beta (158, 214, 126), epsilon (76, 124, 49) 
+  - X DoneRGB for trans-membrane part (74, 124, 179) for peripheral part (0, 146, 69)
+  - X Done remove legends of 5' and 3' block
+  - X Done No internal promoter predicted from TransTermHP within this region; depth drop from delta to alpha can from RNAP deattach or RNase III digestion; drop from gamma to beta can be from
+  - Remove corresponding Methods section of finding dsRNA stem on atpA gene
 
-- R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: 
-  - a. Put several panels to Supplemental figures; 
-  - b. repeat the analysis on syn3A, and report the values; 
-  - c. discuss a little bit why R is not 1 as Abner emailed me
+- R3: The correlation analysis is sort of standard and we want to suppress this discussion even more: [DONE 2026-07-01]
+  - X a. Put several panels to Supplemental figures; main correlation.pdf trimmed to 5 syn1 panels (a copynum, b TPMvsiPM, c PacBiovsIllumina, d R±CAI, e half-life dist); the residual/bias panels moved to new Figure S1 (`si-correlation.pdf`, panels a-l), inserted right after Fig 3 via the `sifigure` env in macros.tex (numbers as S1, restores main counter; verified compile).
+  - X b. repeat the analysis on syn3A, and report the values; new `Syn3A_Corr_RNA_Proteins/Corr_RNA_Protein_Syn3A.py` (run in RNAseq env, needs ostir) -> `R3_panels_syn3A/panel_{f..l}.pdf` + `syn3A_genes_transcriptomics_proteomics.csv` + `R3_syn3A.txt`. **syn3A values:** TPM-iPM r=0.63 (all, n=446) / 0.65 (cyto, n=352); CAI dR2=+0.127 (0.39->0.52), r=0.46; TIR dR2=+0.015, r=0.15; R±CAI all 0.63->0.72, cyto 0.65->0.73; half-life median 5.7h (shortest 0.9h, 6.5% below the 105-min doubling). Method diffs: TIR gene-level OSTIR from scratch (no isoforms); CAI recomputed w/ syn3A top-20%-iPM ref set; half-life reused by locus suffix + re-scaled by syn3A Lon(518)/FtsH(260) & V=0.0335 fL (factors 0.16/1.78). syn1 bias panels (S1 a,b) added to `Syn1_Corr_RNA_Proteins/R3_figure_panels.py`. Methods: `corr_transcriptome_proteome.tex` "Repeating the analysis in Syn3A" subsection.
+  - X c. discuss a little bit why R is not 1 as Abner emailed me; sentence drafted in `corr_RNA_ptn.tex` (finite measurement reproducibility + genuine elongation-driven offsets set the ceiling) — currently COMMENTED OUT by author.
+  - NOTE: the old "no length/abundance bias" claim was softened to "weak dependence (r=0.22 / -0.23, both |r|<0.25)" — the S1 a,b panels now SHOW the weak bias, so the text and figure agree.
 
 - R4: [DONE 2026-06-30 — R4_track_panels.py; b/c untouched]
   - X panel a: matched the "Isoform span (5'->3')" label to the b/c xlabel font (real set_xlabel, 7pt) and lowered the case rows (ylim -0.2..2.9) so spurious/read-through/embedded align row-for-row with the b/c ridge baselines; isoform-span arrow moved into the bottom margin. (Earlier "move isoform/xlabels to top" idea dropped.)
@@ -239,9 +241,9 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 - Panel a: Legends of erosions of RNA isoforms and of RNA processing molecules (shared top strip: 4 erosion categories + 5 RNase/ribosome/tmRNA icons). (7, 7/10) — `Syn1_RNase/R2_panels/R2a_legend_strip.pdf` (icons also as standalone `R2_icon_*.pdf`).
 - Panel b: RNA isoform distribution for gene 0178 with more 3' erosion. (7/2, 7/4) — `Syn1_RNase/R2_panels/R2b_0178_3p_erosion.pdf`
 - Panel c: RNA isoform distribution for gene 0154/lap with more 5' erosion. (7/2, 7/4) — `Syn1_RNase/R2_panels/R2c_lap_5p_erosion.pdf`
-- Panel d: 3' secondary structure for gene 0178 (7/4, 7/4) — `Syn1_RNase/R2_panels/R2d_0178_3prime_structure.pdf` (from `fold_3prime_terminator.py`, mirrored from `terminator_3p/`)
-- Panel e: RNA isoform truncation categories. (7/4, 7/4) — `Syn1_RNase/R2_panels/R2e_truncation_categories.pdf`
-- Panel f: Biased RNA Processing schematics: endo and exo from 3'. (7/2, 7/4) — Illustrator (no matplotlib file)
+- Panel d: RNA isoform truncation categories. (7/4, 7/4) — `Syn1_RNase/R2_panels/R2e_truncation_categories.pdf`
+- Panel e: Biased RNA Processing schematics: endo and exo from 3'. (7/2, 7/4) — Illustrator (no matplotlib file)
+- Panel f: Subunit composition and spatial arrangement of ATP synthase - Illustrator
 - Panel g: RNA isoform distributions for ATP synthase operon — isoforms split into two regions at atpA/α (0792) where RNase III cuts; coloured by 5'-block (a,c,b,δ; teal) vs 3'-block (γ,β,ε; orange), gene arrows tinted by block, depth steps down at the α cut. (7, 7/3) — `Syn1_RNase/R2_panels/R2g_atp_synthase.pdf` (matplotlib: gene arrows + isoforms + depth only; the F1/F0 scheme, SD strengths, subunit labels, "RNase III on α" scissors are added in Illustrator).
 
 ### Chain of Logics
@@ -307,14 +309,26 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 ### Figure
 **Figure:** `Manuscript/figures/correlation.pdf`
 
-- Panel a: Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular).
-- Panel b: Illumina sense TPM vs proteome iPM (log10).
-- Panel c: PacBio vs Illumina sense TPM (log10).
-- Panel d: Predicted TIR vs proteome residual.
-- Panel e: CAI vs proteome residual.
-- Panel f: Model Pearson R for whole proteome and cytoplasmic proteins, with/without CAI.
-- Panel g: Intrinsic protein half-lives transferred from Mpn.
-- Panel h: Protein half-life vs proteome residual.
+- Panel a: Syn1 Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular).
+- Panel b: Syn1 Illumina sense TPM vs proteome iPM (log10).
+- Panel c: Syn1 PacBio vs Illumina sense TPM (log10).
+- Panel d: Syn1 Pearson R for whole proteome and cytoplasmic proteins, with/without CAI.
+- Panel e: Syn1 Intrinsic protein half-lives transferred from Mpn.
+
+For SI figure, each panel is (7/4, 7/4) except panel f and g.
+**Figure:** `Manuscript/figures/si-correlation.pdf`
+- Panel a: Syn1 length biase comparison between PacBio and Illumina
+- Panel b: Syn1 Abundance biase between PacBio and Illumina
+- Panel c: Syn1 TIR vs proteome residual.
+- Panel d: Syn1 CAI vs proteome residual.
+- Panel e: Syn1 Protein half-life vs proteome residual.
+- Panel f: Syn3A Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular). (7/2, 7/4)
+- Panel g: Syn3A Illumina sense TPM vs proteome iPM (log10). (7/2, 7/2)
+- Panel h: Syn3A TIR vs proteome residual.
+- Panel i: Syn3A CAI vs proteome residual.
+- Panel j: Syn3A Intrinsic protein half-lives transferred from Mpn.
+- Panel k: Syn3A Protein half-life vs proteome residual.
+- Panel l: Syn3A Pearson R for whole proteome and cytoplasmic proteins, with/without CAI.
 
 ### Chain of Logics
 

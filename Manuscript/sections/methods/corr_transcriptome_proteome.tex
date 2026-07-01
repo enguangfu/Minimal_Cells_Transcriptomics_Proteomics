@@ -29,3 +29,20 @@ Adding CAI to the baseline model raised the explained variance from $R^{2} = 0.3
 Because turnover is set by the responsible protease, each transferred half-life was scaled by the~\mpn-to-\syn~abundance ratio of that protease, applying Lon to cytoplasmic proteins and FtsH to membrane and lipoproteins, with protease copy numbers and cell volumes taken from this study and from~\mpn~\cite{maier_quantification_2011} (scaling factors 0.84 for Lon and 2.08 for FtsH).
 The shortest~\syn-corrected half-life was 4.7~h and the median was 32~h, all far longer than the $\sim$1~h cell-doubling time, so protein loss is dominated by dilution through growth rather than by active degradation.
 Accordingly, adding $\log_{10}(t_{1/2})$ to the baseline $\log_{10}(\text{iPM}) \sim \log_{10}(\text{TPM})$ model increased $R^{2}$ by at most 0.01, with a half-life coefficient far below the value of 1 expected if abundance scaled with stability, and half-life was uncorrelated with the residual (Pearson $r = -0.12$, $P = 0.06$, $n = 242$).
+
+\subsubsection{Repeating the analysis in \syna}
+
+The same transcriptome--proteome comparison was carried out for~\syna, joining Illumina sense TPM to relative iPM by locus tag over the 446 mRNA genes detected in both layers.
+Protein localization, annotated for~\syna~on a finer scheme, was collapsed onto the four~\syn~classes: trans-membrane proteins were treated as membrane, peripheral-membrane and unassigned proteins were grouped with the cytoplasmic class, and the lipoprotein and extracellular classes were retained.
+Transcript and protein levels correlated to a similar degree as in~\syn~(Pearson $r = 0.63$ across all detected proteins, $n = 446$, and $r = 0.65$ for the cytoplasmic subset, $n = 352$).
+
+Translation initiation was re-predicted from scratch, because~\syna~lacks a long-read isoform set.
+With no isoforms to define transcript ends, \texttt{OSTIR} was run at the gene level on a fixed window spanning 30~nt upstream through 30~nt into the coding sequence at each annotated start codon, using the same anti-Shine--Dalgarno tail (\texttt{ACCUCCUUU}) but without the read-count weighting applied in~\syn.
+As in~\syn, initiation explained little of the residual ($\Delta R^{2} = +0.015$, with $\log_{10}(\text{TIR})$ versus the residual at Pearson $r = 0.15$).
+
+The codon adaptation index was recomputed with~\syna's own reference set of highly expressed genes (the top 20\% by iPM, 89 of 446 genes), since that reference set defines the codon weights.
+CAI again carried post-transcriptional information, correlating with the residual (Pearson $r = 0.46$) and raising the explained variance from $R^{2} = 0.39$ to $0.52$ ($\Delta R^{2} = +0.127$, $n = 446$), a somewhat larger gain than in~\syn.
+
+Intrinsic protein half-lives were not re-derived by orthology.
+Because~\syna~proteins are a subset of~\syn~proteins, the~\mpn-transferred half-lives were carried across by locus-tag correspondence and re-scaled by the~\syna-specific Lon and FtsH abundances and cell volume (scaling factors 0.16 for Lon and 1.78 for FtsH).
+The re-scaled half-lives remained long (median 5.7~h, shortest 0.9~h) relative to the $\sim$105~min~\syna~doubling time, so protein loss in~\syna~is likewise dominated by dilution through growth.

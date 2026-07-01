@@ -44,14 +44,14 @@ Length & Domain \textsuperscript{\emph{b}} & Length & Domain & Coverage \% & Ide
 \end{table}
 \fi
 
-\subsubsection{Mapping B. subtilis Endoribonuclease Cleavage Sites onto Syn1}
+% \subsubsection{Mapping B. subtilis Endoribonuclease Cleavage Sites onto Syn1}
 
-The experimentally mapped RNase~III and RNase~Y cleavage sites of \textit{B. subtilis}~\cite{taggart_high-resolution_2025} were transferred onto \syn~by protein homology to ask whether the conserved endoribonucleases act on conserved RNA structures.
-Orthologues were defined as reciprocal best BLASTP (BLAST+) hits between the two proteomes ($\geq$25\% identity and $\geq$50\% coverage in both directions, e-value $\leq 10^{-5}$, bit score $\geq$50); 18 \syn~genes carried a homology-supported RNase~III site.
-Because RNA secondary structure need not be conserved even at high protein identity, whether each conserved endoribonuclease still acts on a conserved structure was tested directly from the \syn~fold rather than inferred from sequence.
-Each \textit{B. subtilis} cleavage site was projected onto its \syn~orthologue by transcript fraction to give the homologous position; the entire \syn~gene was then folded once (RNAfold, ViennaRNA 2.6.4, default parameters), and the base-pairing at the projected position was read directly from that single structure without re-folding.
-RNase~III cuts both strands of one helix, so a conserved site was scored only when the two staggered cut sites of a gene faced each other across one duplex, that is when the base-pairing partner of each cut lay within four nucleotides of the other cut, the geometry of the 2-nt 3$'$ overhang.
-This criterion was calibrated on \textit{B. subtilis} \gene{atpA}{0792}, whose two sites pair about 105~nt apart across a long central stem yet face with a cross-distance of 3~nt.
-By this test none of the 18 \syn~genes reproduced a clean cross-paired RNase~III duplex at the homologous position: the two cut sites of \gene{atpA}{0792}, for example, folded into separate local stem-loops rather than the single extended stem of \textit{B. subtilis} (cross-distance 104~nt), indicating that the cleaved RNA structures, unlike the enzymes that cut them, are not conserved.
-The homology-mapped cleavage sites were therefore reported as projected positions and displayed on the local \syn~secondary structure, where each falls within a stem (Fig.~\ref{fig:rnase}g).
-RNase~Y sites were projected analogously and scored for a stable structure immediately downstream of the cut, matching the enzyme's single-stranded preference.
+% The experimentally mapped RNase~III and RNase~Y cleavage sites of \textit{B. subtilis}~\cite{taggart_high-resolution_2025} were transferred onto \syn~by protein homology to ask whether the conserved endoribonucleases act on conserved RNA structures.
+% Orthologues were defined as reciprocal best BLASTP (BLAST+) hits between the two proteomes ($\geq$25\% identity and $\geq$50\% coverage in both directions, e-value $\leq 10^{-5}$, bit score $\geq$50); 18 \syn~genes carried a homology-supported RNase~III site.
+% Because RNA secondary structure need not be conserved even at high protein identity, whether each conserved endoribonuclease still acts on a conserved structure was tested directly from the \syn~fold rather than inferred from sequence.
+% Each \textit{B. subtilis} cleavage site was projected onto its \syn~orthologue by transcript fraction to give the homologous position; the entire \syn~gene was then folded once (RNAfold, ViennaRNA 2.6.4, default parameters), and the base-pairing at the projected position was read directly from that single structure without re-folding.
+% RNase~III cuts both strands of one helix, so a conserved site was scored only when the two staggered cut sites of a gene faced each other across one duplex, that is when the base-pairing partner of each cut lay within four nucleotides of the other cut, the geometry of the 2-nt 3$'$ overhang.
+% This criterion was calibrated on \textit{B. subtilis} \gene{atpA}{0792}, whose two sites pair about 105~nt apart across a long central stem yet face with a cross-distance of 3~nt.
+% By this test none of the 18 \syn~genes reproduced a clean cross-paired RNase~III duplex at the homologous position: the two cut sites of \gene{atpA}{0792}, for example, folded into separate local stem-loops rather than the single extended stem of \textit{B. subtilis} (cross-distance 104~nt), indicating that the cleaved RNA structures, unlike the enzymes that cut them, are not conserved.
+% The homology-mapped cleavage sites were therefore reported as projected positions and displayed on the local \syn~secondary structure, where each falls within a stem (Fig.~\ref{fig:rnase}g).
+% RNase~Y sites were projected analogously and scored for a stable structure immediately downstream of the cut, matching the enzyme's single-stranded preference.

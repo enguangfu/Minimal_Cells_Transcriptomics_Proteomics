@@ -1,0 +1,26 @@
+R3 syn3A PANELS (transcriptome-proteome correlation repeated on JCVI-syn3A)
+====================================================================
+Sizes (in): f 7/2 x 7/4; g 7/2 x 7/2; h,i,j,k,l 7/4 x 7/4. Default fonts.
+
+syn3A proteins: 455; merged with TPM coords: 455
+localization merge -> cytoplasmic:356, lipoprotein:13, membrane:84, extracellular:2
+f) cytoplasmic: n=352 median=83.3 copies
+f) lipoprotein: n=12 median=54.1 copies
+f) membrane: n=81 median=19.8 copies
+f) extracellular: n=1 (<5, curve skipped)
+g) all r=0.625 (n=446); cytoplasmic r=0.653 (n=352)
+
+CDSs extracted: 455 (skipped non-multiple-of-3: 0)
+CAI reference set (top 20% by iPM): 89/446 genes
+
+TIR: loaded cache R3_panels_syn3A/gene_TIR_syn3A.csv (455 genes)
+i) CAI vs residual r=0.455 (n=446); R2 0.390->0.517 (dR2=+0.127)
+h) TIR vs residual r=0.148 (n=446); R2 0.390->0.405 (dR2=+0.015)
+   R all 0.625->0.719 (n=446); cytoplasmic 0.653->0.730 (n=352)
+l) R barplot: all 0.625->0.719, cytosolic 0.653->0.730
+
+Half-life: 216 genes mapped by suffix; Cyto_factor=0.158 Mem_factor=1.775 (Syn3A_V=0.0335 fL)
+j) half-life median=5.7 h, shortest=0.9 h, n=216; 6.5% below the 105-min doubling time
+k) half-life vs residual r=-0.101 (n=215)
+
+syn3A_genes_transcriptomics_proteomics.csv: 455 genes (TPM 455, iPM 446, CAI 455, TIR 455, half-life 216)

@@ -1,0 +1,456 @@
+locus_tag,gene_name,gene_product,protein_localization,TPM_illumina,iPM_mean,protein_copy_number,CAI,TIR,protein_halflife_h
+JCVISYN3A_0001,dnaA,Chromosomal replication initiator protein,cytoplasmic,242.522,743.394,74.60771967949213,0.675,15800.614,11.175
+JCVISYN3A_0002,dnaN,DNA polymerase III subunit beta,cytoplasmic,201.193,2681.875,269.1554081195192,0.773,3189.768,
+JCVISYN3A_0003,rnmV,Ribonuclease M5,cytoplasmic,85.494,485.666,48.74186250016163,0.796,231.688,
+JCVISYN3A_0004,ksgA,16S rRNA (adenine(1518)-N(6)/adenine(1519)-N(6))- dimethyltransferase,cytoplasmic,63.75,169.635,17.0247552969071,0.694,8004.518,3.014
+JCVISYN3A_0005,,Uncharacterized protein,membrane,263.534,303.104,30.419760838994826,0.59,20870.594,
+JCVISYN3A_0006,gyrB,DNA gyrase subunit B,cytoplasmic,674.347,970.413,97.39153626319543,0.722,23572.338,3.222
+JCVISYN3A_0007,gyrA,DNA gyrase subunit A,cytoplasmic,945.858,1746.401,175.27045123207682,0.736,29538.185,6.067
+JCVISYN3A_0008,rnsD; uptD,Nucleoside ABC transporter permease,membrane,468.387,121.439,12.18772309804569,0.698,65741.742,
+JCVISYN3A_0009,rnsC; uptD,Nucleoside ABC transporter permease,membrane,117.938,243.671,24.45500529239814,0.693,91811.451,
+JCVISYN3A_0010,rnsA; uptA,Nucleoside ABC transporter ATP-binding protein,cytoplasmic,325.872,290.878,29.19278453422089,0.696,25575.102,5.213
+JCVISYN3A_0011,rnsB; uptB,Nucleoside ABC transporter substrate-binding protein,lipoprotein,230.274,430.263,43.18160685008163,0.714,204741.848,
+JCVISYN3A_0012,metRS,Methionine--tRNA ligase,cytoplasmic,114.982,1276.281,128.08876490522755,0.71,6296.482,5.68
+JCVISYN3A_0918,hisB,Imidazoleglycerol-phosphate dehydratase,cytoplasmic,358.89,,,0.152,4055.052,
+JCVISYN3A_0913,tetM,Tetracycline resistance ribosomal protection protein,cytoplasmic,5298.549,1027.386,103.10937019904964,0.3,29915.112,
+JCVISYN3A_0025,rpsR,30S ribosomal protein S18,cytoplasmic,1630.577,3369.044,338.1204095322903,0.716,2679.24,
+JCVISYN3A_0026,priB,Single-stranded DNA-binding protein,cytoplasmic,2814.474,1767.819,177.41990949195332,0.724,13464.26,
+JCVISYN3A_0027,rpsF,30S ribosomal protein S6,cytoplasmic,1455.747,5196.497,521.5252542225086,0.703,74414.464,
+JCVISYN3A_0029,acpD; azoR,FMN reductase/NADH-azoreductase,cytoplasmic,590.153,9088.996,912.1800108235884,0.844,72362.239,17.285
+JCVISYN3A_0030,,Uncharacterized ABC transporter ATP-binding protein,cytoplasmic,1112.508,2624.631,263.41038656534124,0.73,20117.784,5.838
+JCVISYN3A_0033,,Uncharacterized protein,cytoplasmic,38.054,185.854,18.65250195086778,0.64,4218.77,
+JCVISYN3A_0034,,Uncharacterized efflux ABC transporter permease,membrane,35.034,40.517,4.066326030923897,0.729,339.53,
+JCVISYN3A_0039,ftsH,Membrane anchored AAA+ protease,membrane,3690.279,2592.677,260.2034253002154,0.703,31189.812,93.279
+JCVISYN3A_0040,tilS,tRNA lysidine(34) synthetase,cytoplasmic,72.35,236.041,23.68925525602108,0.716,1084.827,
+JCVISYN3A_0042,,Uncharacterized transcriptional regulator,cytoplasmic,96.509,2333.216,234.1637056116967,0.703,4758.695,
+JCVISYN3A_0043,yabD,Uncharacterized methyltransferase,cytoplasmic,79.641,240.908,24.177732173780846,0.737,853.342,
+JCVISYN3A_0044,holA,DNA polymerase III subunit delta,cytoplasmic,47.122,211.699,21.246259331289245,0.726,2833.41,
+JCVISYN3A_0045,tmk,dTMP kinase,cytoplasmic,352.508,1287.096,129.17414745162154,0.789,11960.046,5.658
+JCVISYN3A_0046,recR,Recombination protein,cytoplasmic,167.754,155.901,15.646363385464486,0.745,1549.881,
+JCVISYN3A_0047,dnaX,DNA polymerase III subunit gamma and tau,cytoplasmic,123.55,190.578,19.126632761168857,0.715,174199.21,
+JCVISYN3A_0054,ahpC,Uncharacterized peroxiredoxin,cytoplasmic,138.37,3105.916,311.7126174197653,0.723,59153.26,
+JCVISYN3A_0060,,Uncharacterized protein,membrane,451.292,176.838,17.747580651212793,0.633,103721.27,
+JCVISYN3A_0061,serRS,Serine--tRNA ligase,cytoplasmic,470.655,3098.79,310.9973916392017,0.771,12407.592,14.099
+JCVISYN3A_0063,dusB,Uncharacterized tRNA dihydrouridine synthase,cytoplasmic,957.459,197.51,19.82228596728168,0.633,7389.064,
+JCVISYN3A_0064,lysRS,Lysine--tRNA ligase,cytoplasmic,589.913,879.549,88.27234434242497,0.727,1233.738,11.324
+JCVISYN3A_0065,trxA,Thioredoxin,cytoplasmic,2792.728,1519.0,152.4482123666766,0.666,39711.742,7.138
+JCVISYN3A_0066,dumP,dUMP phosphatase ,cytoplasmic,1240.912,5484.614,550.440894341809,0.675,19328.906,
+JCVISYN3A_0076,asnRS,Asparagine--tRNA ligase,cytoplasmic,242.62,2579.588,258.8898812017362,0.808,11491.057,9.45
+JCVISYN3A_0077,,Low specificity hydrolase ,cytoplasmic,225.231,223.499,22.43054028426633,0.764,19299.156,
+JCVISYN3A_0079,tsaD,tRNA (adenosine(37)-N6)-threonylcarbamoyltransferase complex transferase subunit D,cytoplasmic,284.568,285.887,28.69190307132901,0.717,710.14,4.655
+JCVISYN3A_0080,,Uncharacterized protein,cytoplasmic,563.275,504.42,50.62408926865687,0.601,515.657,
+JCVISYN3A_0081,mnmE; trmE,tRNA uridine(34) 5-carboxymethylaminomethyl synthesis GTPase,cytoplasmic,70.166,430.733,43.22875225342503,0.755,4882.077,2.756
+JCVISYN3A_0082,rpsT,30S ribosomal protein S20,cytoplasmic,144.193,1090.411,109.43465135108752,0.783,124682.968,
+JCVISYN3A_0094,,Uncharacterized protein,membrane,43.632,3.639,0.3651722275414039,0.639,17784.568,
+JCVISYN3A_0095,secA,Preprotein translocase subunit A,cytoplasmic,656.318,3582.667,359.55981425921453,0.763,24534.406,5.271
+JCVISYN3A_0097,yycJ,Flap endonuclease and 5' exonuclease ,cytoplasmic,130.131,198.943,19.96609716088706,0.752,7677.38,
+JCVISYN3A_0105,xseB,Exodeoxyribonuclease VII small subunit,cytoplasmic,33.471,297.204,29.827667320839502,0.694,11936.595,
+JCVISYN3A_0106,xseA,Exodeoxyribonuclease VII large subunit,cytoplasmic,50.856,40.66,4.080629558496971,0.663,4579.14,
+JCVISYN3A_0107,nusB,Transcription antitermination factor,cytoplasmic,36.168,181.166,18.181989312079622,0.614,11941.637,
+JCVISYN3A_0108,,Uncharacterized lipoprotein,lipoprotein,41.176,316.895,31.803896133221524,0.672,2414.449,
+JCVISYN3A_0109,nfo,Deoxyribonuclease IV,cytoplasmic,35.984,77.189,7.746799119867422,0.756,14035.384,4.741
+JCVISYN3A_0113,bcsA,Glycolipid synthase A,membrane,203.631,95.791,9.613704362710616,0.681,6723.379,
+JCVISYN3A_0114,bcsB; cps,Glycolipid synthase B,cytoplasmic,20.562,101.918,10.22853559540563,0.683,3453.993,2.511
+JCVISYN3A_0115,galU; gtaB,UTP--glucose-1-phosphate uridylyltransferase,cytoplasmic,927.087,3744.997,375.8513642137386,0.716,4128.098,12.184
+JCVISYN3A_0116,,Uncharacterized protein,membrane,13.03,248.205,24.910101623754965,0.673,7702.492,
+JCVISYN3A_0117,plsY,Acyl-phosphate glycerol 3-phosphate acyltransferase,membrane,245.452,70.067,7.031975376952031,0.679,2679.24,
+JCVISYN3A_0126,gluRS,Glutamate--tRNA ligase,cytoplasmic,85.716,516.567,51.84315472710963,0.788,5917.058,30.194
+JCVISYN3A_0127,,Uncharacterized phosphohydrolase,cytoplasmic,101.847,228.8,22.962625522749924,0.732,999.876,16.034
+JCVISYN3A_0128,rpoE,DNA-directed RNA polymerase subunit delta,cytoplasmic,905.994,989.545,99.31161340454337,0.637,2788.589,
+JCVISYN3A_0129,pyrG,CTP synthase,cytoplasmic,404.367,3306.002,331.79342056427765,0.772,35106.062,
+JCVISYN3A_0131,fbaA,"Fructose-1,6-bisphosphate aldolase",cytoplasmic,1942.097,2123.581,213.1245076372273,0.759,30864.142,12.33
+JCVISYN3A_0132,ietA,Toxin-antitoxin AAA ATPase,cytoplasmic,72.678,835.373,83.83877726715488,0.618,1592.811,
+JCVISYN3A_0133,ietS,Toxin-antitoxin serine protease,cytoplasmic,94.699,311.868,31.29934277491111,0.63,8327.692,
+JCVISYN3A_0137,rpmE,50S ribosomal protein L31,cytoplasmic,354.601,1631.847,163.77367294204535,0.79,59244.446,1.15
+JCVISYN3A_0138,,Uncharacterized protein,cytoplasmic,53.957,515.14,51.69992933975523,0.728,3449.496,
+JCVISYN3A_0139,ytqI; orn,NanoRNAse,cytoplasmic,300.137,608.446,61.06423326642759,0.815,1712.17,7.927
+JCVISYN3A_0140,tdk,Thymidine kinase,cytoplasmic,351.353,657.228,65.95999652304319,0.73,154233.36,
+JCVISYN3A_0141,prfA,Peptide chain release factor 1,cytoplasmic,1121.103,1730.966,173.72133213864063,0.793,3545.044,4.94
+JCVISYN3A_0142,prmC,"Protein-(glutamine-N5) methyltransferase, release factor-specific",cytoplasmic,86.322,107.742,10.813056196100757,0.695,853.342,
+JCVISYN3A_0143,,Uncharacterized protein,membrane,98.908,39.781,3.992487482522896,0.712,6306.188,
+JCVISYN3A_0144,tsaC,tRNA (adenosine(37)-N6)-threonylcarbamoyltransferase complex transferase subunit,cytoplasmic,76.5,245.255,24.61404910574233,0.665,4882.077,
+JCVISYN3A_0145,,Uncharacterized acetyltransferase,cytoplasmic,226.242,1362.957,136.7875991576065,0.72,4048.062,
+JCVISYN3A_0146,ywnG-like,Uncharacterized protein,cytoplasmic,6.162,83.112,8.341197021398271,0.656,4160.19,
+JCVISYN3A_0147,clsA,Cardiolipin synthase,membrane,17.236,96.502,9.685076405636254,0.785,4385.235,
+JCVISYN3A_0148,rpsL,30S ribosomal protein S12,cytoplasmic,10399.053,3751.407,376.49470334671247,0.626,246119.445,3.613
+JCVISYN3A_0149,rpsG,30S ribosomal protein S7,cytoplasmic,4261.396,15666.069,1572.2612295433464,0.796,77149.424,3.745
+JCVISYN3A_0150,fusA,Translation elongation factor G,cytoplasmic,8014.986,5118.501,513.6974543280338,0.749,19023.141,3.413
+JCVISYN3A_0151,tuf,Translation elongation factor Tu,cytoplasmic,25395.857,50711.589,5089.462037727943,0.735,10030.355,20.158
+JCVISYN3A_0163,alaRS,Alanine--tRNA ligase,cytoplasmic,326.486,2792.674,280.2753337253914,0.785,9562.695,
+JCVISYN3A_0164,,Uncharacterized protein,membrane,74.076,622.879,62.51271839487466,0.78,3059.406,
+JCVISYN3A_0165,amiC,Oligopeptide ABC transporter permease,membrane,872.003,320.494,32.16502954850721,0.695,39711.742,
+JCVISYN3A_0166,oppC,Oligopeptide ABC transporter permease,membrane,721.678,258.055,25.898651207092257,0.75,140580.714,
+JCVISYN3A_0167,amiE,Oligopeptide ABC transporter ATP-binding protein,cytoplasmic,588.621,1064.526,106.83677252860176,0.764,24534.406,5.729
+JCVISYN3A_0168,amiF,Oligopeptide ABC transporter ATP-binding protein,cytoplasmic,552.775,1666.016,167.20290941595132,0.784,7385.944,
+JCVISYN3A_0169,amiA,Oligopeptide ABC transporter substrate-binding protein,lipoprotein,1258.92,1272.17,127.67617811753944,0.675,158505.506,
+JCVISYN3A_0195,potC,Spermidine/putrescine ABC transporter permease,membrane,239.514,735.286,73.79402182777874,0.724,18534.55,
+JCVISYN3A_0196,potB,Spermidine/putrescine ABC transporter permease,membrane,301.3,446.532,44.81437069403406,0.718,16273.774,
+JCVISYN3A_0197,potA,Spermidine/putrescine ABC transporter ATP-binding protein,cytoplasmic,500.548,2246.177,225.4284279707368,0.749,11040.458,3.028
+JCVISYN3A_0198,rplT,50S ribosomal protein L20,cytoplasmic,990.636,6326.51,634.9344195881132,0.821,29024.531,3.758
+JCVISYN3A_0199,rpmI,50S ribosomal protein L35,cytoplasmic,2726.381,,,0.647,19291.008,
+JCVISYN3A_0200,infC,Translation initiation factor IF-3,cytoplasmic,1158.337,2443.719,245.2539338769241,0.68,36601.952,3.069
+JCVISYN3A_0201,def,Peptide deformylase,cytoplasmic,268.49,814.702,81.76429327481716,0.688,8684.601,3.75
+JCVISYN3A_0202,rsmD,16S rRNA (guanine(966)-N(2))-methyltransferase,cytoplasmic,25.29,449.632,45.12544906331213,0.732,5365.454,
+JCVISYN3A_0203,gmk,Guanylate kinase,cytoplasmic,155.122,610.031,61.22328529999651,0.768,15574.635,5.983
+JCVISYN3A_0213,eno,Phosphopyruvate hydratase,cytoplasmic,2087.077,7896.194,792.4693260533717,0.796,2376.255,31.337
+JCVISYN3A_0214,pgpA,Phosphatidylglycerophosphatase,membrane,10.468,22.019,2.209894974390621,0.683,103.391,
+JCVISYN3A_0215,yrrK; yqgF,Pre-16S rRNA nuclease ,cytoplasmic,160.891,280.673,28.16861855318457,0.681,276.717,
+JCVISYN3A_0216,hptA,Hypoxanthine phosphoribosyltransferase,cytoplasmic,225.384,3407.725,342.0024773692281,0.788,5408.846,1.211
+JCVISYN3A_0218,glpK,Glycerol kinase,cytoplasmic,1587.397,5506.531,552.6405011703979,0.755,50484.28,14.86
+JCVISYN3A_0220,pfkA,6-Phosphofructokinase,cytoplasmic,947.947,2057.387,206.48129923787383,0.788,2689.733,43.074
+JCVISYN3A_0221,pyk,Pyruvate kinase,cytoplasmic,1245.738,2119.617,212.72677249187817,0.748,12652.909,28.541
+JCVISYN3A_0222,thrRS,Threonine--tRNA ligase,cytoplasmic,134.276,1563.8,156.94437700930845,0.8,14.721,9.998
+JCVISYN3A_0227,pdhC,Branched-chain alpha-keto acid dehydrogenase subunit E2,cytoplasmic,4740.136,6736.594,676.0907953990447,0.741,10175.89,13.833
+JCVISYN3A_0228,lpdA,Dihydrolipoyl dehydrogenase,cytoplasmic,4695.831,4343.858,435.9536176032104,0.74,5155.058,9.979
+JCVISYN3A_0229,pta,Phosphate acetyltransferase,cytoplasmic,3314.566,1467.469,147.27651738163897,0.759,1896.321,13.827
+JCVISYN3A_0230,ackA,Acetate kinase,cytoplasmic,2128.174,3711.259,372.4653783748613,0.761,16210.289,47.314
+JCVISYN3A_0233,ptsI,ptsI: Phosphoenolpyruvate--protein phosphotransferase,cytoplasmic,520.84,2311.78,232.0123783045092,0.727,11473.37,18.17
+JCVISYN3A_0234,crr,PTS glucose transporter subunit IIA,cytoplasmic,1971.069,1511.144,151.6597762001129,0.781,59244.446,
+JCVISYN3A_0235,,Uncharacterized protein,membrane,503.326,155.907,15.647001286241627,0.496,942.907,
+JCVISYN3A_0238,rpsD,30S ribosomal protein S4,cytoplasmic,1708.713,11973.269,1201.6483599447847,0.776,81463.234,4.591
+JCVISYN3A_0239,-/ezrA,Uncharacterized protein/FtsZ filament regulator,membrane,9.376,83.124,8.342444672497972,0.753,4882.077,
+JCVISYN3A_0240,thiI,tRNA 4-thiouridine(8) synthase,cytoplasmic,67.894,553.129,55.51256926496747,0.726,3194.686,5.364
+JCVISYN3A_0247,ysxC; yihA,Ribosome biogenesis GTP-binding protein,cytoplasmic,246.168,793.37,79.62334468849994,0.665,1869.2,4.814
+JCVISYN3A_0248,,Uncharacterized protein,membrane,84.667,124.864,12.531497039105084,0.615,5593.045,
+JCVISYN3A_0249,,Uncharacterized protein,membrane,62.625,377.479,37.88410312042666,0.698,383.412,
+JCVISYN3A_0250,,Uncharacterized protein,cytoplasmic,56.754,1461.435,146.67093880010697,0.723,9776.863,
+JCVISYN3A_0253,greA,Transcription elongation factor,cytoplasmic,408.812,9293.215,932.6756609452184,0.815,27662.673,1.66
+JCVISYN3A_0254,uvrC,Excinuclease ABC subunit C,cytoplasmic,45.475,280.878,28.18913859701868,0.758,27614.991,
+JCVISYN3A_0257,rnjB,RNase J family beta-CASP ribonuclease,cytoplasmic,456.385,1662.948,166.89496754588157,0.748,8004.518,4.797
+JCVISYN3A_0259,nadK,NAD(+) kinase,cytoplasmic,94.368,639.675,64.1984206629627,0.739,4160.19,16.073
+JCVISYN3A_0260,valRS,Valine--tRNA ligase,cytoplasmic,163.074,764.125,76.68827217813752,0.783,57.359,5.246
+JCVISYN3A_0262,rpe,Ribulose-phosphate 3-epimerase,cytoplasmic,311.262,1173.3,117.75351488148652,0.767,1821.191,
+JCVISYN3A_0263,rsgA; engC,Ribosome small subunit-dependent GTPase A,cytoplasmic,142.634,98.294,9.864860859168058,0.721,8896.06,
+JCVISYN3A_0264,prkC; stkP,Uncharacterized serine/threonine protein kinase,membrane,110.622,2.044,0.2051824398644917,0.71,14377.128,53.716
+JCVISYN3A_0270,tsaE; yjeE,tRNA (N6-adenosine(37)-N6)-threonylcarbamoyltransferase complex ATPase,cytoplasmic,21.12,598.696,60.08564422353931,0.716,32512.816,
+JCVISYN3A_0271,tsaB; yeaZ,tRNA N6-adenosine(37)-N6-threonylcarbamoyltransferase complex dimerization subunit,cytoplasmic,26.951,362.008,36.33147321724633,0.777,16445.491,3.759
+JCVISYN3A_0281,,Uncharacterized protein,cytoplasmic,10.595,220.667,22.14637778467419,0.776,29966.767,
+JCVISYN3A_0282,proRS,Proline--tRNA ligase,cytoplasmic,79.009,1162.411,116.66065387365616,0.763,7283.386,7.014
+JCVISYN3A_0283,rnhA,Double-stranded RNA binding RNase HI,cytoplasmic,134.924,332.392,33.35914027346285,0.756,1376.984,
+JCVISYN3A_0285,lepA; EF4,Elongation factor 4,cytoplasmic,209.337,973.952,97.7467657564801,0.75,2512.991,
+JCVISYN3A_0286,,Uncharacterized protein,cytoplasmic,135.178,37.308,3.744266354691193,0.708,26197.822,
+JCVISYN3A_0287,aspRS,Aspartate--tRNA ligase,cytoplasmic,192.457,671.876,67.43010473622323,0.808,2718.114,7.402
+JCVISYN3A_0288,hisRS,Histidine--tRNA ligase,cytoplasmic,152.518,1303.265,130.79688477652266,0.74,7400.454,47.314
+JCVISYN3A_0289,rbfA,Ribosome-binding factor A,cytoplasmic,363.041,3803.362,381.708918325579,0.744,39650.62,
+JCVISYN3A_0290,truB,tRNA pseudouridine(55) synthase,cytoplasmic,11.793,11.488,1.152896280557577,0.779,756.841,
+JCVISYN3A_0291,ribF,FAD synthetase,cytoplasmic,13.911,160.651,16.12312715565385,0.656,12913.988,
+JCVISYN3A_0294,rpsO,30S ribosomal protein S15,cytoplasmic,485.525,394.742,39.61666854684373,0.801,14848.476,3.21
+JCVISYN3A_0296,,Uncharacterized protein,membrane,66.178,306.272,30.737770704796613,0.632,1552.557,
+JCVISYN3A_0297,infB,Translation initiation factor IF-2,cytoplasmic,1817.018,2989.022,299.9809829154429,0.774,24524.047,6.251
+JCVISYN3A_0298,-/ylxR,Uncharacterized L7Ae family protein/Transcription Termination Nucleic Acid Binding,cytoplasmic,244.972,276.091,27.708732502355087,0.721,1083.158,
+JCVISYN3A_0299,ylxR/ylxQ,Uncharacterized protein,cytoplasmic,259.12,982.247,98.57926377947672,0.749,367.81,
+JCVISYN3A_0300,nusA,Transcription termination/antitermination protein NusA,cytoplasmic,404.593,1789.004,179.5461092905677,0.811,3590.282,
+JCVISYN3A_0301,rimP,Ribosome assembly cofactor,cytoplasmic,88.848,910.481,91.37668302448668,0.682,3602.025,
+JCVISYN3A_0302,fre,Flavin reductase,cytoplasmic,102.418,464.249,46.592505785625896,0.718,853.342,
+JCVISYN3A_0303,polC,PolC-type DNA polymerase III,cytoplasmic,155.147,156.906,15.747271660320209,0.75,10439.728,7.484
+JCVISYN3A_0304,cdsA,Phosphatidate cytidylyltransferase,membrane,68.552,85.852,8.616185933389335,0.666,4506.703,
+JCVISYN3A_0305,pepP,Prolidase ,cytoplasmic,821.002,7109.952,713.5614091620848,0.744,39711.742,19.206
+JCVISYN3A_0308,trpRS,Tryptophan--tRNA ligase,cytoplasmic,7.44,315.308,31.644596835773434,0.789,18542.379,47.314
+JCVISYN3A_0314,ecfS,Uncharacterized ECF transporter S component,membrane,618.487,714.376,71.69540641972537,0.647,1549.881,
+JCVISYN3A_0315,-/ynzC-like,Uncharacterized protein/DNA Damage Control,cytoplasmic,72.978,53.886,5.408098452236449,0.822,1725.48,
+JCVISYN3A_0316,tkt,Transketolase,cytoplasmic,378.354,1471.029,147.63384191962166,0.798,15574.635,47.314
+JCVISYN3A_0317,,Uncharacterized protein,membrane,376.272,2691.776,270.149137742948,0.823,6997.783,70.248
+JCVISYN3A_0325,,Uncharacterized protein,membrane,30.29,72.178,7.243865056015057,0.697,90.138,
+JCVISYN3A_0326,,Uncharacterized protein,cytoplasmic,30.753,230.972,23.18054720904064,0.649,5812.356,
+JCVISYN3A_0327,scpA,Chromosome segregation protein A,cytoplasmic,47.458,74.768,7.503778422930618,0.68,3630.959,
+JCVISYN3A_0328,scpB,Chromosome segregation protein B,cytoplasmic,96.317,499.796,50.15995125892543,0.743,6818.052,3.157
+JCVISYN3A_0329,rluB,Uncharacterized pseudouridine synthase,cytoplasmic,132.017,427.11,42.8651142550435,0.75,1945.488,
+JCVISYN3A_0330,dgk,Deoxyguanosine kinase,cytoplasmic,149.075,756.611,75.93416809523224,0.745,8344.052,
+JCVISYN3A_0332,,Uncharacterized protein,membrane,48.633,275.952,27.69476473311894,0.717,3272.472,
+JCVISYN3A_0338,,Uncharacterized lipoprotein,lipoprotein,2852.394,3760.121,377.3692517630971,0.59,1084.827,
+JCVISYN3A_0344,ppa,Inorganic diphosphatase,cytoplasmic,1038.293,8966.933,899.9296970663064,0.776,126274.009,7.447
+JCVISYN3A_0345,ecfS,Uncharacterized ECF transporter S component,membrane,123.657,489.496,49.12622180141748,0.704,3189.768,
+JCVISYN3A_0346,,Uncharacterized protein,membrane,15.356,205.617,20.635887069371243,0.765,2615.554,
+JCVISYN3A_0347,cmk,Cytidylate kinase,cytoplasmic,38.054,363.554,36.48664222159687,0.725,2902.4,6.343
+JCVISYN3A_0348,engA,Ribosome biogenesis GTPase,cytoplasmic,45.57,689.682,69.21711941787208,0.819,4399.579,4.078
+JCVISYN3A_0350,hupA,DNA-binding protein,cytoplasmic,171.289,206.29,20.703416871453136,0.766,7376.327,
+JCVISYN3A_0352,-/dnaD-like,Uncharacterized protein/DNA Replication Machinery,cytoplasmic,9.847,39.262,3.940406701308623,0.74,278.409,
+JCVISYN3A_0353,gpsB,Cell division DivIVA/GpsB protein ,cytoplasmic,36.354,2258.715,226.6866935145712,0.668,14608.216,
+JCVISYN3A_0359,rny,Ribonuclease Y,membrane,1375.407,897.873,90.1113840148692,0.704,785.162,
+JCVISYN3A_0360,ffh,Signal recognition particle protein,cytoplasmic,2147.98,2462.23,247.1116662502148,0.758,2316.201,7.055
+JCVISYN3A_0361,rlmH,23S rRNA (pseudouridine(1915)-N3)-methyltransferase,cytoplasmic,397.422,709.994,71.25570103504143,0.764,42.845,
+JCVISYN3A_0362,rpsP,30S ribosomal protein S16,cytoplasmic,2436.257,749.22,75.19245137269175,0.691,204426.72,4.017
+JCVISYN3A_0363,rimM,16S rRNA processing protein,cytoplasmic,671.749,168.182,16.87888418579946,0.728,285.188,
+JCVISYN3A_0364,trmD,tRNA (guanosine(37)-N1)-methyltransferase,cytoplasmic,1599.006,50.405,5.058688593335988,0.738,3736.813,1.142
+JCVISYN3A_0365,rplS,50S ribosomal protein L19,cytoplasmic,2278.696,12955.875,1300.263559447729,0.641,75070.042,4.151
+JCVISYN3A_0366,ylqF; rbgA,L16-binding dependent 50S subunit-maturation GTPase,cytoplasmic,123.5,1405.843,141.0917192962065,0.777,1223.149,2.226
+JCVISYN3A_0371,ywjA,Flippase A,membrane,102.255,596.554,59.87076017723266,0.723,10607.529,254.763
+JCVISYN3A_0372,ywjA,Flippase B,membrane,103.045,740.645,74.33178881355853,0.765,413993.23,
+JCVISYN3A_0373,,Uncharacterized protein,cytoplasmic,35.587,142.379,14.289330648355197,0.767,12251.257,
+JCVISYN3A_0375,,Uncharacterized protein,cytoplasmic,270.669,148.041,14.857509989632849,0.707,11491.057,
+JCVISYN3A_0376,,Uncharacterized protein,cytoplasmic,139.536,65.708,6.594485524289415,0.647,1444.774,
+JCVISYN3A_0377,obgE,Ribosome GTPase,cytoplasmic,879.063,826.117,82.90985502582029,0.748,9791.934,4.035
+JCVISYN3A_0378,nadE,NAD(+) synthase,cytoplasmic,443.018,488.513,49.02759245162881,0.753,2447.727,6.664
+JCVISYN3A_0379,,Uncharacterized protein,membrane,154.368,1.772,0.1778342146048393,0.662,922.997,
+JCVISYN3A_0380,nadD,Nicotinate (nicotinamide) nucleotide adenylyltransferase,cytoplasmic,160.641,153.507,15.406102165177847,0.777,3144.149,5.404
+JCVISYN3A_0381,mtnN,5'-Methylthioadenosine nucleosidase,cytoplasmic,239.384,38.983,3.912419719858412,0.723,3896.041,
+JCVISYN3A_0382,dnk,Deoxynucleoside kinase,cytoplasmic,61.802,128.189,12.86519382816546,0.755,3902.047,
+JCVISYN3A_0387,mnmA,tRNA 2-thiouridine(34) synthase,cytoplasmic,34.137,145.297,14.582132254421763,0.79,12429.016,6.505
+JCVISYN3A_0388,,Uncharacterized protein,membrane,217.925,1764.247,177.06142404906998,0.683,698.649,
+JCVISYN3A_0389,,Uncharacterized protein,cytoplasmic,42.672,235.486,23.633629599453396,0.825,1552.557,
+JCVISYN3A_0390,fmt,Methionyl-tRNA formyltransferase,cytoplasmic,168.194,281.276,28.2290955209888,0.795,15824.971,2.253
+JCVISYN3A_0391,efp,Elongation factor P,cytoplasmic,897.342,1312.661,131.73986677739774,0.755,39650.62,4.666
+JCVISYN3A_0392,,Uncharacterized protein,cytoplasmic,325.311,1762.865,176.92279891973774,0.788,13813.358,
+JCVISYN3A_0394,lon,Endopeptidase La,cytoplasmic,471.87,5165.77,518.4414952295289,0.736,4329.981,2.131
+JCVISYN3A_0398,,Uncharacterized lipoprotein,lipoprotein,10.891,247.226,24.81181821663932,0.738,9562.695,
+JCVISYN3A_0399,,Uncharacterized efflux ABC transporter permease,membrane,89.581,174.342,17.497151872782084,0.759,6563.565,
+JCVISYN3A_0400,thiJ/thiJ-like,Uncharacterized protease/Protein deglycase,cytoplasmic,180.734,138.888,13.938975351465906,0.783,4227.058,
+JCVISYN3A_0401,,Uncharacterized peptidase,membrane,5.073,1.576,0.1582100342524708,0.722,0.009,
+JCVISYN3A_0402,ybeY,rRNA maturation RNase,cytoplasmic,23.6,209.239,20.99937418046294,0.759,11960.046,
+JCVISYN3A_0403,era,Ribosome GTPase,cytoplasmic,49.832,375.596,37.69515519468166,0.72,1273.07,
+JCVISYN3A_0404,recO,DNA repair protein,cytoplasmic,32.198,44.178,4.433743362949662,0.699,19799.54,
+JCVISYN3A_0405,glyRS,Glycine--tRNA ligase,cytoplasmic,286.463,604.589,60.67712252521445,0.724,54605.067,12.657
+JCVISYN3A_0406,dnaG,DNA primase,cytoplasmic,92.426,145.845,14.637184675196847,0.703,8896.06,4.664
+JCVISYN3A_0407,rpoD,RNA polymerase subunit sigma,cytoplasmic,741.672,1918.818,192.5743759438842,0.81,38095.801,1.498
+JCVISYN3A_0408,trmK; yqfN,tRNA (m1A22) methyltransferase ,cytoplasmic,100.784,70.074,7.032699001421781,0.773,1554.95,
+JCVISYN3A_0409,folE/yqfO-like,Uncharacterized protein/GTP cyclohydrolase,cytoplasmic,57.84,279.921,28.093101846968345,0.764,1223.149,
+JCVISYN3A_0410,cshB,Degradosome RNA helicase ,cytoplasmic,154.919,692.151,69.46494721242024,0.777,6723.379,1.014
+JCVISYN3A_0411,,Uncharacterized protein,membrane,420.041,157.903,15.847317709424033,0.716,36601.952,
+JCVISYN3A_0412,secDF,Preprotein translocase subunit DF,membrane,245.865,1094.035,109.79832321168324,0.731,35106.062,
+JCVISYN3A_0413,apt,Adenine phosphoribosyltransferase,cytoplasmic,724.398,4223.175,423.84176178682935,0.79,2615.554,9.742
+JCVISYN3A_0414,relA,"Guanosine-3',5'-bis(diphosphate) 3'-pyrophosphohydrolase",cytoplasmic,203.252,730.349,73.29846737706931,0.758,4329.981,12.63
+JCVISYN3A_0415,smc,Chromosome segregation protein,cytoplasmic,234.237,474.166,47.58778767392597,0.742,32449.068,4.797
+JCVISYN3A_0416,,Uncharacterized protein,cytoplasmic,48.923,6.755,0.6779531679035816,0.654,1196.337,
+JCVISYN3A_0418,rnc,Ribonuclease III,cytoplasmic,307.313,892.068,89.52878650531841,0.749,5356.205,
+JCVISYN3A_0419,plsX,Phosphate acyltransferase,cytoplasmic,289.731,833.667,83.6675884018334,0.793,8004.518,10.28
+JCVISYN3A_0420,fakA,Fatty acid kinase subunit A,cytoplasmic,460.898,1418.857,142.3978006399708,0.742,5963.058,8.605
+JCVISYN3A_0421,-/yloU,Uncharacterized protein/lipid synthesis regulation,cytoplasmic,451.776,447.323,44.89374143156386,0.579,812.012,
+JCVISYN3A_0422,rpmB,50S ribosomal protein L28,cytoplasmic,2153.703,3601.501,361.4500023157229,0.701,11004.464,4.172
+JCVISYN3A_0424,-/yqgC-like,Uncharacterized protein/Unknown - B. subtilis ortholog,cytoplasmic,9.971,63.169,6.339718573158018,0.622,1067.666,
+JCVISYN3A_0425,pstS,Phosphate ABC transporter substrate-binding protein,membrane,45.438,101.68,10.204737073795496,0.731,11941.637,
+JCVISYN3A_0426,pstA,Phosphate ABC transporter permease,membrane,69.232,87.022,8.733631172511117,0.714,6206.43,80.823
+JCVISYN3A_0427,pstB,Phosphate ABC transporter ATP-binding protein,cytoplasmic,117.128,708.081,71.06371038861869,0.764,14560.59,8.433
+JCVISYN3A_0428,phoU,Phosphate transport system regulatory protein,cytoplasmic,102.609,951.051,95.44839567196604,0.728,1376.984,
+JCVISYN3A_0429,ftsY,Signal recognition particle-docking protein,cytoplasmic,333.471,1143.61,114.77378933519172,0.804,72250.862,4.631
+JCVISYN3A_0430,-/ylxM,Uncharacterized DNA-binding protein/effector of translocation SRP,cytoplasmic,348.441,358.78,36.00746114066469,0.677,599.234,3.66
+JCVISYN3A_0431,ymdB/ymdB,Uncharacterized metallophosphoesterase/Damage Control phosphoesterase,cytoplasmic,447.251,533.456,53.53817103184639,0.748,25170.528,27.269
+JCVISYN3A_0432,metK,Methionine adenosyltransferase,cytoplasmic,82.533,399.326,40.0766811783264,0.786,61662.413,6.417
+JCVISYN3A_0433,cutC/cutC-like,Uncharacterized protein/Copper Homeostasis Regulator,cytoplasmic,64.104,240.314,24.11816989055876,0.742,12251.257,
+JCVISYN3A_0434,rlmFO,23S rRNA (uridine(1939)-m5)-methyltransferase,cytoplasmic,113.069,195.27,19.597438256307356,0.739,4944.376,
+JCVISYN3A_0435,manA,Mannose-6-phosphate isomerase,cytoplasmic,110.805,68.783,6.9031707086383705,0.746,1618.413,
+JCVISYN3A_0437,yhaM,Putative 3'-5' exoribonuclease,cytoplasmic,1261.959,2698.614,270.8354074860825,0.672,11491.057,
+JCVISYN3A_0438,hinT,Uncharacterized protein,cytoplasmic,235.895,1019.396,102.3075611245182,0.758,1175.185,12.119
+JCVISYN3A_0439,,Uncharacterized lipoprotein,lipoprotein,1847.368,3335.828,334.78677602611344,0.656,8667.573,
+JCVISYN3A_0440,,Uncharacterized lipoprotein,lipoprotein,1252.629,2949.799,296.0445911418709,0.627,12352.934,
+JCVISYN3A_0441,iscS,Cysteine desulfurase,cytoplasmic,41.366,134.791,13.527708682412094,0.835,24977.947,10.236
+JCVISYN3A_0442,iscU,Iron-sulfur cluster assembly scaffold protein,cytoplasmic,25.8,217.95,21.873651752628223,0.731,277.863,
+JCVISYN3A_0443,yggN,5-Formyltetrahydrofolate cyclo-ligase,cytoplasmic,48.986,126.544,12.700064635611204,0.814,921.406,5.4
+JCVISYN3A_0444,pepO,Oligopeptidase ,cytoplasmic,109.613,1238.837,124.33085809233712,0.8,18542.379,
+JCVISYN3A_0445,pgi,Glucose-6-phosphate isomerase,cytoplasmic,783.774,1099.709,110.36782306475486,0.792,977.973,17.973
+JCVISYN3A_0447,dut,dUTP diphosphatase,cytoplasmic,792.818,235.284,23.613286825016065,0.757,61567.505,
+JCVISYN3A_0448,spoU,Uncharacterized rRNA methyltransferase,cytoplasmic,806.105,564.218,56.62542643984351,0.677,9393.483,
+JCVISYN3A_0451,gapdh,Glyceraldehyde-3-phosphate dehydrogenase,cytoplasmic,603.082,3018.17,302.90637798073027,0.797,204741.848,
+JCVISYN3A_0452,parE,DNA topoisomerase IV subunit B,cytoplasmic,170.334,481.138,48.28750383643591,0.796,1102.669,1.38
+JCVISYN3A_0453,parC,DNA topoisomerase IV subunit A,cytoplasmic,128.693,666.439,66.8844043820312,0.775,11040.458,1.656
+JCVISYN3A_0475,ldh,L-lactate dehydrogenase,cytoplasmic,14382.13,41112.018,4126.0401623553,0.732,33773.424,16.154
+JCVISYN3A_0478,,Uncharacterized protein,membrane,15.175,80.281,8.057055700628986,0.661,1435.393,
+JCVISYN3A_0479,,Uncharacterized peptidase,membrane,20.135,318.886,32.003675349721014,0.793,3896.041,
+JCVISYN3A_0481,,Uncharacterized lipoprotein,lipoprotein,274.121,0.876,0.0878809586508878,0.593,33304.461,
+JCVISYN3A_0482,rpsU,30S ribosomal protein S21,cytoplasmic,720.644,1872.887,187.96468041907173,0.671,2334.933,
+JCVISYN3A_0154,pepA; CARP,Uncharacterized peptidase,cytoplasmic,2056.711,10245.032,1028.2008573400492,0.828,69417.691,8.323
+JCVISYN3A_0493,dapE,Low specificity dipeptidase ,cytoplasmic,524.817,822.509,82.5477484521577,0.748,13271.695,
+JCVISYN3A_0494,nanE,N-acetylmannosamine-6-phosphate 2-epimerase,cytoplasmic,30.601,213.022,21.37911877180696,0.754,11473.37,
+JCVISYN3A_0495,nanK,Uncharacterized kinase,cytoplasmic,66.485,32.063,3.2179025522534,0.692,74.367,
+JCVISYN3A_0499,rpmA,50S ribosomal protein L27,cytoplasmic,4285.26,4110.885,412.5721812513333,0.791,84752.226,
+JCVISYN3A_0500,prp;ysxB,Maturation protease for ribosomal protein L27,cytoplasmic,3175.097,411.424,41.29093580033448,0.643,301.134,
+JCVISYN3A_0501,rplU,50S ribosomal protein L21,cytoplasmic,4370.85,4780.34,479.7593270784667,0.688,5373.725,4.06
+JCVISYN3A_0503,,Uncharacterized protein,extracellular,97.149,,,0.754,16210.289,
+JCVISYN3A_0504,rsmI,16S rRNA (cytidine(1402)-2'-O)-methyltransferase,cytoplasmic,20.48,213.922,21.46941539452717,0.768,6749.71,1.858
+JCVISYN3A_0930,rpmG,50S ribosomal protein L33,cytoplasmic,3213.677,28.432,2.8534487326235687,0.505,13441.051,
+JCVISYN3A_0505,,Uncharacterized lipoprotein,extracellular,266.274,4566.219,458.26993489898086,0.707,22682.909,
+JCVISYN3A_0511,,Uncharacterized protein,cytoplasmic,85.363,908.842,91.21226056866786,0.729,8344.052,
+JCVISYN3A_0512,plsC,Acyl-phosphate glycerol 3-phosphate acyltransferase,cytoplasmic,74.325,1574.195,157.98770651010136,0.769,575.737,6.359
+JCVISYN3A_0513,acpS,ACP synthase,cytoplasmic,65.396,14.446,1.4498542880921976,0.71,874.12,
+JCVISYN3A_0515,dctD,Cytidine deaminase,cytoplasmic,424.909,528.175,53.00816934074943,0.796,23.513,
+JCVISYN3A_0516,-/yqgP-gplG,Uncharacterized protein/membrane protease,membrane,266.957,166.051,16.664984937816286,0.729,14963.907,
+JCVISYN3A_0517,rluD,Uncharacterized RNA pseudouridine synthase,cytoplasmic,89.684,718.829,72.14237661405217,0.755,7087.08,0.888
+JCVISYN3A_0518,lspA,Lipoprotein signal peptidase,membrane,97.615,2.965,0.2975753273594955,0.609,2679.24,
+JCVISYN3A_0519,ileRS,Isoleucine--tRNA ligase,cytoplasmic,101.069,692.324,69.48230952297732,0.831,17842.74,11.165
+JCVISYN3A_0520,,Uncharacterized hydrolase,cytoplasmic,497.649,134.546,13.503130647655093,0.723,1084.827,
+JCVISYN3A_0521,sepF,Cell division protein,cytoplasmic,1830.708,3301.44,331.3355987487635,0.737,12751.273,
+JCVISYN3A_0522,ftsZ,Cell division protein,cytoplasmic,5478.717,9125.799,915.873606525063,0.749,11770.849,0.999
+JCVISYN3A_0523,ftsA,Cell division protein,cytoplasmic,28.694,273.169,27.41546459964109,0.768,5584.436,
+JCVISYN3A_0524,rsmH; mraW,16S rRNA (cytosine(1402)-N(4))-methyltransferase,cytoplasmic,68.028,133.891,13.437401995433651,0.734,2024.89,7.803
+JCVISYN3A_0525,mraZ,Cell division/cell wall cluster transcriptional repressor,cytoplasmic,69.823,92.127,9.245905476221836,0.748,2799.51,47.314
+JCVISYN3A_0526,rpmF,50S ribosomal protein L32,cytoplasmic,5413.985,468.041,46.97306446908363,0.667,126438.64,
+JCVISYN3A_0527,-/ylbN,Uncharacterized protein/23S rRNA regulator,cytoplasmic,1046.924,841.165,84.4200858897213,0.691,368.378,
+JCVISYN3A_0528,pheRS,Phenylalanine--tRNA ligase subunit beta,cytoplasmic,344.212,3765.681,377.92722523994206,0.811,12936.286,
+JCVISYN3A_0529,pheS,Phenylalanine--tRNA ligase subunit alpha,cytoplasmic,862.872,3209.581,322.1165351594027,0.839,5584.436,7.869
+JCVISYN3A_0530,,Uncharacterized protein,cytoplasmic,137.076,3132.935,314.4242169852028,0.839,27969.38,
+JCVISYN3A_0535,argRS,Arginine--tRNA ligase,cytoplasmic,181.483,456.972,45.86208853683603,0.777,176.464,20.048
+JCVISYN3A_0536,frr,Ribosome recycling factor,cytoplasmic,408.014,5188.615,520.7341731189348,0.751,17842.74,6.377
+JCVISYN3A_0537,pyrH,UMP kinase,cytoplasmic,559.272,1122.365,112.64154779828344,0.704,27705.316,5.681
+JCVISYN3A_0538,,Uncharacterized protein,membrane,421.416,1287.165,129.1810660360376,0.662,74.886,
+JCVISYN3A_0539,tsf,Translation elongation factor Ts,cytoplasmic,1577.733,11548.192,1158.987231289456,0.874,64179.065,7.284
+JCVISYN3A_0540,rpsB,30S ribosomal protein S2,cytoplasmic,2419.575,10225.908,1026.2816017391194,0.843,8684.601,2.184
+JCVISYN3A_0541,dnaJ,Molecular chaperone,cytoplasmic,422.506,1034.723,103.84578108743656,0.745,3749.036,18.038
+JCVISYN3A_0542,dnaK,Molecular chaperone,cytoplasmic,1056.371,15289.538,1534.4722146572983,0.843,99458.658,47.314
+JCVISYN3A_0543,grpE,Nucleotide exchange factor,cytoplasmic,94.937,6293.221,631.5935235444026,0.774,221795.311,7.857
+JCVISYN3A_0544,hrcA,Heat-inducible transcription repressor,cytoplasmic,63.82,1321.057,132.58253954365895,0.731,274.005,2.047
+JCVISYN3A_0545,clpB,ATP-dependent Clp protease subunit B,cytoplasmic,360.954,4571.758,458.8259056187667,0.769,5685.394,47.314
+JCVISYN3A_0548,trmL; cspR,tRNA (cytidine(34)-2'-O)-methyltransferase,cytoplasmic,351.367,1433.576,143.8749732917535,0.695,4960.548,1.48
+JCVISYN3A_0549,rgdB,Non-canonical purine NTP pyrophosphatase,cytoplasmic,53.573,349.029,35.02883535605556,0.793,3194.686,
+JCVISYN3A_0931,met14p,Adenylyl-sulfate kinase,cytoplasmic,9721.626,0.697,0.069910742011994,0.282,634.729,
+JCVISYN3A_0592,,Uncharacterized protein,cytoplasmic,10.668,232.361,23.3199160082482,0.757,0.47,2.564
+JCVISYN3A_0593,,Uncharacterized protein,cytoplasmic,1.148,,,0.647,57.703,
+JCVISYN3A_0599,,Uncharacterized protein,cytoplasmic,53.332,70.708,7.096283271164282,0.612,11921.053,
+JCVISYN3A_0600,rnjA,Ribonuclease J,cytoplasmic,1342.8,999.125,100.27309447909212,0.789,2283.075,6.001
+JCVISYN3A_0601,,Uncharacterized protein,membrane,411.598,665.113,66.75138816407224,0.714,13906.562,
+JCVISYN3A_0604,lemA/lemA-gacS,"Uncharacterized protein/two component sensor, membrane",membrane,343.59,3618.562,363.1622716097494,0.709,15574.635,
+JCVISYN3A_0605,,Uncharacterized protein,lipoprotein,119.635,58.24,5.84505759590149,0.456,14585.732,
+JCVISYN3A_0606,pgk,Phosphoglycerate kinase,cytoplasmic,1128.892,5461.438,548.1149488870926,0.789,33787.69,11.229
+JCVISYN3A_0607,gapDH,Type I glyceraldehyde-3-phosphate dehydrogenase,cytoplasmic,5145.836,22688.156,2277.004298972766,0.752,6296.482,47.314
+JCVISYN3A_0608,dnaI,Primosomal protein,cytoplasmic,39.129,156.521,15.708608692555208,0.763,3460.779,
+JCVISYN3A_0609,dnaB,Chromosome replication initiation protein,cytoplasmic,14.851,24.099,2.4185938720868667,0.729,13271.695,
+JCVISYN3A_0610,mutM,DNA-formamidopyrimidine glycosylase,cytoplasmic,36.327,491.317,49.30902408448931,0.762,4220.552,5.135
+JCVISYN3A_0611,polA,DNA polymerase I,cytoplasmic,42.834,411.839,41.332507364223126,0.792,15454.492,
+JCVISYN3A_0612,dnaE,DNA polymerase III subunit alpha,cytoplasmic,39.303,86.979,8.729245707251378,0.739,4766.03,2.734
+JCVISYN3A_0613,tyrRS,Tyrosine--tRNA ligase,cytoplasmic,260.488,349.974,35.12375839732114,0.777,14013.782,18.273
+JCVISYN3A_0614,pncB,Nicotinate phosphoribosyltransferase,cytoplasmic,361.769,721.157,72.37593623362875,0.732,3194.686,
+JCVISYN3A_0615,,Uncharacterized protein,cytoplasmic,96.678,1594.567,160.0322075644602,0.704,84103.781,4.949
+JCVISYN3A_0616,fakB,Fatty acid binding protein,cytoplasmic,793.332,8672.842,870.4144092817115,0.682,2692.668,7.626
+JCVISYN3A_0617,fakB,Fatty acid binding protein,cytoplasmic,954.667,2582.512,259.1832455692676,0.672,66695.617,
+JCVISYN3A_0620,perR,Uncharacterized transcriptional regulator,cytoplasmic,67.58,372.89,37.42358281276896,0.688,7990.72,
+JCVISYN3A_0621,acpA,Acyl carrier protein,cytoplasmic,100.094,104.484,10.48615956992482,0.579,7890.038,
+JCVISYN3A_0622,,Uncharacterized lipoprotein,membrane,0.87,,,0.645,4346.939,
+JCVISYN3A_0623,,Uncharacterized protein,cytoplasmic,1.262,,,0.689,1084.827,
+JCVISYN3A_0634,leuRS,Leucine--tRNA ligase,cytoplasmic,240.98,411.825,41.33117463307068,0.749,33839.774,7.596
+JCVISYN3A_0636,,Uncharacterized lipoprotein,lipoprotein,32.464,363.25,36.45607439819655,0.644,7389.064,
+JCVISYN3A_0637,rpsI,30S ribosomal protein S9,cytoplasmic,14940.961,9034.603,906.7211355447544,0.771,21750.714,3.57
+JCVISYN3A_0638,rplM,50S ribosomal protein L13,cytoplasmic,16620.903,6950.568,697.5653914427581,0.695,8667.573,3.948
+JCVISYN3A_0639,,Uncharacterized efflux ABC transporter permease,membrane,56.032,171.723,17.23431590216381,0.789,6997.783,
+JCVISYN3A_0640,truA,tRNA pseudouridine(38-40) synthase,cytoplasmic,161.464,226.698,22.751604371402,0.776,787.73,2.656
+JCVISYN3A_0641,ecfT,ECF transporter T component,membrane,404.644,1329.041,133.38376482388497,0.743,6553.462,
+JCVISYN3A_0642,ecfA,ECF transporter ATPase,cytoplasmic,408.465,3909.92,392.4032224402523,0.714,5963.058,5.986
+JCVISYN3A_0643,ecfA,ECF transporter ATPase,cytoplasmic,173.525,2532.886,254.202795154587,0.703,8316.849,6.818
+JCVISYN3A_0644,rplQ,50S ribosomal protein L17,cytoplasmic,4622.533,2799.414,280.9517816782558,0.635,107742.819,5.57
+JCVISYN3A_0645,rpoA,DNA-directed RNA polymerase subunit alpha,cytoplasmic,7826.178,11555.649,1159.7356107367016,0.719,12751.273,4.968
+JCVISYN3A_0646,rpsK,30S ribosomal protein S11,cytoplasmic,13235.014,5115.055,513.3516867247947,0.625,24572.226,4.329
+JCVISYN3A_0647,rpsM,30S ribosomal protein S13,cytoplasmic,8634.076,26477.147,2657.2709472008114,0.695,2137.209,4.132
+JCVISYN3A_0648,rpmJ,50S ribosomal protein L36,cytoplasmic,12513.861,2266.572,227.4752282278475,0.495,33729.449,
+JCVISYN3A_0649,infA,Translation initiation factor IF-1,cytoplasmic,10731.57,2345.456,235.3921161890605,0.499,6997.783,1.95
+JCVISYN3A_0650,map,Type I methionyl aminopeptidase,cytoplasmic,3156.751,405.643,40.7107466132758,0.672,31668.442,3.657
+JCVISYN3A_0651,adk,Adenylate kinase,cytoplasmic,352.428,1858.22,186.49267454785385,0.823,3144.149,4.034
+JCVISYN3A_0652,secY,Preprotein translocase subunit,membrane,6183.513,203.961,20.46971780300536,0.639,9637.035,29.803
+JCVISYN3A_0653,rplO,50S ribosomal protein L15,cytoplasmic,15457.766,2617.555,262.7002209201167,0.618,119793.778,3.501
+JCVISYN3A_0654,rpsE,30S ribosomal protein S5,cytoplasmic,10722.44,9352.91,938.6666881852778,0.8,31136.05,4.196
+JCVISYN3A_0655,rplR,50S ribosomal protein L18,cytoplasmic,6373.352,3231.496,324.3159158538511,0.797,1530.352,4.723
+JCVISYN3A_0656,rplF,50S ribosomal protein L6,cytoplasmic,12229.211,8341.643,837.1749950228458,0.775,8344.052,3.814
+JCVISYN3A_0657,rpsH,30S ribosomal protein S8,cytoplasmic,12130.826,9050.217,908.2881566377564,0.66,8547.219,4.458
+JCVISYN3A_0658,rpsN,30S ribosomal protein S14,cytoplasmic,11803.53,15370.7,1542.617661628065,0.707,83575.394,
+JCVISYN3A_0659,rplE,50S ribosomal protein L5,cytoplasmic,8057.749,17006.898,1706.8279897418088,0.742,31176.644,4.023
+JCVISYN3A_0660,rplX,50S ribosomal protein L24,cytoplasmic,13568.795,11668.341,1171.0455159898984,0.747,20078.339,
+JCVISYN3A_0661,rplN,50S ribosomal protein L14,cytoplasmic,15281.296,5838.013,585.9083895306077,0.718,13989.626,4.962
+JCVISYN3A_0662,rpsQ,30S ribosomal protein S17,cytoplasmic,12136.14,5215.763,523.4587740076049,0.781,9389.517,3.931
+JCVISYN3A_0663,rpmC,50S ribosomal protein L29,cytoplasmic,12777.291,5854.774,587.590545602766,0.782,20897.804,
+JCVISYN3A_0664,rplP,50S ribosomal protein L16,cytoplasmic,13182.204,2659.067,266.8664561184438,0.752,76353.656,3.939
+JCVISYN3A_0665,rpsC,30S ribosomal protein S3,cytoplasmic,10413.1,28467.639,2857.0385606577106,0.804,11004.464,3.952
+JCVISYN3A_0666,rplV,50S ribosomal protein L22,cytoplasmic,9920.818,7521.562,754.8708732521773,0.77,15928.4,4.324
+JCVISYN3A_0667,rpsS,30S ribosomal protein S19,cytoplasmic,13689.608,19885.89,1995.766342686151,0.7,26770.756,3.118
+JCVISYN3A_0668,rplB,50S ribosomal protein L2,cytoplasmic,13590.191,12513.602,1255.876630924241,0.666,12751.273,5.799
+JCVISYN3A_0669,rplW,50S ribosomal protein L23,cytoplasmic,4422.11,11510.284,1155.1827280142415,0.731,27373.832,
+JCVISYN3A_0670,rplD,50S ribosomal protein L4,cytoplasmic,8415.041,8758.367,878.9977684370374,0.705,30012.961,4.078
+JCVISYN3A_0671,rplC,50S ribosomal protein L3,cytoplasmic,13897.237,5818.149,583.9148278919773,0.694,94231.703,4.711
+JCVISYN3A_0672,rpsJ,30S ribosomal protein S10,cytoplasmic,11080.367,7907.56,793.6100002414903,0.674,112187.535,4.283
+JCVISYN3A_0684,folD,"Bifunctional 5,10-methylene-tetrahydrofolate dehydrogenase/5,10-methylene-tetrahydrofolate cyclohydrolase",cytoplasmic,130.971,273.724,27.471178563088248,0.733,4053.339,2.934
+JCVISYN3A_0685,ktrD,Sodium transporter,membrane,102.522,76.747,7.702390394994842,0.71,26197.822,69.882
+JCVISYN3A_0686,ktrC,Potassium transporter,cytoplasmic,96.394,1597.875,160.36425212968842,0.775,17815.277,11.085
+JCVISYN3A_0687,gatB,Glutamyl-tRNA amidotransferase subunit B,cytoplasmic,253.889,945.467,94.88794789704951,0.788,32512.816,6.456
+JCVISYN3A_0688,gatA,Glutamyl-tRNA amidotransferase subunit A,cytoplasmic,769.014,874.844,87.800145255484,0.76,39083.54,6.805
+JCVISYN3A_0689,gatC,Glutamyl-tRNA amidotransferase subunit C,cytoplasmic,384.334,64.921,6.515564529470161,0.617,3460.779,
+JCVISYN3A_0690,ligA,DNA ligase (NAD(+)),cytoplasmic,350.433,224.364,22.517372615604685,0.787,10158.349,4.056
+JCVISYN3A_0691,,Uncharacterized protein,membrane,143.169,36.047,3.617718157187119,0.695,1976.759,
+JCVISYN3A_0692,rluC,Uncharacterized pseudouridine synthase,cytoplasmic,43.826,106.216,10.659906827418627,0.644,18.969,
+JCVISYN3A_0693,,Uncharacterized protease,membrane,95.091,160.445,16.10238740055089,0.707,300.615,
+JCVISYN3A_0694,ptsH,ptsH: Phosphocarrier protein,cytoplasmic,6155.1,3624.058,363.7138393149184,0.714,14560.59,14.792
+JCVISYN3A_0695,pcrA,ATP-dependent DNA helicase,cytoplasmic,35.508,413.447,41.493968312576285,0.773,2283.075,
+JCVISYN3A_0696,,Uncharacterized transporter,membrane,26.322,21.901,2.1980392543640863,0.647,1491.676,
+JCVISYN3A_0697,,Uncharacterized glycosyl transferase,cytoplasmic,28.41,1230.838,123.52806948924255,0.726,5081.331,
+JCVISYN3A_0706,thiP,Thiamine ABC transporter permease,membrane,66.387,4.958,0.4975549407559443,0.624,14963.907,
+JCVISYN3A_0707,thiQ,Thiamine ABC transporter ATP-binding protein,cytoplasmic,170.601,481.731,48.34692563173602,0.607,4227.058,1.374
+JCVISYN3A_0708,thiB,Thiamine ABC transporter substrate-binding protein,lipoprotein,322.108,1359.0,136.39050928900525,0.682,54605.067,
+JCVISYN3A_0710,,Low specificity hydrolase ,cytoplasmic,92.553,360.51,36.18109711901156,0.744,11473.37,
+JCVISYN3A_0726,nagB,Glucosamine-6-phosphate deaminase,cytoplasmic,5476.849,1241.34,124.58207326508185,0.73,10439.728,
+JCVISYN3A_0727,tpiA,Triose-phosphate isomerase,cytoplasmic,1161.012,2626.334,263.5812618274528,0.757,3545.044,15.382
+JCVISYN3A_0728,ycsE; YitU; ywtE,Low specificity hydrolase ,cytoplasmic,1061.16,1095.775,109.97296705326876,0.726,135.301,
+JCVISYN3A_0729,pgm,"Phosphoglycerate mutase (2,3-diphosphoglycerate-independent)",cytoplasmic,1758.883,2061.564,206.90048537902277,0.769,25575.102,6.893
+JCVISYN3A_0730,,Uncharacterized protein,cytoplasmic,11.335,39.62,3.976275069014052,0.668,56809.689,
+JCVISYN3A_0732,deoC,Deoxyribose-phosphate aldolase,cytoplasmic,371.348,1205.051,120.9400755317976,0.794,1684.466,9.365
+JCVISYN3A_0733,deoB,Phosphopentomutase,cytoplasmic,139.734,790.622,79.3476001513951,0.79,44775.202,9.439
+JCVISYN3A_0747,punA,Purine-nucleoside phosphorylase,cytoplasmic,246.738,4566.14,458.2620275697577,0.786,19799.54,11.238
+JCVISYN3A_0771,nrdE,Ribonucleotide-diphosphate reductase subunit alpha,cytoplasmic,251.747,2281.245,228.94784654314435,0.808,44775.202,47.314
+JCVISYN3A_0772,nrdI,Ribonucleotide reductase assembly protein,cytoplasmic,414.67,682.743,68.52075218452684,0.783,2504.798,1.737
+JCVISYN3A_0773,nrdF,Ribonucleoside-diphosphate reductase subunit beta,cytoplasmic,539.559,4576.68,459.31987662745456,0.746,40354.521,47.314
+JCVISYN3A_0774,secG,Preprotein translocase subunit,membrane,147.682,11.278,1.1319127937047886,0.553,41268.896,
+JCVISYN3A_0775,rnr,Ribonuclease R,cytoplasmic,51.068,502.669,50.44835672111524,0.758,4220.552,1.65
+JCVISYN3A_0776,smpB,SsrA-binding protein,cytoplasmic,110.343,298.94,30.00185183526206,0.731,9025.137,
+JCVISYN3A_0777,,Uncharacterized protein,membrane,68.752,515.606,51.74669596518898,0.725,4399.579,
+JCVISYN3A_0778,,Uncharacterized protein,membrane,5985.024,408.138,40.96113546024567,0.574,1015.219,
+JCVISYN3A_0779,ptsG,PTS sugar transporter,membrane,21339.287,7084.071,710.9638864176749,0.701,427.127,
+JCVISYN3A_0787,mgtA,Magnesium-translocating P-type ATPase,membrane,220.875,733.006,73.56514810314094,0.729,6563.565,
+JCVISYN3A_0789,atpC,F1 ATP synthase subunit epsilon,cytoplasmic,542.671,337.123,33.83402623659152,0.7,2512.991,
+JCVISYN3A_0790,atpD,F1 ATP synthase subunit beta,cytoplasmic,2581.252,1569.568,157.52333979377238,0.757,14266.223,47.314
+JCVISYN3A_0791,atpG,F1 ATP synthase subunit gamma,cytoplasmic,814.248,312.616,31.37446740625296,0.698,3590.282,47.314
+JCVISYN3A_0792,atpA,F1 ATP synthase subunit alpha,cytoplasmic,2078.818,1723.836,173.0057903178796,0.79,38154.527,47.314
+JCVISYN3A_0793,atpH,F1 ATP synthase subunit delta,cytoplasmic,345.865,418.802,42.03134011824802,0.675,5574.81,
+JCVISYN3A_0794,atpF,F0 ATP synthase subunit B,membrane,715.404,801.43,80.43225340790396,0.779,1401.878,532.405
+JCVISYN3A_0795,atpE,F0 ATP synthase subunit C,membrane,2461.864,,,0.689,95434.165,532.405
+JCVISYN3A_0796,atpB,F0 ATP synthase subunit A,membrane,672.227,17.822,1.7886717912421597,0.664,61662.413,532.405
+JCVISYN3A_0797,atpI,Uncharacterized protein/Chaperon for ATP Synthase C-ring formation,membrane,158.049,,,0.538,9259.138,
+JCVISYN3A_0798,upp,Uracil phosphoribosyltransferase,cytoplasmic,1214.106,7972.686,800.1461647140012,0.734,53824.11,3.761
+JCVISYN3A_0799,glyA,Serine hydroxymethyltransferase,cytoplasmic,474.407,1574.118,157.9799518926799,0.826,2607.027,17.188
+JCVISYN3A_0800,rpiB,Ribose 5-phosphate isomerase B,cytoplasmic,427.698,698.314,70.08341485843924,0.696,112360.475,2.813
+JCVISYN3A_0803,rpoC,DNA-directed RNA polymerase subunit beta',cytoplasmic,2395.95,2811.747,282.18950809834234,0.762,46530.901,4.21
+JCVISYN3A_0804,rpoB,DNA-directed RNA polymerase subunit beta,cytoplasmic,1122.455,3085.549,309.66858989799,0.784,27662.673,4.689
+JCVISYN3A_0805,-/fic,"Uncharacterized protein/Filamentation, Protein Adenylation",cytoplasmic,70.128,158.022,15.859234605560934,0.652,5821.316,
+JCVISYN3A_0806,rplG,50S ribosomal protein L7/L12,cytoplasmic,4510.953,19779.678,1985.10674013798,0.869,56809.689,3.868
+JCVISYN3A_0807,rplJ,50S ribosomal protein L10,cytoplasmic,3041.382,6465.664,648.8999914446464,0.704,31998.494,4.488
+JCVISYN3A_0809,rplA,50S ribosomal protein L1,cytoplasmic,4613.279,9314.979,934.8599376895444,0.794,11353.57,4.275
+JCVISYN3A_0810,rplK,50S ribosomal protein L11,cytoplasmic,4344.089,8994.066,902.6527507731474,0.705,4181.041,2.386
+JCVISYN3A_0813,galE,UDP-glucose 4-epimerase GalE,cytoplasmic,134.797,2067.739,207.5202449378474,0.689,3064.688,7.398
+JCVISYN3A_0814,glf,UDP-galactopyranose mutase,cytoplasmic,62.476,957.635,96.109089121087,0.736,11023.465,6.949
+JCVISYN3A_0817,whiA/whiA,"Uncharacterized DNA-binding protein/Cell Division, Chromosome Segregation Regulation",cytoplasmic,118.068,177.602,17.824315138301458,0.733,13485.015,2.528
+JCVISYN3A_0818,lgt,Diacylglyceryl transferase,membrane,595.631,580.182,58.227650267619694,0.755,160805.33,
+JCVISYN3A_0819,trx,Thioredoxin-disulfide reductase,cytoplasmic,727.564,622.877,62.512525440855576,0.743,7099.317,6.065
+JCVISYN3A_0820,lgt,Diacylglyceryl transferase,membrane,51.057,41.431,4.15801507887624,0.717,2410.733,
+JCVISYN3A_0821,hpr; ptsH,HPr(Ser) kinase/phosphatase,cytoplasmic,52.823,647.48,64.98165640617017,0.708,2225.376,5.377
+JCVISYN3A_0822,ecfS,ecsF / folate ,membrane,618.134,48.317,4.849124539993062,0.665,5288.718,
+JCVISYN3A_0823,folC,Dihydrofolate synthase,cytoplasmic,109.123,72.072,7.233190163185861,0.719,547.777,
+JCVISYN3A_0824,uvrA,Excinuclease ABC subunit A,cytoplasmic,315.914,512.974,51.48258619651488,0.75,22682.909,4.591
+JCVISYN3A_0825,uvrB,Excinuclease ABC subunit B,cytoplasmic,70.816,149.045,14.958257202827228,0.752,12429.016,3.39
+JCVISYN3A_0826,yqeN,DNA polymerase III subunit delta,cytoplasmic,5.631,196.147,19.68546247801197,0.758,325.654,
+JCVISYN3A_0827,,Uncharacterized protein,membrane,103.815,908.726,91.2006249000238,0.717,8684.601,
+JCVISYN3A_0830,-/yqxA-like,Uncharacterized protein/Growth factor,membrane,12.721,0.889,0.0892389127031802,0.799,7283.386,
+JCVISYN3A_0831,prs,Phosphoribosylpyrophosphate synthetase,cytoplasmic,854.58,6621.502,664.5400188612549,0.773,12429.016,14.093
+JCVISYN3A_0832,pth,Aminoacyl-tRNA hydrolase,cytoplasmic,67.342,781.821,78.46426158535026,0.727,6831.446,47.314
+JCVISYN3A_0833,rplI,50S ribosomal protein L9,cytoplasmic,92.416,1666.28,167.22935845529778,0.719,755.676,2.16
+JCVISYN3A_0834,dnaC,Replicative DNA helicase,cytoplasmic,332.604,1268.53,127.31085242375,0.761,10030.355,4.435
+JCVISYN3A_0835,,Uncharacterized lipoprotein,lipoprotein,412.056,674.78,67.72152729281719,0.711,20086.82,
+JCVISYN3A_0836,ecfS,Uncharacterized ECF transporter S component,membrane,340.407,45.427,4.559100158077207,0.709,4960.548,
+JCVISYN3A_0837,cysRS,Cysteine--tRNA ligase,cytoplasmic,171.057,280.112,28.1123304040293,0.733,14013.782,2.698
+JCVISYN3A_0838,rlmB,23S rRNA (guanosine(2251)-2'-O)-methyltransferase,cytoplasmic,79.455,177.042,17.768096463168728,0.753,3590.282,2.949
+JCVISYN3A_0932,rpmG,50S ribosomal protein L33,cytoplasmic,237.172,768.494,77.12676386407944,0.562,78389.471,
+JCVISYN3A_0839,secE,Preprotein translocase subunit,membrane,450.965,89.156,8.947809022073761,0.718,36078.474,
+JCVISYN3A_0840,nusG,Antitermination protein,cytoplasmic,1215.34,3001.901,301.2735837463794,0.8,35106.062,
+JCVISYN3A_0851,,Uncharacterized lipoprotein,lipoprotein,5.535,,,0.634,724.792,
+JCVISYN3A_0852,,Uncharacterized protein,membrane,20.926,5.534,0.5553748552227079,0.613,4912.943,
+JCVISYN3A_0853,,Uncharacterized protein,cytoplasmic,41.117,90.248,9.05736460696195,0.655,12751.273,
+JCVISYN3A_0859,topA,DNA topoisomerase I,cytoplasmic,183.676,837.568,84.05912992119282,0.779,19328.906,3.374
+JCVISYN3A_0870,,Uncharacterized C4-dicarboxylate ABC transporter,membrane,174.052,64.482,6.471505684754512,0.741,2138.112,
+JCVISYN3A_0872,ychF/ychF,Uncharacterized ATPase/Ribosome Binding Factor ATPase,cytoplasmic,250.955,562.39,56.44198482091965,0.753,4220.552,
+JCVISYN3A_0873,,Uncharacterized protein,cytoplasmic,69.624,3.544,0.3556377443596171,0.72,16615.348,
+JCVISYN3A_0874,rsmG,16S rRNA (guanine(527)-N(7))-methyltransferase,cytoplasmic,96.593,272.02,27.30019338954029,0.741,238.793,13.598
+JCVISYN3A_0875,pgsA,CDP-diacylglycerol--glycerol-3-phosphate 3-phosphatidyltransferase,membrane,86.343,584.497,58.66061205524554,0.699,12751.273,61.917
+JCVISYN3A_0876,,Uncharacterized amino acid permease,membrane,443.311,322.844,32.40095462151947,0.66,171707.828,
+JCVISYN3A_0877,fmnP; ribU,Riboflavin ECF transporter S component ,membrane,355.795,123.486,12.393153077535873,0.614,3304.871,
+JCVISYN3A_0878,-/gabP,Uncharacterized amino acid permease/amino acid transporter,membrane,483.411,449.739,45.13626073556562,0.711,4952.913,
+JCVISYN3A_0879,corA,magnesium-importing ATPase ,membrane,60.248,212.169,21.29351829217661,0.722,10591.202,
+JCVISYN3A_0881,,Uncharacterized MFS transporter,membrane,3259.107,1150.595,115.474784622457,0.646,1753.214,
+JCVISYN3A_0885,mnmG; gidA,tRNA uridine(34) 5-carboxymethylaminomethyl synthesis enzyme,cytoplasmic,595.572,525.085,52.698066611681256,0.722,10030.355,5.445
+JCVISYN3A_0886,gltP,Proton-glutamate symporter,membrane,486.711,197.246,19.79575518512988,0.724,2447.727,
+JCVISYN3A_0887,cdr,Coenzyme A Disulfide Reductase,cytoplasmic,242.874,260.403,26.13429891819517,0.723,594.427,
+JCVISYN3A_0906,,Uncharacterized protein,cytoplasmic,68.779,546.91,54.88839329734999,0.707,5504.568,
+JCVISYN3A_0907,,Low specificity hydrolase ,cytoplasmic,44.16,160.827,16.140719445769594,0.723,3545.044,
+JCVISYN3A_0908,yidC,Membrane protein insertase,membrane,871.708,387.825,38.92250134363413,0.607,345723.148,45.574
+JCVISYN3A_0909,rnpA,Ribonuclease P protein component,cytoplasmic,1096.482,26.783,2.6879678375364824,0.639,22.591,
+JCVISYN3A_0910,rpmH,50S ribosomal protein L34,cytoplasmic,1616.3,10.805,1.0844442893221526,0.824,146318.289,

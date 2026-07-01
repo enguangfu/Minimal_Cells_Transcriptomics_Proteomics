@@ -151,6 +151,41 @@ ax.spines[['top', 'right']].set_visible(False)
 fig.savefig(f'{OUT}/panel_c_PacBio_vs_Illumina.pdf', dpi=300); plt.close(fig)
 say(f"c) PacBio vs Illumina r={r_c:.3f} (n={len(m)}, TPM>=0.5)")
 
+# ============================================================ SI bias a (length)
+# log2(PacBio/Illumina) vs gene length; near-zero slope => no length bias.
+# Same filtered set as panel c (both platforms TPM>=0.5); reuse m.
+from scipy.stats import linregress
+glen = m['gene_len'].astype(float).values
+log2_ratio = np.log2(m['PacBio_sense_TPM'].values / m['avg_sense_TPM'].values)
+sl_l, ic_l, r_l, p_l, _ = linregress(glen, log2_ratio)
+fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
+ax.scatter(glen, log2_ratio, s=5, alpha=0.5, c='#555555', edgecolors='none')
+ax.axhline(0, color='black', lw=0.5, ls=':')
+xs = np.array([glen.min(), glen.max()])
+ax.plot(xs, sl_l * xs + ic_l, color='crimson', lw=1.0)
+ax.text(0.04, 0.96, f"$r$ = {r_l:.2f}\n$P$ = {p_l:.1g}", transform=ax.transAxes, va='top', fontsize=6)
+ax.set_xlabel('Gene length (bp)')
+ax.set_ylabel('PacBio/Illumina TPM ($\\log_2$)')
+ax.spines[['top', 'right']].set_visible(False)
+fig.savefig(f'{OUT}/panel_si_a_length_bias.pdf', dpi=300); plt.close(fig)
+say(f"SI a) length bias: slope={sl_l:.2e}, r={r_l:.3f}, p={p_l:.2g} (n={len(m)})")
+
+# ========================================================= SI bias b (abundance)
+# MA plot: M=log2(PacBio/Illumina) vs A=mean log2 abundance; flat => no abundance bias.
+A = 0.5 * (np.log2(m['PacBio_sense_TPM'].values) + np.log2(m['avg_sense_TPM'].values))
+sl_a, ic_a, r_a, p_a, _ = linregress(A, log2_ratio)
+fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
+ax.scatter(A, log2_ratio, s=5, alpha=0.5, c='#555555', edgecolors='none')
+ax.axhline(0, color='black', lw=0.5, ls=':')
+xs = np.array([A.min(), A.max()])
+ax.plot(xs, sl_a * xs + ic_a, color='crimson', lw=1.0)
+ax.text(0.04, 0.96, f"$r$ = {r_a:.2f}\n$P$ = {p_a:.1g}", transform=ax.transAxes, va='top', fontsize=6)
+ax.set_xlabel('Mean TPM, $\\frac{1}{2}(\\log_2 P + \\log_2 I)$')
+ax.set_ylabel('PacBio/Illumina TPM ($\\log_2$)')
+ax.spines[['top', 'right']].set_visible(False)
+fig.savefig(f'{OUT}/panel_si_b_abundance_bias.pdf', dpi=300); plt.close(fig)
+say(f"SI b) abundance bias: slope={sl_a:.2e}, r={r_a:.3f}, p={p_a:.2g} (n={len(m)})")
+
 # ====================================================================== d
 tir = pd.read_csv('residual_analysis/gene_TIR_omics_merged.csv')
 r_d = pearsonr(tir['log10_TIR'], tir['residual'])[0]
