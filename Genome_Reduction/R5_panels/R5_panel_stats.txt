@@ -10,3 +10,11 @@
     gene   ptsI/0233                      Syn1   0.93x  Syn3A   0.40x  FC 0.434
     gene   crr/0234                       Syn1   3.86x  Syn3A   1.53x  FC 0.396
     gene   0235                           Syn1   0.45x  Syn3A   0.43x  FC 0.956
+
+[panel d] HupA operon OP_00187 decapitated (DEL_050; TSS 441031 deleted); depth=Illumina both organisms; hupA syn1=7.6x vs syn3A=0.13x mean -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5d_hupA_operon.pdf
+
+[hupA -10 promoter] operon OP_00187  TSS=441031 (+ strand)
+  -10 hexamer (TANAAT)   : TATAAT  match=True mm=0 shift=0
+  -10 extended (TNNTANAAT): TTATATAAT  match=True mm=0 shift=0
+  motif_tier             : strong_9mer
+  -10 window 441019-441024 falls inside DEL_050 (440092-441059) -> the promoter was deleted in Syn3A (decapitation)
