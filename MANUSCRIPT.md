@@ -60,9 +60,10 @@ Results:
   - X new panel b: FC-vs-absChange (14/3, 7/2), black base dots, 51 rPtns green, correlation inset top-left (r=0.84, 66% below diagonal). `R6_figure_panels.py::panel_b`.
   - X panel c: flipped to landscape (7, 7/6) — vertical lollipop, entities on x, FC on log-y.
   - X panel c: legend "Transcript" -> "mRNA".
-  - [ ] recheck the normalization scheme here to make sure fair comparison (retained-pool mean-normalization; NOT re-verified this pass)
+  - X naming DECIDED 2026-07-02: keep **relative TPM** (NOT "normalized TPM" — TPM is already normalized, so that name is ambiguous). Defined inline at first use in R6 P2 (reduction_omics.tex): "each gene's TPM relative to the average gene TPM, which counteracts the different gene numbers of the two cells"; relative iPM = its protein analogue. P1 normalization explanation shortened to a one-clause pointer (mean-normalized to the retained pool; Methods).
+  - [Done] recheck the normalization scheme here to make sure fair comparison (retained-pool mean-normalization; NOT re-verified this pass)
   - [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper (DEFERRED per author)
-  - Finished Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression (DEFERRED per author)
+  - Finished: Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression (DEFERRED per author)
 
 Discussion
 
