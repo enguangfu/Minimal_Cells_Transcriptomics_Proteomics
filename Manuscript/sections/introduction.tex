@@ -3,14 +3,13 @@
 \jsyn~(\syn) and its minimized derivative \jsyna~(\syna), genetically modified and reduced versions of the naturally occurring bacterium \Mmy~\cite{gibson_creation_2010, hutchison_design_2016}, are landmark platforms for defining the minimal requirements of cellular life. \cmt{EFU: state how WCM enables knowing more about syn3A}
 The two cells also differ in phenotype: \syna~divides more slowly~\cite{pelletier_genetic_2021}, packs a denser cytosol~\cite{gilbert_generating_2021}, and lacks the persistent chromosome contacts, the last linked to its low level of the nucleoid-associated protein HupA~\cite{gilbert_generating_2021}.
 
-Bacterial genes are co-transcribed in operons~\cite{jacob_genetic_1961}, and multiple transcription start and termination sites over one gene cluster. Further, the downstream RNA endo- and exoribonucleolytic processing generate a spectrum of overlapping and truncated RNA isoforms (Fig.~\ref{fig:operon}a).
-
 Yet they have been characterized chiefly through genome design and protein essentiality~\cite{breuer_essential_2019}, leaving how their genes are organized and processed at the RNA level largely uncharted.
 Three questions follow:
 First, how is gene expression organized across a synthetic genome, from operon boundaries and transcription signals to downstream RNA processing?
 Second, what does genome minimization as the synthetic evolution do to the transcription and translation scheme beyond deleting half of the genome from ~\syn to ~\syna?
 Last, how the genome minimization contribute to the cellular phenotype differences? 
 
+Bacterial genes are co-transcribed in operons~\cite{jacob_genetic_1961}, and multiple transcription start and termination sites over one gene cluster. Further, the downstream RNA endo- and exoribonucleolytic processing generate a spectrum of overlapping and truncated RNA isoforms (Fig.~\ref{fig:operon}a).
 Resolving operons requires reading transcripts at full length: short-read Illumina sequencing quantifies transcript abundance robustly but fragments RNA and cannot show which genes share a transcript~\cite{stark_rna_2019}, whereas long-read sequencing recovers full-length molecules and so exposes operon co-transcription, processing isoforms, and antisense or intergenic transcription~\cite{yan_smrt-cappable-seq_2018, grunberger_nanopore_2022}.
 
 We therefore captured full-length transcripts with PacBio in \syn~and Oxford Nanopore in \syna, using Illumina short reads as the standard for transcript quantification, and combined these with proteomics to build a genome-wide, operon-resolved map of transcription, RNA processing, and translation for both organisms and to compare how the synthetic minimization reshaped it.

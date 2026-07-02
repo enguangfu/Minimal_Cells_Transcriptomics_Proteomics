@@ -9,15 +9,25 @@ expand them into prose, quoting numbers verbatim from the files you list.
 
 Now i have discussed the entire manuscript in details with PI; following is the final TODO list before sending to all co-authors. I will ask you to revise some analysis and redraw panels; the tex files now will be edited on overleaf.
 
-Intro:
-- Separate one paragraph to include the followings:
-  - Briefly mention how syn1 differ from M. mycoides and why synthetic yeast gene inserted
-  - add genebank entry for both organisms
-  - briefly mention how syn1 reduced to syn3A
-  - mention how the WCM enabling know much more about syn3A
+### ⬜ Open / remaining
 
-Results:
-- Always denote syn1 or syn3A in the operon plot; normalize depth to avg depth in each organism
+Intro — separate one paragraph to include the following:
+- Briefly mention how syn1 differ from M. mycoides and why synthetic yeast gene inserted
+- add genebank entry for both organisms
+- briefly mention how syn1 reduced to syn3A
+- mention how the WCM enabling know much more about syn3A
+
+- R5: [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
+- R6: [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper (DEFERRED per author).
+
+Discussion:
+- cleaner gene set in the synthetic minimal cell
+- the reallocation of mRNA pool emphasize the balance of different subsystems, which is important issue for syncell
+
+### ✅ Finished
+
+General directive (applied to all figures): Always denote syn1 or syn3A in the operon plot; normalize depth to avg depth in each organism.
+
 - R2: 
   - X Remove panel d since secondary prediction and terminator signature not consistent
   - X Add a panel as f to show the spatial organization of ATP synthase
@@ -52,23 +62,16 @@ Results:
   - X panel d (violin replacement): rather than a TPM-FC distribution, replaced with the two-decapitated-central-carbon-operons showcase -> panel c (pdh/acetate OP_00121 + PTS OP_00122; operon-spanning PacBio isoforms; log-y Illumina depth; highlights promoter_lost cases beyond hupA). The impact-class violin is kept as panel_impact -> SI.
   - X panels b/c/d x-axis unified to "Relative transcript position (nt)".
   - X prose reframed 2026-07-01: section retitled "Genome reduction decapitates the operons of key proteins"; leads with promoter-loss -> key-protein suppression (HupA + central-carbon in two dedicated paragraphs), fusion (rpsT/rpsO) framed as the rare, ineffective reciprocal. The operon-truncation / junction-taxonomy / gene-impact-class COUNTS were moved out of Results into Methods (`genome_reduction.tex`: 235/172/52 operon overlay; 53/19/15/8 + 30/11/9/3 junctions; 2/3 vs 3/30, baseline 27/45 co-transcription; 360/45/42/24/17/6/3 impact classes) + full tables in `\sdreduction`. rpsO TPM FC restored to 0.144 (protein unchanged/up, transcript-only).
-  - [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
 
-- R6: 
+- R6: [prose + panels DONE 2026-07-01/02]
   - X New story line [prose DONE 2026-07-01, see the R6 Figure NOTE below]: P1 removed half genes + 1/5 pool (panel a); P2 correlation still high but majority genes lower since translation up, esp. the 21-rPtn operon (new panel b); P3 RNAP/degradosome/central-carbon (panel c); P4 21-rPtn operon intact yet upstream now a tRNA operon (panels d, e).
   - X a: add title: mRNA pool share in Illustrator [Illustrator step — panel unchanged in code]
   - X new panel b: FC-vs-absChange (14/3, 7/2), black base dots, 51 rPtns green, correlation inset top-left (r=0.84, 66% below diagonal). `R6_figure_panels.py::panel_b`.
   - X panel c: flipped to landscape (7, 7/6) — vertical lollipop, entities on x, FC on log-y.
   - X panel c: legend "Transcript" -> "mRNA".
   - X naming DECIDED 2026-07-02: keep **relative TPM** (NOT "normalized TPM" — TPM is already normalized, so that name is ambiguous). Defined inline at first use in R6 P2 (reduction_omics.tex): "each gene's TPM relative to the average gene TPM, which counteracts the different gene numbers of the two cells"; relative iPM = its protein analogue. P1 normalization explanation shortened to a one-clause pointer (mean-normalized to the retained pool; Methods).
-  - [Done] recheck the normalization scheme here to make sure fair comparison (retained-pool mean-normalization; NOT re-verified this pass)
-  - [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper (DEFERRED per author)
-  - Finished: Do something with d and e to make the point clean: upstream of rPtn operon changes from dnaK to tRNAs; but still no co-expression (DEFERRED per author)
-
-Discussion
-
-cleaner gene set in the synthetic minimal cell
-the reallocation of mRNA pool emphasize the balance of different subsystems, which is important issue for syncell
+  - X recheck the normalization scheme (retained-pool mean-normalization) — DONE 2026-07-02; comparisons are mean-normalized to the retained pool, with the relative-TPM definition added inline (see the relative-TPM naming item above).
+  - X d and e merged into one clean panel — DONE 2026-07-01: the rPtn operon's upstream-neighbour swap (dnaK -> tRNAs) with still no co-expression is now a single transcript-axis panel d.
 
 ## Deferred / future work
 
