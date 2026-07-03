@@ -12,7 +12,7 @@ Now i have discussed the entire manuscript in details with PI; following is the 
 ### ⬜ Open / remaining
 
 Intro: 
-Add diff between syn1 and Mmy in simple words
+Done Add diff between syn1 and Mmy in simple words
 
 Mention all three RNAseq techniques: PacBio, ONT, Illumina
 - add few details in Intro
@@ -28,6 +28,7 @@ Add SD strength as digits to panel g;
 Fig 3:
 put syn3A dist of proteins, corr plot and half-life dist to main figure
 move Illumina and PacBio TPM corr and comparison panels to new Fig S1
+resize figures so that six panels can fit
 
 Fig 4:
 Add SI fig for old intergenic transcription activity in syn1 0884 and 0885 region
@@ -36,8 +37,8 @@ Fig 5:
 - panel d: add syn1 ONT here
 
 Fig 6:
-- panel b: add upregulated and downregulated to top-right and down-left regions
-- panel d: expand the text to 5.3 x avg depth
+- Done panel b: add upregulated and downregulated to top-right and down-left regions
+- Done panel d: expand the text to 5.3 x avg depth
 
 - R5: [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
 - R6: [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
@@ -45,7 +46,7 @@ Fig 6:
 DCW operon:
 check syn1 and syn3A to see if restored
 
-Table S1 and S2: no regulatory elements into SI table
+Table S1 and S2: no regulatory elements into SI table; comment in the intro on regulation loss
 
 Try to visual the counts of isoforms arrows
 
