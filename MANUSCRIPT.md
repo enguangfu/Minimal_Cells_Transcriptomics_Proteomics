@@ -11,18 +11,43 @@ Now i have discussed the entire manuscript in details with PI; following is the 
 
 ### ⬜ Open / remaining
 
-Intro — separate one paragraph to include the following:
-- Briefly mention how syn1 differ from M. mycoides and why synthetic yeast gene inserted
-- add genebank entry for both organisms
-- briefly mention how syn1 reduced to syn3A
-- mention how the WCM enabling know much more about syn3A
+Intro: 
+Add diff between syn1 and Mmy in simple words
+
+Mention all three RNAseq techniques: PacBio, ONT, Illumina
+- add few details in Intro
+- mention the dists of read length in R1 and plot in new Fig S1
+- detailed review of techniques in Methods
+- replace corr plot xlabel to mRNA TPM (log10, Illumina)
+
+Check all figure captions
+
+Fig 2:
+Add SD strength as digits to panel g; 
+
+Fig 3:
+put syn3A dist of proteins, corr plot and half-life dist to main figure
+move Illumina and PacBio TPM corr and comparison panels to new Fig S1
+
+Fig 4:
+Add SI fig for old intergenic transcription activity in syn1 0884 and 0885 region
+
+Fig 5:
+- panel d: add syn1 ONT here
+
+Fig 6:
+- panel b: add upregulated and downregulated to top-right and down-left regions
+- panel d: expand the text to 5.3 x avg depth
 
 - R5: [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
-- R6: [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper (DEFERRED per author).
+- R6: [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
 
-Discussion:
-- Done cleaner gene set in the synthetic minimal cell
-- Done the reallocation of mRNA pool emphasize the balance of different subsystems, which is important issue for syncell
+DCW operon:
+check syn1 and syn3A to see if restored
+
+Table S1 and S2: no regulatory elements into SI table
+
+Try to visual the counts of isoforms arrows
 
 ### ✅ Finished
 
