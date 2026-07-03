@@ -8,21 +8,26 @@ The transcriptome proved richer than the reduced gene count implies.
 We mapped 459 operons whose full-length isoforms carried matched promoters and terminators, and their primary transcripts were pervasively reshaped, with markedly more 3$'$ than 5$'$ erosion.
 We interpret this asymmetry as a 3$'\rightarrow$5$'$ exonucleolytic clearance bottleneck rather than biased endonucleolytic cutting, a hypothesis direct cleavage-site mapping will test.
 
-Across \syn, transcript level was the dominant determinant of protein abundance, with translation-elongation features explaining part of the residual variance.
-The antisense and intergenic transcription we detected traced largely to inherited mis-annotation and synthetic-construction artifacts, and those regions were among the first removed during minimization to \syna.
+Across \syn, transcript level was the strongest single determinant of protein abundance, with translation-elongation features explaining part of the residual variance.
+The antisense and intergenic transcription we detected traced largely to inherited mis-annotation and synthetic-construction artifacts from \mmy, and those regions were among the first removed during minimization to \syna.
 
 Minimization was structurally conservative yet functionally transformative, and the resulting expression changes point to molecular reasons for the phenotype differences between the two cells.
 It preserved gene order and excised whole operons, decapitating only a few retained operons by deleting their own promoters, the clearest being the nucleoid protein HupA, whose collapse in \syna~accounts for its loss of the persistent chromosome contacts that \syn~maintains~\cite{gilbert_dynamics_2023,gilbert_generating_2021}.
-The retained transcriptome reallocated toward the translation machinery, especially a single 11~kb ribosomal-protein operon tripling its mRNA-pool share, while RNA polymerase and central-metabolic enzymes declined and the RNA degradosome rose, lower transcription and energy output against faster RNA turnover, coherent with \syna's longer cell cycle~\cite{pelletier_genetic_2021}.
-The same upregulation, together with the downregulation of several other ribosomal-protein genes, could imbalance ribosomal-protein production and so disrupt the efficiency of ribosome assembly, leaving surplus subunits to crowd the cytosol, a plausible origin of the more compact cytosol surrounding the ribosomes in \syna~\cite{gilbert_generating_2021}.
+The retained transcriptome reallocated toward the translation machinery, especially the single 11~kb ribosomal-protein operon that tripled its mRNA-pool share, while RNA polymerase and the central-metabolic enzymes declined and the RNA degradosome rose.
+This coupling of lower transcription and energy output to faster RNA turnover is coherent with \syna's longer cell cycle~\cite{pelletier_genetic_2021}.
+Such reallocation of resources between transcription and translation echoes the balancing of cellular economy seen when other genomes are streamlined (for example \Bsub~\cite{michalik_bacillus_2021}) and when synthetic cells are built from scratch.
+
+The same upregulation of the giant ribosomal-protein operon, together with the downregulation of several other ribosomal-protein genes, could imbalance ribosomal-protein production and so disrupt ribosome assembly, leaving surplus subunits to crowd the cytosol, a plausible origin of the more compact cytosol surrounding the ribosomes in \syna~\cite{gilbert_generating_2021}.
 Two non-exclusive effects could underlie this operon's rise: the tRNA operon that minimization brought adjacent to it may raise the local availability of RNA polymerase without read-through, and the loss of HupA may have shifted genome-wide supercoiling toward strong promoters.
 
-These reallocations also frame how the minimal cell evolves.
-Our \syna~profiles describe the wild-type ancestor from which laboratory evolution begins (Methods), and under selection for growth \syna~raises its ribosomal proteins further still~\cite{sandberg_adaptive_2023}, as expected if ribosome content sets growth rate.
-Evolution also prunes synthetic baggage: the dispensable \gene{tetM}{0913} resistance cassette, in the top tenth of the \syna~transcriptome, is silenced under selection~\cite{sandberg_adaptive_2023}, echoing the \gene{his3}{0918} over-transcription that minimization had already silenced.
+% These reallocations also frame how the minimal cell evolves.
+% Our \syna~profiles describe the wild-type ancestor from which laboratory evolution begins (Methods), and under selection for growth \syna~raises its ribosomal proteins further still~\cite{sandberg_adaptive_2023}, as expected if ribosome content sets growth rate.
+% Evolution also prunes synthetic baggage: the dispensable \gene{tetM}{0913} resistance cassette, in the top tenth of the \syna~transcriptome, is silenced under selection~\cite{sandberg_adaptive_2023}, echoing the \gene{his3}{0918} over-transcription that minimization had already silenced.
 
-Several limitations remain.
-The homology-mapped processing sites await direct cleavage-site mapping in \syn, since conserved ribonucleases need not act on conserved RNA structures; the truncated \syna~nanopore reads leave operon-level changes to be confirmed by PacBio (Methods); expression was framed as mRNA-pool share and excludes rRNA; and ribosomal and membrane-protein abundances are the least reliable, which ribosome profiling could sharpen while testing whether the elevated ribosomal-protein transcripts yield proportionally more ribosomes.
-Together these data establish a gene-coexpression foundation for incorporation into a four-dimensional whole-cell model of the minimal cell~\cite{thornburg_bringing_2026}.
+% Several limitations remain.
+% The homology-mapped processing sites await direct cleavage-site mapping in \syn, since conserved ribonucleases need not act on conserved RNA structures; 
+Several limitations remain: truncated \syna~nanopore reads leave operon-level changes to be confirmed by PacBio (Methods); expression is framed as mRNA-pool share and excludes rRNA; and ribosomal and membrane-protein abundances are the least reliable, which ribosome profiling could sharpen while testing whether the elevated ribosomal-protein transcripts yield proportionally more ribosomes.
+
+Together, this map of gene co-expression and transcript quantification establishes a foundation for a four-dimensional whole-cell model of the minimal cell~\cite{thornburg_bringing_2026}.
 
 \newpage

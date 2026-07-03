@@ -21,8 +21,8 @@ Intro — separate one paragraph to include the following:
 - R6: [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper (DEFERRED per author).
 
 Discussion:
-- cleaner gene set in the synthetic minimal cell
-- the reallocation of mRNA pool emphasize the balance of different subsystems, which is important issue for syncell
+- Done cleaner gene set in the synthetic minimal cell
+- Done the reallocation of mRNA pool emphasize the balance of different subsystems, which is important issue for syncell
 
 ### ✅ Finished
 
