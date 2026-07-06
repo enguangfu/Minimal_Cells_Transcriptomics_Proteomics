@@ -1,0 +1,58 @@
+\subsubsection{ONT RNA Sample Preparation}
+
+Direct-RNA samples for~\jsyn~and~\jsyna~were prepared by a shared protocol adapted from~\cite{grunberger_next_2019}.
+One mL aliquots of actively growing cells were placed in 25 mL of SP4 + 17\% KnockOut serum replacement in 50 mL conical tubes and incubated overnight at 37\textdegree C.
+The cells were harvested in mid-late log phase, indicated by a red-orange color of the phenol red pH indicator, when the media pH reached 7.0;~\syn~cultures reached this stage in 16 hours and~\syna~cultures in 22 hours.
+Growth was arrested by placing the tubes on wet ice for 10 minutes.
+Keeping all tubes on ice, 1.4 mL of bulk culture was distributed into fifteen 1.8 mL microfuge tubes per culture and centrifuged at 4\textdegree C for five minutes at 10,000$\times$g to pellet the cells.
+The supernatants from ten tubes were aspirated, and the pellets were progressively resuspended and reconcentrated into five tubes of concentrated cell suspension.
+These were centrifuged again (five minutes, 4\textdegree C, 10,000$\times$g), the supernatants aspirated completely, and the pellets snap-frozen in liquid nitrogen and stored at -80\textdegree C.
+
+Cellular RNA was extracted using a phenol-chloroform protocol with the ThermoFisher TRIzol\textsuperscript{TM} reagent.
+1 mL of 4\textdegree C TRIzol\textsuperscript{TM} was added to each frozen pellet and pipetted to break up the pellet, followed by a 5-minute room-temperature incubation.
+200 $\mu$L of chloroform was added, the tubes were shaken for 30 seconds, incubated for 3 minutes, and centrifuged at 12,000$\times$g for 15 minutes at 4\textdegree C.
+The upper aqueous phase was transferred, avoiding the interphase, into tubes containing 500 $\mu$L isopropanol, incubated on ice for 10 minutes, and centrifuged at 12,000$\times$g for 10 minutes at 4\textdegree C.
+The supernatant was discarded, the pellet air-dried for 15 minutes, and the RNA dissolved in 20 $\mu$L of RNase-free water containing 0.1 mM EDTA.
+RNA concentration was assessed with a Qubit RNA HS fluorometer assay and an Agilent TapeStation 2200.
+
+Ribosomal RNA (rRNA) was then depleted.
+The~\syna~sample and the second~\syn~sample were depleted with the NEBNext\textregistered{} rRNA Depletion Kit for bacteria, whereas the first~\syn~sample was depleted with the Invitrogen RiboMinus\textsuperscript{TM} Bacteria 2.0 Transcriptome Isolation Kit.
+For the NEBNext\textregistered{} protocol, 1 $\mu$g of RNA was brought up to 11 $\mu$L with RNase-free water, combined with 2 $\mu$L of NEBNext\textregistered{} Bacterial rRNA Depletion Solution and 2 $\mu$L of NEBNext\textregistered{} Probe Hybridization Buffer, heated to 95\textdegree C for 2 minutes, and cooled to 22\textdegree C at 0.1\textdegree C/sec.
+This was followed immediately by RNase H digestion (2 $\mu$L of RNase H Reaction Buffer and 2 $\mu$L of NEBNext Thermostable RNase H, total 20 $\mu$L, 50\textdegree C for 30 minutes) and an Agencourt RNAClean XP bead cleanup (Beckman Coulter\texttrademark, cat \# A63987).
+
+Depleted RNA was 3$'$ poly(A) tailed with a premade solution of 2 $\mu$L of 10X~\eco~Poly(A) Polymerase Reaction Buffer, 2 $\mu$L of ATP, and 1 $\mu$L of~\eco~Poly(A) Polymerase (New England Biolabs), incubated at 37\textdegree C for 30 minutes, and stopped with EDTA (10 mM final).
+After a further bead cleanup and quality control, RNA was normalized to 9 $\mu$L containing 140 ng for~\syn~and 50 ng for~\syna.
+
+\subsubsection{ONT RNA Sample Quality Control Analysis}
+
+Both a Qubit RNA HS fluorometer assay and an Agilent TapeStation 2200 were used to assess RNA concentration post-extraction; initial Qubit values were 1890 ng/$\mu$L for~\syna.
+The TapeStation was used throughout extraction and rRNA depletion to assess RNA quality and the extent of depletion, estimated from the absence of the 16S and 23S peaks (\sdqc).
+Post poly-adenylation, DNA and buffer contamination were checked by spectroscopy (NanoDrop One) and the Qubit 1$\times$ dsDNA HS assay kit (ThermoFisher Scientific), and input RNA was finally quantified with the Qubit RNA HS assay kit before normalization to 9 $\mu$L containing 50--500 ng.
+
+\subsubsection{ONT Library Preparation and Direct Sequencing}
+
+Libraries were prepared with the ONT Direct RNA Sequencing Kit (SQK-RNA002) with slight modifications, using 0.5 $\mu$L of the RT adapter enzyme (reduced from 1 $\mu$L) and 4 $\mu$L of the RMX RNA adapter (reduced from 6 $\mu$L).
+All samples were sequenced on R9.4 flow cells on the ONT GridION platform, with live base-calling enabled through the recommended MinKNOW (v23.07.5) scripts.
+Base-calling used Guppy with the RNA trim strategy and calibration detection and filtering enabled: v6.1.3 (on NVIDIA A5000 GPUs) for the first~\syn~run and v7.0.9 for the second~\syn~run and the~\syna~run; called bases were 99.99--100\% confident in all run reports.
+Two runs were generated for~\syn~and a single run for~\syna~(734.08~k reads, average N50 430).
+
+\subsubsection{Mapping ONT Reads to the Reference Genomes}
+
+Reads were retrieved from the NCBI SRA with the SRA Toolkit:~\syn~run 1 (SRR36199726, 234{,}477 reads),~\syn~run 2 (SRR36199725, 584{,}958 reads), and~\syna~(SRR36199724, 734~k reads).
+Direct-RNA reads deposited in the native 3$'\rightarrow$5$'$ pore order (the~\syn~run 2 and the~\syna~run) were restored to 5$'\rightarrow$3$'$ sense orientation by reversing the base order (\texttt{seqkit} v2.1.0, reverse only and not reverse-complement, since direct-RNA reads are single-stranded), whereas the~\syn~run 1 reads were already in sense orientation.
+Orientation was verified empirically: in the corrected orientation reads mapped sense to the annotated genes (over 97\% of gene-overlapping reads), whereas the opposite orientation mapped almost nothing.
+Reads were aligned to the respective reference genome (\jsyn, NCBI accession CP002027.1;~\jsyna, CP016816.2) with \texttt{minimap2} v2.30~\cite{li_minimap2_2018} using the non-spliced long-read preset \texttt{-ax map-ont -p 0.99 --MD}, and sorted and indexed with \texttt{samtools} v1.22.1~\cite{li_sequence_2009}.
+The \texttt{map-ont} preset was used in place of the splice-aware preset because~\mmy~and its reduced derivative are intron-less, so N-skip (spliced) alignments would bridge tens to hundreds of kilobases of unrelated reference.
+Strandedness of the direct-RNA reads is preserved through the BAM flag bits, and per-strand sequencing-depth bedGraph tracks were computed with \texttt{samtools depth}, with forward-mapped reads defining the plus-strand transcripts.
+
+For~\syn, run 1 yielded 207{,}480 primary mapped reads (88.5\%; mean length 661~nt, mean Phred quality Q17.5) and run 2 yielded 456{,}755 primary mapped reads (78.1\%; mean length 370~nt, Q31.7, 98.4\% above Q20), the higher quality of run 2 reflecting its newer base-caller.
+For~\syna, 559~k of 734~k reads (76.2\%) mapped as primary alignments (mean length 383~nt, range 49--2{,}858~nt, mean quality Q31.2, 98.2\% above Q20); the 175~k unmapped reads (23.9\%) were of substantially lower quality (mean Q20.7, 61.0\% shorter than 300~nt), consistent with the expected tail of truncated ONT direct-RNA molecules rather than reference mismatch.
+Secondary alignments accounted for 3--4\% of primary mapped reads in every run and clustered at the ribosomal RNA and tRNA loci of each genome (for~\syna, $\sim$55{,}460 and $\sim$343{,}267~bp, the two rRNA operons).
+
+\subsubsection{Between-run Reproducibility and TPM Quantification}
+
+Per-gene sense transcripts-per-million (TPM) were computed from the strand-specific depth tracks using the depth-based definition applied to the~\syn~Illumina and PacBio data.
+The two~\syn~runs agreed only moderately (Pearson $r = 0.82$ on $\log_{10}$ TPM, with 36\% of genes differing more than two-fold), the largest discrepancies being residual rRNA transcripts, which the RiboMinus\textsuperscript{TM}-depleted run 1 retained far more abundantly than the NEBNext\textregistered{}-depleted run 2.
+Because the two runs used different depletion chemistries and differ substantially, they were treated as independent runs rather than averaged into a single quantitative profile, and the pooled alignment was retained only as a genome-browser coverage track.
+Each~\syn~run reproduced the~\syn~Illumina TPM profile with comparable fidelity (Pearson $r = 0.61$ and $0.60$ on $\log_{10}$ TPM for runs 1 and 2), confirming that the direct-RNA data recover the same transcriptome as the short-read and PacBio platforms.
+The~\syna~ONT TPM profile was quantified in the same way and is reported alongside the~\syna~Illumina track (see the~\syna~short-read sequencing methods).

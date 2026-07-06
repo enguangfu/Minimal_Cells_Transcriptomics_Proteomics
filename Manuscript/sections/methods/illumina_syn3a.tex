@@ -1,0 +1,18 @@
+\subsubsection{Mapping Illumina Reads to Syn3A Genome}
+
+Raw Illumina reads (paired-end, 51 nt, $\sim$12.7~M pairs per replicate) of Syn3A wild type at log-phase from~\cite{sandberg_adaptive_2023} were retrieved from NCBI SRA database.
+Per-base and per-read quality scores passed all checks and no Illumina adapters were detected, so no trimming was applied.
+
+% The FastQC \emph{sequence duplication} and \emph{per-base sequence content} flags failed in both mates as expected for RNA-seq on a 543~kb bacterial genome (the same transcript fragment is sequenced many times, and the first $\sim$10~nt show the canonical random-hexamer priming bias); neither was treated as a quality issue. A small fraction of overrepresented sequences mapped to the 16S/23S/5S ribosomal operons, indicating residual rRNA after Ribo-Zero depletion, but these were retained for downstream strand-split depth analysis.
+
+Reads were aligned to the JCVI-syn3A reference (NCBI accession CP016816.2) with \texttt{bowtie2} v2.5.5~\cite{langmead_fast_2012} in default paired-end mode.
+The overall alignment rate was 98.88\%: 83.55\% of pairs mapped concordantly exactly once, 10.43\% concordantly with $>$1 hit (corresponding to the two ribosomal RNA operons of syn3A), and 6.02\% of pairs were discordant or unpaired.
+SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22.1~\cite{li_sequence_2009}.
+Strand-specific BAMs were generated using the dUTP / fr-firststrand flag convention (read 2 forward on $+$ strand and read 1 reverse on $+$ strand define plus-strand reads; their reverse complements define minus-strand reads), matching the Kapa Stranded RNA-Seq Kit library preparation, and per-strand sequencing-depth bedGraph tracks were computed with \texttt{samtools depth}.
+
+\subsubsection{Quantification of TPM from Sequencing Depth}
+
+Per-gene sense and antisense TPM were computed for~\syna~from the strand-specific depth tracks, using the same depth-based definition applied to the~\syn~Illumina data, namely a gene-length-normalized mean per-base depth scaled to transcripts per million against a single sense-plus-antisense denominator per dataset.
+Genes were taken from the~\syna~annotation, parsing both the \texttt{gene} and \texttt{pseudogene} feature types so that the three annotated pseudogenes were retained, for a total of 496 loci.
+TPM was computed independently from the Illumina and the ONT depth tracks; the single biological replicate of each platform required no replicate averaging, and the two profiles were merged into one table.
+The Illumina profile served as the quantitative transcript-abundance track, with the long-read ONT profile retained as an orthogonal check, and it reproduced the per-gene TPM reported for the same wild-type~\syna~library by~\cite{sandberg_adaptive_2023} (Pearson $r = 0.998$ on $\log_{10}$ TPM), validating the depth-based pipeline.

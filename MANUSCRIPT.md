@@ -12,23 +12,35 @@ Now i have discussed the entire manuscript in details with PI; following is the 
 ### ⬜ Open / remaining
 
 Intro: 
-Done Add diff between syn1 and Mmy in simple words
 
 Mention all three RNAseq techniques: PacBio, ONT, Illumina
 - add few details in Intro
-- mention the dists of read length in R1 and plot in new Fig S1
-- detailed review of techniques in Methods
-- replace corr plot xlabel to mRNA TPM (log10, Illumina)
+- mention the dists of read length for three techniques in syn1 R1
+- New FigS1: corr of TPMs among all three techniques; length and abundance biase comparing long-read (ONT and PacBio) against Illumina
+- X DONE 2026-07-06 detailed review of techniques in Methods: new `Manuscript/sections/methods/rnaseq_comparison.tex` (adapted from OLD intro.tex L27-30, methods style, \citep->\cite); `\input` is first subsection in methods.tex. Ported 11 technique refs (Soneson2019, Mortazavi2008, Nagalakshmi2008, Wilhelm2008, Stark2019, illumina_acc2011, Wenger2019, Rhoads2015, Garalde2018, Liu2019, Satam2023) from OLD_Manuscript/ref*.bib into references.bib (fixed Liu2019 journal `&amp;`->`\&`). Full manuscript compiles clean (46 pp, 0 undefined cites).
+- detailed review of techniques in Methods from the OLD introduction in OLD_Manuscript folder
+
+ONT:
+- X DONE 2026-07-06 redo ONT analysis on syn1: new pipeline in `Syn1_Transcriptomics/ONT/` mirroring the Syn3A ONT flow.
+  - `ONT_Raw/00_retrieve_fastq.sh` (fasterq-dump SRR36199726=rep1, SRR36199725=rep2; rename+gzip) + `00b_orient_check.sh` (empirical orientation).
+  - `ONT_Processing/02_map_sort.sh` (minimap2 -ax map-ont -p 0.99 --MD, syn1 genome, per-rep BAM + merged), `03_report.sh` (QC), `04_sequencing_depth.sh` (strand-split bedGraphs per rep + merged, in `depth_bedgraph/`).
+  - **Orientation (verified, NOT copied from Syn3A):** rep1 correct AS-IS (88.5% map, 97.7% sense); rep2 native 3'->5', reversed with `seqkit seq -r` (78.1% map, 99.2% sense). Confirms OLD note "Syn1 Rep2 must be complemented."
+  - **Two runs differ a lot -> DO NOT average.** Different rRNA kits (rep1=RiboMinus/high residual 5S rrf; rep2=NEBNext/clean); per-gene sense TPM rep1 vs rep2 r=0.82, 36% of genes >2-fold. Merged BAM kept only as a browser coverage track. rep1/rep2 vs Illumina r=0.61/0.60; merged 0.65.
+  - Data now available for Fig 5 panel d (syn1 ONT track) and Fig 4 SI (0884/0885 intergenic).
+- X DONE 2026-07-06 add back the ONT of syn1 to methods: new `Manuscript/sections/methods/ont_syn1.tex` (from OLD_Manuscript/sections/methods/ont-exp-methods.tex + corrected map-ont pipeline), `\input` added to `methods.tex` after pacbio_syn1; compiles clean. NOTE: cited samtools v1.22.1 to match manuscript convention (actually ran 1.23; identical output).
 
 Check all figure captions
 
 Fig 2:
 Add SD strength as digits to panel g; 
+Comment on this in Discussion and cite Gene-wei's paper
 
 Fig 3:
 put syn3A dist of proteins, corr plot and half-life dist to main figure
 move Illumina and PacBio TPM corr and comparison panels to new Fig S1
 resize figures so that six panels can fit
+replace corr plot xlabel to mRNA TPM (log10, Illumina)
+revisit protein copy number calculation
 
 Fig 4:
 Add SI fig for old intergenic transcription activity in syn1 0884 and 0885 region
@@ -39,6 +51,7 @@ Fig 5:
 Fig 6:
 - Done panel b: add upregulated and downregulated to top-right and down-left regions
 - Done panel d: expand the text to 5.3 x avg depth
+- panel b: add mRNA before both x and y labels
 
 - R5: [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
 - R6: [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.

@@ -1,0 +1,18 @@
+Three complementary RNA sequencing (RNAseq) platforms were used to profile the transcriptome, each capturing a different facet of transcript structure and abundance~\cite{Soneson2019}.
+Illumina short-read sequencing provided the quantitative backbone, PacBio Iso-Seq\textsuperscript{TM} resolved full-length isoform structure, and Oxford Nanopore Technologies (ONT) direct-RNA sequencing provided native, amplification-free long reads.
+
+Illumina-based sequencing is currently the most common technique for capturing gene expression information, owing to its robustness, cost, and throughput.
+Illumina instruments generate billions of reads per flow cell, and the chemistry has been refined considerably since the technique was introduced~\cite{Mortazavi2008,Nagalakshmi2008,Wilhelm2008}.
+Library preparation requires several intermediary steps prior to sequencing: (i) fragmentation of RNA, (ii) conversion of isolated mRNA fragments to double-stranded complementary DNA (cDNA) by reverse transcription, (iii) adapter ligation, (iv) PCR amplification, and (v) size selection~\cite{Stark2019}.
+Fragments are sequenced from one end (single-end) or both ends (paired-end), typically with read lengths of 150--250 nt depending on the instrument.
+The reads are short but exceed 99\% base accuracy, particularly with the latest chemistries and instrumentation~\cite{illumina_acc2011}.
+
+Pacific Biosciences (PacBio) sequencing requires similar library-preparation steps from mRNA to cDNA but sequences full-length cDNA through the Iso-Seq\textsuperscript{TM} protocol, which incorporates SMRTbell adapters for circular consensus sequencing (CCS, also known as HiFi sequencing)~\cite{Wenger2019}.
+Improved instrumentation such as the PacBio Revio and concatemerization techniques such as Kinnex yield accurate full-length isoforms of up to 20 kb, although longer transcripts may be truncated or lost when size selection is applied.
+PacBio requires substantial RNA input, so PCR amplification is commonly used during library preparation, and the platform carries a known bias toward smaller fragments that can complicate expression quantification~\cite{Rhoads2015}.
+
+Both Illumina and PacBio Iso-Seq convert RNA to cDNA and rely on PCR amplification and size selection, and short reads alone cannot capture the full complexity of the transcripts present in a bacterial cell.
+ONT instead captures long transcripts directly by passing native RNA through a membrane-embedded nanopore (\threeprime~to~\fiveprime) and reading the perturbations of an applied electric current~\cite{Garalde2018}.
+Direct-RNA sequencing was included for its ability to read full-length native transcripts without conversion to cDNA, which can perturb the native molecule and lose information~\cite{Soneson2019}.
+Beyond quantification, native long reads resolve gene co-expression, antisense and intergenic transcription, and, in principle, common base modifications such as N6-methyladenosine~\cite{Liu2019}.
+The three RNAseq approaches are further reviewed in~\cite{Stark2019,Satam2023}.
