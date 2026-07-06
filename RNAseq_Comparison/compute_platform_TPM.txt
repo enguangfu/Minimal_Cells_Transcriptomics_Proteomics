@@ -1,0 +1,13 @@
+Pairwise Pearson r on log10 sense TPM (genes with both TPM > 0.5)
+
+== Syn1 (n genes = 911) ==
+  Illumina  vs PacBio   : r = 0.617  (n = 884)
+  Illumina  vs ONT1     : r = 0.610  (n = 885)
+  Illumina  vs ONT2     : r = 0.599  (n = 885)
+  PacBio    vs ONT1     : r = 0.466  (n = 892)
+  PacBio    vs ONT2     : r = 0.510  (n = 892)
+  ONT1      vs ONT2     : r = 0.815  (n = 896)
+  [ONTmerged vs Illumina]: r = 0.648  (n = 890)
+
+== Syn3A (n genes = 496) ==
+  ONT       vs Illumina : r = 0.570  (n = 496)

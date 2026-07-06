@@ -12,13 +12,18 @@ Now i have discussed the entire manuscript in details with PI; following is the 
 ### ⬜ Open / remaining
 
 Intro: 
-
+also
 Mention all three RNAseq techniques: PacBio, ONT, Illumina
-- add few details in Intro
-- mention the dists of read length for three techniques in syn1 R1
-- New FigS1: corr of TPMs among all three techniques; length and abundance biase comparing long-read (ONT and PacBio) against Illumina
+- No need anymore: add few details in Intro.
+- Create a new result section R0 with tex name rna_seq.tex to report the statitcs of read length and coverage for three techniques
 - X DONE 2026-07-06 detailed review of techniques in Methods: new `Manuscript/sections/methods/rnaseq_comparison.tex` (adapted from OLD intro.tex L27-30, methods style, \citep->\cite); `\input` is first subsection in methods.tex. Ported 11 technique refs (Soneson2019, Mortazavi2008, Nagalakshmi2008, Wilhelm2008, Stark2019, illumina_acc2011, Wenger2019, Rhoads2015, Garalde2018, Liu2019, Satam2023) from OLD_Manuscript/ref*.bib into references.bib (fixed Liu2019 journal `&amp;`->`\&`). Full manuscript compiles clean (46 pp, 0 undefined cites).
-- detailed review of techniques in Methods from the OLD introduction in OLD_Manuscript folder
+- Done detailed review of techniques in Methods from the OLD introduction in OLD_Manuscript folder
+- Now Figure S1: [X DONE 2026-07-06] `RNAseq_Comparison/{compute_platform_TPM.py,FigS1_panels.py}` -> 4 born-at-size panels in `FigS1_panels/`; prose in rna_seq.tex; `sifigure` env fixed so this=Fig S1, R3 si-correlation=Fig S2. Combine si-rnaseq.pdf manually in Illustrator.
+  - corr of TPMs among all three techniques; length and abundance biase comparing PacBio against Illumina (ONT dropped from b/c per author, repeats old Fig S1)
+  - panel a (7/2, 7/2): correlation coefficient between TPMs for syn1: 4 by 4 (illumina, PacBio, ONT1, ONT2); upper half Pearson R coefficient; lower half actual correlation plot
+  - panel b (7/4, 7/4): gene-length versus PacBio/Illumina in old Fig S1
+  - panel c (7/4, 7/4): abundance versus PacBio/Illumina in old Fig S1
+  - panel d (7/4, 7/4): correlation plot for Syn3A ONT and Illumina
 
 ONT:
 - X DONE 2026-07-06 redo ONT analysis on syn1: new pipeline in `Syn1_Transcriptomics/ONT/` mirroring the Syn3A ONT flow.
@@ -33,7 +38,7 @@ Check all figure captions
 
 Fig 2:
 Add SD strength as digits to panel g; 
-Comment on this in Discussion and cite Gene-wei's paper
+Comment on SD strength in Discussion and cite Gene-wei's paper
 
 Fig 3:
 put syn3A dist of proteins, corr plot and half-life dist to main figure
@@ -41,6 +46,7 @@ move Illumina and PacBio TPM corr and comparison panels to new Fig S1
 resize figures so that six panels can fit
 replace corr plot xlabel to mRNA TPM (log10, Illumina)
 revisit protein copy number calculation
+denote what is proteome redisual in Illustrator
 
 Fig 4:
 Add SI fig for old intergenic transcription activity in syn1 0884 and 0885 region

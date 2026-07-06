@@ -73,12 +73,14 @@
 
 % Supplementary figure: numbered S1, S2, ... without disturbing the main figure counter.
 \newcounter{savedfigure}
+\newcounter{sifigurecount}% persistent count of SI figures (0-based, survives across blocks)
 \newenvironment{sifigure}[1][H]
   {\setcounter{savedfigure}{\value{figure}}%
-   \setcounter{figure}{0}%
+   \setcounter{figure}{\value{sifigurecount}}%
    \renewcommand{\thefigure}{S\arabic{figure}}%
    \begin{figure}[#1]}
   {\end{figure}%
+   \setcounter{sifigurecount}{\value{figure}}%
    \setcounter{figure}{\value{savedfigure}}}
 
 \newcommand{\ltbl}[1]{\label{tbl:#1}}
