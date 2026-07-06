@@ -128,11 +128,11 @@ def draw_syn3a(ax):
     m = (a > THR) & (b > THR)
     x, y = l10(a[m]), l10(b[m])
     r = pearsonr(x, y)[0]
-    ax.scatter(x, y, s=2, alpha=0.5, c=C_GREY, edgecolors="none")
+    ax.scatter(x, y, s=5, alpha=0.5, c="#555555", edgecolors="none")  # same params as panels b/c
     ax.plot(LIM, LIM, ls=":", lw=0.5, c="#c0392b")
     ax.set_xlim(LIM); ax.set_ylim(LIM)
-    ax.set_xlabel(f"Illumina sense TPM (log{SUB10})", fontsize=6.5)
-    ax.set_ylabel(f"ONT sense TPM (log{SUB10})", fontsize=6.5)
+    ax.set_xlabel(f"Illumina TPM (log{SUB10})", fontsize=6.5)
+    ax.set_ylabel(f"ONT TPM (log{SUB10})", fontsize=6.5)
     ax.text(0.05, 0.93, f"r = {r:.2f}\nn = {int(m.sum())}", transform=ax.transAxes,
             ha="left", va="top", fontsize=5.5)
     ax.tick_params(length=2)
