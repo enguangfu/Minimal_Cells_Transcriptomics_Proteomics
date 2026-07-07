@@ -11,6 +11,7 @@ Now Extended/SI displays:
 - TableS2: Rnases
 - FigS2: corr between mRNA and protein
 - TableS3: parameters on calculating absolute protein copy numbers
+- FigS3: intergenic transcription between 0884/0885
 
 ## Manuscript Revision
 
@@ -23,18 +24,8 @@ Check all figure captions.
 Fig 2:
 - Comment on SD strength in Discussion and cite Gene-wei's paper.
 
-Fig 3:
-- Denote what proteome residual is in Illustrator.
-- (open decision) Assumption consistency in the copy-number calc: syn1 uses protein mass fraction 58.2% (Razin 1963) while syn3A uses 54.727% (Breuer 2019); syn3A gDW = 1.0161e-14 g has a commented-out alternative 5.4e-15 (~1.9x) in the notebook. Decide whether to unify onto one basis. (Dry masses are NOT identical — see Finished.)
-
-Fig 4:
-- Add SI fig for old intergenic transcription activity in syn1 0884/0885 region (syn1 ONT data now available).
-
-Fig 5:
-- panel d: add syn1 ONT here (data ready — see the ONT redo under Finished).
-
-Fig 6:
-- panel b: add "mRNA" before both x and y labels.
+Fig4:
+- revise 0884 plot and explanation
 
 R6:
 - Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
@@ -45,9 +36,16 @@ Try to visualize the counts of isoform arrows.
 
 DCW operon:
 - Check syn1 and syn3A to see if restored.
+
 ### ✅ Finished
 
 General directive (applied to all figures): Always denote syn1 or syn3A in the operon plot; normalize depth to avg depth in each organism.
+
+- Fig 4 SI panel (Fig S3, intergenic 0884/0885) [DONE 2026-07-07]: `Syn1_Novel_ORF/FigS3_intergenic_0884_0885.py` -> `R4_panels/FigS3_intergenic_0884_0885.pdf` (-> `figures/si-intergenic.pdf`). **Combined Syn1-vs-Syn3A**, absolute syn1 coords: gene track (0884+ / 0885- / 0886-) + 6 mirror depth tracks (Syn1 PacBio / ONT1 / ONT2 / Illumina-avg, then Syn3A ONT / Illumina mapped through the retained block onto the syn1 axis; deleted block = blank on syn3A tracks). + up (blue) / - down (orange), each ÷ its own both-strand genome-mean. Deletion band shaded red ("deleted in Syn3A"), the ~180 bp intergenic gap shaded yellow. **INTERPRETATION (author, corrected from my "decapitation"):** a discrete ~180 bp + transcript sits in the 0884/0885 gap NOT overlapping either gene (0884 body is bare; 0884 = "conserved hypothetical protein"); a candidate UNANNOTATED transcription unit. Abundant in Illumina (21.8x) + ONT1 (21.6x) but under-sampled by size-selected PacBio (0.15x, short transcript). syn3A: 0884 (hypothetical) deleted, but the intergenic unit RETAINED though ~8x lower (Illumina 2.8x, ONT 1.5x). Wired into `novel.tex` (sifigure Fig S3; reframed reference sentence). Compiles clean (50 pp). NOTE Illumina norm uses replicate-WEIGHTED-avg mean (~292, matches R5/R6 panels), not Table S1 pooled 766.
+
+- Fig 5 panel d + Fig 6 panel b [DONE 2026-07-07]:
+  - Fig 5 panel d (hupA, `Genome_Reduction/R5_figure_panels.py::panel_d`): resized to (7, 7/3), added a **Syn1 ONT isoform track** beneath the PacBio one (new `load_syn1_ont_plus_isoforms` reads `syn1.ONT.merged.sorted.bam` via samtools; + strand reads over hupA clustered by 5'/3' ends). ONT 5' ends pile up at the TSS inside 0349: 3,313 reads over hupA, 1,540 start at/upstream of the deletion junction. Confirms the promoter lies inside gpsA/0349 (deleted in syn3A; hupA depth 7.6x -> 0.13x). **5' quantification (PacBio vs ONT):** PacBio pins the TSS sharply -- 79% of 2,130 reads at a single 5' base (441031, = annotated TSS, anchors the -10 box 441019-441024); ONT 5' ends fall inside 0349 too but shifted ~15-30 nt downstream (modal +14, median +29 nt), the expected 5' digestion of direct-RNA. Results + caption say PacBio fixes the TSS sharply / ONT corroborates just downstream. `_junction_panel` extended with an optional `ont_iso` track (panel c unaffected). Results + caption in `reduction_operons.tex` updated (PacBio+ONT place the TSS inside 0349).
+  - Fig 6 panel b (`R6_figure_panels.py::panel_b`): prepended "mRNA" to both axis labels -> "mRNA TPM fold change" / "mRNA TPM absolute change".
 
 - Protein copy-number: syn3A Methods + Table S3 + Results diff [DONE 2026-07-07]:
   - Checked the dry masses: NOT identical. syn1 = 12.8 fg dry mass x 58.2% protein = 7.48 fg protein/cell -> ~127,800 proteins/cell; syn3A = 10.2 fg x 54.727% = 5.56 fg -> ~100,300 proteins/cell. EF-Tu(0151): syn1 7,173 vs syn3A 5,089 copies. Constants in `Syn1_Syn3A_Proteomics/Protein_Quantification_Localization.ipynb` cells 16 (syn1) + 35 (syn3A).
@@ -55,6 +53,7 @@ General directive (applied to all figures): Always denote syn1 or syn3A in the o
   - Results (`corr_RNA_ptn.tex`): added the copy-number difference sentence. **Direction fix**: syn3A median copy number (~66) is nearly DOUBLE syn1 (~31), because a comparable protein pool is spread over fewer genes (446 vs 721) even though syn1 has 1.27x more total protein molecules. (The TODO had the direction reversed.)
   - Also reconciled the now-stale Fig 3 / Fig S2 captions + in-text panel refs to the rebuilt figures. **Panel order (match in Illustrator):** main correlation.pdf a/d = copy-number dist, b/e = mRNA-iPM corr, c/f = half-life (a-c syn1, d-f syn3A); SI si-correlation a-d = syn1 TIR/CAI/half-life-residual/R, e-h = syn3A same. Table S3 also lists cell volume (um^3) + protein density (um^-3) per organism. Full manuscript compiles clean (49 pp, 0 undefined).
 
+- **Fig 3 COMPLETE [DONE 2026-07-07].** Panel order finalized (a/d copy-number, b/e corr, c/f half-life). Legend polish: copy-number title compacted to "(median, n=unique)", corr+half-life legends -> 5 pt, localization labels shortened to Cyto/Lipo/Mem/Extra (defined in the caption). Proteome residual annotated in Illustrator (author). Remaining copy-number-assumption question moved to Deferred.
 - Fig 3 rebuilt with the syn1(blue)/syn3A(red) organism convention [DONE 2026-07-07]:
   - Main figure = 6 panels (3 metrics x 2 organisms): mRNA-vs-iPM corr (7/3 sq; FILLED syn1 / OPEN syn3A circles), copy-number distribution by localization (7/3 x 7/6), half-life distribution (7/3 x 7/6; blue vs red bars). Every panel tagged with a bold blue "Syn1.0" / red "Syn3A" left-title (Fig 5/6 convention); localization palette SHARED so the two rows compare like-for-like. Corr xlabel -> "mRNA Illumina TPM (log10)".
   - SI figure (si-correlation) = 8 panels (4 metrics x 2 organisms): residual vs TIR / CAI / half-life + R-improvement; syn1 dots blue, syn3A dots red, black fit lines.
@@ -124,6 +123,7 @@ Intentionally deferred analyses; the manuscript already ships without them.
 - **R6 L6.5 (no panel).** ATP/GTP flux comparison: needs a metabolic model.
 - **R1 L1.5 (panel e).** Decide which polycistronic operon to showcase.
 - **R4.** RNA-polymerase-conflict angle (Ju et al., Nat. Microbiol.).
+- **R3 copy-number assumption consistency.** syn1 uses protein mass fraction 58.2% (Razin 1963) while syn3A uses 54.727% (Breuer 2019); syn3A gDW = 1.0161e-14 g has a commented-out alternative 5.4e-15 (~1.9x) in `Protein_Quantification_Localization.ipynb`. Optional: unify onto one basis. Dry masses are NOT identical, and Table S3 documents the values as used, so the manuscript ships without this.
 - Make **deliverables** for following 4DWCM: omics in syn3A (Done); Genome Visualization of Operons (TSS, TTS), ORFs
 
 ---

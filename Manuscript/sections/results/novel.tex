@@ -5,10 +5,10 @@ Three structural classes were distinguished by the arrangement of sense and anti
 These clusters are the isoform-level counterpart of the antisense coverage already captured by the operon segmentation: read-through and embedded clusters fall within the 69 operons that enclose an antisense gene, while the spurious-promoter clusters account for the eight antisense-only operons, leaving the single genuinely intergenic unit (below) as the ninth.
 The classes differed in length and abundance yet all stayed minor against sense transcription (Fig.~\ref{fig:novel}b,c): embedded transcripts were longest (median 2.2~kb, versus 1.5--1.6~kb for the others) and read-through carried the highest typical support (median 111 reads), but every antisense cluster bar one ($\sim$31{,}700 reads) was far less abundant than the sense transcripts it overlapped, consistent with transcriptional noise from the AT-rich genome rather than a regulated small-RNA program~\cite{llorens-rico_bacterial_2016}.
 
-The one exception was the yeast selection marker \gene{his3}{0918}, a vector element carried into the synthetic \syn~genome during assembly~\cite{gibson_creation_2010}, transcribed almost entirely antisense at a depth exceeding 30{,}000 ($\sim$ 16 times the genome-wide average) yet yielding no protein (Fig.~\ref{fig:novel}d).
+The one exception was the yeast selection marker \gene{his3}{0918}, a vector element carried into the synthetic \syn~genome during assembly~\cite{gibson_creation_2010}, transcribed almost entirely antisense at a depth exceeding 30{,}000 ($\sim$8 times the genome-wide average) yet yielding no protein (Fig.~\ref{fig:novel}d).
 The antisense isoforms initiated from a spurious promoter just upstream carrying a perfect \texttt{TANAAT} hexamer (\texttt{TAAAAT}), a genuine if mislocated $\sigma$-factor promoter.
 The \gene{his3}{0918} reading frame was retained in \syna, but its conspicuous antisense transcription did not survive minimization, falling to a \syna~Illumina antisense depth of 0.23 times the genome-wide average, consistent with loss of that upstream promoter when an adjacent deletion truncated the operon.
-The four genomic watermarks as synthetic signatures~\cite{gibson_creation_2010} were similarly only minimally transcribed (mean PacBio depth $\sim$280--360 per strand, six- to eightfold below the genome-wide average $\sim$2{,}100), spurious noise over hypothetical reading frames.
+The four genomic watermarks as synthetic signatures~\cite{gibson_creation_2010} were similarly only minimally transcribed (mean PacBio depth $\sim$560--720, six- to eightfold below the $\sim$4{,}200 genome-wide average), spurious noise over hypothetical reading frames.
 
 Intergenic coverage was far more pervasive than antisense but overwhelmingly benign (Fig.~\ref{fig:novel}e): across isoforms the intergenic fraction had a median of only 2.1\%, contributed almost entirely by operon-flanking untranslated regions and short intra-operon gaps.
 The \fiveprime~and \threeprime~untranslated regions of canonical operons had median lengths of 37 and 41~nt (Fig.~\ref{fig:novel}f), with a minority of long-UTR outliers from antisense read-through or boundary truncation.
@@ -16,6 +16,8 @@ The \fiveprime~and \threeprime~untranslated regions of canonical operons had med
 Only one transcription unit was genuinely intergenic along its length: a cluster spanning 199{,}379--200{,}123 ($\sim$980 reads) lay entirely between \gene{lap}{0154} and the pseudogene \locus{0155} (Fig.~\ref{fig:novel}g).
 Unlike the \gene{his3}{0918} promoter, its start site carried no recognizable $-10$ box (closest \texttt{TANAAT} match \texttt{TAAAAA}), consistent with pervasive low-level transcription rather than a defined promoter.
 Both this unit and \locus{0155} fell within a region deleted in \syna, whereas \gene{lap}{0154} occupied the narrow retained gap and was relocated elsewhere.
+Beyond these long-read isoforms, a discrete $\sim$180~bp $+$ strand transcript occupied the gap between the conserved-hypothetical gene \locus{0884} and \gene{gidA}{0885} without overlapping either, abundant in Illumina and one ONT run ($\sim$22$\times$ the genome-mean coverage) but under-sampled by the size-selected PacBio library (Fig.~\ref{fig:si-intergenic}); its discreteness and position mark it as a candidate unannotated transcription unit rather than spillover from the flanking genes.
+The reduction deleted the hypothetical \locus{0884} but retained this intergenic unit, whose transcription nonetheless fell about eightfold in \syna~($\sim$2.8$\times$), so an annotated hypothetical gene was lost while the unannotated transcript beside it was only attenuated.
 
 To test for translation of the abnormal transcription, every open reading frame within the 837 most abnormal isoforms ranked by fraction of antisense and intergenic coverage was scored for initiation with \texttt{OSTIR}~\cite{roots_ostir_2021}, giving $\sim$29{,}000 candidates of which the 100 highest-scoring collapsed to 48 unique peptides (47 proteotypic).
 Re-searching the \syn~mass spectra confirmed two novel products, a 118-residue ORF near \locus{0592} (Fig.~\ref{fig:novel}h) and a 54-residue \fiveprime~extension of \gene{mmyCIVR}{0768}, both in restriction-modification loci beside uncharacterized features, the first downstream of the \gene{mmyCImod}{0591} pseudogene and the function-unknown \locus{0592}, the second within the \textit{mmyCIV} cluster.
@@ -34,3 +36,13 @@ Both lay in regions deleted in \syna, so these cryptic products, like the antise
     (h) A novel 118-amino-acid ORF near \locus{0592} with its covering isoforms and peptide sequence.}
     \label{fig:novel}
 \end{figure}
+
+\begin{sifigure}
+    \centering
+    \includegraphics[scale=1]{figures/si-intergenic.pdf}% born-at-size (7 in wide)
+    \caption{\textbf{An intergenic transcription unit in the \locus{0884}/\locus{0885} region, \syn~versus \syna.}
+    Sequencing depth on absolute \syn~genome coordinates for \syn~PacBio, the two \syn~ONT runs and the replicate-averaged \syn~Illumina library, and for the \syna~ONT and Illumina libraries mapped through the single retained block onto the same axis; each track is normalised to its own both-strand genome-mean coverage ($\times$ mean), with $+$ strand depth upward (blue) and $-$ strand downward (orange).
+    The block deleted in \syna~(red; it removes the conserved-hypothetical gene \locus{0884}) is left blank in the \syna~tracks, and the $\sim$180~bp intergenic gap is shaded yellow.
+    A discrete $+$ strand transcript fills the gap without overlapping \locus{0884} or \gene{gidA}{0885}, abundant in Illumina and \syn~ONT run 1 ($\sim$22$\times$) but under-sampled by PacBio ($0.2\times$); it is retained in \syna~yet transcribed $\sim$8-fold lower ($2.8\times$).}
+    \label{fig:si-intergenic}
+\end{sifigure}

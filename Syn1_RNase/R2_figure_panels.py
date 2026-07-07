@@ -397,12 +397,11 @@ def panel_f(iso, mask=None):
     axi.set_ylabel("RNA isoforms", fontsize=6)
     for sp in ("top", "right", "bottom"):
         axi.spines[sp].set_visible(False)
-    axi.text(0.005, 0.98, "Syn1", transform=axi.transAxes, ha="left", va="top",
-             fontsize=6, color="#333")
 
-    # depth (bottom): minus strand, normalised to genome-wide mean coverage (x-mean)
+    # depth (bottom): minus strand, normalised to the BOTH-STRAND genome-mean coverage
+    # (plus+minus; = avg sense-gene depth), matching the Fig 4-6 depth panels + Table S1
     xd, dd = load_depth("-", lo, hi)
-    dd = dd / genome_mean_depth("-")
+    dd = dd / (genome_mean_depth("+") + genome_mean_depth("-"))
     axd.fill_between(xd, dd, color="#dcdcdc", lw=0); axd.plot(xd, dd, color="#7a7a7a", lw=0.5)
     dmax = dd.max() if dd.max() else 1
     axd.set_ylim(0, dmax * 1.1)
@@ -422,7 +421,7 @@ def panel_f(iso, mask=None):
     plt.close(fig)
     n5 = int((df["block"] == "F0").sum())
     print(f"[R2g] ATP synthase: {len(df)} isoforms ({n5} 5'/F0 / {len(df)-n5} 3'/F1); "
-          f"mean(-) depth={genome_mean_depth('-'):.0f}x, peak={dmax:.1f}x mean")
+          f"both-strand mean depth={genome_mean_depth('+')+genome_mean_depth('-'):.0f}x, peak={dmax:.1f}x mean")
 
 
 PANELS = {"a": panel_a, "b": panel_b, "c": panel_c, "f": panel_f}

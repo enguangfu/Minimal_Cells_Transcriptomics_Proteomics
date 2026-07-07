@@ -98,8 +98,8 @@ def panel_b(out_name="R6b_mRNA_FC_vs_absChange.pdf", figsize=(14 / 3, 7 / 2)):
     ax.set_xscale("log")
     ax.set_yscale("symlog", linthresh=linthresh)
     # exact axis labels from the old TPM_FC_vs_absChange.pdf (mathtext now in Arial)
-    ax.set_xlabel(r"TPM fold change  ($\mathrm{rel}_{\mathrm{syn3A}}/\mathrm{rel}_{\mathrm{syn1}}$)", fontsize=7)
-    ax.set_ylabel(r"TPM absolute change  ($\mathrm{rel}_{\mathrm{syn3A}}-\mathrm{rel}_{\mathrm{syn1}}$)", fontsize=7)
+    ax.set_xlabel(r"mRNA TPM fold change  ($\mathrm{rel}_{\mathrm{syn3A}}/\mathrm{rel}_{\mathrm{syn1}}$)", fontsize=7)
+    ax.set_ylabel(r"mRNA TPM absolute change  ($\mathrm{rel}_{\mathrm{syn3A}}-\mathrm{rel}_{\mathrm{syn1}}$)", fontsize=7)
     mlog = float(np.log10(x).abs().max()) * 1.05
     ax.set_xlim(10 ** (-mlog), 10 ** mlog)
     ymax = float(y.abs().max()) * 1.15

@@ -12,7 +12,7 @@ Panels (R5 caption):
   a  genome map: 95 deletions overlaid on the operon map, by deletion class   [TODO]
   b  fusion junction DEL_014 (OP_00043 -> OP_00050)                           [TODO]
   c  transcript fold change by gene_impact_class (promoter_lost robustly down) [this]
-  d  HupA operon, decapitated (promoter inside deleted MMSYN1_0349)           [TODO]
+  d  HupA operon, decapitated (promoter inside deleted MMSYN1_0349); +Syn1 ONT   [this]
 
 Run:  python R5_figure_panels.py c        # one panel
       python R5_figure_panels.py          # all implemented panels
@@ -288,15 +288,43 @@ def _draw_depth(ax, xg, cov, fill_c, line_c, label, nice_top, logy=False):
 
 
 # ================================= shared 4-track deletion-junction plotter (panels d, e)
+CHROM_SYN1   = "CP002027.1"
+SYN1_ONT_BAM = os.path.join(GR, "..", "Syn1_Transcriptomics", "ONT", "ONT_Processing",
+                            "syn1.ONT.merged.sorted.bam")
+
+
+def load_syn1_ont_plus_isoforms(win_s, win_e, cover_s, cover_e, bin5=20, bin3=100, min_reads=5):
+    """+ strand syn1 ONT reads (merged direct-RNA BAM) covering [cover_s, cover_e], clustered into
+    pseudo-isoforms by rounding the 5' (bin5) and 3' (bin3) ends. For direct-RNA the read IS the
+    transcript, so a forward alignment marks a sense (+ strand) molecule; the 5' pile-up marks where
+    transcription starts. Returns df(start0, end0, n_reads)."""
+    import subprocess, re
+    from collections import Counter
+    sam = subprocess.run(["samtools", "view", SYN1_ONT_BAM, f"{CHROM_SYN1}:{win_s}-{win_e}"],
+                         capture_output=True, text=True).stdout
+    clusters = Counter()
+    for line in sam.splitlines():
+        f = line.split("\t")
+        flag = int(f[1])
+        if flag & 0x904 or flag & 0x10:          # skip unmapped/secondary/supplementary and - strand
+            continue
+        pos = int(f[3]) - 1
+        rend = pos + sum(int(n) for n, op in re.findall(r'(\d+)([MIDNSHP=X])', f[5]) if op in "MDN=X")
+        if pos < cover_e and rend > cover_s:
+            clusters[(int(round(pos / bin5) * bin5), int(round(rend / bin3) * bin3))] += 1
+    rows = [{"start0": s, "end0": e, "n_reads": n} for (s, e), n in clusters.items() if n >= min_reads]
+    return pd.DataFrame(rows, columns=["start0", "end0", "n_reads"])
+
+
 def _junction_panel(win_s, win_e, D1, iso_sel, rel_ticks, fig_w, fig_h,
-                    label_override=None, max_iso=8, logy=False):
-    """Four tracks on a deletion-junction RELATIVE axis (+ strand; rel = syn1_pos - D1), shared
-    by panel d (pdh/acetate operon) and panel e (hupA):
-      genes (syn3A deletions shaded across all tracks) | Syn1 PacBio isoforms |
-      Syn1 Illumina depth (blue) | Syn3A Illumina depth (red, mapped per-base through the
-      retained blocks so deletions read as gaps).
-    Isoforms are PacBio (transcript structure); depth is Illumina for BOTH organisms (the
-    quantitative standard; PacBio under-samples short genes), each x its own genome mean.
+                    label_override=None, max_iso=8, logy=False, ont_iso=None, ont_max_iso=12):
+    """Deletion-junction RELATIVE-axis stack (+ strand; rel = syn1_pos - D1), shared by
+    panel c (central-carbon operons) and panel d (hupA):
+      genes (syn3A deletions shaded across all data tracks) | Syn1 PacBio isoforms |
+      [optional Syn1 ONT isoforms] | Syn1 Illumina depth (blue) | Syn3A Illumina depth (red,
+      mapped per-base through the retained blocks so deletions read as gaps).
+    Isoforms show transcript structure (PacBio always; ONT added via `ont_iso` to mark the 5'
+    start independently); depth is Illumina for BOTH organisms, each x its own genome mean.
     Returns (fig, axes, cov1, cov3); the caller saves so it can add annotations first."""
     r4dir = os.path.join(GR, "..", "Syn1_Novel_ORF")
     if r4dir not in sys.path:
@@ -304,21 +332,30 @@ def _junction_panel(win_s, win_e, D1, iso_sel, rel_ticks, fig_w, fig_h,
     import R4_track_panels as R4
 
     win_len = win_e - win_s
+    has_ont = ont_iso is not None and len(ont_iso) > 0
+    n_iso = 2 if has_ont else 1
     _gl = R4.gene_label
     if label_override is not None:
         R4.gene_label = label_override
     try:
-        fig, axes = plt.subplots(4, 1, figsize=(fig_w, fig_h),
-                                 height_ratios=[1.0, 0.75, 1.0, 1.0], constrained_layout=True)
+        fig, axes = plt.subplots(3 + n_iso, 1, figsize=(fig_w, fig_h),
+                                 height_ratios=[1.0] + [0.75] * n_iso + [1.0, 1.0],
+                                 constrained_layout=True)
         R4.draw_gene_track(axes[0], win_s, win_e, '+')
         R4.draw_isoform_track(axes[1], iso_sel, win_s, win_e, '+', color="#1b6ca8", max_iso=max_iso)
+        if has_ont:
+            axes[1].set_ylabel('PacBio\nisoforms', fontsize=5)
+            R4.draw_isoform_track(axes[2], ont_iso, win_s, win_e, '+', color="#e08214", max_iso=ont_max_iso)
+            axes[2].set_ylabel('ONT\nisoforms', fontsize=5)
     finally:
         R4.gene_label = _gl
 
+    i_s1 = 2 + (1 if has_ont else 0)          # Syn1 depth axis
+    i_s3 = i_s1 + 1                            # Syn3A depth axis
     xg = np.arange(win_len)
     cov1 = load_syn1_illumina_plus(win_s, win_e) / syn1_illumina_mean_total()
-    _draw_depth(axes[2], xg, cov1, "#9ecae1", "#3182bd", "Syn1\n(× mean)", R4._nice_top, logy)
-    axes[2].set_xticks([])
+    _draw_depth(axes[i_s1], xg, cov1, "#9ecae1", "#3182bd", "Syn1\n(× mean)", R4._nice_top, logy)
+    axes[i_s1].set_xticks([])
 
     # Syn3A depth mapped per-base through the retained blocks; deletions stay NaN (true gaps)
     retained = pd.read_excel(os.path.join(GR, "aln/analysis/genome_reduction_summary.xlsx"))
@@ -334,17 +371,17 @@ def _junction_panel(win_s, win_e, D1, iso_sel, rel_ticks, fig_w, fig_h,
         q0 = s2 + (lo - s1)
         cov3[lo - win_s:hi - win_s] = R4.load_syn3a_depth_plus(q0, q0 + (hi - lo))
     cov3 /= R4.syn3a_mean_depth_total()
-    _draw_depth(axes[3], xg, cov3, "#f3b0ad", "#c0392b", "Syn3A\n(× mean)", R4._nice_top, logy)
+    _draw_depth(axes[i_s3], xg, cov3, "#f3b0ad", "#c0392b", "Syn3A\n(× mean)", R4._nice_top, logy)
     off = D1 - win_s                                                    # rel -> tx: tx = rel + off
-    axes[3].set_xticks([r + off for r in rel_ticks])
-    axes[3].set_xticklabels([str(r) for r in rel_ticks], fontsize=5)
-    axes[3].set_xlabel('Relative transcript position (nt)', fontsize=6)
+    axes[i_s3].set_xticks([r + off for r in rel_ticks])
+    axes[i_s3].set_xticklabels([str(r) for r in rel_ticks], fontsize=5)
+    axes[i_s3].set_xlabel('Relative transcript position (nt)', fontsize=6)
 
-    for d0, d1 in R4.DELETIONS:                          # deletion shading across all four tracks
+    for d0, d1 in R4.DELETIONS:                          # deletion shading across all data tracks
         if d1 <= win_s or d0 >= win_e:
             continue
         xa, xb = max(d0, win_s) - win_s, min(d1, win_e) - win_s
-        for a in (axes[1], axes[2], axes[3]):
+        for a in axes[1:]:
             a.axvspan(xa, xb, facecolor='#e8736a', alpha=0.17, lw=0, zorder=0)
     return fig, axes, cov1, cov3
 
@@ -400,11 +437,13 @@ def panel_c(out_name="R5c_central_carbon.pdf", fig_w=7, fig_h=7 / 3):
 
 
 # ============================================================ panel d: HupA decapitation
-def panel_d(out_name="R5d_hupA_operon.pdf", fig_w=7, fig_h=7 / 4):
+def panel_d(out_name="R5d_hupA_operon.pdf", fig_w=7, fig_h=7 / 3):
     """HupA operon (OP_00187, + strand), decapitated: DEL_050 (440092-441059) removed the operon
     promoter (TSS 441031, -10 box 441019-441024) inside gpsA/MMSYN1_0349, so hupA collapses in
-    Syn3A. 4-track deletion-junction panel (rel = syn1_pos - deletion_end 441059); isoforms PacBio,
-    depth Illumina both organisms; window includes recU/0351 and 0353 for completeness."""
+    Syn3A. 5-track deletion-junction panel (rel = syn1_pos - deletion_end 441059): genes, Syn1
+    PacBio isoforms, Syn1 ONT isoforms (the direct-RNA 5' ends pile up at the TSS inside 0349 --
+    independent long-read support for the promoter position), then Illumina depth for both
+    organisms. Window includes recU/0351 and 0353 for completeness."""
     r4dir = os.path.join(GR, "..", "Syn1_Novel_ORF")
     if r4dir not in sys.path:
         sys.path.insert(0, r4dir)
@@ -414,16 +453,23 @@ def panel_d(out_name="R5d_hupA_operon.pdf", fig_w=7, fig_h=7 / 4):
     hup_s, hup_e = 441113, 441386
     sel = R4.ISO[(R4.ISO.strand == '+') & (R4.ISO.start0 < hup_e) & (R4.ISO.end0 > hup_s) &
                  (R4.ISO.n_reads >= 10)]
+    ont = load_syn1_ont_plus_isoforms(win_s, win_e, hup_s, hup_e)   # syn1 ONT isoforms over hupA
     _orig = R4.gene_label
     override = lambda r: 'hupA' if str(r.locus_tag) == 'MMSYN1_0350' else _orig(r)
     rel_ticks = [-1000, -500, 0, 500, 1000, 1500]
     fig, axes, cov1, cov3 = _junction_panel(win_s, win_e, D1, sel, rel_ticks, fig_w, fig_h,
-                                            label_override=override)
+                                            label_override=override, ont_iso=ont)
     hs, he = hup_s - win_s, hup_e - win_s
     out = os.path.join(OUTDIR, out_name)
     fig.savefig(out, dpi=300); plt.close(fig)
     log(f"\n[panel d] HupA operon OP_00187 decapitated (DEL_050; TSS 441031 deleted); depth=Illumina "
         f"both organisms; hupA syn1={np.nanmean(cov1[hs:he]):.1f}x vs syn3A={np.nanmean(cov3[hs:he]):.2f}x mean -> {out}")
+    if len(ont):
+        top = ont.sort_values('n_reads', ascending=False).iloc[0]
+        n_into = int(ont.loc[ont.start0 <= D1, 'n_reads'].sum())
+        log(f"  syn1 ONT: {int(ont['n_reads'].sum())} reads over hupA in {len(ont)} clusters; "
+            f"{n_into} reads start at/upstream of the junction (into deleted 0349); "
+            f"top isoform 5'={int(top.start0)} (rel {int(top.start0)-D1:+d}), n={int(top.n_reads)}")
     _hupA_minus10()
     return out
 

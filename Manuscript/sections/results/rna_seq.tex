@@ -1,7 +1,7 @@
 \subsection{Deep multi-platform RNA sequencing of the Syn1 and Syn3A transcriptomes}
 
 The \syn~and \syna~transcriptomes were sequenced on complementary platforms whose depth, read length, and cross-platform agreement are summarized in Table~\ref{tbl:seq-summary} and Fig.~\ref{fig:si-rnaseq}.
-For \syn, PacBio Iso-Seq combined the greatest sequencing depth (2{,}092$\times$ per strand) with the longest reads (median 1.56~kb), several-fold longer than the \syn~ONT direct-RNA reads (mean 370--661~nt), so the full-length PacBio isoforms were selected for operon calling.
+For \syn, PacBio Iso-Seq combined the greatest sequencing depth (4{,}184$\times$ genome-mean) with the longest reads (median 1.56~kb), several-fold longer than the \syn~ONT direct-RNA reads (mean 370--661~nt), so the full-length PacBio isoforms were selected for operon calling.
 Two independent ONT direct-RNA runs of \syn~were performed, yet they agreed only moderately in depth, read length, and per-gene transcript abundance (Pearson $r = 0.82$ on $\log_{10}$ transcripts per million (TPM); Fig.~\ref{fig:si-rnaseq}a), below the nearly unitity $r$ reproducibility of the Illumina and PacBio technical replicates.
 Part of this run-to-run variability tracked the different ribosomal-RNA depletion chemistries of the two libraries (Methods), and part the short read length and the pervasive 3$'$ RNA processing described below, together indicating that direct-RNA sequencing of these degradation-prone transcripts would benefit from a dedicated RNA-protection protocol.
 
@@ -23,12 +23,12 @@ The \syna~ONT and Illumina TPM agreed to a degree comparable to the cross-platfo
 \toprule
 Organism & Platform & Read type & SRA accession(s) & Reads\textsuperscript{b} & Mapped\textsuperscript{b} & Rate & Read length & Depth ($\times$)\textsuperscript{c} \\
 \midrule
-\syn  & PacBio Iso-Seq (HiFi) & full-length cDNA      & SRR36012641--43 & 2.95~M raw HiFi & 2.60~M\textsuperscript{a} & 88.2\% & median 1.56~kb & 2092 \\
-\syn  & Illumina MiSeq        & paired-end 2$\times$251~nt & SRR35996296--98 & 2.10~M & 2.08~M & 99.2\% & 251~nt & 383 \\
-\syn  & ONT direct RNA        & native RNA, run 1     & SRR36199726 & 234~k & 207~k & 88.5\% & mean 661~nt & 58 \\
-\syn  & ONT direct RNA        & native RNA, run 2     & SRR36199725 & 585~k & 457~k & 78.1\% & mean 370~nt & 64 \\
-\syna & Illumina              & paired-end 2$\times$51~nt  & SRR19432056--57~\cite{sandberg_adaptive_2023} & 12.7~M & 12.5~M & 98.3\% & 51~nt & 1178 \\
-\syna & ONT direct RNA        & native RNA, 1 run     & SRR36199724 & 734~k & 559~k & 76.2\% & mean 383~nt & 156 \\
+\syn  & PacBio Iso-Seq (HiFi) & full-length cDNA      & SRR36012641--43 & 2.95~M raw HiFi & 2.60~M\textsuperscript{a} & 88.2\% & median 1.56~kb & 4184 \\
+\syn  & Illumina MiSeq        & paired-end 2$\times$251~nt & SRR35996296--98 & 2.10~M & 2.08~M & 99.2\% & 251~nt & 766 \\
+\syn  & ONT direct RNA        & native RNA, run 1     & SRR36199726 & 234~k & 207~k & 88.5\% & mean 661~nt & 116 \\
+\syn  & ONT direct RNA        & native RNA, run 2     & SRR36199725 & 585~k & 457~k & 78.1\% & mean 370~nt & 127 \\
+\syna & Illumina              & paired-end 2$\times$51~nt  & SRR19432056--57~\cite{sandberg_adaptive_2023} & 12.7~M & 12.5~M & 98.3\% & 51~nt & 2355 \\
+\syna & ONT direct RNA        & native RNA, 1 run     & SRR36199724 & 734~k & 559~k & 76.2\% & mean 383~nt & 313 \\
 \bottomrule
 \end{tabular}%
 }
@@ -39,7 +39,7 @@ Organism & Platform & Read type & SRA accession(s) & Reads\textsuperscript{b} & 
 All libraries are strand-specific; the Illumina libraries used the dUTP protocol.\\
 \textsuperscript{a}2.60~M high-quality full-length reads retained after quality control (Methods).\\
 \textsuperscript{b}Illumina values are read pairs with both mates mapped; PacBio and ONT values are reads (primary alignments), with the PacBio Reads column giving the raw HiFi count.\\
-\textsuperscript{c}Genome-mean per-base sequencing depth per strand.
+\textsuperscript{c}Genome-mean per-base sequencing depth over both strands (sense $+$ antisense), which, given negligible antisense in this gene-dense genome, approximates the average sense-gene coverage.
 \end{minipage}}
 \end{table}
 

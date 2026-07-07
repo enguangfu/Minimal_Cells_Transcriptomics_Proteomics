@@ -8,7 +8,8 @@ Because the retained sequence is 99.90\% identical between the two cells, this s
 
 The proteins silenced this way are functionally central.
 The nucleoid-associated protein \gene{hupA}{0350}, \syn's principal chromosome-compacting factor, is transcribed from a promoter that lies inside its upstream neighbour \locus{0349}; the reduction deleted \locus{0349} together with that promoter, decapitating the operon so that \gene{hupA}{0350} collapsed in both transcript (fold change 0.020) and protein (0.014) (Fig.~\ref{fig:reduction_operons}d).
-The excised segment carried a perfect \texttt{TANAAT} promoter (\texttt{TATAAT}) with the extended \texttt{TNNTANAAT} motif, confirming that a genuine strong promoter, not incidental sequence, was removed.
+PacBio isoforms fixed this transcription start sharply, with 79\% of reads sharing a single 5$'$ base, from which a perfect \texttt{TATAAT} $-10$ box (consensus \texttt{TANAAT}, extended \texttt{TNNTANAAT}) was located just upstream, confirming that a genuine strong promoter, not incidental sequence, was removed.
+\syn~ONT direct-RNA reads corroborated this start independently, their 5$'$ ends falling within \locus{0349} as well but shifted roughly 15--30~nt downstream of the sharp PacBio start, possibly from 5$'$ digestion of native transcripts.
 
 Central-carbon metabolism was decapitated the same way at two adjacent operons.
 One deletion removed the promoter, along with the pyruvate-dehydrogenase E1 subunits \gene{pdhA}{0225} and \gene{pdhB}{0226}, from the pyruvate-dehydrogenase/acetate operon, and a second removed the promoter of the neighbouring glucose-PTS operon, so the retained enzymes \gene{pdhC}{0227}--\gene{ackA}{0230} and \gene{ptsI}{0233}--\locus{0235} lost their promoters and fell together in \syna~(Fig.~\ref{fig:reduction_operons}c).
@@ -27,8 +28,8 @@ Loss of a gene's own promoter, by outright deletion or by replacement with a wea
     (a) The \syn~$\rightarrow$~\syna~reduction: 95 deletions on the operon map, coloured by whether each operon was excised, truncated, or kept.
     (b) \gene{rpsT}{0082} switches partner: co-transcribed with \locus{0083} in \syn, then fused downstream of \locus{0094} in \syna~after DEL\_014 excises 15.5~kb (37 bridging ONT reads), both aligned on the shared \gene{rpsT}{0082} 5$'$ end.
     (c) Two decapitated central-carbon operons: deletions took the promoters of the pyruvate-dehydrogenase/acetate operon (\gene{pdhC}{0227}--\gene{ackA}{0230}) and the adjacent PTS operon (\gene{ptsI}{0233}--\locus{0235}), which drop together in \syna.
-    (d) The \gene{hupA}{0350} operon, decapitated by deletion of the promoter inside its neighbour \locus{0349}, collapses in \syna.}
-    % Panels b--d share a deletion-junction relative axis with PacBio isoforms and Illumina depth (× genome-mean; log scale in c); the \syna~depth is mapped through the retained blocks, so deletions read as shaded gaps.}
+    (d) The \gene{hupA}{0350} operon, decapitated by deletion of the promoter inside its neighbour \locus{0349}: PacBio isoforms fix the transcription start sharply within \locus{0349}, the \syn~ONT 5$'$ ends fall just downstream, and \gene{hupA}{0350} collapses in \syna.}
+    % Panels b--d share a deletion-junction relative axis with PacBio isoforms and Illumina depth (× genome-mean; log scale in c; panel d adds a Syn1 ONT isoform track); the \syna~depth is mapped through the retained blocks, so deletions read as shaded gaps.}
     \label{fig:reduction_operons}
 \end{figure}
 
