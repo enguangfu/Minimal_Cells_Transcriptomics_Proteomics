@@ -3,29 +3,29 @@
 """
 R3 figure panels (transcriptome-proteome correlation in Syn1).
 
-Regenerates the eight panels of the R3 manuscript figure (correlation.pdf) at
-final print sizes, reading the already-computed analysis tables rather than
-recomputing. Born-at-size, OUTPUT.md default fonts (7 pt labels / 6 pt ticks).
+Regenerates the Syn1 R3 panels at final print sizes, reading the already-computed
+analysis tables rather than recomputing. Born-at-size, OUTPUT.md default fonts
+(7 pt labels / 6 pt ticks). Every panel carries a bold blue "Syn1.0" tag (the
+Fig 5/6 organism convention); the syn3A twin (Corr_RNA_Protein_Syn3A.py) is red.
 
-Panel -> size (inches) -> source table:
-  a  7/2 x 7/4  copy-number distribution by localization (4 colors)
+MAIN figure (correlation.pdf), syn1 row:
+  b  7/3 x 7/3  Illumina TPM vs iPM (log10), FILLED circles by localization
+                <- residual_analysis/gene_CAI_omics_merged.csv
+  a  7/3 x 7/6  copy-number distribution by localization (4 colors)
                 <- Syn1_Syn3A_Proteomics/syn1_proteomics_localization_2026.csv
-  b  7/2 x 7/2  Illumina TPM vs iPM (log10), colored by localization, NO R^2
-                <- residual_analysis/gene_CAI_omics_merged.csv
-  c  7/4 x 7/4  PacBio vs Illumina sense TPM (log10)
-                <- ../Syn1_Transcriptomics/Gene_TPM/syn1_Illumina_PacBio_TPM_profiles.csv
-  d  7/4 x 7/4  proteome residual vs log10(TIR)
-                <- residual_analysis/gene_TIR_omics_merged.csv
-  e  7/4 x 7/4  proteome residual vs CAI
-                <- residual_analysis/gene_CAI_omics_merged.csv
-  f  7/4 x 7/4  model R^2 (baseline vs +CAI) for all and cytosolic proteins
-                <- residual_analysis/gene_CAI_omics_merged.csv
-  g  7/4 x 7/4  intrinsic half-life distribution (Mpn-transferred)
+  g  7/3 x 7/6  intrinsic half-life distribution (Mpn-transferred), blue bars
                 <- residual_analysis/syn1_ptn_degradation_from_mpn.csv
-  h  7/4 x 7/4  proteome residual vs log10(half-life)
-                <- degradation table joined to gene_CAI_omics_merged residual
 
-Output: R3_panels/panel_{a..h}.pdf + R3_figure.txt
+SI figure (si-correlation.pdf), syn1 row:
+  d  7/4 x 7/4  proteome residual vs log10(TIR)
+  e  7/4 x 7/4  proteome residual vs CAI
+  h  7/4 x 7/4  proteome residual vs log10(half-life)
+  f  7/4 x 7/4  model R (baseline vs +CAI) for all and cytosolic proteins
+
+The PacBio-vs-Illumina correlation and the length/abundance-bias panels moved to
+the R0 platform-comparison figure (RNAseq_Comparison/, si-rnaseq.pdf).
+
+Output: R3_panels/panel_{a,b,d,e,f,g,h}.pdf + syn1_omics.xlsx + R3_figure.txt
 Run from Syn1_Corr_RNA_Proteins/.
 """
 
@@ -49,7 +49,10 @@ mpl.rcParams.update({
     'ps.fonttype': 42,
 })
 
-HALF, QUART = 7 / 2, 7 / 4          # 3.5 in, 1.75 in
+HALF, QUART = 7 / 2, 7 / 4          # 3.5 in, 1.75 in (SI residual panels)
+W    = 7 / 3                        # 2.333 in -- main-panel width
+CORR = (W, W)                       # 7/3 x 7/3  (TPM vs iPM)
+DIST = (W, 7 / 6)                   # 7/3 x 7/6  (copy-number + half-life)
 OUT = 'R3_panels'
 GENE_TPM = '../Syn1_Transcriptomics/Gene_TPM/syn1_Illumina_PacBio_TPM_profiles.csv'
 os.makedirs(OUT, exist_ok=True)
@@ -63,6 +66,14 @@ LOC_COLORS = {'cytoplasmic': '#0072B2',    # blue
               'lipoprotein': '#009E73',    # green
               'membrane': '#D55E00',       # vermillion
               'extracellular': '#CC79A7'}  # reddish purple
+
+# Organism identity colors (match Fig 5/6): Syn1 blue, Syn3A red. Used only as a
+# bold left-title tag on every panel and as the half-life bar fill -- never for
+# the localization-coloured points.
+SYN1_COL, SYN3A_COL = '#3182bd', '#c0392b'
+def org_tag(ax, which='syn1'):
+    name, col = ('Syn1.0', SYN1_COL) if which == 'syn1' else ('Syn3A', SYN3A_COL)
+    ax.set_title(name, loc='left', color=col, fontweight='bold', fontsize=7)
 
 log = []
 def say(s):
@@ -86,7 +97,7 @@ def r2_lstsq(X, y):
 # ====================================================================== a
 prot = pd.read_csv('../Syn1_Syn3A_Proteomics/syn1_proteomics_localization_2026.csv')
 prot = prot[(prot['ptn_copy_number'] > 0) & prot['ptn_localization'].isin(LOC_ORDER)]
-fig, ax = plt.subplots(figsize=(HALF, QUART), constrained_layout=True)
+fig, ax = plt.subplots(figsize=DIST, constrained_layout=True)
 allv = np.log10(prot['ptn_copy_number'].values)
 lo, hi = allv.min(), allv.max()
 xgrid = np.linspace(lo, hi, 300)
@@ -113,14 +124,15 @@ leg = ax.legend(frameon=False, handlelength=0.8, labelspacing=0.2, borderpad=0.2
                 title='(median copies, n=unique proteins)', title_fontsize=5)
 leg._legend_box.align = 'left'
 ax.spines[['top', 'right']].set_visible(False)
+org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_a_copynumber_by_localization.pdf', dpi=300); plt.close(fig)
 
 # ====================================================================== b
 cai = pd.read_csv('residual_analysis/gene_CAI_omics_merged.csv')
-fig, ax = plt.subplots(figsize=(HALF, HALF), constrained_layout=True)
+fig, ax = plt.subplots(figsize=CORR, constrained_layout=True)
 for loc in LOC_ORDER:
     s = cai[cai['ptn_localization'] == loc]
-    ax.scatter(s['log10_TPM'], s['log10_iPM'], s=8, alpha=0.7,
+    ax.scatter(s['log10_TPM'], s['log10_iPM'], s=9, alpha=0.7,          # filled = syn1
                c=LOC_COLORS[loc], edgecolors='none', label=f"{LOC_LABEL[loc]} (n={len(s)})")
 r_all = pearsonr(cai['log10_TPM'], cai['log10_iPM'])[0]
 cyto = cai[cai['ptn_localization'] == 'cytoplasmic']
@@ -129,87 +141,45 @@ fit_line(ax, cai['log10_TPM'].values, cai['log10_iPM'].values)
 ax.text(0.04, 0.96, f"all $r$ = {r_all:.2f} ($n$ = {len(cai)})\n"
                     f"cytoplasmic $r$ = {r_cyto:.2f} ($n$ = {len(cyto)})",
         transform=ax.transAxes, va='top', ha='left', fontsize=6)
-ax.set_xlabel('Illumina sense TPM ($\\log_{10}$)')
+ax.set_xlabel('mRNA Illumina TPM ($\\log_{10}$)')
 ax.set_ylabel('Protein iPM ($\\log_{10}$)')
 ax.legend(frameon=False, handlelength=1.0, labelspacing=0.25, loc='lower right')
 ax.spines[['top', 'right']].set_visible(False)
+org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_b_TPM_vs_iPM.pdf', dpi=300); plt.close(fig)
 say(f"b) all r={r_all:.3f} (n={len(cai)}); cytoplasmic r={r_cyto:.3f} (n={len(cyto)}); R^2 NOT shown")
 
-# ====================================================================== c
+# TPM profiles retained only for the syn1_omics.xlsx workbook below. The
+# PacBio-vs-Illumina correlation and the length/abundance-bias panels moved to
+# the R0 platform-comparison figure (RNAseq_Comparison/, si-rnaseq.pdf).
 tpm = pd.read_csv(GENE_TPM)
-m = tpm[(tpm['avg_sense_TPM'] >= 0.5) & (tpm['PacBio_sense_TPM'] >= 0.5)]
-x, y = np.log10(m['avg_sense_TPM']), np.log10(m['PacBio_sense_TPM'])
-r_c = pearsonr(x, y)[0]
-fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
-ax.scatter(x, y, s=5, alpha=0.5, c='#555555', edgecolors='none')
-fit_line(ax, x.values, y.values, color='crimson')
-ax.text(0.04, 0.96, f"$r$ = {r_c:.2f}\n$n$ = {len(m)}", transform=ax.transAxes, va='top', fontsize=6)
-ax.set_xlabel('Illumina TPM ($\\log_{10}$)')
-ax.set_ylabel('PacBio TPM ($\\log_{10}$)')
-ax.spines[['top', 'right']].set_visible(False)
-fig.savefig(f'{OUT}/panel_c_PacBio_vs_Illumina.pdf', dpi=300); plt.close(fig)
-say(f"c) PacBio vs Illumina r={r_c:.3f} (n={len(m)}, TPM>=0.5)")
-
-# ============================================================ SI bias a (length)
-# log2(PacBio/Illumina) vs gene length; near-zero slope => no length bias.
-# Same filtered set as panel c (both platforms TPM>=0.5); reuse m.
-from scipy.stats import linregress
-glen = m['gene_len'].astype(float).values
-log2_ratio = np.log2(m['PacBio_sense_TPM'].values / m['avg_sense_TPM'].values)
-sl_l, ic_l, r_l, p_l, _ = linregress(glen, log2_ratio)
-fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
-ax.scatter(glen, log2_ratio, s=5, alpha=0.5, c='#555555', edgecolors='none')
-ax.axhline(0, color='black', lw=0.5, ls=':')
-xs = np.array([glen.min(), glen.max()])
-ax.plot(xs, sl_l * xs + ic_l, color='crimson', lw=1.0)
-ax.text(0.04, 0.96, f"$r$ = {r_l:.2f}\n$P$ = {p_l:.1g}", transform=ax.transAxes, va='top', fontsize=6)
-ax.set_xlabel('Gene length (bp)')
-ax.set_ylabel('PacBio/Illumina TPM ($\\log_2$)')
-ax.spines[['top', 'right']].set_visible(False)
-fig.savefig(f'{OUT}/panel_si_a_length_bias.pdf', dpi=300); plt.close(fig)
-say(f"SI a) length bias: slope={sl_l:.2e}, r={r_l:.3f}, p={p_l:.2g} (n={len(m)})")
-
-# ========================================================= SI bias b (abundance)
-# MA plot: M=log2(PacBio/Illumina) vs A=mean log2 abundance; flat => no abundance bias.
-A = 0.5 * (np.log2(m['PacBio_sense_TPM'].values) + np.log2(m['avg_sense_TPM'].values))
-sl_a, ic_a, r_a, p_a, _ = linregress(A, log2_ratio)
-fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
-ax.scatter(A, log2_ratio, s=5, alpha=0.5, c='#555555', edgecolors='none')
-ax.axhline(0, color='black', lw=0.5, ls=':')
-xs = np.array([A.min(), A.max()])
-ax.plot(xs, sl_a * xs + ic_a, color='crimson', lw=1.0)
-ax.text(0.04, 0.96, f"$r$ = {r_a:.2f}\n$P$ = {p_a:.1g}", transform=ax.transAxes, va='top', fontsize=6)
-ax.set_xlabel('Mean TPM, $\\frac{1}{2}(\\log_2 P + \\log_2 I)$')
-ax.set_ylabel('PacBio/Illumina TPM ($\\log_2$)')
-ax.spines[['top', 'right']].set_visible(False)
-fig.savefig(f'{OUT}/panel_si_b_abundance_bias.pdf', dpi=300); plt.close(fig)
-say(f"SI b) abundance bias: slope={sl_a:.2e}, r={r_a:.3f}, p={p_a:.2g} (n={len(m)})")
 
 # ====================================================================== d
 tir = pd.read_csv('residual_analysis/gene_TIR_omics_merged.csv')
 r_d = pearsonr(tir['log10_TIR'], tir['residual'])[0]
 fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
-ax.scatter(tir['log10_TIR'], tir['residual'], s=5, alpha=0.5, c='#555555', edgecolors='none')
-fit_line(ax, tir['log10_TIR'].values, tir['residual'].values, color='crimson')
+ax.scatter(tir['log10_TIR'], tir['residual'], s=5, alpha=0.5, c=SYN1_COL, edgecolors='none')
+fit_line(ax, tir['log10_TIR'].values, tir['residual'].values, color='black')
 ax.axhline(0, color='black', lw=0.5, ls=':')
 ax.text(0.04, 0.96, f"$r$ = {r_d:.2f}\n$n$ = {len(tir)}", transform=ax.transAxes, va='top', fontsize=6)
 ax.set_xlabel('TIR ($\\log_{10}$)')
 ax.set_ylabel('Proteome residual')
 ax.spines[['top', 'right']].set_visible(False)
+org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_d_TIR_vs_residual.pdf', dpi=300); plt.close(fig)
 say(f"d) residual vs log10(TIR) r={r_d:.3f} (n={len(tir)})")
 
 # ====================================================================== e
 r_e = pearsonr(cai['CAI'], cai['proteome_residual'])[0]
 fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
-ax.scatter(cai['CAI'], cai['proteome_residual'], s=5, alpha=0.5, c='#555555', edgecolors='none')
-fit_line(ax, cai['CAI'].values, cai['proteome_residual'].values, color='crimson')
+ax.scatter(cai['CAI'], cai['proteome_residual'], s=5, alpha=0.5, c=SYN1_COL, edgecolors='none')
+fit_line(ax, cai['CAI'].values, cai['proteome_residual'].values, color='black')
 ax.axhline(0, color='black', lw=0.5, ls=':')
 ax.text(0.04, 0.96, f"$r$ = {r_e:.2f}\n$n$ = {len(cai)}", transform=ax.transAxes, va='top', fontsize=6)
 ax.set_xlabel('CAI')
 ax.set_ylabel('Proteome residual')
 ax.spines[['top', 'right']].set_visible(False)
+org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_e_CAI_vs_residual.pdf', dpi=300); plt.close(fig)
 say(f"e) residual vs CAI r={r_e:.3f} (n={len(cai)})")
 
@@ -228,7 +198,7 @@ fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
 xpos = np.array([0, 1])
 w = 0.38
 bars1 = ax.bar(xpos - w/2, base_R, w, color='#bbbbbb', label='TPM only')
-bars2 = ax.bar(xpos + w/2, cai_R,  w, color='#0072B2', label='+ CAI')
+bars2 = ax.bar(xpos + w/2, cai_R,  w, color=SYN1_COL, label='+ CAI')
 for bars in (bars1, bars2):
     for bar in bars:
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.012,
@@ -238,6 +208,7 @@ ax.set_ylabel('$R$')
 ax.set_ylim(0, 0.95)
 ax.legend(frameon=False, handlelength=1.0, labelspacing=0.25, loc='upper left')
 ax.spines[['top', 'right']].set_visible(False)
+org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_f_R_improvement.pdf', dpi=300); plt.close(fig)
 say(f"f) R all {R(b_all):.3f}->{R(f_all):.3f}; cytosolic {R(b_cyt):.3f}->{R(f_cyt):.3f} "
     f"(R^2 all {b_all:.3f}->{f_all:.3f}, cyto {b_cyt:.3f}->{f_cyt:.3f})")
@@ -246,15 +217,16 @@ say(f"f) R all {R(b_all):.3f}->{R(f_all):.3f}; cytosolic {R(b_cyt):.3f}->{R(f_cy
 deg = pd.read_csv('residual_analysis/syn1_ptn_degradation_from_mpn.csv')
 hl = deg['halflife_h_syn1'].dropna()
 g_med, g_min, g_n = hl.median(), hl.min(), len(hl)
-fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
-ax.hist(np.log10(hl), bins=20, color='#9467bd', edgecolor='white', linewidth=0.3)
-ax.axvline(np.log10(g_med), color='crimson', lw=1.0, ls='--', label=f'median {g_med:.0f} h')
-ax.axvline(np.log10(g_min), color='#0072B2', lw=1.0, ls=':', label=f'shortest {g_min:.1f} h')
+fig, ax = plt.subplots(figsize=DIST, constrained_layout=True)
+ax.hist(np.log10(hl), bins=20, color=SYN1_COL, edgecolor='white', linewidth=0.3)
+ax.axvline(np.log10(g_med), color='black', lw=1.0, ls='--', label=f'median {g_med:.0f} h')
+ax.axvline(np.log10(g_min), color='#888888', lw=1.0, ls=':', label=f'shortest {g_min:.1f} h')
 ax.set_xlabel('Half-life, h ($\\log_{10}$)')
 ax.set_ylabel('Proteins')
 ax.legend(frameon=False, handlelength=1.2, labelspacing=0.25, loc='upper right',
           title=f'n = {g_n}', title_fontsize=6)
 ax.spines[['top', 'right']].set_visible(False)
+org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_g_halflife_distribution.pdf', dpi=300); plt.close(fig)
 say(f"g) half-life median={g_med:.1f} h, shortest={g_min:.1f} h, n={g_n}")
 
@@ -265,13 +237,14 @@ hjoin = deg.merge(cai[['locus_tag', 'proteome_residual']],
 xh = np.log10(hjoin['halflife_h_syn1']); yh = hjoin['proteome_residual']
 r_h = pearsonr(xh, yh)[0]
 fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
-ax.scatter(xh, yh, s=5, alpha=0.5, c='#555555', edgecolors='none')
-fit_line(ax, xh.values, yh.values, color='crimson')
+ax.scatter(xh, yh, s=5, alpha=0.5, c=SYN1_COL, edgecolors='none')
+fit_line(ax, xh.values, yh.values, color='black')
 ax.axhline(0, color='black', lw=0.5, ls=':')
 ax.text(0.04, 0.96, f"$r$ = {r_h:.2f}\n$n$ = {len(hjoin)}", transform=ax.transAxes, va='top', fontsize=6)
 ax.set_xlabel('Half-life, h ($\\log_{10}$)')
 ax.set_ylabel('Proteome residual')
 ax.spines[['top', 'right']].set_visible(False)
+org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_h_halflife_vs_residual.pdf', dpi=300); plt.close(fig)
 say(f"h) residual vs log10(half-life) r={r_h:.3f} (n={len(hjoin)})")
 
@@ -329,6 +302,6 @@ say(f"\nsyn1_omics.xlsx: {len(wb_out)} genes "
 with open(f'{OUT}/R3_figure.txt', 'w') as fh:
     fh.write("R3 FIGURE PANELS (transcriptome-proteome correlation)\n")
     fh.write("=" * 60 + "\n")
-    fh.write("Sizes (in): a 7/2 x 7/4; b 7/2 x 7/2; c-h 7/4 x 7/4. Default fonts.\n\n")
+    fh.write("MAIN: b 7/3 x 7/3; a,g 7/3 x 7/6.  SI: d,e,f,h 7/4 x 7/4. Default fonts.\n\n")
     fh.write("\n".join(log) + "\n")
-print(f"\nSaved 8 panels + R3_figure.txt to {OUT}/")
+print(f"\nSaved 7 panels (3 main + 4 SI) + syn1_omics.xlsx + R3_figure.txt to {OUT}/")

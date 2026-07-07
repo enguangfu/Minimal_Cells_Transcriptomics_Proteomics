@@ -1,6 +1,6 @@
 R3 syn3A PANELS (transcriptome-proteome correlation repeated on JCVI-syn3A)
 ====================================================================
-Sizes (in): f 7/2 x 7/4; g 7/2 x 7/2; h,i,j,k,l 7/4 x 7/4. Default fonts.
+MAIN: g 7/3 x 7/3; f,j 7/3 x 7/6.  SI: h,i,k,l 7/4 x 7/4. Default fonts.
 
 syn3A proteins: 455; merged with TPM coords: 455
 localization merge -> cytoplasmic:356, lipoprotein:13, membrane:84, extracellular:2

@@ -2,17 +2,21 @@
 """Fig S1 panels: cross-platform / cross-run RNA-seq quantification comparison.
 
 Reads the pre-computed tables from compute_platform_TPM.py (never recomputes).
+Organism colours (match Fig 5/6 + the R3 panels): Syn1 = blue (#3182bd),
+Syn3A = red (#c0392b). The syn1 panels (a-c) are blue, the syn3A panel (d) red;
+b/c/d also carry a bold organism tag. Identity/reference lines are neutral grey.
+
 Panels (born at final print size, OUTPUT.md fonts, Arial, pdf.fonttype 42):
   a (7/2 x 7/2) : Syn1 4x4 scatter-plot matrix of mRNA TPM (order along both
                   axes: Illumina, PacBio, ONT run 1, ONT run 2); lower triangle =
-                  log10-log10 scatter with identity line, diagonal = log10 TPM
+                  log10-log10 blue scatter with identity line, diagonal = log10 TPM
                   histogram (unlabelled), upper triangle = blank. Every subpanel
                   carries [0,2,4] ticks on both axes.
   b (7/4 x 7/4) : Syn1 length bias, log2(PacBio / Illumina) vs gene length,
-                  gray scatter + linear fit (reproduces the old Fig S1 panel).
+                  blue scatter + linear fit (reproduces the old Fig S1 panel).
   c (7/4 x 7/4) : Syn1 abundance bias, log2(PacBio / Illumina) vs MA-plot mean
-                  abundance, gray scatter + linear fit.
-  d (7/4 x 7/4) : Syn3A ONT vs Illumina sense TPM (log10-log10), Pearson r.
+                  abundance, blue scatter + linear fit.
+  d (7/4 x 7/4) : Syn3A ONT vs Illumina TPM (log10-log10), red scatter, Pearson r.
 
 Outputs the four individual panels to FigS1_panels/ (born-at-size). The combined
 Fig S1 is assembled manually in Illustrator from these panels.
@@ -42,8 +46,15 @@ os.makedirs(OUT, exist_ok=True)
 # Modern (breaks the pure-Arial rule), so use plain "log10" / "log2".
 SUB10, SUB2 = "10", "2"
 C_PB, C_ONT, C_GREY = "#3b6fb0", "#e08214", "#7a7a7a"
+# Organism identity colors (match Fig 5/6 and the R3 panels): Syn1 blue, Syn3A red.
+SYN1_COL, SYN3A_COL = "#3182bd", "#c0392b"
 THR = 0.5
 LIM = (-1.2, 5.2)
+
+
+def org_tag(ax, which="syn1"):
+    name, col = ("Syn1.0", SYN1_COL) if which == "syn1" else ("Syn3A", SYN3A_COL)
+    ax.set_title(name, loc="left", color=col, fontweight="bold", fontsize=6.5)
 
 s1 = pd.read_csv(os.path.join(HERE, "platform_TPM_syn1.tsv"), sep="\t")
 s3 = pd.read_csv(os.path.join(HERE, "platform_TPM_syn3A.tsv"), sep="\t")
@@ -79,15 +90,15 @@ def draw_matrix(axes):
             if i == j:                                   # diagonal: histogram, no label
                 v = l10(s1[PLAT[i][1]].values)
                 v = v[np.isfinite(v) & (v > LIM[0])]
-                ax.hist(v, bins=22, range=LIM, color=C_GREY, edgecolor="none")
+                ax.hist(v, bins=22, range=LIM, color=SYN1_COL, edgecolor="none")
                 ax.set_xlim(LIM)
                 ax.set_xticks([0, 2, 4]); ax.set_xticklabels(["0", "2", "4"], fontsize=4.5)
                 ax.set_yticks([])                        # y is a count, not TPM
             elif i > j:                                  # lower: scatter, ticks on both axes
                 a, b = s1[PLAT[j][1]].values, s1[PLAT[i][1]].values
                 m = (a > THR) & (b > THR)
-                ax.scatter(l10(a[m]), l10(b[m]), s=1.2, alpha=0.35, c=C_GREY, edgecolors="none")
-                ax.plot(LIM, LIM, ls=":", lw=0.5, c="#c0392b")
+                ax.scatter(l10(a[m]), l10(b[m]), s=1.2, alpha=0.35, c=SYN1_COL, edgecolors="none")
+                ax.plot(LIM, LIM, ls=":", lw=0.5, c="#888888")
                 ax.set_xlim(LIM); ax.set_ylim(LIM)
                 ax.set_xticks([0, 2, 4]); ax.set_xticklabels(["0", "2", "4"], fontsize=4.5)
                 ax.set_yticks([0, 2, 4]); ax.set_yticklabels(["0", "2", "4"], fontsize=4.5)
@@ -112,10 +123,10 @@ def draw_bias(ax, mode):
     good = np.isfinite(x) & np.isfinite(y)
     x, y = x[good], y[good]
     sl, ic, r, p, _ = linregress(x, y)
-    ax.scatter(x, y, s=5, alpha=0.5, c="#555555", edgecolors="none")
+    ax.scatter(x, y, s=5, alpha=0.5, c=SYN1_COL, edgecolors="none")
     ax.axhline(0, color="black", lw=0.5, ls=":")
     xs = np.array([x.min(), x.max()])
-    ax.plot(xs, sl * xs + ic, color="crimson", lw=1.0)
+    ax.plot(xs, sl * xs + ic, color="black", lw=1.0)
     ax.text(0.04, 0.96, f"r = {r:.2f}\nP = {p:.1g}", transform=ax.transAxes, va="top", fontsize=5.5)
     ax.set_xlabel(xlabel, fontsize=6.5)
     ax.set_ylabel(f"PacBio/Illumina TPM (log{SUB2})", fontsize=6.5)
@@ -128,8 +139,8 @@ def draw_syn3a(ax):
     m = (a > THR) & (b > THR)
     x, y = l10(a[m]), l10(b[m])
     r = pearsonr(x, y)[0]
-    ax.scatter(x, y, s=5, alpha=0.5, c="#555555", edgecolors="none")  # same params as panels b/c
-    ax.plot(LIM, LIM, ls=":", lw=0.5, c="#c0392b")
+    ax.scatter(x, y, s=5, alpha=0.5, c=SYN3A_COL, edgecolors="none")  # red = syn3A
+    ax.plot(LIM, LIM, ls=":", lw=0.5, c="#888888")
     ax.set_xlim(LIM); ax.set_ylim(LIM)
     ax.set_xlabel(f"Illumina TPM (log{SUB10})", fontsize=6.5)
     ax.set_ylabel(f"ONT TPM (log{SUB10})", fontsize=6.5)
@@ -149,10 +160,12 @@ for mode, fn in [("length", "panel_b_syn1_length_bias.pdf"),
                  ("abundance", "panel_c_syn1_abundance_bias.pdf")]:
     fig, ax = plt.subplots(figsize=(7 / 4, 7 / 4), constrained_layout=True)
     draw_bias(ax, mode)
+    org_tag(ax, "syn1")
     fig.savefig(os.path.join(OUT, fn), dpi=300); plt.close(fig)
 
 fig, ax = plt.subplots(figsize=(7 / 4, 7 / 4), constrained_layout=True)
 draw_syn3a(ax)
+org_tag(ax, "syn3a")
 fig.savefig(os.path.join(OUT, "panel_d_syn3A_ONT_vs_Illumina.pdf"), dpi=300); plt.close(fig)
 
 print("wrote 4 individual panels to", OUT, "(combined Fig S1 assembled manually in Illustrator)")

@@ -5,73 +5,64 @@ Results paragraphs. Each subsection here mirrors a `.tex` file under
 `Manuscript/sections/{results,methods}/`. Fill in the bullets; the LLM will
 expand them into prose, quoting numbers verbatim from the files you list.
 
+Now Extended/SI displays:
+- FigS1: RNA seq comparison
+- TableS1: statistics on RNA seqs
+- TableS2: Rnases
+- FigS2: corr between mRNA and protein
+- TableS3: parameters on calculating absolute protein copy numbers
+
 ## Manuscript Revision
 
 Now i have discussed the entire manuscript in details with PI; following is the final TODO list before sending to all co-authors. I will ask you to revise some analysis and redraw panels; the tex files now will be edited on overleaf.
 
 ### ⬜ Open / remaining
 
-Intro: 
-also
-Mention all three RNAseq techniques: PacBio, ONT, Illumina
-- No need anymore: add few details in Intro.
-- Create a new result section R0 with tex name rna_seq.tex to report the statitcs of read length and coverage for three techniques
-- X DONE 2026-07-06 detailed review of techniques in Methods: new `Manuscript/sections/methods/rnaseq_comparison.tex` (adapted from OLD intro.tex L27-30, methods style, \citep->\cite); `\input` is first subsection in methods.tex. Ported 11 technique refs (Soneson2019, Mortazavi2008, Nagalakshmi2008, Wilhelm2008, Stark2019, illumina_acc2011, Wenger2019, Rhoads2015, Garalde2018, Liu2019, Satam2023) from OLD_Manuscript/ref*.bib into references.bib (fixed Liu2019 journal `&amp;`->`\&`). Full manuscript compiles clean (46 pp, 0 undefined cites).
-- Done detailed review of techniques in Methods from the OLD introduction in OLD_Manuscript folder
-- Now Figure S1: [X DONE 2026-07-06] `RNAseq_Comparison/{compute_platform_TPM.py,FigS1_panels.py}` -> 4 born-at-size panels in `FigS1_panels/`; prose in rna_seq.tex; `sifigure` env fixed so this=Fig S1, R3 si-correlation=Fig S2. Combine si-rnaseq.pdf manually in Illustrator.
-  - corr of TPMs among all three techniques; length and abundance biase comparing PacBio against Illumina (ONT dropped from b/c per author, repeats old Fig S1)
-  - panel a (7/2, 7/2): correlation coefficient between TPMs for syn1: 4 by 4 (illumina, PacBio, ONT1, ONT2); upper half Pearson R coefficient; lower half actual correlation plot
-  - panel b (7/4, 7/4): gene-length versus PacBio/Illumina in old Fig S1
-  - panel c (7/4, 7/4): abundance versus PacBio/Illumina in old Fig S1
-  - panel d (7/4, 7/4): correlation plot for Syn3A ONT and Illumina
-
-ONT:
-- X DONE 2026-07-06 redo ONT analysis on syn1: new pipeline in `Syn1_Transcriptomics/ONT/` mirroring the Syn3A ONT flow.
-  - `ONT_Raw/00_retrieve_fastq.sh` (fasterq-dump SRR36199726=rep1, SRR36199725=rep2; rename+gzip) + `00b_orient_check.sh` (empirical orientation).
-  - `ONT_Processing/02_map_sort.sh` (minimap2 -ax map-ont -p 0.99 --MD, syn1 genome, per-rep BAM + merged), `03_report.sh` (QC), `04_sequencing_depth.sh` (strand-split bedGraphs per rep + merged, in `depth_bedgraph/`).
-  - **Orientation (verified, NOT copied from Syn3A):** rep1 correct AS-IS (88.5% map, 97.7% sense); rep2 native 3'->5', reversed with `seqkit seq -r` (78.1% map, 99.2% sense). Confirms OLD note "Syn1 Rep2 must be complemented."
-  - **Two runs differ a lot -> DO NOT average.** Different rRNA kits (rep1=RiboMinus/high residual 5S rrf; rep2=NEBNext/clean); per-gene sense TPM rep1 vs rep2 r=0.82, 36% of genes >2-fold. Merged BAM kept only as a browser coverage track. rep1/rep2 vs Illumina r=0.61/0.60; merged 0.65.
-  - Data now available for Fig 5 panel d (syn1 ONT track) and Fig 4 SI (0884/0885 intergenic).
-- X DONE 2026-07-06 add back the ONT of syn1 to methods: new `Manuscript/sections/methods/ont_syn1.tex` (from OLD_Manuscript/sections/methods/ont-exp-methods.tex + corrected map-ont pipeline), `\input` added to `methods.tex` after pacbio_syn1; compiles clean. NOTE: cited samtools v1.22.1 to match manuscript convention (actually ran 1.23; identical output).
-
-Check all figure captions
+Check all figure captions.
 
 Fig 2:
-Add SD strength as digits to panel g; 
-Comment on SD strength in Discussion and cite Gene-wei's paper
+- Comment on SD strength in Discussion and cite Gene-wei's paper.
 
 Fig 3:
-put syn3A dist of proteins, corr plot and half-life dist to main figure
-move Illumina and PacBio TPM corr and comparison panels to new Fig S1
-resize figures so that six panels can fit
-replace corr plot xlabel to mRNA TPM (log10, Illumina)
-revisit protein copy number calculation
-denote what is proteome redisual in Illustrator
+- Revisit protein copy number calculation: why syn1 and syn3A protein dry mass the same?
+- Denote what proteome residual is in Illustrator.
 
 Fig 4:
-Add SI fig for old intergenic transcription activity in syn1 0884 and 0885 region
+- Add SI fig for old intergenic transcription activity in syn1 0884/0885 region (syn1 ONT data now available).
 
 Fig 5:
-- panel d: add syn1 ONT here
+- panel d: add syn1 ONT here (data ready — see the ONT redo under Finished).
 
 Fig 6:
-- Done panel b: add upregulated and downregulated to top-right and down-left regions
-- Done panel d: expand the text to 5.3 x avg depth
-- panel b: add mRNA before both x and y labels
+- panel b: add "mRNA" before both x and y labels.
 
-- R5: [ ] Add one sentence saying why shorter reads in ONT (prose — NOT done yet).
-- R6: [ ] expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
+R6:
+- Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
 
 DCW operon:
-check syn1 and syn3A to see if restored
+- Check syn1 and syn3A to see if restored.
 
-Table S1 and S2: no regulatory elements into SI table; comment in the intro on regulation loss
+Table S1 and S2: no regulatory elements into SI table; comment in the intro on regulation loss.
 
-Try to visual the counts of isoforms arrows
+Try to visualize the counts of isoform arrows.
 
 ### ✅ Finished
 
 General directive (applied to all figures): Always denote syn1 or syn3A in the operon plot; normalize depth to avg depth in each organism.
+
+- Fig 3 rebuilt with the syn1(blue)/syn3A(red) organism convention [DONE 2026-07-07]:
+  - Main figure = 6 panels (3 metrics x 2 organisms): mRNA-vs-iPM corr (7/3 sq; FILLED syn1 / OPEN syn3A circles), copy-number distribution by localization (7/3 x 7/6), half-life distribution (7/3 x 7/6; blue vs red bars). Every panel tagged with a bold blue "Syn1.0" / red "Syn3A" left-title (Fig 5/6 convention); localization palette SHARED so the two rows compare like-for-like. Corr xlabel -> "mRNA Illumina TPM (log10)".
+  - SI figure (si-correlation) = 8 panels (4 metrics x 2 organisms): residual vs TIR / CAI / half-life + R-improvement; syn1 dots blue, syn3A dots red, black fit lines.
+  - Dropped from R3: PacBio-vs-Illumina corr + length/abundance-bias panels (now live in R0 si-rnaseq). Also recoloured R0 Fig S1's gray scatter to blue(syn1)/red(syn3A) per author.
+  - Scripts: `Syn1_Corr_RNA_Proteins/R3_figure_panels.py`, `Syn3A_Corr_RNA_Proteins/Corr_RNA_Protein_Syn3A.py`, `RNAseq_Comparison/FigS1_panels.py` (all rerun, same numbers). Combine correlation.pdf / si-correlation.pdf / si-rnaseq.pdf manually in Illustrator.
+
+- Intro / R0 / Fig S1 / syn1 ONT [DONE 2026-07-06]:
+  - Intro now names all three RNA-seq platforms (PacBio, ONT, Illumina); the detailed technique review moved to Methods `rnaseq_comparison.tex` (from OLD intro.tex L27-30; 11 technique refs ported into references.bib). "Add a few details in Intro" dropped (no longer needed).
+  - New opening Results section `rna_seq.tex` (R0) reporting read length + per-strand coverage for all libraries, with Table S1 (sequencing summary).
+  - Fig S1: `RNAseq_Comparison/{compute_platform_TPM.py,FigS1_panels.py}` -> 4 born-at-size panels in `FigS1_panels/` (a = syn1 4x4 TPM SPLOM; b/c = PacBio-vs-Illumina length/abundance bias, ONT dropped per author; d = syn3A ONT-vs-Illumina). Combine si-rnaseq.pdf manually in Illustrator; `sifigure` env fixed so this=Fig S1, R3 si-correlation=Fig S2. (This absorbs the old Fig 3 item "move Illumina/PacBio TPM corr panels to a new Fig S1".)
+  - syn1 ONT redo: new `Syn1_Transcriptomics/ONT/` pipeline mirroring the Syn3A flow. Orientation verified (rep1 as-is 88.5% map; rep2 native 3'->5' reversed 78.1% map). Two runs differ a lot (per-gene sense TPM r=0.82, different rRNA kits) -> DO NOT average; merged BAM kept only as a browser track. Methods: `ont_syn1.tex` + combined `ont_syn1_syn3A.tex` + `illumina_syn3a.tex`.
+  - Fig 2 panel g: SD strength added as digits.
+  - Fig 6 panel b: up/down-regulated labels added; panel d: text expanded to 5.3x avg depth.
 
 - R2: 
   - X Remove panel d since secondary prediction and terminator signature not consistent
@@ -365,28 +356,31 @@ Chain of logics for each section; use one or multiple paragraphs for each logic.
 **High correlation found between transcriptome and proteome.**
 
 ### Figure
-**Figure:** `Manuscript/figures/correlation.pdf`
 
-- Panel a: Syn1 Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular).
-- Panel b: Syn1 Illumina sense TPM vs proteome iPM (log10).
-- Panel c: Syn1 PacBio vs Illumina sense TPM (log10).
-- Panel d: Syn1 Pearson R for whole proteome and cytoplasmic proteins, with/without CAI.
-- Panel e: Syn1 Intrinsic protein half-lives transferred from Mpn.
+**Organism colour convention (Fig 5/6): Syn1.0 = blue `#3182bd`, Syn3A = red `#c0392b`.**
+Every panel carries a bold left-title organism tag in that colour. The localization
+palette (Okabe-Ito: cytoplasmic blue / lipoprotein green / membrane vermillion /
+extracellular purple) is SHARED across both organisms so the two rows compare
+like-for-like; organism is carried by the tag plus a second channel per panel
+(corr = filled Syn1 / open Syn3A circles; half-life = blue vs red bars). Rebuilt
+2026-07-07 by `Syn1_Corr_RNA_Proteins/R3_figure_panels.py` (syn1) +
+`Syn3A_Corr_RNA_Proteins/Corr_RNA_Protein_Syn3A.py` (syn3A).
 
-For SI figure, each panel is (7/4, 7/4) except panel f and g.
-**Figure:** `Manuscript/figures/si-correlation.pdf`
-- Panel a: Syn1 length biase comparison between PacBio and Illumina
-- Panel b: Syn1 Abundance biase between PacBio and Illumina
-- Panel c: Syn1 TIR vs proteome residual.
-- Panel d: Syn1 CAI vs proteome residual.
-- Panel e: Syn1 Protein half-life vs proteome residual.
-- Panel f: Syn3A Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular). (7/2, 7/4)
-- Panel g: Syn3A Illumina sense TPM vs proteome iPM (log10). (7/2, 7/2)
-- Panel h: Syn3A TIR vs proteome residual.
-- Panel i: Syn3A CAI vs proteome residual.
-- Panel j: Syn3A Intrinsic protein half-lives transferred from Mpn.
-- Panel k: Syn3A Protein half-life vs proteome residual.
-- Panel l: Syn3A Pearson R for whole proteome and cytoplasmic proteins, with/without CAI.
+**Main figure** `Manuscript/figures/correlation.pdf` — 6 panels (3 metrics x 2 organisms):
+- Syn1 mRNA TPM (log10, Illumina) vs proteome iPM (log10), FILLED circles by localization. (7/3, 7/3) — `R3_panels/panel_b_TPM_vs_iPM.pdf`
+- Syn3A same, OPEN circles. (7/3, 7/3) — `R3_panels_syn3A/panel_g_TPM_vs_iPM.pdf`
+- Syn1 copy-number distribution by localization. (7/3, 7/6) — `R3_panels/panel_a_copynumber_by_localization.pdf`
+- Syn3A copy-number distribution by localization. (7/3, 7/6) — `R3_panels_syn3A/panel_f_copynumber_by_localization.pdf`
+- Syn1 intrinsic half-life distribution (Mpn-transferred), blue bars. (7/3, 7/6) — `R3_panels/panel_g_halflife_distribution.pdf`
+- Syn3A intrinsic half-life distribution (Mpn re-scaled), red bars. (7/3, 7/6) — `R3_panels_syn3A/panel_j_halflife_distribution.pdf`
+
+**SI figure** `Manuscript/figures/si-correlation.pdf` — 8 panels (4 metrics x 2 organisms), each (7/4, 7/4); syn1 dots blue, syn3A dots red, black fit lines:
+- Syn1 / Syn3A proteome residual vs TIR (log10) — `panel_d_TIR_vs_residual` / `panel_h_TIR_vs_residual`
+- Syn1 / Syn3A proteome residual vs CAI — `panel_e_CAI_vs_residual` / `panel_i_CAI_vs_residual`
+- Syn1 / Syn3A proteome residual vs half-life (log10) — `panel_h_halflife_vs_residual` / `panel_k_halflife_vs_residual`
+- Syn1 / Syn3A Pearson R for whole proteome and cytoplasmic proteins, with/without CAI — `panel_f_R_improvement` / `panel_l_R_improvement`
+
+The PacBio-vs-Illumina correlation + length/abundance-bias panels were dropped from R3 (now live in the R0 platform-comparison figure, `RNAseq_Comparison/`, si-rnaseq.pdf). The R0 Fig S1 gray scatter was also recoloured to the same blue(syn1)/red(syn3A) convention.
 
 ### Chain of Logics
 
