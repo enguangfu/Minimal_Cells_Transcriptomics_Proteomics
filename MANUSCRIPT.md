@@ -24,8 +24,8 @@ Fig 2:
 - Comment on SD strength in Discussion and cite Gene-wei's paper.
 
 Fig 3:
-- Revisit protein copy number calculation: why syn1 and syn3A protein dry mass the same?
 - Denote what proteome residual is in Illustrator.
+- (open decision) Assumption consistency in the copy-number calc: syn1 uses protein mass fraction 58.2% (Razin 1963) while syn3A uses 54.727% (Breuer 2019); syn3A gDW = 1.0161e-14 g has a commented-out alternative 5.4e-15 (~1.9x) in the notebook. Decide whether to unify onto one basis. (Dry masses are NOT identical — see Finished.)
 
 Fig 4:
 - Add SI fig for old intergenic transcription activity in syn1 0884/0885 region (syn1 ONT data now available).
@@ -39,16 +39,21 @@ Fig 6:
 R6:
 - Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
 
-DCW operon:
-- Check syn1 and syn3A to see if restored.
-
 Table S1 and S2: no regulatory elements into SI table; comment in the intro on regulation loss.
 
 Try to visualize the counts of isoform arrows.
 
+DCW operon:
+- Check syn1 and syn3A to see if restored.
 ### ✅ Finished
 
 General directive (applied to all figures): Always denote syn1 or syn3A in the operon plot; normalize depth to avg depth in each organism.
+
+- Protein copy-number: syn3A Methods + Table S3 + Results diff [DONE 2026-07-07]:
+  - Checked the dry masses: NOT identical. syn1 = 12.8 fg dry mass x 58.2% protein = 7.48 fg protein/cell -> ~127,800 proteins/cell; syn3A = 10.2 fg x 54.727% = 5.56 fg -> ~100,300 proteins/cell. EF-Tu(0151): syn1 7,173 vs syn3A 5,089 copies. Constants in `Syn1_Syn3A_Proteomics/Protein_Quantification_Localization.ipynb` cells 16 (syn1) + 35 (syn3A).
+  - Methods (`proteomics_syn1_syn3A.tex`): added syn3A relative-detection sentence (446/455) + syn3A absolute-quantification paragraph. **Table S3** (`tbl:copynum-params`, all parameters incl. cell volume um^3 + protein density um^-3, mimics OLD `dry_mass_param.tex` via booktabs+minipage since threeparttable isn't loaded) now lives in `results/corr_RNA_ptn.tex` right after Fig S2 (moved out of Methods per author). Numbering unchanged: S1 seq-summary, S2 rnase, S3 copynum-params (R3 is after R2 in doc order; verified in .aux, table on p.14 right after Fig S2 p.13).
+  - Results (`corr_RNA_ptn.tex`): added the copy-number difference sentence. **Direction fix**: syn3A median copy number (~66) is nearly DOUBLE syn1 (~31), because a comparable protein pool is spread over fewer genes (446 vs 721) even though syn1 has 1.27x more total protein molecules. (The TODO had the direction reversed.)
+  - Also reconciled the now-stale Fig 3 / Fig S2 captions + in-text panel refs to the rebuilt figures. **Panel order (match in Illustrator):** main correlation.pdf a/d = copy-number dist, b/e = mRNA-iPM corr, c/f = half-life (a-c syn1, d-f syn3A); SI si-correlation a-d = syn1 TIR/CAI/half-life-residual/R, e-h = syn3A same. Table S3 also lists cell volume (um^3) + protein density (um^-3) per organism. Full manuscript compiles clean (49 pp, 0 undefined).
 
 - Fig 3 rebuilt with the syn1(blue)/syn3A(red) organism convention [DONE 2026-07-07]:
   - Main figure = 6 panels (3 metrics x 2 organisms): mRNA-vs-iPM corr (7/3 sq; FILLED syn1 / OPEN syn3A circles), copy-number distribution by localization (7/3 x 7/6), half-life distribution (7/3 x 7/6; blue vs red bars). Every panel tagged with a bold blue "Syn1.0" / red "Syn3A" left-title (Fig 5/6 convention); localization palette SHARED so the two rows compare like-for-like. Corr xlabel -> "mRNA Illumina TPM (log10)".

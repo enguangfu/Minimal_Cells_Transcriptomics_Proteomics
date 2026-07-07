@@ -59,8 +59,8 @@ os.makedirs(OUT, exist_ok=True)
 
 # Four distinct, consistent localization colors (panels a, b)
 LOC_ORDER  = ['cytoplasmic', 'lipoprotein', 'membrane', 'extracellular']
-LOC_LABEL  = {'cytoplasmic': 'Cytoplasmic', 'lipoprotein': 'Lipoprotein',
-              'membrane': 'Membrane', 'extracellular': 'Extracellular'}
+LOC_LABEL  = {'cytoplasmic': 'Cyto', 'lipoprotein': 'Lipo',
+              'membrane': 'Mem', 'extracellular': 'Extra'}
 # Okabe-Ito colorblind-safe palette, four maximally distinct hues (panels a, b)
 LOC_COLORS = {'cytoplasmic': '#0072B2',    # blue
               'lipoprotein': '#009E73',    # green
@@ -121,7 +121,7 @@ ax.set_xlim(lo, hi)
 # leading number as the median copies/cell (also drawn as the dashed vertical lines)
 leg = ax.legend(frameon=False, handlelength=0.8, labelspacing=0.2, borderpad=0.2,
                 fontsize=5, loc='upper left',
-                title='(median copies, n=unique proteins)', title_fontsize=5)
+                title='(median, n=unique)', title_fontsize=5)
 leg._legend_box.align = 'left'
 ax.spines[['top', 'right']].set_visible(False)
 org_tag(ax, 'syn1')
@@ -143,7 +143,7 @@ ax.text(0.04, 0.96, f"all $r$ = {r_all:.2f} ($n$ = {len(cai)})\n"
         transform=ax.transAxes, va='top', ha='left', fontsize=6)
 ax.set_xlabel('mRNA Illumina TPM ($\\log_{10}$)')
 ax.set_ylabel('Protein iPM ($\\log_{10}$)')
-ax.legend(frameon=False, handlelength=1.0, labelspacing=0.25, loc='lower right')
+ax.legend(frameon=False, handlelength=1.0, labelspacing=0.25, loc='lower right', fontsize=5)
 ax.spines[['top', 'right']].set_visible(False)
 org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_b_TPM_vs_iPM.pdf', dpi=300); plt.close(fig)
@@ -224,7 +224,7 @@ ax.axvline(np.log10(g_min), color='#888888', lw=1.0, ls=':', label=f'shortest {g
 ax.set_xlabel('Half-life, h ($\\log_{10}$)')
 ax.set_ylabel('Proteins')
 ax.legend(frameon=False, handlelength=1.2, labelspacing=0.25, loc='upper right',
-          title=f'n = {g_n}', title_fontsize=6)
+          fontsize=5, title=f'n = {g_n}', title_fontsize=5)
 ax.spines[['top', 'right']].set_visible(False)
 org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_g_halflife_distribution.pdf', dpi=300); plt.close(fig)

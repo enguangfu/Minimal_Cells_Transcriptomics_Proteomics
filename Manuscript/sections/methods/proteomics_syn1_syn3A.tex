@@ -26,6 +26,7 @@ The MS raw data associated with this study has been deposited onto the MassIVE R
 Protein abundances were quantified from the Spectronaut iBAQ (intensity-based absolute quantification) values, which serve as a within-sample proxy for molar protein amount.
 For each of the three replicates per organism, iBAQ was converted to a relative abundance in parts per million (iPM), $\text{iPM}_i = 10^{6}\,\text{iBAQ}_i / \sum_j \text{iBAQ}_j$, and the per-protein mean iPM across replicates was used for all downstream analyses, with the across-replicate coefficient of variation retained as a quality metric.
 For~\syn, 721 of the 828 annotated protein-coding genes (87.1\%) carried a quantified iPM.
+For~\syna, 446 of the 455 annotated protein-coding genes (98.0\%) carried a quantified iPM.
 The per-gene relative abundances (iPM) are available in \sdomics.
 
 \subsubsection{Absolute Protein Quantification}
@@ -36,9 +37,9 @@ The per-gene relative abundances (iPM) are available in \sdomics.
 
 The~\syn~mass spectrometry data provides relative abundances for 721 of the 828 protein-coding genes, which can be converted to absolute abundances by scaling the relative amount with the total number of proteins in the cell.
 The total number of proteins has not been measured directly within \syn, but can be estimated via an approach similar to that used in \cite{breuer_essential_2019}.
-First the dry mass of the cell and protein mass fraction are needed.
+First the dry mass of the cell and protein mass fraction are needed (all parameters used are listed in Table~\ref{tbl:copynum-params}).
 The protein mass fraction is assumed to be 58.2\%, which was measured in the parent organism, \Mmy~\citep{razin_chemical_1963}.
-The dry mass of the cell, 12.8 fg, was also estimated identically to the dry mass of \jsyna~(see \cite{breuer_essential_2019}, \textit{Appendix 1}).
+The dry mass of the cell, 12.8 fg, was also estimated similar to the dry mass of \jsyna~\cite{breuer_essential_2019}.
 Accordingly, the average \jsyn~cell has approximately 127,000 proteins; the cell volume is calculated as the sphere of 220 nm radius as 0.044 $\mu m^3$ \cite{moger-reischer_evolution_2023}.
 Thus, a protein density of $2.87\times 10^{6}$ $proteins/\mu m^{3}$ is estimated, which is in rough agreement with $3.5-4.4 \times 10^{6}$ $proteins/\mu m^{3}$ measured in \eco~\citep{milo_what_2013}.
 Finally, absolute protein abundances were calculated using the following formula:
@@ -47,6 +48,14 @@ Finally, absolute protein abundances were calculated using the following formula
 \text{$Abs~Abundance_{i} = \frac{dry~mass * mass~fraction}{avg~molecular~weight} * Rel~Abundance_{i}$}
 \end{equation}
 The resulting per-gene absolute copy numbers are available in \sdomics.
+
+The same estimation was applied to~\syna~using its independently determined cellular parameters (Table~\ref{tbl:copynum-params}).
+The~\syna~protein mass fraction, 54.727\%, and total cellular dry mass, 10.2~fg, were taken directly from the whole-cell metabolic reconstruction of~\syna~\citep{breuer_essential_2019}, and the cell volume from a sphere of 200~nm radius (0.034~$\mu m^3$).
+Of the 455 annotated~\syna~proteins, 446 carried a quantified iPM, and Equation~\ref{eqn:abs-formula}, evaluated with an iPM-weighted mean molecular weight of 33.4~kDa, yielded approximately 100{,}000 proteins per average cell.
+The corresponding protein density, $3.0\times10^{6}$~$proteins/\mu m^{3}$, is close to the~\syn~estimate.
+Because~\syn~and~\syna~were quantified with independently determined dry masses and protein mass fractions, their absolute copy-number scales differ (Results).
+The resulting per-gene~\syna~absolute copy numbers accompany the~\syna~proteome annotation.
+The parameters used for both organisms are listed in Table~\ref{tbl:copynum-params} (placed with the correlation supplementary figure).
 
 \subsubsection{Localization of Proteome}
 

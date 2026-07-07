@@ -13,26 +13,29 @@ Across the detected proteome, $\log_{10}$ iPM and $\log_{10}$ Illumina TPM were 
 Transcript abundance is thus the primary determinant of protein abundance in \syn, leaving roughly half the variance to post-transcriptional effects.
 
 To dissect this residual, defined as the offset of each protein's $\log_{10}$ iPM from the transcript fit, three post-transcriptional layers were tested.
-Translation-initiation rates (TIR) predicted with OSTIR~\cite{roots_ostir_2021} were largely uninformative, correlating only weakly with the residual (Pearson $r = 0.17$) and raising $R^{2}$ by just 0.020, about 2\% of the variance (Fig.~\ref{fig:si-correlation}c), most likely reflecting the limited accuracy of de novo initiation-rate prediction rather than an absence of initiation control.
-The codon adaptation index (CAI)~\cite{sharp_codon_1987}, a proxy for elongation efficiency, was by contrast substantial: it correlated with the residual (Pearson $r = 0.36$; Fig.~\ref{fig:si-correlation}d) and increased $R^{2}$ by 0.080, about 8\% of the variance (Fig.~\ref{fig:correlation}d), so elongation efficiency set by codon usage against the AT-rich genome measurably tunes protein output beyond transcript level.
+Translation-initiation rates (TIR) predicted with OSTIR~\cite{roots_ostir_2021} were largely uninformative, correlating only weakly with the residual (Pearson $r = 0.17$) and raising $R^{2}$ by just 0.020, about 2\% of the variance (Fig.~\ref{fig:si-correlation}a), most likely reflecting the limited accuracy of de novo initiation-rate prediction rather than an absence of initiation control.
+The codon adaptation index (CAI)~\cite{sharp_codon_1987}, a proxy for elongation efficiency, was by contrast substantial: it correlated with the residual (Pearson $r = 0.36$; Fig.~\ref{fig:si-correlation}b) and increased $R^{2}$ by 0.080, about 8\% of the variance (Fig.~\ref{fig:si-correlation}d), so elongation efficiency set by codon usage against the AT-rich genome measurably tunes protein output beyond transcript level.
 Protein turnover, not measured in \syn, was approximated by transferring intrinsic half-lives from the related minimal bacterium~\mpn~\cite{burgos_protein_2020} by reciprocal-best-hit orthology, scaled by protease abundance (Methods).
-The 245 mapped half-lives were long (median 32~h, minimum 4.7~h), far exceeding the roughly 1~h doubling time (Fig.~\ref{fig:correlation}e), and were uncorrelated with the residual (Pearson $r = -0.12$, $P = 0.06$, $n = 242$), adding at most 0.01 to $R^{2}$ (Fig.~\ref{fig:si-correlation}e).
+The 245 mapped half-lives were long (median 32~h, minimum 4.7~h), far exceeding the roughly 1~h doubling time (Fig.~\ref{fig:correlation}c), and were uncorrelated with the residual (Pearson $r = -0.12$, $P = 0.06$, $n = 242$), adding at most 0.01 to $R^{2}$ (Fig.~\ref{fig:si-correlation}c).
 Intrinsic degradation therefore has little influence on steady-state protein abundance in this fast-growing cell, where turnover is dominated by dilution through growth.
 
-Repeating the entire analysis in \syna~returned the same picture (Fig.~\ref{fig:si-correlation}f--l).
+Repeating the entire analysis in \syna~returned the same picture (Fig.~\ref{fig:correlation}d--f, Fig.~\ref{fig:si-correlation}e--h).
+The one systematic difference was in absolute scale: although \syn~carried about 1.27-fold more total protein molecules per cell (roughly 128{,}000 versus 100{,}000 in \syna, Methods), a comparable protein pool was distributed across fewer detected genes in \syna~(446 versus 721), so its median per-protein copy number was nearly double that of \syn~(66 versus 31 copies per cell; Fig.~\ref{fig:correlation}a,d).
 Transcript and protein levels correlated at Pearson $r = 0.63$ across the detected proteome ($n = 446$) and $r = 0.65$ for cytoplasmic proteins ($n = 352$), codon adaptation again explained a comparable slice of the residual ($\Delta R^{2} = +0.13$), and predicted initiation stayed uninformative.
-The transferred half-lives were shorter than in \syn~(median 5.7~h versus 32~h), tracking the 5.4-fold higher Lon and 1.2-fold higher FtsH concentration in \syna, yet still exceeded the 105-min \syna~doubling time for all but 6.5\% of proteins (Fig.~\ref{fig:si-correlation}j), so protein turnover remains dominated by dilution through growth.
+The transferred half-lives were shorter than in \syn~(median 5.7~h versus 32~h), tracking the 5.4-fold higher Lon and 1.2-fold higher FtsH concentration in \syna, yet still exceeded the 105-min \syna~doubling time for all but 6.5\% of proteins (Fig.~\ref{fig:correlation}f), so protein turnover remains dominated by dilution through growth.
 % The correlation falls short of unity in both cells not because transcript level fails to specify the proteome but because each layer is measured with finite reproducibility and a genuine post-transcriptional component, chiefly elongation efficiency, offsets individual proteins, so the attainable ceiling is set jointly by measurement noise and by the modest translational tuning resolved here.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1]{figures/correlation.pdf}% born-at-size: render at native size (5.25 in), no scaling
-    \caption{\textbf{Transcriptome--proteome correlation in \syn.}
-    (a) Per-protein copy-number distribution by localization (cytoplasmic, lipoprotein, membrane, extracellular).
-    (b) Illumina sense TPM versus proteome iPM ($\log_{10}$).
-    (c) PacBio versus Illumina sense TPM ($\log_{10}$).
-    (d) Model Pearson $R$ for the whole proteome and for cytoplasmic proteins, with and without CAI.
-    (e) Intrinsic protein half-lives as protease degradation transferred from \mpn.}
+    \caption{\textbf{Transcriptome--proteome correlation in \syn~and \syna.}
+    \syn~is drawn in blue and \syna~in red; the localization colours are shared between the two organisms.
+    (a) \syn~per-protein copy-number distribution by protein localization (Cyto, cytoplasmic; Lipo, lipoprotein; Mem, membrane; Extra, extracellular).
+    (b) \syn~mRNA Illumina TPM versus proteome iPM ($\log_{10}$), coloured by localization (filled circles).
+    (c) \syn~intrinsic protein half-lives transferred from \mpn.
+    (d) \syna~per-protein copy-number distribution by localization.
+    (e) \syna~mRNA Illumina TPM versus proteome iPM ($\log_{10}$), open circles.
+    (f) \syna~intrinsic protein half-lives.}
 	 \label{fig:correlation}
 \end{figure}
 
@@ -40,17 +43,52 @@ The transferred half-lives were shorter than in \syn~(median 5.7~h versus 32~h),
     \centering
     \includegraphics[scale=1]{figures/si-correlation.pdf}% born-at-size: native 177.8 mm, fits the 180 mm text block
     \caption{\textbf{Supporting transcriptome--proteome analysis for \syn~and \syna.}
-    (a) Length dependence of the PacBio-to-Illumina sense-TPM ratio in \syn.
-    (b) Abundance dependence of the same ratio (MA plot).
-    (c) Predicted TIR versus the \syn~proteome residual.
-    (d) CAI versus the \syn~proteome residual.
-    (e) \syn~protein half-life versus the proteome residual.
-    (f) \syna~per-protein copy-number distribution by localization.
-    (g) \syna~Illumina sense TPM versus proteome iPM ($\log_{10}$).
-    (h) \syna~predicted TIR versus the proteome residual.
-    (i) \syna~CAI versus the proteome residual.
-    (j) \syna~intrinsic protein half-lives transferred from \mpn.
-    (k) \syna~protein half-life versus the proteome residual.
-    (l) \syna~model Pearson $R$ for the whole proteome and for cytoplasmic proteins, with and without CAI.}
+    \syn~points are blue and \syna~points red.
+    (a) \syn~predicted TIR versus the proteome residual.
+    (b) \syn~CAI versus the proteome residual.
+    (c) \syn~protein half-life versus the proteome residual.
+    (d) \syn~model Pearson $R$ for the whole proteome and for cytoplasmic proteins, with and without CAI.
+    (e) \syna~predicted TIR versus the proteome residual.
+    (f) \syna~CAI versus the proteome residual.
+    (g) \syna~protein half-life versus the proteome residual.
+    (h) \syna~model Pearson $R$ for the whole proteome and for cytoplasmic proteins, with and without CAI.}
     \label{fig:si-correlation}
 \end{sifigure}
+
+\begin{table}[htbp]
+\centering
+\caption{Parameters for absolute protein copy-number quantification of \syn~and \syna.}
+\ltbl{copynum-params}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l l l}
+\toprule
+Parameter & Value & Unit & Reference \\
+\midrule
+Avogadro constant ($N_A$)          & $6.022\times10^{23}$ & mol$^{-1}$ & --- \\
+\midrule
+\syn~protein mass fraction         & 58.2      & \%  & \cite{razin_chemical_1963}\textsuperscript{a} \\
+\syn~cell diameter                 & 439       & nm  & \cite{moger-reischer_evolution_2023} \\
+\syn~cell volume                   & 0.044     & $\mu m^{3}$   & This study \\
+\syn~total cellular dry mass       & 12.8      & fg  & This study \\
+\syn~iPM-weighted mean protein MW  & 35.2      & kDa & This study \\
+\syn~total proteins per cell       & 127{,}800 & --- & This study \\
+\syn~protein density               & $2.87\times10^{6}$ & $\mu m^{-3}$ & This study \\
+\midrule
+\syna~protein mass fraction        & 54.727    & \%  & \cite{breuer_essential_2019} \\
+\syna~cell diameter                & 400       & nm  & \cite{breuer_essential_2019} \\
+\syna~cell volume                  & 0.034     & $\mu m^{3}$   & This study \\
+\syna~total cellular dry mass      & 10.2      & fg  & \cite{breuer_essential_2019} \\
+\syna~iPM-weighted mean protein MW & 33.4      & kDa & This study \\
+\syna~total proteins per cell      & 100{,}300 & --- & This study \\
+\syna~protein density              & $3.0\times10^{6}$  & $\mu m^{-3}$ & This study \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+{\footnotesize
+\begin{minipage}{0.92\textwidth}
+\raggedright
+Absolute copy number per protein $=$ (dry mass $\times$ protein mass fraction) $/$ mean molecular weight $\times$ relative abundance (iPM$/10^{6}$), following~\cite{breuer_essential_2019}; see Equation~\ref{eqn:abs-formula}.
+The iPM-weighted mean molecular weight and total proteins per cell are derived from the proteome of each organism.\\
+\textsuperscript{a}Measured in the parent organism \Mmy~var.\ \textit{capri}.
+\end{minipage}}
+\end{table}
