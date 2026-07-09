@@ -27,12 +27,49 @@ Fig 2:
 R6:
 - Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
 
-Table S1 and S2: no regulatory elements into SI table; comment in the intro on regulation loss.
+Done Table S1 and S2: no regulatory elements into SI table; comment in the intro on regulation loss.
 
 Try to visualize the counts of isoform arrows.
 
 DCW operon:
 - Check syn1 and syn3A to see if restored.
+
+Discussion:
+**Write as flowing prose that FOLLOWS the three Intro questions (introduction.tex:14-17), NOT a literal numbered Q&A. Target ~500 words (style budget). Do NOT re-report that transcript is the strongest determinant of protein abundance — that is R3's result; cut the repetition (current draft says it twice, discussion.tex:5 + :11).**
+
+Opening (1 sentence): full-length sequencing gave an operon-resolved transcriptome of syn1 and matched transcriptome/proteome in both cells; set up the three questions below.
+
+Q1 — How is gene expression organized across the synthetic genome?
+- PacBio resolved **459 operons** in syn1, each carrying matched promoter/terminator signatures; the transcriptome is richer than the reduced gene count implies.
+- Primary transcripts are pervasively reshaped by RNA processing, with markedly **more 3' than 5' erosion**.
+- RETAIN (item 1 — the interpretation, not just the observation): the 3'-bias is a **3'->5' exonucleolytic CLEARANCE bottleneck** (scarce RNase R that reads through structure; YhaM stalls at stems; ribosome trapping on non-stop ends), not biased endonucleolytic cutting — a hypothesis that direct cleavage-site mapping will test (discussion.tex:9). (You can mention the interpretation, but it is just a hypothesis so keep it short)
+
+Q2 — What did minimization do to the transcription AND translation program of the retained genes? (ALL observations live here now)
+- Removed synthetic/mis-annotation baggage first: antisense + intergenic transcription traced to inherited *M. mycoides* mis-annotation and synthetic-construction artifacts, and those regions were among the first excised in syn3A.
+- Structurally conservative (gene order preserved, whole operons excised) yet functionally transformative: a few retained operons were **decapitated** when their own promoter was deleted — clearest = **HupA** (promoter inside gpsA/0349, deleted -> HupA mRNA collapses 7.6x -> 0.13x avg depth).
+- **MOVED HERE from Q3 (reallocation observations):** the retained transcriptome shifted toward the translation machinery —
+   - the single **11 kb ribosomal-protein operon tripled its mRNA-pool share**;
+   - **RNA polymerase and central-carbon / central-metabolic enzymes declined**;
+   - the **RNA degradosome rose**.
+- RETAIN (item 2 — two mechanistic hypotheses for the rProtein-operon rise): (a) the **tRNA operon** that minimization brought adjacent may raise local RNA-polymerase availability without read-through; (b) **HupA loss** may have shifted genome-wide supercoiling toward strong promoters (discussion.tex:21).
+
+Q3 — How does minimization contribute to the phenotype differences? (INTERPRET the Q2 changes as causes)
+1. **Longer cell cycle** (Syn3A ~2 h vs Syn1 ~1 h; pelletier_genetic_2021): lower transcription + lower energy output (RNAP + central metabolism down) coupled to faster RNA turnover (degradosome up) is coherent with slower growth. *Tentative add-on you flagged "will check":* under laboratory adaptive evolution Syn3A raises rProteins further and grows faster (ribosome content sets growth rate; sandberg_adaptive_2023), and prunes synthetic baggage (tetM/0913 silenced, echoing the his3/0918 over-transcription already lost) — reuse the drafted-but-commented paragraph (discussion.tex:23-25) ONLY if supportable.
+2. **Denser cytosol** (gilbert_generating_2021): the giant rProtein operon UP together with several other rProtein genes DOWN imbalances rProtein production -> disrupts ribosome assembly -> surplus subunits crowd the cytosol.
+3. **HupA** (as noted in Q2): its collapse accounts for Syn3A losing the persistent chromosome contacts Syn1 maintains (gilbert_dynamics_2023, gilbert_generating_2021).
+
+Limitations:
+- Direct ONT gave lower coverage and shorter reads than PacBio cDNA Iso-Seq, plausibly because pervasive 3' RNA processing degrades these transcripts — direct-RNA of degradation-prone messages would benefit from a dedicated RNA-protection protocol.
+- **No PacBio library for Syn3A**: syn3A operon-level changes are inferred from short ONT/Illumina reads and await PacBio confirmation (Methods).
+- Expression is framed as mRNA-pool share and excludes rRNA.
+- Ribosomal- and membrane-protein abundances are the least reliable; **ribosome profiling** could sharpen them and test whether the elevated rProtein transcripts yield proportionally more ribosomes.
+
+Implications:
+- RETAIN (item 3 — cross-organism framing): reallocating resources between transcription and translation echoes the cellular-economy balancing seen when other genomes are streamlined (e.g. *B. subtilis*, michalik_bacillus_2021) and when synthetic cells are built from scratch — a general principle, not a syn3A quirk.
+- Delete this since repeat with item 3: Emphasize that **allocation of transcription/translation resources** is a key consideration for anyone streamlining or designing minimal genomes.
+- This map of gene co-expression + transcript quantification establishes the RNA-level **foundation for a 4D whole-cell model (4DWCM)** of the minimal cell (thornburg_bringing_2026).
+
+
 
 ### ✅ Finished
 

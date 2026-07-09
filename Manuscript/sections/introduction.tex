@@ -1,22 +1,91 @@
 \section{Introduction}
+\cmt{ZLS:   Also put back most of the  old introduction below and detailed discussion of sequencing methods not copied below should be put into new SI.  Update citations to methods or more recent reveiws and comparisons if any. Citation to Palsson RNA work needed especially if you use it as a comparison. Many of the old SI figures particularly dealing with more ONT data needs to be put into the new SI.  I see no reason to use the Palsson data in any of the plots unless it really makes a point}
 
-\jsyn~(\syn, GenBank CP002027.1) and its minimized derivative \jsyna~(\syna, GenBank CP016816.2), genetically modified and reduced versions of the naturally occurring bacterium \Mmy~\cite{gibson_creation_2010, hutchison_design_2016}, are landmark platforms for defining the minimal requirements of cellular life.
-In synthesizing the \syn~genome (1{,}078{,}809~bp, 911 genes), 14 wild-type \mmy~genes were either deleted or disrupted and five non-native genes required for the cloning procedure as well as four watermarks were incorporated~\cite{gibson_creation_2010}.
+\cmt{EFU: I have expanded Mycoplasma mycoide, syn1 and syn3a relationship; Added one paragraph on simplified transcription schemes in syn1 and syn3A due to genome reduction; Briefly mentioned long-read RNAseq, and details in the first Method subsection;}
+
+\textcolor{red}{Genetically minimized bacteria provide a unique opportunity to elucidate the inherent phenomena governing bacterial life \citep{lachance_minimal_2019}.} \jsyn~(\syn, GenBank CP002027.1) and its minimized derivative \jsyna~(\syna, GenBank CP016816.2) are genetically modified and reduced versions of the naturally occurring bacterium \Mmy~\cite{gibson_creation_2010, hutchison_design_2016} and they are landmark platforms for defining the minimal requirements of cellular life.
+\textcolor{red}{In synthesizing the \syn~genome (1{,}078{,}809~bp, 911 genes), 14 wild-type \mmy~genes were either deleted or disrupted and five non-native genes required for the cloning procedure in yeast as well as four watermarks were incorporated~\cite{gibson_creation_2010}.}
 Reducing the genome from \syn~to \syna~(543{,}379~bp, 493 genes), while preserving the ancestral order of the retained genes, produced the minimal genome of an autonomously replicating organism.
 \syna~in particular has drawn interest from laboratories worldwide seeking the essence of life, through studies of gene essentiality and metabolism~\cite{breuer_essential_2019}, three-dimensional organization~\cite{gilbert_generating_2021}, and cell division~\cite{pelletier_genetic_2021}.
 Together these efforts enabled the first whole-cell model resolved in three-dimensional space across an entire cell cycle~\cite{thornburg_fundamental_2022, thornburg_bringing_2026}.
 
-Bacterial genes are co-transcribed in operons~\cite{jacob_genetic_1961}, with multiple transcription start and termination sites acting across a single gene cluster, and downstream endo- and exoribonucleolytic processing further generates a spectrum of overlapping and truncated RNA isoforms (Fig.~\ref{fig:operon}a).
-Resolving operons requires reading transcripts at full length: short-read Illumina sequencing quantifies transcript abundance robustly but fragments RNA and cannot show which genes share a transcript~\cite{stark_rna_2019}, whereas long-read sequencing recovers full-length molecules and so exposes operon co-transcription, processing isoforms, and antisense or intergenic transcription~\cite{yan_smrt-cappable-seq_2018, grunberger_nanopore_2022}.
+\textcolor{red}{The transcriptional program of both cells is correspondingly spare, which makes the underlying regulation easier to resolve.
+\Mycs~are themselves a product of natural genome reduction, having descended from low-G+C Gram-positive ancestors related to \Bsub~through massive gene loss as obligate parasites of stable host niches~\cite{razin_molecular_1998}.
+In shedding much of the machinery that free-living bacteria use to cope with changing environments, \syn~retains only a single sigma factor and a small set of transcriptional regulators (18 genes), alongside a handful of housekeeping non-coding RNAs (Table~\ref{tbl:regulators}).
+\syna~carries the reduction further, but by design rather than by evolution: its genome was engineered to keep only the genes needed for rapid growth in a constant laboratory medium~\cite{hutchison_design_2016, breuer_essential_2019}, and it discards 6 of the prior 18 regulators while keeping the same lone sigma factor.
+With few dedicated regulators and minimal regulatory RNA, \syn~and \syna~expose the core, largely constitutive transcription shared by all bacteria with little confounding control.}
 
-Yet both cells have so far been defined chiefly at the level of genome design and protein essentiality~\cite{breuer_essential_2019}, leaving how their genes are organized and processed at the RNA level largely uncharted.
-The two also differ in phenotype: \syna~divides more slowly~\cite{pelletier_genetic_2021}, packs a denser cytosol~\cite{gilbert_generating_2021}, and lacks persistent chromosome contacts, the last linked to its collapsed level of the nucleoid-associated protein HupA~\cite{gilbert_generating_2021}.
-Three questions follow.
+Bacterial genes are co-transcribed in operons~\cite{jacob_genetic_1961}, with multiple transcription start and termination sites acting across a single gene cluster, and downstream endo- and exoribonucleolytic processing further generates a spectrum of overlapping and truncated RNA isoforms (Fig.~\ref{fig:operon}a).
+Resolving operons requires reading transcripts at full length: short-read Illumina sequencing quantifies transcript abundance robustly but fragments RNA and cannot show which genes share a transcript~\cite{stark_rna_2019}, whereas long-read sequencing recovers full-length molecules and so exposes operon co-transcription, processing isoforms, and antisense or intergenic transcription~\cite{yan_smrt-cappable-seq_2018, grunberger_nanopore_2022}. See \hyperref[method:rnaseq]{Methods} for detailed discussion.
+
+Despite the importance of operonal structures in bacterial gene expression, both \syn~and \syna~have so far been defined chiefly at the level of genome design and protein essentiality~\cite{breuer_essential_2019}, leaving how their genes are organized and processed at the RNA level largely uncharted.
+The two also differ in phenotype: \syna~divides more slowly in 2 hours instead of 1 hour of \syn~\cite{pelletier_genetic_2021}, packs a denser cytosol~\cite{gilbert_generating_2021}, and lacks persistent chromosome contacts, the last linked to its collapsed level of the nucleoid-associated protein HupA~\cite{gilbert_generating_2021}.
+Here, we address three questions that have emerged in the gene expression of \syn~and \syna~as a result of their characterization to date.
 First, how is gene expression organized across a synthetic genome, from operon boundaries and transcription signals to downstream RNA processing?
 Second, beyond the deletions themselves, what does this minimization, as a form of synthetic evolution, do to the transcription and translation program of the retained genes?
-Third, how does that minimization contribute to the phenotypic differences between the two cells?
-
-We therefore captured full-length transcripts with Pacific Biosciences (PacBio) and Oxford Nanopore Technologies (ONT) in \syn~and ONT in \syna, using Illumina short reads as the standard for transcript quantification, and combined these with proteomics to build a genome-wide, operon-resolved map of transcription, RNA processing, and translation in both cells, and to ask how minimization reshaped it.
+And finally, how does that minimization contribute to the phenotypic differences between the two cells? 
+We quantitatively address these questions by capturing full-length transcripts with PacBio and ONT in \syn~and ONT in \syna, using Illumina short reads as the standard for transcript quantification, and combined these with proteomics to build a genome-wide, operon-resolved map of transcription, RNA processing, and translation in both cells.
 This atlas supplies the RNA-level foundation of gene co-expression and quantification that whole-cell modeling of the minimal cell has so far lacked.
 
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Transcriptional regulators and non-coding RNAs of \syn~and \syna.}
+Protein-coding transcriptional regulators (from GenBank functional classification and~\cite{breuer_essential_2019}) and structural or housekeeping non-coding RNAs. Locus numbers are shared between the two organisms; the ``In \syna'' column marks retention after minimization.}
+\ltbl{regulators}
+\small
+\begin{tabular}{c c p{9.2cm} c}
+\toprule
+Locus & Gene & Description & In \syna \\
+\midrule
+\multicolumn{4}{l}{\textit{Transcriptional regulators}}\\
+0020 & --- & Transcriptional regulator, RpiR family & No \\
+0042 & --- & Uncharacterized transcriptional regulator & Yes \\
+0107 & \textit{nusB} & Transcription antitermination factor & Yes \\
+0187 & --- & Transcriptional regulator, GntR family & No \\
+0211 & --- & Transcriptional regulator, GntR family & No \\
+0300 & \textit{nusA} & Transcription termination/antitermination protein NusA & Yes \\
+0350 & \textit{hupA} & DNA-binding protein HU & Yes \\
+0407 & \textit{rpoD} & RNA polymerase sigma factor (sole $\sigma$) & Yes \\
+0428 & \textit{phoU} & Phosphate transport system regulatory protein PhoU & Yes \\
+0430 & \textit{ylxM} & Putative effector of the signal recognition particle & Yes \\
+0525 & \textit{mraZ} & Cell-division/cell-wall cluster transcriptional repressor & Yes \\
+0544 & \textit{hrcA} & Heat-inducible transcription repressor & Yes \\
+0620 & \textit{perR} & Uncharacterized transcriptional regulator & Yes \\
+0676 & --- & Transcriptional regulator, LacI family & No \\
+0745 & --- & Transcriptional regulator of the fructose operon, DeoR family & No \\
+0817 & \textit{whiA} & Uncharacterized DNA-binding protein & Yes \\
+0840 & \textit{nusG} & Transcription antitermination protein NusG & Yes \\
+0858 & --- & Predicted transcriptional regulator with an HTH domain & No \\
+\midrule
+\multicolumn{4}{l}{\textit{Non-coding RNAs}}\\
+0049 & \textit{ffs}  & Signal recognition particle (SRP) RNA & Yes \\
+0158 & \textit{ssrA} & Transfer-messenger RNA (tmRNA) & Yes \\
+0356 & \textit{rnpB} & RNase P RNA, class B & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+
+\cmt{ZLS:   Here is the old introduction and move detailed discussion of RNA sequencing methods to SI}
+
+Genetically minimized bacteria provide a unique opportunity to elucidate the inherent phenomena governing bacterial life \citep{Morowitz1984,Lachance2019}.
+\jsyn~(\syn) is a strain of the caprine pathogen Mycoplasma mycoides subspecies capri that has a synthetic genome. In synthesizing the Syn1.0 genome which has roughly 910 genes, 14 wild-type \textit{M. mycoides} genes were either deleted or disrupted and five non-native genes required for the cloning procedure as well as four watermarks were incorporated \citep{Gibson2010}. 
+Based on annotation of those genes, their absence or alteration is unlikely to affect transcription. \Mycs~evolved from low G+C\% Gram-positive bacteria similar to \Bsub~or \textit{Staphylococcus aureus} through a process of massive gene loss beginning about 600 million years ago \citep{Maniloff1992}. This was possible because as obligate parasites, \Mycs~lived in extremely stable environments such as mammalian respiratory and urogenital tracts. Wild-type \textit{M. mycoides capri} lives only in goat upper respiratory tracts, which are \textasciitilde30~\textdegree C, and lower respiratory tracts, which are \textasciitilde39~\textdegree C. 
+
+%An analysis of adenine methylation using Pacific Biosciences (PacBio) genome sequencing of a very similar goat pathogen, \textit{Mycoplasma capricolum} showed 15 GATGA sites with methylation of the first adenine when the bacteria were grown at \textasciitilde37~\textdegree C, and a different 308 GATGA sites with that methylation in DNA from bacteria grown at \textasciitilde30~\textdegree C (data not shown). So these \Mycs~likely use DNA methylation to control expression of some genes. Even after millions of years of genome minimization, \Mycs~still actively regulate gene transcription. 
+
+It is noteworthy that Syn1.0 encodes only 24 methyltransferase proteins (\tbl{methyltransferase}), while \bsub~, a phylogenetically similar species that can live in many different environments, encodes 145 \citep{Elfmann2024}. The minimization of \Myc~ancestors similar to \bsub~likely resulted in the loss of large numbers of genes that modified bacterial DNA and RNA that were not needed for life in the very stable environmental niches that \Mycs~occupy.
+
+
+While the primary focus of this study is~\syn, we analyzed a more minimized version of \textit{M. mycoides} called~\jsyna~(\syna) \citep{Breuer2019}. Its additional genome reduction to 493 genes was not an evolutionary process. The genome of~\syna~was designed to comprise only the minimum set of genes needed for rapid growth in laboratory media at \textasciitilde37~\textdegree C ($\sim$80 of the 493 genes are non-essential but were retained to keep operons intact and for other reasons not related to viability). Most phenotypic characteristics of~\syna~and~\syn~are similar.~\syna~divides more slowly than~\syn~(2 hours between cell divisions as opposed to 1 hour) \citep{Breuer2019}. In recent years extensive experimental characterization of~\syn~and~\syna~has been reported \citep{Hutchison2016, Breuer2019, Mariscal2018, Hutchison2019,  Gilbert2021, Pelletier2021, Haas2022, Thornburg2022, MogerReischer2023,  Sandberg2023,  Bittencourt2024, Justice2024, Safronova2024}.
+To briefly summarize, the initial genome synthesis and transplantation resulted in~\jsyn, a near wild-type version of \Myc~\textit{mycoides} with a chemically synthesized genome of 911 genes capable of growth and division \citep{Gibson2010}. Genome reduction resulted in JCVI-syn3.0, which to date has the least number of genes observed in any bacteria \citep{Hutchison2016}. However, its inconsistent morphology motivated the re-introduction of approximately 19 genes resulting in the more robust,~\jsyna~with 493 genes~\citep{Breuer2019,Pelletier2021}. \syna~was constructed to only have primarily essential genes leading to few remaining identified regulatory elements (see \tbl{TF-table}-\tbl{riboswitch-table}). Like other \Mycs,~\syn~and~\syna~encode only a single sigma factor. Most bacteria encode multiple sigma factors to regulate their gene expression. Importantly, \syna, whose genome was designed to live in a precise stress free laboratory environment, lacks 6 of the 18 annotated transcriptional regulatory protein encoding genes present in \syn. The transcriptional regulators remaining may be essential for control of the regulation of genes during a bacterial cell cycle and may be required in most bacteria. Contrary to their reduced nature, the minimized bacteria still have the genes needed to perform the fundamental bacterial cellular functions common to all life: having a cellular envelope, acquiring molecular building blocks, genome replication, transcription of genes to make RNA, and translation of messenger RNA (mRNA) into proteins.
+
+Consequently, we hypothesize that \Mycs~like~\syn, which are the products of millions of years of evolution that left them with highly minimized genomes, offer model systems to investigate how gene expression is controlled in the primordial core sets of genes present in essentially all bacteria. Furthermore, \syna, which did not evolve to live a a goat parasite, but was designed to grow rapidly and with consistent morphology in an unchanging laboratory environment, is an even better chassis to for both experimental and bioinformatic investigation of transcription and translation in essential bacterial genes.        
+
+A detailed understanding of how bacterial cells control the transcription of RNA is critical to understanding how cells work. Most bacteria are able to function in environments that change as a result of being able to adapt gene expression to turn genes on an off to suit different circumstances. This adaptability is possible because most bacteria have large enough sets of genes that allows survival in unstable or multiple niches. However there are some bacteria that evolved to live in extremely stable environments and as a result of that stability were able to lose large fractions of their genomes. Through analyzing transcription and proteomics data from minimal bacteria as opposed to a more typical model organism, such as~\Eco~or~\Bsub, we can better understand the fundamental principles of gene expression in the core elements common to bacterial cells. We use bioinformatics analysis, RNA sequencing, and proteomics to analyze transcription in two bacterial strains whose genomes have undergone massive gene loss.
+
+%In this study, we first present a bioinformatic and then experimental investigations into the transcription landscape of the minimized bacterium,~\jsyn.
+The bio-informatic approach identifies the genetic motifs capable of modulating gene expression within \jsyn~(and related organisms like \syna ). Genome sequence architecture or the arrangement of the genetic motifs along the chromosome is highly conserved across bacterial life \citep{Tamames2001,Fondi2022}. From a genetic motif perspective, the circular chromosome of \syn~(and~\syna) is highly organized like many other bacteria. 
+The local arrangement of sequence motifs important for controlling transcription and translation such as promoters, gene open reading frames (ORFs),~\sd~sequences, transcription start sites (TSSs), and intrinsic termination loops exhibit some variation as shown in \fig{gene-arch}A, giving rise to different patterns of gene expression. The transcription units (TUs), defined to be the regions of the DNA that are transcribed during a single transcriptional event, may contain multiple genes, and a single gene may belong to multiple TUs as has been observed in \Mflorum~\citep{Matteau2020}. TU production begins with the initial binding of RNA polymerase (RNAP) at the promoter followed by transcription initiation at the TSS and finally ends with the halting of the RNAP due to the formation of an intrinsic termination loop encoded within the DNA sequence~\citep{deHoon2005,Matteau2020}. The usage of an intrinsic termination loop as a mechanism to halt transcription is typical for Gram-positive bacteria instead of the Gram-negative mechanism of Rho-dependent transcription termination \citep{deHoon2005}. Transcription of multiple bacterial genes gives rise to a single polycistronic mRNA and may result in multiple mRNA isoforms upon subsequent processing such as cleavage into smaller transcripts by ribonucleases, primarily occurring at degradosomes. The possible RNA isoform outcomes for bacteria have been recently reviewed in \cite{Taggart2021} (See \fig{gene-arch}B). Recent stochastic simulations of a smal bacteriophage genome (10 genes) indicate that the local TU architecture plays a role in the observed gene expression pattern, and manipulation of the genome sequence architecture can produce pre-determined gene expression patterns~\citep{Shah2022}.
 \newpage
