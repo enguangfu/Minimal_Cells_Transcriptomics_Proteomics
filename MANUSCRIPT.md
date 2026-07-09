@@ -11,7 +11,7 @@ Now Extended/SI displays:
 - TableS2: Rnases
 - FigS2: corr between mRNA and protein
 - TableS3: parameters on calculating absolute protein copy numbers
-- FigS3: intergenic transcription between 0884/0885
+- FigS3: intergenic transcription between 0884/0885 and novel peptide for 0768
 
 ## Manuscript Revision
 
@@ -23,9 +23,6 @@ Check all figure captions.
 
 Fig 2:
 - Comment on SD strength in Discussion and cite Gene-wei's paper.
-
-Fig4:
-- revise 0884 plot and explanation
 
 R6:
 - Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
