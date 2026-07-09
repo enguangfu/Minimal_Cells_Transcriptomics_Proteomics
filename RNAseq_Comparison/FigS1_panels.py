@@ -12,11 +12,14 @@ Panels (born at final print size, OUTPUT.md fonts, Arial, pdf.fonttype 42):
                   log10-log10 blue scatter with identity line, diagonal = log10 TPM
                   histogram (unlabelled), upper triangle = blank. Every subpanel
                   carries [0,2,4] ticks on both axes.
-  b (7/4 x 7/4) : Syn1 length bias, log2(PacBio / Illumina) vs gene length,
+  b (7/6 x 7/2) : Syn1 mapped-read length distribution, 1x4 stacked (Illumina,
+                  PacBio, ONT run 1, ONT run 2) on a shared x-axis; blue histograms,
+                  median marked. From readlen_syn1.tsv (compute_readlen_syn1.py).
+  c (7/4 x 7/4) : Syn1 length bias, log2(PacBio / Illumina) vs gene length,
                   blue scatter + linear fit (reproduces the old Fig S1 panel).
-  c (7/4 x 7/4) : Syn1 abundance bias, log2(PacBio / Illumina) vs MA-plot mean
+  d (7/4 x 7/4) : Syn1 abundance bias, log2(PacBio / Illumina) vs MA-plot mean
                   abundance, blue scatter + linear fit.
-  d (7/4 x 7/4) : Syn3A ONT vs Illumina TPM (log10-log10), red scatter, Pearson r.
+  e (7/4 x 7/4) : Syn3A ONT vs Illumina TPM (log10-log10), red scatter, Pearson r.
 
 Outputs the four individual panels to FigS1_panels/ (born-at-size). The combined
 Fig S1 is assembled manually in Illustrator from these panels.
@@ -58,6 +61,7 @@ def org_tag(ax, which="syn1"):
 
 s1 = pd.read_csv(os.path.join(HERE, "platform_TPM_syn1.tsv"), sep="\t")
 s3 = pd.read_csv(os.path.join(HERE, "platform_TPM_syn3A.tsv"), sep="\t")
+rl = pd.read_csv(os.path.join(HERE, "readlen_syn1.tsv"), sep="\t")  # compute_readlen_syn1.py
 
 
 def l10(v):
@@ -134,6 +138,40 @@ def draw_bias(ax, mode):
     ax.tick_params(length=2)
 
 
+RL_ORDER = [("Illumina", "Illumina"), ("PacBio", "PacBio"),
+            ("ONT1", "ONT run 1"), ("ONT2", "ONT run 2")]
+RL_XMAX, RL_BIN = 4000, 50   # shared x-axis; PacBio's ~1% tail beyond 4 kb is off-screen
+
+
+def draw_readlen(axes):
+    """Mapped-read length distribution of the four Syn1 platforms (top to bottom:
+    Illumina, PacBio, ONT run 1, ONT run 2), one histogram per row on a SHARED
+    x-axis so the read-length regimes line up. y = fraction of that platform's reads
+    per 50 bp bin (own scale); median marked with a dashed line."""
+    edges = np.arange(0, RL_XMAX + RL_BIN, RL_BIN)
+    ctr = 0.5 * (edges[:-1] + edges[1:])
+    for ax, (key, label) in zip(axes, RL_ORDER):
+        sub = rl[rl.platform == key].sort_values("length")
+        L, C = sub.length.values.astype(float), sub["count"].values.astype(float)
+        tot = C.sum()
+        h, _ = np.histogram(L, bins=edges, weights=C)
+        ax.bar(ctr, h / tot, width=RL_BIN, color=SYN1_COL, edgecolor="none")
+        med = L[np.searchsorted(np.cumsum(C) / tot, 0.5)]
+        ax.axvline(med, color="black", lw=0.6, ls="--")
+        ax.text(0.97, 0.90, f"{label}\nmedian {int(med)} bp", transform=ax.transAxes,
+                ha="right", va="top", fontsize=5, color=SYN1_COL)
+        ax.set_xlim(0, RL_XMAX)
+        ax.set_ylim(0, (h / tot).max() * 1.30)
+        ax.set_yticks([0, round((h / tot).max(), 2)])
+        ax.tick_params(length=1.5, pad=1)
+        ax.spines[["top", "right"]].set_visible(False)
+    for ax in axes[:-1]:
+        ax.tick_params(labelbottom=False)
+    axes[-1].set_xticks([0, 1000, 2000, 3000, 4000])
+    axes[-1].set_xticklabels(["0", "1k", "2k", "3k", "4k"])
+    axes[-1].set_xlabel("Read length (bp)", fontsize=6.5)
+
+
 def draw_syn3a(ax):
     a, b = s3.Illumina_TPM.values, s3.ONT_TPM.values
     m = (a > THR) & (b > THR)
@@ -156,8 +194,13 @@ fig.supxlabel(f"mRNA TPM (log{SUB10})", fontsize=6)
 fig.supylabel(f"mRNA TPM (log{SUB10})", fontsize=6)
 fig.savefig(os.path.join(OUT, "panel_a_syn1_TPM_matrix.pdf"), dpi=300); plt.close(fig)
 
-for mode, fn in [("length", "panel_b_syn1_length_bias.pdf"),
-                 ("abundance", "panel_c_syn1_abundance_bias.pdf")]:
+fig, axes = plt.subplots(4, 1, figsize=(7 / 6, 7 / 2), constrained_layout=True, sharex=True)
+draw_readlen(axes)
+fig.supylabel("Fraction of reads", fontsize=6)
+fig.savefig(os.path.join(OUT, "panel_b_syn1_readlen.pdf"), dpi=300); plt.close(fig)
+
+for mode, fn in [("length", "panel_c_syn1_length_bias.pdf"),
+                 ("abundance", "panel_d_syn1_abundance_bias.pdf")]:
     fig, ax = plt.subplots(figsize=(7 / 4, 7 / 4), constrained_layout=True)
     draw_bias(ax, mode)
     org_tag(ax, "syn1")
@@ -166,6 +209,6 @@ for mode, fn in [("length", "panel_b_syn1_length_bias.pdf"),
 fig, ax = plt.subplots(figsize=(7 / 4, 7 / 4), constrained_layout=True)
 draw_syn3a(ax)
 org_tag(ax, "syn3a")
-fig.savefig(os.path.join(OUT, "panel_d_syn3A_ONT_vs_Illumina.pdf"), dpi=300); plt.close(fig)
+fig.savefig(os.path.join(OUT, "panel_e_syn3A_ONT_vs_Illumina.pdf"), dpi=300); plt.close(fig)
 
 print("wrote 4 individual panels to", OUT, "(combined Fig S1 assembled manually in Illustrator)")
