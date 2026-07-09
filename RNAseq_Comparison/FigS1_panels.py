@@ -138,8 +138,9 @@ def draw_bias(ax, mode):
     ax.tick_params(length=2)
 
 
-RL_ORDER = [("Illumina", "Illumina"), ("PacBio", "PacBio"),
-            ("ONT1", "ONT run 1"), ("ONT2", "ONT run 2")]
+# unit per library: cDNA (Illumina, PacBio) measured in bp; direct-RNA ONT in nt
+RL_ORDER = [("Illumina", "Illumina", "bp"), ("PacBio", "PacBio", "bp"),
+            ("ONT1", "ONT run 1", "nt"), ("ONT2", "ONT run 2", "nt")]
 RL_XMAX, RL_BIN = 4000, 50   # shared x-axis; PacBio's ~1% tail beyond 4 kb is off-screen
 
 
@@ -150,7 +151,7 @@ def draw_readlen(axes):
     per 50 bp bin (own scale); median marked with a dashed line."""
     edges = np.arange(0, RL_XMAX + RL_BIN, RL_BIN)
     ctr = 0.5 * (edges[:-1] + edges[1:])
-    for ax, (key, label) in zip(axes, RL_ORDER):
+    for ax, (key, label, unit) in zip(axes, RL_ORDER):
         sub = rl[rl.platform == key].sort_values("length")
         L, C = sub.length.values.astype(float), sub["count"].values.astype(float)
         tot = C.sum()
@@ -158,7 +159,7 @@ def draw_readlen(axes):
         ax.bar(ctr, h / tot, width=RL_BIN, color=SYN1_COL, edgecolor="none")
         med = L[np.searchsorted(np.cumsum(C) / tot, 0.5)]
         ax.axvline(med, color="black", lw=0.6, ls="--")
-        ax.text(0.97, 0.90, f"{label}\nmedian {int(med)} bp", transform=ax.transAxes,
+        ax.text(0.97, 0.90, f"{label}\nmedian {int(med)} {unit}", transform=ax.transAxes,
                 ha="right", va="top", fontsize=5, color=SYN1_COL)
         ax.set_xlim(0, RL_XMAX)
         ax.set_ylim(0, (h / tot).max() * 1.30)
@@ -169,7 +170,7 @@ def draw_readlen(axes):
         ax.tick_params(labelbottom=False)
     axes[-1].set_xticks([0, 1000, 2000, 3000, 4000])
     axes[-1].set_xticklabels(["0", "1k", "2k", "3k", "4k"])
-    axes[-1].set_xlabel("Read length (bp)", fontsize=6.5)
+    axes[-1].set_xlabel("Read length (bp/nt)", fontsize=6.5)
 
 
 def draw_syn3a(ax):

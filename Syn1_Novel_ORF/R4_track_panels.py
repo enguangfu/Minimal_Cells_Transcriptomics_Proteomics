@@ -261,7 +261,7 @@ def draw_isoform_track(ax, iso, win_s, win_e, strand, color='#1b6ca8', max_iso=7
     ax.set_xticks([])
 
 
-def draw_depth_track(ax, win_s, win_e, strand, color='#9ecae1'):
+def draw_depth_track(ax, win_s, win_e, strand, color='#9ecae1', ymax=None):
     cov = load_depth_window(win_s, win_e) / genome_mean_depth_total()   # x genome-mean (both strands)
     win_len = win_e - win_s
     xg = np.arange(win_len)
@@ -270,13 +270,10 @@ def draw_depth_track(ax, win_s, win_e, strand, color='#9ecae1'):
     ax.fill_between(xg, 0, cov, color=color, lw=0, zorder=1)
     ax.plot(xg, cov, color='#3182bd', lw=0.4, zorder=2)
     m = float(cov.max())
-    if m > 0:
-        T = _nice_top(m)                                   # top tick = nice x-mean value
-        ax.set_yticks([0, T])
-        ax.set_yticklabels(['0', f'{T:.0f}×' if T >= 1 else f'{T:g}×'])
-        ax.set_ylim(0, T * 1.02)
-    else:
-        ax.set_ylim(0, 1)
+    T = ymax if ymax is not None else (_nice_top(m) if m > 0 else 1.0)  # ymax shares the axis across organisms
+    ax.set_yticks([0, T])
+    ax.set_yticklabels(['0', f'{T:.0f}×' if T >= 1 else f'{T:g}×'])
+    ax.set_ylim(0, T * 1.02)
     ax.set_xlim(0, win_len)
     ax.set_ylabel('Depth\n(× mean)', fontsize=5)
     ax.tick_params(labelsize=5)
@@ -303,8 +300,9 @@ def locus_panel(fname, win_s, win_e, strand, iso_sel, iso_color, orf=None, depth
         draw_isoform_xaxis(axes[1], win_s, win_e, strand)
     if seq is not None:
         import textwrap
-        axes[1].text(0.995, 0.55, textwrap.fill(seq, 24), transform=axes[1].transAxes,
-                     ha='right', va='center', fontsize=5, family='monospace', color='#444')
+        axes[1].text(0.995, 0.98, textwrap.fill(seq, 16), transform=axes[1].transAxes,
+                     ha='right', va='top', fontsize=5, family='monospace', color='#444',
+                     bbox=dict(boxstyle='round,pad=0.25', facecolor='white', edgecolor='none', alpha=0.85))
     fig.savefig(f'{OUT}/{fname}', dpi=300); plt.close(fig)
 
 
@@ -440,23 +438,23 @@ def panel_d_his3():
                              height_ratios=[1.0, 0.75, 1.0, 1.0], constrained_layout=True)
     draw_gene_track(axes[0], win_s, win_e, '+')
     draw_isoform_track(axes[1], sel, win_s, win_e, '+', color=CASE_COLOR['spurious_prom'], max_iso=10)
-    draw_depth_track(axes[2], win_s, win_e, '+')                      # Syn1 PacBio + depth (blue)
+    # Syn3A Illumina + depth, aligned by the junction, normalised to its own mean (red).
+    # Share the y-axis across both organisms so the Syn3A antisense collapse is apparent.
+    q_s = D3 + (win_s - D1)
+    cov3 = load_syn3a_depth_plus(q_s, q_s + win_len) / syn3a_mean_depth_total()
+    cov1 = load_depth_window(win_s, win_e) / genome_mean_depth_total()   # Syn1 + strand PacBio
+    shared_top = _nice_top(max(float(cov1.max()), float(cov3.max())))
+
+    draw_depth_track(axes[2], win_s, win_e, '+', ymax=shared_top)     # Syn1 PacBio + depth (blue)
     axes[2].set_xticks([]); axes[2].set_xlabel('')
     axes[2].set_ylabel('Syn1\n(× mean)', fontsize=5, color='#3182bd')
 
-    # Syn3A Illumina + depth, aligned by the junction, normalised to its own mean (red)
-    q_s = D3 + (win_s - D1)
-    cov3 = load_syn3a_depth_plus(q_s, q_s + win_len) / syn3a_mean_depth_total()
     ax3, xg = axes[3], np.arange(win_len)
     ax3.fill_between(xg, 0, cov3, color='#f3b0ad', lw=0, zorder=1)
     ax3.plot(xg, cov3, color='#c0392b', lw=0.4, zorder=2)
-    m = float(cov3.max())
-    if m > 0:
-        T = _nice_top(m)
-        ax3.set_yticks([0, T]); ax3.set_yticklabels(['0', f'{T:.0f}×' if T >= 1 else f'{T:g}×'])
-        ax3.set_ylim(0, T * 1.02)
-    else:
-        ax3.set_ylim(0, 1)
+    T = shared_top
+    ax3.set_yticks([0, T]); ax3.set_yticklabels(['0', f'{T:.0f}×' if T >= 1 else f'{T:g}×'])
+    ax3.set_ylim(0, T * 1.02)
     ax3.set_xlim(0, win_len)
     ax3.set_ylabel('Syn3A\n(× mean)', fontsize=5, color='#c0392b')
     ax3.tick_params(labelsize=5)

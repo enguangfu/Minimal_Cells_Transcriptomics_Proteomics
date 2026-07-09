@@ -256,7 +256,7 @@ def syn1_illumina_mean_total():
     return _SYN1_ILL_MEAN[0]
 
 
-def _draw_depth(ax, xg, cov, fill_c, line_c, label, nice_top, logy=False):
+def _draw_depth(ax, xg, cov, fill_c, line_c, label, nice_top, logy=False, ymax=None):
     """Depth fill+line on a linear (0..nice_top) or log y-axis. NaN in `cov` marks a
     gap (e.g. a deleted region on the Syn3A track); on a log axis it stays blank, on a
     linear axis it drops to the 0 baseline. A log axis lets a low-expressed operon show
@@ -269,7 +269,7 @@ def _draw_depth(ax, xg, cov, fill_c, line_c, label, nice_top, logy=False):
         ax.fill_between(xg, floor, cc, color=fill_c, lw=0, zorder=1)
         ax.plot(xg, cc, color=line_c, lw=0.4, zorder=2)
         mx = float(np.nanmax(cc)) if np.isfinite(cc).any() else 1.0
-        top = 10.0 ** np.ceil(np.log10(mx))
+        top = ymax if ymax is not None else 10.0 ** np.ceil(np.log10(mx))
         ax.set_ylim(floor, top)
         ticks = [t for t in (0.1, 1, 10, 100) if floor <= t <= top]
         ax.set_yticks(ticks); ax.set_yticklabels([f"{t:g}×" for t in ticks])
@@ -278,7 +278,7 @@ def _draw_depth(ax, xg, cov, fill_c, line_c, label, nice_top, logy=False):
         ax.fill_between(xg, 0, cc, color=fill_c, lw=0, zorder=1)
         ax.plot(xg, cc, color=line_c, lw=0.4, zorder=2)
         m = float(cc.max())
-        T = nice_top(m) if m > 0 else 1.0
+        T = ymax if ymax is not None else (nice_top(m) if m > 0 else 1.0)
         ax.set_yticks([0, T]); ax.set_yticklabels(["0", f"{T:.0f}×" if T >= 1 else f"{T:g}×"])
         ax.set_ylim(0, T * 1.02)
     ax.set_xlim(0, len(xg))
@@ -354,8 +354,6 @@ def _junction_panel(win_s, win_e, D1, iso_sel, rel_ticks, fig_w, fig_h,
     i_s3 = i_s1 + 1                            # Syn3A depth axis
     xg = np.arange(win_len)
     cov1 = load_syn1_illumina_plus(win_s, win_e) / syn1_illumina_mean_total()
-    _draw_depth(axes[i_s1], xg, cov1, "#9ecae1", "#3182bd", "Syn1\n(× mean)", R4._nice_top, logy)
-    axes[i_s1].set_xticks([])
 
     # Syn3A depth mapped per-base through the retained blocks; deletions stay NaN (true gaps)
     retained = pd.read_excel(os.path.join(GR, "aln/analysis/genome_reduction_summary.xlsx"))
@@ -371,7 +369,14 @@ def _junction_panel(win_s, win_e, D1, iso_sel, rel_ticks, fig_w, fig_h,
         q0 = s2 + (lo - s1)
         cov3[lo - win_s:hi - win_s] = R4.load_syn3a_depth_plus(q0, q0 + (hi - lo))
     cov3 /= R4.syn3a_mean_depth_total()
-    _draw_depth(axes[i_s3], xg, cov3, "#f3b0ad", "#c0392b", "Syn3A\n(× mean)", R4._nice_top, logy)
+
+    # shared y-axis across both organisms so the syn1 -> syn3A change is directly comparable
+    mmax = float(np.nanmax([np.nanmax(cov1), np.nanmax(cov3)]))
+    shared = 10.0 ** np.ceil(np.log10(max(mmax, 0.1))) if logy else R4._nice_top(mmax)
+
+    _draw_depth(axes[i_s1], xg, cov1, "#9ecae1", "#3182bd", "Syn1\n(× mean)", R4._nice_top, logy, ymax=shared)
+    axes[i_s1].set_xticks([])
+    _draw_depth(axes[i_s3], xg, cov3, "#f3b0ad", "#c0392b", "Syn3A\n(× mean)", R4._nice_top, logy, ymax=shared)
     off = D1 - win_s                                                    # rel -> tx: tx = rel + off
     axes[i_s3].set_xticks([r + off for r in rel_ticks])
     axes[i_s3].set_xticklabels([str(r) for r in rel_ticks], fontsize=5)
@@ -582,14 +587,11 @@ def panel_b(out_name="R5b_rpsT_fusion.pdf", fig_w=14 / 3, fig_h=7 / 3):
                              constrained_layout=True)
     ag1, ai1, ad1, ag3, ai3, ad3 = axes
 
-    def _yax(ax, cov, color, label):
+    def _yax(ax, cov, color, label, ytop=None):
         m = float(cov.max())
-        if m > 0:
-            T = R4._nice_top(m)
-            ax.set_yticks([0, T]); ax.set_yticklabels(["0", f"{T:.0f}×" if T >= 1 else f"{T:g}×"])
-            ax.set_ylim(0, T * 1.02)
-        else:
-            ax.set_ylim(0, 1)
+        T = ytop if ytop is not None else (R4._nice_top(m) if m > 0 else 1.0)
+        ax.set_yticks([0, T]); ax.set_yticklabels(["0", f"{T:.0f}×" if T >= 1 else f"{T:g}×"])
+        ax.set_ylim(0, T * 1.02)
         ax.set_xlim(TP_LO, TP_HI); ax.set_ylabel(label, fontsize=5, color=color)
         ax.tick_params(labelsize=5); ax.spines[["top", "right"]].set_visible(False)
 
@@ -605,7 +607,7 @@ def panel_b(out_name="R5b_rpsT_fusion.pdf", fig_w=14 / 3, fig_h=7 / 3):
     xg1, c1 = _depth_on_tp(syn1_ill_minus, "CP002027.1", A1, TP_LO, TP_HI, syn1_illumina_mean_total())
     ad1.fill_between(xg1, 0, c1, color="#9ecae1", lw=0, zorder=1)
     ad1.plot(xg1, c1, color="#3182bd", lw=0.4, zorder=2)
-    _yax(ad1, c1, "#3182bd", "Syn1\n(× mean)"); ad1.set_xticks([])
+    ad1.set_xticks([])
 
     # --- Syn3A (ONT isoforms, Illumina depth) ---
     _genes_tp(ag3, genes3, A3, TP_LO, TP_HI)
@@ -615,7 +617,11 @@ def panel_b(out_name="R5b_rpsT_fusion.pdf", fig_w=14 / 3, fig_h=7 / 3):
                            R4.syn3a_mean_depth_total())
     ad3.fill_between(xg3, 0, c3, color="#f3b0ad", lw=0, zorder=1)
     ad3.plot(xg3, c3, color="#c0392b", lw=0.4, zorder=2)
-    _yax(ad3, c3, "#c0392b", "Syn3A\n(× mean)")
+
+    # shared y-axis across both organisms so the rpsT depth change is directly comparable
+    shared = R4._nice_top(float(np.nanmax([np.nanmax(c1), np.nanmax(c3)])))
+    _yax(ad1, c1, "#3182bd", "Syn1\n(× mean)", ytop=shared)
+    _yax(ad3, c3, "#c0392b", "Syn3A\n(× mean)", ytop=shared)
     ad3.set_xticks([-750, -500, -250, 0, 250])
     ad3.set_xticklabels(["-750", "-500", "-250", "0", "250"], fontsize=5)
     ad3.set_xlabel("Transcript position from rpsT/0082 5′ (nt)", fontsize=6)

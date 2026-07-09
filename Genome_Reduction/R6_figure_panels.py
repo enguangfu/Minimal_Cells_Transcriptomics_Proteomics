@@ -334,11 +334,11 @@ def panel_d(out_name="R6d_rPtn_operon.pdf", figsize=(7, 7 / 3)):
 
     syn1_ill_minus = [(os.path.join(R5.SYN1_ILL_DIR, f"{s}.minus.bedGraph"), w) for s, w in R5.SYN1_ILL]
 
-    def _depthrow(ax, xg, cov, fill, line, label):
+    def _depthrow(ax, xg, cov, fill, line, label, ytop=None):
         ax.fill_between(xg, 0, cov, color=fill, lw=0, zorder=1)
         ax.plot(xg, cov, color=line, lw=0.4, zorder=2)
         m = float(np.nanmax(cov)) if len(cov) else 0.0
-        T = R4._nice_top(m) if m > 0 else 1
+        T = ytop if ytop is not None else (R4._nice_top(m) if m > 0 else 1)
         ax.set_ylim(0, T * 1.03); ax.set_yticks([0, T])
         ax.set_yticklabels(["0", f"{T:.0f}×" if T >= 1 else f"{T:g}×"], fontsize=5)
         ax.set_xlim(TP_LO, TP_HI); ax.set_ylabel(label, fontsize=5, color=line)
@@ -351,7 +351,6 @@ def panel_d(out_name="R6d_rPtn_operon.pdf", figsize=(7, 7 / 3)):
     ag1.axvspan(TP_LO, A1 - 806355, facecolor="#e8736a", alpha=0.15, lw=0, zorder=0)  # DEL_074 (dhaK+) deleted in Syn3A; starts at -179
     ag1.text(TP_LO + 40, 0.06, "deleted in Syn3A", ha="left", va="bottom", fontsize=4.5, color="#c0392b")
     xg1, c1 = R5._depth_on_tp(syn1_ill_minus, R5.SYN1_CHROM, A1, TP_LO, TP_HI, R5.syn1_illumina_mean_total())
-    _depthrow(ad1, xg1, c1, "#9ecae1", "#3182bd", "Syn1\n(× mean)")
 
     # --- Syn3A ---
     R5._genes_tp(ag3, genes3, A3, TP_LO, TP_HI)
@@ -360,7 +359,11 @@ def panel_d(out_name="R6d_rPtn_operon.pdf", figsize=(7, 7 / 3)):
              color=TEAL, linespacing=0.9)
     xg3, c3 = R5._depth_on_tp([(R4.SYN3A_DEPTH_MINUS, 1.0)], "CP016816.2", A3, TP_LO, TP_HI,
                               R4.syn3a_mean_depth_total())
-    _depthrow(ad3, xg3, c3, "#f3b0ad", "#c0392b", "Syn3A\n(× mean)")
+
+    # shared depth axis across both organisms so the operon's rise in Syn3A is directly comparable
+    shared = R4._nice_top(float(np.nanmax([np.nanmax(c1), np.nanmax(c3)])))
+    _depthrow(ad1, xg1, c1, "#9ecae1", "#3182bd", "Syn1\n(× mean)", ytop=shared)
+    _depthrow(ad3, xg3, c3, "#f3b0ad", "#c0392b", "Syn3A\n(× mean)", ytop=shared)
     ad3.axvspan(A3 - 420350, min(0, A3 - 419784), facecolor="#c0392b", alpha=0.08, lw=0, zorder=0)  # silent inter-operon gap
 
     # shared cue: 5'-end line across all tracks; organism tags

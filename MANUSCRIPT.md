@@ -19,10 +19,16 @@ Now i have discussed the entire manuscript in details with PI; following is the 
 
 ### ⬜ Open / remaining
 
+
+Minor changes to main figures:
+Fig 3: ZRT: Panel b's legend would benefit from adding the legend frame. The points are scattered enough that it looks like the legend is mixing with the scatter plot. For consistency, might want to do the same for panel e.
+Fig 4: ZRT: In panels b and c it would be nice is the numbers aligned with the tops of the dotted lines rather than the end of the distributions. Panel e you should use a finer dotted line for the median. Panel f shouls have its legend moved to the upper left so that it doesn't overlap with the data. Panel h the amino acid sequence is overlapping one of the arrows. 
+Fig 5 and Fig6: in each panel where we show depth in both syn1 and syn3A, use the same axis (linear or log) so that the changes are more apparent. 
+
 Check all figure captions.
 
 Fig 2:
-- Comment on SD strength in Discussion and cite Gene-wei's paper.
+- Comment on SD strength in Discussion; comment in Methods; how SD strength relate to TIR. cite Gene-wei's paper.
 
 R6:
 - Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.

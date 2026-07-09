@@ -80,12 +80,10 @@ def ridgeline(ax, values_by_case, xgrid, x_is_log10=False, scale=0.7,
         med = float(np.median(v))
         med_plot = np.log10(med) if x_is_log10 else med
         ax.plot([med_plot, med_plot], [base, base + scale], color=col, lw=0.8, ls='--', alpha=0.85)
-        ax.text(xgrid[-1], base + 0.30, med_fmt(med), ha='right', va='center',   # median on the right
+        ax.text(med_plot, base + scale + 0.05, med_fmt(med), ha='center', va='bottom',  # median atop its dashed line
                 fontsize=5, fontweight='bold', color=col)
-    ax.text(0.995, 0.995, 'Median', transform=ax.transAxes, ha='right', va='top',
-            fontsize=5, color='0.3')
     ax.set_yticks([])                                # keep x ticks (the value scale)
-    ax.set_ylim(-0.1, n - 1 + scale + 0.20)
+    ax.set_ylim(-0.1, n - 1 + scale + 0.40)
     ax.spines[['top', 'right', 'left']].set_visible(False)
 
 
@@ -142,7 +140,7 @@ say(f"f) canonical operons used: {n_canonical}")
 ax.set_xscale('log')
 ax.set_xlabel('UTR length (nt)')
 ax.set_ylabel('Operons')
-ax.legend(frameon=False, handlelength=1.1, labelspacing=0.25, loc='upper right', fontsize=5)
+ax.legend(frameon=False, handlelength=1.1, labelspacing=0.25, loc='upper left', fontsize=5)
 ax.spines[['top', 'right']].set_visible(False)
 fig.savefig(f'{OUT}/panel_f_utr_distribution.pdf', dpi=300); plt.close(fig)
 
@@ -156,7 +154,7 @@ fig, ax = plt.subplots(figsize=(QUART, QUART), constrained_layout=True)
 ax.hist(fi, bins=np.linspace(0, 100, 51), color='#1f77b4', alpha=0.85,
         edgecolor='white', linewidth=0.3)
 ax.set_yscale('log')
-ax.axvline(med_fi, color='black', lw=1.0, ls='--', label=f'median {med_fi:.1f}%')
+ax.axvline(med_fi, color='black', lw=0.6, ls=(0, (2, 2)), label=f'median {med_fi:.1f}%')
 ax.set_xlim(-1, 101)
 ax.set_xlabel('Intergenic coverage (%)')
 ax.set_ylabel('Isoforms')

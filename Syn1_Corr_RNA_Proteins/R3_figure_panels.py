@@ -143,7 +143,8 @@ ax.text(0.04, 0.96, f"all $r$ = {r_all:.2f} ($n$ = {len(cai)})\n"
         transform=ax.transAxes, va='top', ha='left', fontsize=6)
 ax.set_xlabel('mRNA Illumina TPM ($\\log_{10}$)')
 ax.set_ylabel('Protein iPM ($\\log_{10}$)')
-ax.legend(frameon=False, handlelength=1.0, labelspacing=0.25, loc='lower right', fontsize=5)
+ax.legend(frameon=True, framealpha=0.9, edgecolor='0.7', handlelength=1.0,
+          labelspacing=0.25, loc='lower right', fontsize=5)
 ax.spines[['top', 'right']].set_visible(False)
 org_tag(ax, 'syn1')
 fig.savefig(f'{OUT}/panel_b_TPM_vs_iPM.pdf', dpi=300); plt.close(fig)
