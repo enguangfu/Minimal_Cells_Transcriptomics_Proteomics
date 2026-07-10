@@ -150,8 +150,8 @@ def pack(intervals, gap=60):
 
 
 nrow = 1 + 1 + len(TRACKS)                      # genes + isoforms + 5 depth
-fig, axes = plt.subplots(nrow, 1, figsize=(7, 5.2), sharex=True,
-                         height_ratios=[0.7, 1.3] + [1.0] * len(TRACKS), constrained_layout=True)
+fig, axes = plt.subplots(nrow, 1, figsize=(7, 5.9), sharex=True,
+                         height_ratios=[1.6, 1.3] + [1.0] * len(TRACKS), constrained_layout=True)
 
 # ---- gene track (pheT/0528 is a flanking gene, not drawn; labels staggered) ----
 axG = axes[0]
@@ -209,11 +209,9 @@ for ax, (name, kind, pwl, anchor, ch, glen) in zip(axes[2:], TRACKS):
 # Red band drawn ONLY on the gene-arrow track.
 DEL30 = [(ANC1 - 628640, ANC1 - 628121),          # 0527
          (ANC1 - 625201, ANC1 - 622613)]          # 0522 (ftsZ) .. 0520
-for a, b in DEL30:
+for a, b in DEL30:                                 # red band on the gene-arrow track only; label added in Illustrator
     axG.axvspan(a, b, facecolor="#e8736a", alpha=0.20, lw=0, zorder=0)
-    axG.text((a + b) / 2, 1.05, "deleted in Syn3.0 but added back to Syn3A",
-             ha="center", va="bottom", fontsize=4.0, color="#c0392b", clip_on=False)
-axG.set_ylim(-0.8, 1.5)
+axG.set_ylim(-1.2, 1.8)                             # extra head/foot room for hand-added markers
 
 # TSS (green) / terminator (red) guide lines across every track; text added later in Illustrator
 for ax in axes:
