@@ -1,0 +1,48 @@
+DCW / mra operon (MMSYN1_0527..0520), minus strand
+============================================================
+anchor (5' of 0527): Syn1 628640, Syn3A 336007;  rel = anchor - genomic_pos
+
+Both-strand genome-mean depth per library (normaliser):
+  Syn1 PacBio     mean =   4184.1
+  Syn1 ONT 1      mean =    115.8
+  Syn1 ONT 2      mean =    127.1
+  Syn1 Illumina   mean =    292.3
+  Syn3A ONT       mean =    312.9
+  Syn3A Illumina  mean =   2355.4
+Per-gene mean SENSE depth (x both-strand genome mean):
+
+gene               Syn1Pac   Syn1ONT   Syn1ONT   Syn1Ill   Syn3ONT   Syn3Ill
+hyp/0527              0.15      2.10      3.00      5.24      2.47      0.81
+rpmF/0526             0.47      6.24      6.74     31.28      5.56      4.22
+mraZ/0525             0.43      0.29      0.81      0.22      1.11      0.05
+mraW/0524             0.29      0.30      0.56      0.10      0.54      0.05
+ftsA/0523             0.07      0.25      0.39      0.01      0.20      0.02
+ftsZ/0522             0.50      1.23      1.43      4.46      1.32      4.25
+sepF/0521             0.23      1.46      1.29      1.16      1.51      1.42
+hyp/0520              0.11      2.41      1.19      0.21      1.73      0.39
+
+Reduction paired table (mean-normalised rel units; TPM=Illumina):
+gene        relTPM_s1  relTPM_s3   TPM_FC  relIPM_s1  relIPM_s3   iPM_FC
+0527             5.58       0.50     0.09       0.39       0.38     0.95
+0526            31.78       4.00     0.13       0.01       0.21    36.21
+0525             0.18       0.05     0.25       0.03       0.04     1.19
+0524             0.08       0.05     0.59       0.04       0.06     1.51
+0523             0.01       0.02     1.75       0.05       0.12     2.45
+0522             4.02       3.84     0.96       6.01       4.07     0.68
+0521             0.91       1.07     1.18       2.09       1.47     0.71
+0520             0.15       0.34     2.27       0.13       0.06     0.47
+
+Promoter (-10) scan at the block 5' ends (minus strand):
+  OP_00267  0527/rpmF block         TSS 628239 (inside 0527, rel 401)
+      -10 6-mer TATACT (mm1); 9-mer TGATATACT (mm1); tier no_minus10
+  internal mraZ-mraW-ftsA promoter  TSS ~627840 (rel ~800, ONT-defined)
+      -10 6-mer TATAAA (mm1); 9-mer AATTATAAA (mm2); tier no_minus10
+  OP_00266  ftsZ block              TSS 625215 (rel 3425)
+      -10 6-mer TATTAT (mm1); 9-mer ATATATTAT (mm2); tier no_minus10
+  note: mraZ TSS taken from the least-truncated ONT 5' ends (rel ~800, both organisms);
+        the dominant ONT 5' pile-up at rel ~823 is a downstream 5' truncation hotspot.
+
+TransTermHP intrinsic terminators in the window (rel = anchor - coord):
+  TERM 223     622475 - 622457   - R    86  -6.1 -5.74122 | opp_overlap 622457
+  TERM 224     622579 - 622551   - R    78  -9.2 -3.41961 | opp_overlap 622552
+  TERM 225     627907 - 627889   - R   100 -10.4 -6.04953 | opp_overlap 627887

@@ -38,5 +38,23 @@ These conventional $-10$ and intrinsic-terminator elements indicate that the red
     \label{fig:operon}
 \end{figure}
 
+A striking example of this fine structure is the division and cell-wall (\textit{dcw}/\textit{mra}) cluster \locus{0527}--\locus{0520} (Fig.~\ref{fig:si-dcw}).
+Its eight genes form not one operon but two separately co-transcribed units: a 5$'$ unit \locus{0527}--\gene{rpmF}{0526}--\gene{mraZ}{0525}--\gene{mraW}{0524}--\locus{0523} and a 3$'$ unit \gene{ftsZ}{0522}--\locus{0521}--\locus{0520}, each with its own promoter and \threeprime~intrinsic terminator, together with a weak internal promoter that re-initiates transcription at \gene{mraZ}{0525}.
+The dominant promoter lies \emph{inside} \locus{0527} and drives strong transcription of the ribosomal-protein gene \gene{rpmF}{0526}, which a high-confidence intrinsic terminator immediately downstream then truncates, leaving the \textit{mra} cell-division genes only weakly read through.
+This two-operon architecture is shared by \syn~and \syna.
+Notably, \locus{0527} and the \gene{ftsZ}{0522}--\locus{0520} block are among the genes deleted in the more aggressively reduced JCVI-syn3.0 yet restored in \syna~\cite{hutchison_design_2016, breuer_essential_2019}, and both regain \syn-like transcription in \syna.
+Because the \gene{rpmF}{0526} promoter is embedded within \locus{0527}, its deletion in syn3.0 would be expected to silence \gene{rpmF}{0526} and the downstream \textit{mra} genes, offering a transcription-level rationale for why \locus{0527} had to be added back to build a viable minimal cell.
+
+\begin{sifigure}
+    \centering
+    \includegraphics[scale=1]{figures/si-dcw.pdf}% born-at-size (7 in wide)
+    \caption{\textbf{Fine transcriptional structure of the \textit{dcw}/\textit{mra} cluster (\locus{0527}--\locus{0520}), \syn~versus \syna.}
+    Sense (operon-strand) sequencing depth across the cluster on a shared logarithmic axis ($\times$ the both-strand genome mean) for all six libraries: \syn~PacBio, the two \syn~ONT runs, \syn~Illumina, and the \syna~ONT and Illumina libraries, with the \syn~PacBio isoforms also drawn above; PacBio is size-selected, so its absolute depth is low but its profile matches the others.
+    The x-axis is the relative position from the 5$'$ end of \locus{0527} (both organisms anchored at their own \locus{0527}).
+    Green dashed lines mark transcription start sites (a strong promoter inside \locus{0527}, a weak internal promoter at \gene{mraZ}{0525}, and the \gene{ftsZ}{0522} promoter); red dashed lines mark TransTermHP intrinsic terminators (after \gene{rpmF}{0526} and after \locus{0520}).
+    Red bands mark \locus{0527} and the \gene{ftsZ}{0522}--\locus{0520} block, deleted in JCVI-syn3.0 but restored in \syna.}
+    \label{fig:si-dcw}
+\end{sifigure}
+
 
 

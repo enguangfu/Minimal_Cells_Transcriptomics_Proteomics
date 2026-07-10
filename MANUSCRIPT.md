@@ -19,21 +19,26 @@ Now i have discussed the entire manuscript in details with PI; following is the 
 
 ### ⬜ Open / remaining
 
-
-Minor changes to main figures:
-Fig 3: ZRT: Panel b's legend would benefit from adding the legend frame. The points are scattered enough that it looks like the legend is mixing with the scatter plot. For consistency, might want to do the same for panel e.
-Fig 4: ZRT: In panels b and c it would be nice is the numbers aligned with the tops of the dotted lines rather than the end of the distributions. Panel e you should use a finer dotted line for the median. Panel f shouls have its legend moved to the upper left so that it doesn't overlap with the data. Panel h the amino acid sequence is overlapping one of the arrows. 
-Fig 5 and Fig6: in each panel where we show depth in both syn1 and syn3A, use the same axis (linear or log) so that the changes are more apparent. 
+Questions from Troy:
+Comment on OSTIR and connect to shine-dalgarno
+citation to containment clustering to resolve operons
+panel c of fig2: locate the promoter to argue which is the true TSS
+how can you call processing by judging if isoforms ends intergenic or intragenic?
+3' erosion due to RNA seq biase? 
+quantify the tmRNA absolute copy number
+misannotation citation in discussion: long-read enables finding new features in bacterial genomes
+citation: ribosome content affect protein synthesis, thus cell cycle: Hwa group paper
 
 Check all figure captions.
+
+Things for the experimentalists:
+Quality report of ONT: second Syn1 run
 
 Fig 2:
 - Comment on SD strength in Discussion; comment in Methods; how SD strength relate to TIR. cite Gene-wei's paper.
 
 R6:
 - Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
-
-Done Table S1 and S2: no regulatory elements into SI table; comment in the intro on regulation loss.
 
 Try to visualize the counts of isoform arrows.
 
