@@ -34,16 +34,7 @@ Check all figure captions.
 Things for the experimentalists:
 Quality report of ONT: second Syn1 run
 
-Fig 2:
-- Comment on SD strength in Discussion; comment in Methods; how SD strength relate to TIR. cite Gene-wei's paper.
-
-R6:
-- Expand the explanations on glycolytic enzymes: pinpoint fbaA protein and cite Cell 2022 paper.
-
 Try to visualize the counts of isoform arrows.
-
-DCW operon:
-- Check syn1 and syn3A to see if restored.
 
 Discussion:
 **Write as flowing prose that FOLLOWS the three Intro questions (introduction.tex:14-17), NOT a literal numbered Q&A. Target ~500 words (style budget). Do NOT re-report that transcript is the strongest determinant of protein abundance — that is R3's result; cut the repetition (current draft says it twice, discussion.tex:5 + :11).**

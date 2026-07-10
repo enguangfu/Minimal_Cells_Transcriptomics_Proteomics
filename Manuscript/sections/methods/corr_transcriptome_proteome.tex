@@ -14,6 +14,7 @@ Each window was scored with \texttt{OSTIR}~\cite{roots_ostir_2021} using the~\sy
 A read-count-weighted mean TIR was then computed for each gene, yielding a valid TIR for 566 genes.
 The contribution of initiation was quantified by adding $\log_{10}(\text{TIR})$ to the baseline ordinary-least-squares model $\log_{10}(\text{iPM}) \sim \log_{10}(\text{TPM})$ (baseline $r = 0.59$, $R^{2} = 0.35$ on this subset) and by correlating $\log_{10}(\text{TIR})$ against the baseline residual.
 Translation initiation explained little of the residual: it raised the model $R^{2}$ by only 0.020 (2.0\% of the variance), and $\log_{10}(\text{TIR})$ correlated weakly with the residual (Pearson $r = 0.17$, $P = 4 \times 10^{-5}$).
+Dissecting the OSTIR sub-terms against the residual, the Shine--Dalgarno hybridization $\Delta G$ carried the strongest association, though it remained weak (Pearson $r = -0.12$, $P = 4.2 \times 10^{-3}$; more negative $\Delta G$, i.e.\ stronger pairing, associated with a slightly higher residual), while the standby-site ($r = -0.02$, $P = 0.7$), spacing ($r = -0.07$, $P = 0.08$), and 5$'$ mRNA-folding ($r = 0.08$, $P = 0.05$) terms carried essentially none.
 
 \subsubsection{Codon Adaptation Index (CAI)}
 
