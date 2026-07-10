@@ -13,8 +13,11 @@ Across the detected proteome, $\log_{10}$ iPM and $\log_{10}$ Illumina TPM were 
 Transcript abundance is thus the primary determinant of protein abundance in \syn, leaving roughly half the variance to post-transcriptional effects.
 
 To dissect this residual, defined as the offset of each protein's $\log_{10}$ iPM from the transcript fit, three post-transcriptional layers were tested.
-Translation-initiation rates (TIR) predicted with OSTIR~\cite{roots_ostir_2021} were largely uninformative, correlating only weakly with the residual (Pearson $r = 0.17$) and raising $R^{2}$ by just 0.020, about 2\% of the variance (Fig.~\ref{fig:si-correlation}a), most likely reflecting the limited accuracy of de novo initiation-rate prediction rather than an absence of initiation control.
+Translation-initiation rates (TIR) predicted with OSTIR~\cite{roots_ostir_2021} were largely uninformative, correlating only weakly with the residual (Pearson $r = 0.17$) and raising $R^{2}$ by just 0.020, about 2\% of the variance (Fig.~\ref{fig:si-correlation}a), most likely reflecting the limited accuracy of de novo initiation-rate prediction rather than an absence of initiation control~\cite{li_quantifying_2014}.
+Shine-Dalgarno strength, standby structure, RBS spacing and 5$'$ mRNA folding, the four subfeatures constituting TIR all correlated poorly with the residual (Pearson $ \vert r \vert \leq 0.12$; \hyperref[method:corr-TIR]{Methods}).
+
 The codon adaptation index (CAI)~\cite{sharp_codon_1987}, a proxy for elongation efficiency, was by contrast substantial: it correlated with the residual (Pearson $r = 0.36$; Fig.~\ref{fig:si-correlation}b) and increased $R^{2}$ by 0.080, about 8\% of the variance (Fig.~\ref{fig:si-correlation}d), so elongation efficiency set by codon usage against the AT-rich genome measurably tunes protein output beyond transcript level.
+
 Protein turnover, not measured in \syn, was approximated by transferring intrinsic half-lives from the related minimal bacterium~\mpn~\cite{burgos_protein_2020} by reciprocal-best-hit orthology, scaled by protease abundance (Methods).
 The 245 mapped half-lives were long (median 32~h, minimum 4.7~h), far exceeding the roughly 1~h doubling time (Fig.~\ref{fig:correlation}c), and were uncorrelated with the residual (Pearson $r = -0.12$, $P = 0.06$, $n = 242$), adding at most 0.01 to $R^{2}$ (Fig.~\ref{fig:si-correlation}c).
 Intrinsic degradation therefore has little influence on steady-state protein abundance in this fast-growing cell, where turnover is dominated by dilution through growth.

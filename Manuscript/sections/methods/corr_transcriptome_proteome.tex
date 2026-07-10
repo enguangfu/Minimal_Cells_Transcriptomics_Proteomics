@@ -7,7 +7,7 @@ Three layers, translation initiation, translation elongation, and protein degrad
 The combined per-gene transcriptome and proteome table, together with the predicted TIR, CAI, and transferred half-lives, is available in \sdomics.
 
 \subsubsection{Translation Initiation Rate Prediction}
-
+\label{method:corr-TIR}
 Per-gene translation initiation efficiency was predicted from sequence to test whether initiation rate accounts for the transcriptome--proteome residual.
 For each detected mRNA gene, the PacBio isoforms (read count $\geq 10$) whose transcribed span covered the full ORF were identified, and an initiation window spanning 30~nt of 5$'$ UTR (or the available UTR, whichever was shorter) through 30~nt into the coding sequence was extracted from the~\syn~genome with circular wraparound.
 Each window was scored with \texttt{OSTIR}~\cite{roots_ostir_2021} using the~\syn~16S rRNA anti-Shine--Dalgarno tail (\texttt{ACCUCCUUU}), taking the prediction at the annotated start codon, and the translation initiation rate (TIR) together with its thermodynamic sub-terms (Shine--Dalgarno, standby-site, spacing, and 5$'$ mRNA-folding $\Delta G$) was recorded per isoform.

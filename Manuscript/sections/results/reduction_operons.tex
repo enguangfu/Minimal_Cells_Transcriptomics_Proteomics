@@ -1,22 +1,22 @@
 \subsection{Genome reduction decapitates the operons of key proteins}
 
-From \syn~to \syna~the genome contracted from 1{,}078{,}809 to 543{,}379~bp through 95 deletions ($\geq 50$~bp), removing $\sim$536~kb while the retained backbone stayed 99.90\% identical (Fig.~\ref{fig:reduction_operons}a; Methods).
-Most deletions excised whole operons: of the 459 \syn~operons, just over half lost every sense gene and a third kept all of theirs, leaving only $\sim$50 partially truncated (leading, lagging or internal), and it is these that change a retained gene's regulation (\sdreduction).
+From \syn~to \syna, the genome contracted from 1{,}078{,}809 to 543{,}379~bp through 95 deletions ($\geq 50$~bp), removing $\sim$536~kb while the retained backbone stayed 99.90\% identical (Fig.~\ref{fig:reduction_operons}a; Methods).
+Most deletions excised whole operons. Of the 459 \syn~operons, just over half lost every sense gene and a third kept all of theirs, leaving only $\sim$50 partially truncated (leading, lagging or internal), and it is these that change a retained gene's regulation (\sdreduction).
 
-Classifying every retained gene by how the reduction changed the source of its transcription (Methods) isolated one decisive event: only genes whose operon lost its own promoter with no replacement dropped robustly in expression (42 genes; median fold change 0.44 against 0.76 for structurally unaffected genes, two-sided Mann--Whitney $p = 2.7\times10^{-4}$), with no other class of contextual change differing significantly (\sdreduction).
+Classifying every retained gene by how the reduction changed the source of its transcription (see Methods) isolated one decisive event: only genes whose operon lost its own promoter with no replacement dropped robustly in expression (42 genes; median fold change 0.44 against 0.76 for structurally unaffected genes, two-sided Mann--Whitney $p = 2.7\times10^{-4}$), with no other class of contextual change differing significantly (\sdreduction).
 Because the retained sequence is 99.90\% identical between the two cells, this suppression is regulatory rather than mutational: deleting the promoter decapitates the operon and strands its retained genes without a transcription source.
 
-The proteins silenced this way are functionally central.
+Some proteins silenced this way are functionally essential.
 The nucleoid-associated protein \gene{hupA}{0350}, \syn's principal chromosome-compacting factor, is transcribed from a promoter that lies inside its upstream neighbour \locus{0349}; the reduction deleted \locus{0349} together with that promoter, decapitating the operon so that \gene{hupA}{0350} collapsed in both transcript (fold change 0.020) and protein (0.014) (Fig.~\ref{fig:reduction_operons}d).
 PacBio isoforms fixed this transcription start sharply, with 79\% of reads sharing a single 5$'$ base, from which a perfect \texttt{TATAAT} $-10$ box (consensus \texttt{TANAAT}, extended \texttt{TNNTANAAT}) was located just upstream, confirming that a genuine strong promoter, not incidental sequence, was removed.
 \syn~ONT direct-RNA reads corroborated this start independently, their 5$'$ ends falling within \locus{0349} as well but shifted roughly 15--30~nt downstream of the sharp PacBio start, possibly from 5$'$ digestion of native transcripts.
 
-Central-carbon metabolism was decapitated the same way at two adjacent operons.
+Central-carbon metabolism was disrupted the same way at two adjacent operons.
 One deletion removed the promoter, along with the pyruvate-dehydrogenase E1 subunits \gene{pdhA}{0225} and \gene{pdhB}{0226}, from the pyruvate-dehydrogenase/acetate operon, and a second removed the promoter of the neighbouring glucose-PTS operon, so the retained enzymes \gene{pdhC}{0227}--\gene{ackA}{0230} and \gene{ptsI}{0233}--\locus{0235} lost their promoters and fell together in \syna~(Fig.~\ref{fig:reduction_operons}c).
 This promoter loss is the transcriptional origin of the coordinated central-metabolism downshift quantified in the next section.
 
 The reciprocal outcome, two operons fused into one across a deletion junction, was rare (3 of 95 junctions; Methods) and ineffective.
-The clearest case placed \gene{rpsT}{0082} downstream of \locus{0094} in a single unit (37 bridging reads; Fig.~\ref{fig:reduction_operons}b), yet transcribed \gene{rpsT}{0082} only weakly (fold change 0.074) because the acquired \locus{0094} promoter is itself weak, and a second ribosomal-protein gene, \gene{rpsO}{0294}, lost transcription the same way (fold change 0.144).
+The clearest case placed \gene{rpsT}{0082} downstream of \locus{0094} in a single unit (37 bridging ONT reads and 2 reads spanned both genes; Fig.~\ref{fig:reduction_operons}b), though the in-between 8 genes were deleted. \gene{rpsT}{0082} was transcribed only weakly (fold change 0.074) because the acquired \locus{0094} promoter is itself weak. The similar case happened for another ribosomal-protein gene, \gene{rpsO}{0294}, lost transcription the same way (fold change 0.144).
 Loss of a gene's own promoter, by outright deletion or by replacement with a weaker fused one, rather than any change in the retained sequence, is thus the structural event that most strongly suppresses \syna's retained proteins.
 
 % L5.5 (panel e): essentiality x trace-expression -- analysis not yet done (essentiality source pending); draft once available.

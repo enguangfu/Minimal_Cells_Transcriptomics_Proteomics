@@ -1,16 +1,16 @@
-\subsection{Pervasive RNA processing truncates transcripts with a 3' erosion bias in ~\syn}
+\subsection{Pervasive RNA processing truncates transcripts with a 3' erosion bias in \syn}
 
-Alongside each intact operon transcript, PacBio sequencing recovered many shorter isoforms; when an isoform's variable end falls inside a coding sequence, it records post-transcriptional processing rather than an alternative promoter or terminator.
-Two retained genes illustrate the opposite polarities of this erosion.
-At the neopullulanase gene \locus{0178}, 3$'$ erosion dominated the 85 operon-contained isoforms: unprocessed transcripts carried 65.5\% of the reads, while among the processed species 49 were truncated only at the 3$'$ end and 27 only at the 5$'$ end (Fig.~\ref{fig:rnase}b).
-At the leucyl-aminopeptidase gene \gene{lap}{0154} the polarity was reversed: of its 134 isoforms, unprocessed transcripts carried 49.7\% of the reads, and 92 were truncated only at the 5$'$ end behind a shared 3$'$ terminator against only 29 at the 3$'$ end (Fig.~\ref{fig:rnase}c).
+The containment algorithm nicely identified 459 operons in~\syn, while many isoforms shorter than the full operon length also observed. When an isoform's end falls inside the gene body, it most likely records post-transcriptional processing rather than an alternative promoter or terminator.
+Two genes illustrate the opposite polarities of this erosion.
+At the neopullulanase gene \locus{0178}, 3$'$ erosion dominated the 85 isoform clusters for the entire operon: unprocessed transcripts carried 65.5\% of the reads, while among the processed species 29.5\% were truncated only at the 3$'$ end and 4.6\% only at the 5$'$ end (Fig.~\ref{fig:rnase}b).
+At the leucyl-aminopeptidase gene \gene{lap}{0154} the polarity was reversed: of its 134 isoforms, unprocessed transcripts carried 49.7\% of the reads, and 41.8\% were truncated only at the 5$'$ end behind a shared 3$'$ terminator against only 8.2\% at the 3$'$ end (Fig.~\ref{fig:rnase}c).
 
 % The \locus{0178} 3$'$ terminus folds into a canonical intrinsic terminator (Fig.~\ref{fig:rnase}d), yet erosion proceeds through it: RNase~R loads on the single-stranded poly-U overhang and degrades processively through the base-paired stem~\cite{hossain_how_2016}, so a stable 3$'$ structure does not by itself protect against 3$'\rightarrow$5$'$ erosion.
 
-This processing was pervasive and strongly 3$'$-biased over the entire tanscriptome.
+This post-transcriptional processing was pervasive and strongly 3$'$-biased over the entire tanscriptome.
 Each of the 20{,}885 well-supported isoforms ($\geq$10 reads) was classified by whether each end lay inside a coding sequence (a processing event) or in an intergenic region (a promoter or terminator).
-Only 8.3\% of isoforms, carrying 27.0\% of the reads, had both ends intergenic and so were unprocessed primary transcripts (Fig.~\ref{fig:rnase}e).
-Among the processed majority the asymmetry was pronounced: isoforms eroded only at the 3$'$ end made up 30.3\% of isoforms but 47.5\% of reads, against 19.5\% and 9.2\% for those eroded only at the 5$'$ end, so 5$'$ erosion carried just 0.40 times the read weight of 3$'$ erosion.
+Only 8.3\% of isoforms, carrying 27.0\% of the reads, had both ends intergenic, thus classified as unprocessed primary transcripts (Fig.~\ref{fig:rnase}e).
+Among the processed majority, the asymmetry was pronounced: isoforms eroded only at the 3$'$ end made up 30.3\% of isoforms but 47.5\% of reads, against 19.5\% and 9.2\% for those eroded only at the 5$'$ end, so 5$'$ erosion carried just 0.40 times the read weight of 3$'$ erosion.
 The same imbalance was more significant in isoform reads: 42.2\% of the open reading frames contained within an isoform kept a start codon but had lost their stop codon to 3$'$ truncation.
 
 The directionality implicates the cell's exoribonucleases.
@@ -18,16 +18,16 @@ The directionality implicates the cell's exoribonucleases.
 Endonucleolytic cleavage by RNase~III or RNase~Y opens internal sites, and the fragments are trimmed exonucleolytically from their new ends (Fig.~\ref{fig:rnase}f)~\cite{durand_rnases_2018}.
 Two asymmetries between the directions can account for the bias toward intragenic 3$'$ ends.
 First, they initiate differently: RNase~R can begin at an accessible 3$'$ end such as a terminator poly-U tail, whereas RNase~J1 requires a 5$'$-monophosphate end left by a prior cut and cannot initiate on an intact triphosphorylated 5$'$ end.
-Second, the processive enzymes differ in abundance: RNase~J1 (92 copies, with RNase~J2 as cofactor) is more than twofold more abundant than RNase~R (36 copies, the only 3$'\rightarrow$5$'$ enzyme that reads through structure, since YhaM stalls at a stem), so 5$'$-eroded fragments are cleared rapidly while 3$'$-eroded fragments persist and accumulate.
-Consistently, the same gene set encodes the trans-translation system, tmRNA (\gene{ssrA}{0158}) and SmpB (\gene{smpB}{0776}), which rescues ribosomes stalled on exactly the stop-codon-less messages 3$'$ erosion produces~\cite{janssen_tmrna_2012}, yet is itself low in abundance (SmpB at 14 copies), so this rescue capacity may also be limited.
+Second, 3$'$ erosion in~\syn was more limited than 5$'$. The processive enzymes differ in abundance: RNase~J1 (92 copies, with RNase~J2 as cofactor) is more than twofold more abundant than RNase~R (36 copies, the only 3$'\rightarrow$5$'$ enzyme that reads through structure, since YhaM stalls at a stem), so 5$'$-eroded fragments are cleared rapidly while 3$'$-eroded fragments persist and accumulate.
+Furthermore, the action of 3$'$ exoribonucleases could be hindered by the stalled ribosomes. The trans-translation system, tmRNA (\gene{ssrA}{0158}) and SmpB (\gene{smpB}{0776}), which rescues ribosomes stalled on the stop-codon-less messages 3$'$ erosion products~\cite{janssen_tmrna_2012}, is itself low in abundance (SmpB at 14 copies), so this rescue capacity may be limited.
 
 RNA processing also remodels co-expression within an operon.
 ATP synthase, a conserved membrane complex of subunit composition $\alpha_3\beta_3\gamma\epsilon\delta ac_{10}b_{2}$~\cite{fu_assembly_2026}, is organized into a transmembrane F$_0$ sector ($ac_{10}b_{2}$) and a peripheral-membrane F$_1$ sector ($\delta\alpha_3\beta_3\gamma\epsilon$) (Fig.~\ref{fig:rnase}f).
 The ATP-synthase operon (\locus{0797}--\locus{0789}) split into two non-overlapping isoform populations meeting at the $\alpha$-subunit gene \gene{atpA}{0792} (Fig.~\ref{fig:rnase}g).
-A 5$'$ population covered the F$_0$ subunits and $\delta$ (\locus{0797}--\locus{0793}) and ended at \gene{atpA}{0792}, while a 3$'$ population began there and ran through the F$_1$ subunits (\locus{0791}--\locus{0798}).
+The upstream population covered the F$_0$ subunits and $\delta$ (\locus{0797}--\locus{0793}) and ended at \gene{atpA}{0792}, while the downstream population began there and ran through the F$_1$ subunits (\locus{0791}--\locus{0798}).
 Read depth fell from about 2$\times$ the genome-mean coverage of $\sim$4{,}200 to roughly half across the boundary, indicating a possible internal termination event, though no intrinsic terminator was predicted.
 A similar drop recurred between $\gamma$ and $\beta$.
-More interestingly, the isoforms spanning the $\alpha$ and $\gamma$ subunits had varying 5$'$ ends inside \gene{atpA}{0792}, the same gene whose ortholog in the Gram-positive \textit{B. subtilis} carries two characterised RNase~III sites~\cite{taggart_high-resolution_2025}.
+More interestingly, the isoforms spanning the $\alpha$ and $\gamma$ subunits had varying 5$'$ ends inside \gene{atpA}{0792}, the same gene whose ortholog in the Gram-positive \textit{B. subtilis} carries two characterized RNase~III sites~\cite{taggart_high-resolution_2025}.
 
 \begin{figure}[H]
     \centering

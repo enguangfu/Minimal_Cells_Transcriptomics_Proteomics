@@ -51,7 +51,7 @@ Of the retained genes, 360 were \texttt{unaffected}, 45 \texttt{context\_only}, 
 This classification is purely structural; the corresponding changes in transcript and protein abundance were quantified separately (sheet Gene\_table of \sdreduction, with the abundance comparison described in the following subsection).
 
 \subsubsection{Relative-abundance normalization and the paired expression-change table}
-
+\label{method:reduction-normalization}
 Transcript and protein abundances were compared between the two organisms after a normalization that removes the artefact of the reduced gene complement.
 TPM and iPM are both relative units that each sum to $10^{6}$ within an organism, so when several hundred genes are absent from \syna~the same fixed pool is divided among fewer genes and every retained gene's value is mechanically inflated, leaving a naive \syna/\syn~ratio well above 1 even for genes whose true abundance is unchanged.
 To remove this baseline, each gene's value was expressed relative to the per-gene mean of its own organism and subset, $\mathrm{rel}_i = v_i / \bar{v}$, where $\bar{v}$ is the mean over the genes detected in that subset (coding or non-coding), so that the average gene equals 1 in both organisms and an unchanged gene gives a fold change of $\sim$1 regardless of the gene-count difference.
