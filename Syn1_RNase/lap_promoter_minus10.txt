@@ -1,0 +1,166 @@
+==============================================================================
+lap/0154 (Fig. 2 panel c) -- promoter -10 box at the two candidate 5' ends
+==============================================================================
+
+Operon OP_00078  CP002027.1  + strand  span 197657-199153 (1496 bp)
+Gene   MMSYN1_0154 (lap)  197743-199098
+Isoforms contained in the operon span: 195  (2096 reads)
+
+-- Step 1: the two candidate coordinates ----------------------------------
+
+A  operon start (segmentation TSS)   = 197657
+   PacBio 5' ends exactly here       = 102 reads in 4 isoform clusters
+   position relative to lap start    = -86 bp (intergenic, upstream of the ORF)
+
+B  depth-jump coordinate             = 197721
+   PacBio depth step                 = 169x -> 1143x (+974, 6.8-fold), the largest inside the operon
+   PacBio 5' ends exactly here       = 1003 reads in 26 isoform clusters
+   position relative to lap start    = -22 bp (still intergenic, 64 bp downstream of A)
+
+   Read-weighted isoform 5'-end histogram, top 8 positions:
+           pos   reads  clusters   note
+        197721    1003        26   <- B (depth jump)
+        197657     102         4   <- A (operon start)
+        198158      58         3   
+        198184      46         1   
+        197884      42         4   
+        197993      37         3   
+        197734      24         2   
+        198027      23         1   
+
+   The modal 5' end is B (1003 reads), i.e. the depth jump and the
+   dominant isoform 5' end are the same coordinate -- the two derivations agree.
+
+-- Step 2: -10 box at each candidate (promoter_motif.scan_minus10) --------
+
+   scanner: 6-mer TANAAT over [-12,-7], 9-mer TNNTANAAT over [-15,-7], register shift +/-2 bp
+   (imported from Syn1_Operon/promoter_motif.py -- identical to the 127-operon analysis)
+
+   A 197657 (operon start)
+      6-mer TAAAAT (shift +0, match) | 9-mer GTGTAAAAT (shift +0, 1 mm) | core_6mer
+   B 197721 (depth jump)
+      6-mer TATTAT (shift +0, 1 mm) | 9-mer TGTTATTAT (shift +0, 1 mm) | no_minus10
+
+   Sequence context (transcription orientation, TSS = position 0, marked '^'):
+
+      A 197657 (operon start)   tier = core_6mer
+         AGTTTCAGTTTTTTTATTGTGAATTTAAAAGTGTAAAATTATATATTAGTATTAAT
+                                                      ^          
+                                       999999999                    9-mer window -> GTGTAAAAT (1 mismatch(es))
+                                          666666                    6-mer window -> TAAAAT (MATCH)
+
+      B 197721 (depth jump)   tier = no_minus10
+         ATTTAATATTAATTATTAGGTAGTTTAAAGTGTTATTATATATTTAAATAACCAAA
+                                                      ^          
+                                       999999999                    9-mer window -> TGTTATTAT (1 mismatch(es))
+                                          666666                    6-mer window -> TATTAT (1 mismatch(es))
+
+-- Step 3: how often does this happen by chance? -------------------------
+
+   Random + strand positions (n=20000, same scanner, same +/-2 shift):
+      6-mer TANAAT     matched   478 / 20000  = 2.4%
+      9-mer TNNTANAAT  matched   191 / 20000  = 1.0%
+
+   The 127 canonical operon TSSs (Operon_Annotation.py, same scanner):
+      6-mer matched    87 / 127  = 68.5%
+      9-mer matched    52 / 127  = 40.9%
+
+   Enrichment at real operon TSSs over background: 6-mer 29x, 9-mer 43x.
+   A 6-mer hit is therefore informative, not automatic, in this AT-rich genome:
+   it is the tier candidate A reaches and it occurs at only 2.4% of positions by chance.
+
+-- Step 4: local specificity around lap ----------------------------------
+
+   Scanning every position in 197597-197781 (185 bp):
+      positions with a 6-mer -10 box: 10 (5%), in 2 interval(s): 197597-197601, 197655-197659
+      positions with a 9-mer -10 box: 0 (0%)
+
+      A (197657) carries a 6-mer box: True
+      B (197721) carries a 6-mer box: False
+
+      The 10 positive positions collapse to 2 distinct box loci, one of which
+      sits exactly at A (the run spans A +/- the 2 bp register tolerance). B falls in
+      neither, and is 60+ bp from the nearest one.
+
+-- Verdict ---------------------------------------------------------------
+
+   A  197657  operon start      core_6mer   6-mer TAAAAT (0 mm), 9-mer GTGTAAAAT (1 mm)
+   B  197721  depth jump       no_minus10   6-mer TATTAT (1 mm), 9-mer TGTTATTAT (1 mm)
+
+   The operon start carries a perfect TANAAT hexamer (TAAAAT) at register 0,
+   i.e. canonical -10 spacing; the depth-jump coordinate carries no -10 box at any
+   register within +/-2 bp, and is one of the 6-mer-negative positions in its own
+   neighbourhood. The 6.8-fold coverage step at 197721 therefore marks a
+   post-transcriptional boundary inside a transcript initiated at 197657, not a
+   second promoter. (What kind of boundary -- endonucleolytic cut vs 5'->3' trimming
+   stall -- is NOT settled by these data; see the rejected RBS argument in the
+   docstring.)
+
+   Caveat: A reaches the core_6mer tier, not strong_9mer -- the 9-mer extension misses
+   by 1 (GTGTAAAAT). That is the majority situation among real Syn1 operons
+   (87/127 match the 6-mer, only 52/127 the 9-mer), so it does not weaken the call.
+
+
+==============================================================================
+PART 2 -- 0178 / neopullulanase (Fig. 2 panel b, the 3'-erosion example)
+==============================================================================
+
+Operon OP_00099  CP002027.1  - strand  span 232650-234512 (1862 bp)
+Gene   MMSYN1_0178  232672-234468 (neopullulanase)
+Isoforms contained in the operon span: 150  (3121 reads)
+
+-- Step 1: is there a competing 5' end here at all? -----------------------
+
+   dominant 5' base                   = 234511  (2901 reads in 66 clusters, 93% of operon reads)
+   coverage across it                 = 2861x -> 150x
+   5'UTR to the ORF                   = 44 nt
+
+   Next strongest 5' ends:
+      234395     26 reads  (5 clusters)
+      234451     18 reads  (2 clusters)
+      234497     18 reads  (7 clusters)
+      233981     11 reads  (1 clusters)
+
+   One sharp 5' end carries almost all the reads, so -- unlike lap -- there is no
+   second coordinate to arbitrate. The only question is whether it is a promoter.
+
+-- Step 2: -10 box at the 0178 5' end -------------------------------------
+
+   Minus-strand convention check (annotation tss = end0 = 234512, true 5' base = end0-1 = 234511):
+      234512  end0 (Operon_Annotation convention)
+         6-mer TAATAT (shift +0, 1 mm) | 9-mer AATTAATAT (shift +0, 2 mm) | no_minus10
+      234511  end0-1 (true 5' base)
+         6-mer TAATAT (shift -1, 1 mm) | 9-mer AATTAATAT (shift -1, 2 mm) | no_minus10
+   -> same k-mer and same tier either way; the +/-2 register search absorbs the 1 bp.
+
+   Sequence context   tier = no_minus10
+      TAAATAAACCTATACAATATATAAAAAAGAATTAATATTAATTAGGTATATTAGTA
+                                                   ^          
+                                   999999999                     9-mer -> AATTAATAT (2 mismatch(es))
+                                      666666                     6-mer -> TAATAT (1 mismatch(es))
+
+-- Step 3: is there a usable -10 box anywhere nearby? ---------------------
+
+   Sweeping 234481-234547 (67 bp) for a 6-mer box:
+      5 positive positions in 1 locus/loci: 234530-234534  (box TACAAT)
+      That box would serve a TSS near 234532, i.e. 21 nt further upstream than the observed 5' end.
+      PacBio coverage there = 4x, against 2861x at 234511.
+
+      So that box is essentially unused: almost no transcript actually starts
+      there, and it cannot be the promoter for the observed 0178 transcripts.
+
+-- Verdict (0178) --------------------------------------------------------
+
+   234511  0178 5' end     no_minus10   6-mer TAATAT (1 mm), 9-mer AATTAATAT (2 mm)
+
+   The consensus is not matched: TAATAT is 1 mismatch from TANAAT at every register
+   within +/-2 bp. Treat this as a scanner non-assignment, NOT as evidence that the
+   5' end is not a promoter -- a single deviation from consensus is ordinary in real
+   bacterial -10 elements, and 40/127 (31%) of the canonical Syn1 operons fall in the
+   same bin. The scan is simply uninformative here, in either direction.
+
+   What does stand on its own: the 0178 5' end is sharp, dominant (93% of reads) and
+   intergenic. The affirmative -10 argument is available for lap (Part 1); it is not
+   claimed for 0178.
+
+[written] /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Syn1_RNase/lap_promoter_minus10.txt

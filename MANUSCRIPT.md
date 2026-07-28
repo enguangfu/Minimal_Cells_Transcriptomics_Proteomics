@@ -20,16 +20,8 @@ Now i have discussed the entire manuscript in details with PI; following is the 
 ### ⬜ Open / remaining
 
 Questions from Troy:
-Comment on OSTIR and connect to shine-dalgarno
-citation to containment clustering to resolve operons
-panel c of fig2: locate the promoter to argue which is the true TSS
-how can you call processing by judging if isoforms ends intergenic or intragenic?
-3' erosion due to RNA seq biase? 
-quantify the tmRNA absolute copy number
-misannotation citation in discussion: long-read enables finding new features in bacterial genomes
-citation: ribosome content affect protein synthesis, thus cell cycle: Hwa group paper
 
-Check all figure captions.
+beatify the operon drawing notebook; learn from the David 2022 format
 
 Things for the experimentalists:
 Quality report of ONT: second Syn1 run

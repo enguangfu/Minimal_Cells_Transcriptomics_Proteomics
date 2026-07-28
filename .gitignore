@@ -13,6 +13,9 @@ homology_*/
 USELESS/
 *.csv.gz
 
+# Syn3A operon segmentation — kept locally, not published with the repo
+Syn3A_Operon/
+
 # ----------------------------
 # PDF Complie Cache
 # ----------------------------

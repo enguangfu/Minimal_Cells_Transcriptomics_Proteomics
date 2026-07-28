@@ -1,13 +1,13 @@
-\subsection{Genome reduction decapitates the operons of key proteins}
+\subsection{Genome reduction disrupts the operons of key proteins}
 
 From \syn~to \syna, the genome contracted from 1{,}078{,}809 to 543{,}379~bp through 95 deletions ($\geq 50$~bp), removing $\sim$536~kb while the retained backbone stayed 99.90\% identical (Fig.~\ref{fig:reduction_operons}a; Methods).
 Most deletions excised whole operons. Of the 459 \syn~operons, just over half lost every sense gene and a third kept all of theirs, leaving only $\sim$50 partially truncated (leading, lagging or internal), and it is these that change a retained gene's regulation (\sdreduction).
 
 Classifying every retained gene by how the reduction changed the source of its transcription (see Methods) isolated one decisive event: only genes whose operon lost its own promoter with no replacement dropped robustly in expression (42 genes; median fold change 0.44 against 0.76 for structurally unaffected genes, two-sided Mann--Whitney $p = 2.7\times10^{-4}$), with no other class of contextual change differing significantly (\sdreduction).
-Because the retained sequence is 99.90\% identical between the two cells, this suppression is regulatory rather than mutational: deleting the promoter decapitates the operon and strands its retained genes without a transcription source.
+Because the retained sequence is 99.90\% identical between the two cells, this suppression is regulatory rather than mutational: deleting the promoter distrupts the operon and strands its retained genes without a transcription source.
 
 Some proteins silenced this way are functionally essential.
-The nucleoid-associated protein \gene{hupA}{0350}, \syn's principal chromosome-compacting factor, is transcribed from a promoter that lies inside its upstream neighbour \locus{0349}; the reduction deleted \locus{0349} together with that promoter, decapitating the operon so that \gene{hupA}{0350} collapsed in both transcript (fold change 0.020) and protein (0.014) (Fig.~\ref{fig:reduction_operons}d).
+The nucleoid-associated protein \gene{hupA}{0350}, \syn's principal chromosome-compacting factor, is transcribed from a promoter that lies inside its upstream neighbour \locus{0349}; the reduction deleted \locus{0349} together with that promoter, disrupting the operon so that \gene{hupA}{0350} collapsed in both transcript (fold change 0.020) and protein (0.014) (Fig.~\ref{fig:reduction_operons}d).
 PacBio isoforms fixed this transcription start sharply, with 79\% of reads sharing a single 5$'$ base, from which a perfect \texttt{TATAAT} $-10$ box (consensus \texttt{TANAAT}, extended \texttt{TNNTANAAT}) was located just upstream, confirming that a genuine strong promoter, not incidental sequence, was removed.
 \syn~ONT direct-RNA reads corroborated this start independently, their 5$'$ ends falling within \locus{0349} as well but shifted roughly 15--30~nt downstream of the sharp PacBio start, possibly from 5$'$ digestion of native transcripts.
 
@@ -27,10 +27,8 @@ Loss of a gene's own promoter, by outright deletion or by replacement with a wea
     \caption{\textbf{Genome minimization remodels \syn~operon structure.}
     (a) The \syn~$\rightarrow$~\syna~reduction: 95 deletions on the operon map, coloured by whether each operon was excised, truncated, or kept.
     (b) \gene{rpsT}{0082} switches partner: co-transcribed with \locus{0083} in \syn, then fused downstream of \locus{0094} in \syna~after DEL\_014 excises 15.5~kb (37 bridging ONT reads), both aligned on the shared \gene{rpsT}{0082} 5$'$ end.
-    (c) Two decapitated central-carbon operons: deletions took the promoters of the pyruvate-dehydrogenase/acetate operon (\gene{pdhC}{0227}--\gene{ackA}{0230}) and the adjacent PTS operon (\gene{ptsI}{0233}--\locus{0235}), which drop together in \syna.
-    (d) The \gene{hupA}{0350} operon, decapitated by deletion of the promoter inside its neighbour \locus{0349}: PacBio isoforms fix the transcription start sharply within \locus{0349}, the \syn~ONT 5$'$ ends fall just downstream, and \gene{hupA}{0350} collapses in \syna.
-    \cmt{ZRT: This figure would aslo benefit from headings above b, c, and d to clarify what these examples are.}}
-    % Panels b--d share a deletion-junction relative axis with PacBio isoforms and Illumina depth (× genome-mean; log scale in c; panel d adds a Syn1 ONT isoform track); the \syna~depth is mapped through the retained blocks, so deletions read as shaded gaps.}
+    (c) Two disrupted central-carbon operons: deletions took the promoters of the pyruvate-dehydrogenase/acetate operon (\gene{pdhC}{0227}--\gene{ackA}{0230}) and the adjacent PTS operon (\gene{ptsI}{0233}--\locus{0235}), which drop together in \syna. Illumina of \syn~and \syna~\cite{sandberg_adaptive_2023} were used for coverage.
+    (d) The \gene{hupA}{0350} operon, disrupted by deletion of the promoter inside its neighbour \locus{0349}: PacBio isoforms fix the transcription start sharply within \locus{0349}, the \syn~ONT 5$'$ ends fall just downstream, and \gene{hupA}{0350} collapses in \syna. Illumina of \syna~\cite{sandberg_adaptive_2023} used.}
     \label{fig:reduction_operons}
 \end{figure}
 

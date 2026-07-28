@@ -43,10 +43,13 @@ The library pool was quantitated by qPCR and sequenced on one MiSeq Nano flowcel
 
 \subsubsection{Illumina MiSeq Read Processing, Mapping to the Genome}
 
-Three strand-specific RNA-seq datasets of~\syn~were retrieved from the NCBI SRA database (accessions SRR35996296, SRR35996297, and SRR35996298), each comprising paired-end reads of 2$\times$251~nt sequenced on an Illumina MiSeq.
+Three strand-specific paired-end RNA-seq datasets of~\syn~were retrieved from the NCBI SRA database (accessions SRR35996296, SRR35996297, and SRR35996298), sequenced on an Illumina MiSeq for 251 cycles from each end as described above.
 Datasets SRR35996296 and SRR35996297 are technical replicates of one biological RNA sample, and SRR35996298 is a second biological sample, yielding $\sim$505~k, $\sim$511~k, and $\sim$1.09~M read pairs, respectively.
-No adapter or quality trimming was applied prior to alignment.
-Reads were aligned to the~\syn~reference genome (NCBI accession CP002027.1) with \texttt{bowtie2} v2.5.5~\cite{langmead_fast_2012} in default paired-end mode, against an index built with \texttt{bowtie2-build} from the same reference.
+The deposited reads are of variable length: they were demultiplexed with \texttt{bcl2fastq}, which emits 250~nt reads and trims the 3$'$ adapter at demultiplexing, and because the library inserts (mean 214--234~nt across the three datasets) are shorter than the read, most reads are clipped back to the insert length.
+Pooled over the three datasets the reads span 35--250~nt (median 212~nt, mean 198~nt), with 22.4\% at the full 250~nt and a floor at 35~nt set by the \texttt{bcl2fastq} minimum trimmed-read length.
+% No further adapter or quality trimming was applied prior to alignment, and \texttt{bowtie2} was run in end-to-end mode, so aligned reads retain their full deposited length (no soft-clipping).
+
+Deposited reads were aligned to the~\syn~reference genome (NCBI accession CP002027.1) with \texttt{bowtie2} v2.5.5~\cite{langmead_fast_2012} in default paired-end mode, against an index built with \texttt{bowtie2-build} from the same reference.
 Overall alignment rates were 99.49--99.56\% across the three datasets, of which 89.4--93.1\% of pairs aligned concordantly exactly once and 5.1--7.8\% aligned concordantly more than once.
 SAM output was converted, sorted, and indexed with \texttt{samtools} v1.22.1~\cite{li_sequence_2009}.
 Strand-specific BAMs were generated using the dUTP / fr-firststrand flag convention (read 2 forward on the $+$ strand and read 1 reverse on the $+$ strand define plus-strand reads; their reverse complements define minus-strand reads), matching the Kapa Hyper Stranded mRNA library preparation, and per-strand sequencing-depth bedGraph tracks were computed with \texttt{samtools depth}.

@@ -5,7 +5,7 @@ After full-length non-chimeric (FLNC) recovery and filtering, 2.6~M high-quality
 To remove residual end noise, reads sharing transcript ends within 10~bp were clustered into 267~k isoform clusters, each a distinct transcript species with sharply defined boundaries (\hyperref[method:pacbio-clustering]{Methods}).
 
 Operons were segmented from these clusters in three stages (\hyperref[method:pacbio-operon]{Methods}).
-The 4~k clusters supported by at least 50 reads were grouped into candidate operons by containment clustering, yielding 313 initial operons.
+The 4~k clusters supported by at least 50 reads were grouped into candidate operons by containment clustering~\cite{yan_smrt-cappable-seq_2018}, yielding 313 initial operons.
 Adjacent same-strand operons that overlapped, or flanked a same-strand gene, were tested for read-level co-transcription and merged where continuous PacBio coverage bridged the junction, collapsing the set to 275.
 Finally, genes left uncovered by the resolved operons were rescued from spanning reads, the two highly structured rRNA operons were added directly, and 162 remaining isolated genes were assigned as monocistronic operons since low RNA read coverage.
 This produced a final map of 459 operons covering all 911 annotated \syn~genes on the sense strand.
@@ -32,7 +32,7 @@ These conventional $-10$ and intrinsic-terminator elements indicate that the red
     \label{fig:operon}
 \end{figure}
 
-The operon structure and gene co-expression we resolved for the division and cell wall (\textit{dcw}) cluster \gene{mraZ}{0525}--\locus{0520}, together with its upstream co-transcribed genes \gene{rpmF}{0526} and \locus{0527}, in \syn~support previous studies of the cell-division mechanism.
+The operon structure and gene co-expression we resolved for the division and cell wall (\textit{dcw}) cluster \gene{mraZ}{0525}--\locus{0520}, together with its upstream co-transcribed genes \gene{rpmF}{0526} and \locus{0527}, in \syn~support previous studies of the cell-division mechanism~\cite{pelletier_genetic_2021}.
 Full-length PacBio isoforms segmented the entire region into two operons, a 5$'$ unit \locus{0527}--\gene{rpmF}{0526}--\gene{mraZ}{0525}--\gene{mraW}{0524}--\gene{ftsA}{0523} and a 3$'$ unit \gene{ftsZ}{0522}--\gene{sepF}{0521}--\locus{0520}, each with its own promoter and \threeprime~intrinsic terminator.
 In addition, a weak internal promoter re-initiating transcription at \gene{mraZ}{0525} was evident in the ONT reads of both \syn~and \syna~(Fig.~\ref{fig:si-dcw}).
 Removing \locus{0527} in \synthreezero~would also remove this promoter and thus suppress the downstream \textit{mra} genes, offering a transcription-level rationale for why \locus{0527} had to be added back to build a minimal cell with normal morphology~\cite{pelletier_genetic_2021}.
@@ -44,7 +44,7 @@ Across \gene{mraW}{0524}--\locus{0520}, both the mRNA and protein fold changes b
     \centering
     \includegraphics[scale=1]{figures/si-dcw.pdf}% born-at-size (7 in wide)
     \caption{\textbf{Fine transcriptional structure of the \textit{dcw} cluster (\gene{mraZ}{0525}--\locus{0520}) and its upstream genes \gene{rpmF}{0526} and \locus{0527}, \syn~versus \syna.}
-    Sense (operon-strand) sequencing depth across the cluster on a shared logarithmic axis ($\times$ the both-strand genome mean) for all six libraries: \syn~PacBio, the two \syn~ONT runs, \syn~Illumina, and the \syna~ONT and Illumina libraries, with the \syn~PacBio isoforms also drawn above.
+    Sense (operon-strand) sequencing depth across the cluster on a shared logarithmic axis ($\times$ the both-strand genome mean) for all six libraries: \syn~PacBio, the two \syn~ONT runs, \syn~Illumina, and the \syna~ONT and Illumina~\cite{sandberg_adaptive_2023} libraries, with the \syn~PacBio isoforms also drawn above.
     The x-axis is the relative position from the 5$'$ end of \locus{0527} (both organisms anchored at their own \locus{0527}).
     Green dashed lines mark transcription start sites (a strong promoter inside \locus{0527}, a weak internal promoter at \gene{mraZ}{0525}, and the \gene{ftsZ}{0522} promoter); red dashed lines mark TransTermHP intrinsic terminators (after \gene{rpmF}{0526} and after \locus{0520}).
     Red bands mark \locus{0527} and the \gene{ftsZ}{0522}--\locus{0520} block, deleted in JCVI-syn3.0 but restored in \syna.}

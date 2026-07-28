@@ -2,24 +2,26 @@
 
 \section{Discussion}
 
-Full-length sequencing resolved the transcriptome of \syn~into operons and matched it to the proteome in both \syn~and \syna, showing that a genome stripped close to the minimum still runs a structured, heavily processed, and finely reallocated transcription pattern.
-We read that pattern against the three questions raised at the outset.
+Full-length sequencing resolved the transcriptome of \syn~into operons and matched it to the proteome in both \syn~and \syna, showing that a synthetically-reduced genome still runs a structured, heavily processed, and finely reallocated transcription pattern.
+We interpret the transcriptional organization based on the three questions raised at the outset.
 
-First, transcription is organized more richly than the reduced gene count implies.
-Full-length PacBio isoforms defined 459 operons in \syn, each bounded by matched promoter and terminator signatures, and their primary transcripts were then pervasively reshaped by RNA processing, with markedly more 3$'$ than 5$'$ erosion.
-We read this asymmetry, tentatively, not as biased endonucleolytic cutting but as a 3$'\rightarrow$5$'$ exonucleolytic clearance bottleneck, a hypothesis that direct cleavage-site mapping will test.
+First, transcription is organized despite a low quantity of regulators encoded in the genome.
+Full-length PacBio isoforms defined 459 operons in \syn, each bounded by matched promoter and terminator signatures. 
+Their primary transcripts were then pervasively reshaped by RNA processing, with markedly more 3$'$ than 5$'$ erosion.
+We read this asymmetry, tentatively, as a 3$'\rightarrow$5$'$ exonucleolytic clearance bottleneck, a hypothesis that direct cleavage-site mapping will test.
 
-Second, minimization was structurally conservative yet functionally transformative for the retained genes.
-It preserved gene order and largely excised whole operons, and among the earliest casualties were the antisense and intergenic transcripts we traced to inherited \mmy~mis-annotation and synthetic-construction artifacts.
-Where deletions fell inside a retained operon they occasionally removed a gene's own promoter and decapitated it, the clearest case being the nucleoid-associated protein HupA, whose promoter lies within the deleted \gene{gpsA}{0349} and whose transcript accordingly collapses in \syna.
+Second, genome minimization from \syn~to \syna~was structurally conservative yet functionally transformative for the retained genes.
+It preserved gene order and largely excised whole operons, and some deletions we observed include antisense and intergenic transcripts that we traced to inherited \mmy~mis-annotation and synthetic-construction artifacts.
+Where deletions fell inside a retained operon they occasionally removed a gene's own promoter and disrupted its transcription, the clearest case being the nucleoid-associated protein HupA, whose promoter lies within the deleted \gene{gpsA}{0349} and whose transcript accordingly collapses in \syna.
+
 Beyond these losses the retained transcriptome was reallocated toward the translation machinery: the single 11~kb ribosomal-protein operon tripled its share of the mRNA pool, while RNA polymerase and the central-metabolic enzymes fell and the RNA degradosome rose.
-Interestingly, we have noticed the particular example of fructose-1,6-bisphosphate aldolase encoded by \gene{fbaA}{0131} whose protein abundance had to be manually increased to allow glycolysis flux go in forward direction when parameterizing the glycolysis in \syna~\cite{thornburg_fundamental_2022}.
+Of note, we identified the particular example of fructose-1,6-bisphosphate aldolase encoded by \gene{fbaA}{0131} whose protein abundance had to be manually increased to allow glycolysis flux go in forward direction when parameterizing the glycolysis in \syna~\cite{thornburg_fundamental_2022}.
 Two non-exclusive effects could drive this operon's rise, a tRNA operon that minimization brought adjacent to it raising the local availability of RNA polymerase without read-through, and the loss of HupA shifting genome-wide supercoiling toward strong promoters.
 
 Third, these expression changes point to molecular origins for the phenotypic differences between the two cells.
 The coupling of lower transcription and energy output to faster RNA turnover is coherent with \syna's roughly twofold longer cell cycle~\cite{pelletier_genetic_2021}.
 The same imbalance, one giant ribosomal-protein operon rising while several other ribosomal-protein genes fall, would imbalance ribosomal-protein production and disrupt ribosome assembly and leave surplus subunits to crowd the cytosol, which is a plausible source of the denser cytoplasm imaged in \syna~\cite{gilbert_generating_2021}.
-And the collapse of HupA noted above accounts for \syna~losing the persistent chromosome contacts that \syn~maintains~\cite{gilbert_dynamics_2023, gilbert_generating_2021}.
+And the collapse of HupA noted above accounts for \syna~losing the persistent chromosome supercoiling~\cite{gilbert_generating_2021} that its phylogenetic relative \mmy~contains.~\cite{trussart_defined_2017}.
 
 % Tentative (verify before enabling): laboratory evolution frames these reallocations further.
 % Under selection for growth \syna~raises its ribosomal proteins still higher~\cite{sandberg_adaptive_2023}, as expected if ribosome content sets growth rate, and prunes synthetic baggage: the dispensable \gene{tetM}{0913} resistance cassette, in the top tenth of the \syna~transcriptome, is silenced under selection~\cite{sandberg_adaptive_2023}, echoing the \gene{his3}{0918} over-transcription that minimization had already removed.
@@ -27,10 +29,10 @@ And the collapse of HupA noted above accounts for \syna~losing the persistent ch
 Several limitations remain.
 Direct-RNA nanopore sequencing gave lower coverage and shorter reads than PacBio cDNA Iso-Seq, plausibly because the same pervasive 3$'$ processing degrades these native transcripts, so degradation-prone messages would benefit from a dedicated RNA-protection protocol.
 \syna~was sequenced without a PacBio library, so its operon-level changes are inferred from shorter ONT reads and await full-length confirmation (Methods).
-Expression here is framed as a share of the mRNA pool and excludes rRNA and tRNA, and the ribosomal- and membrane-protein abundances are the least reliable, quantities that ribosome profiling could both sharpen and use to test whether the elevated ribosomal-protein transcripts yield proportionally more ribosomes.
+Expression here is framed as a share of the mRNA pool and excludes rRNA and tRNA. The ribosomal- and membrane-protein abundances are the least reliable, quantities that ribosome profiling could both sharpen and use to test whether the elevated ribosomal-protein transcripts yield proportionally more ribosomes.
 
-More broadly, this reallocation of resources between transcription and translation echoes the balancing of cellular economy seen when other genomes are streamlined, such as \Bsub~\cite{michalik_bacillus_2021}, and when synthetic cells are assembled from scratch, suggesting a general principle rather than a \syn~and \syna~idiosyncrasy.
-The isoform-resolved transcription in ATP synthase operon echos that in \Bsub, where differential transcription, RNA stability and translation coherently contributed to the stoichiometric protein synthesis~\cite{taggart_quantitative_2021}.
+More broadly, the reallocation of resources between transcription and translation echoes the balancing of cellular economy seen when other genomes are streamlined, such as \Bsub~\cite{michalik_bacillus_2021}, and when synthetic cells are assembled from scratch, suggesting a general principle rather than a \syn~and \syna~idiosyncrasy.
+The isoform-resolved transcription in ATP synthase operon echos that differential transcription, RNA stability, and translation coherently contributed to the stoichiometric protein synthesis as in \Bsub~\cite{taggart_quantitative_2021}.
 Together, this operon-resolved map of gene co-expression and transcript quantification supplies the RNA-level foundation that a four-dimensional whole-cell model of the minimal cell has so far lacked~\cite{thornburg_bringing_2026}.
 
 \newpage
