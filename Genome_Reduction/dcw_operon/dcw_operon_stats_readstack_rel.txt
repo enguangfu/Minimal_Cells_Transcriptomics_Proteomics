@@ -21,6 +21,25 @@ ftsZ/0522             0.50      1.23      1.43      4.58      1.32      4.25
 sepF/0521             0.23      1.46      1.29      1.00      1.51      1.42
 hyp/0520              0.11      2.41      1.19      0.16      1.73      0.39
 
+Read stacks - primary MINUS-strand (= sense) alignments in the window.
+Syn3A is syntenic over this operon (same 6,026 bp span), so the same rel window applies.
+run            reads  med_len  p90_len  rows_drawn
+Syn1 PacBio     5879     1335     2190         190
+Syn1 ONT 1      1402      370     1992         190
+Syn1 ONT 2      3907      256      528         190
+Syn3A ONT       8171      277      575         190
+
+Reads on each gene, per run  (overlap / covering >=50% of the gene / full span):
+gene                 Syn1 PacBio          Syn1 ONT 1          Syn1 ONT 2           Syn3A ONT
+hyp/0527          2067 / 239 /227        758 / 140 /98        1155 / 333 /12        2057 / 721 /25  
+rpmF/0526         2055 /1974 /1953       769 / 756 /714       1040 / 926 /476       2054 /1879 /989 
+mraZ/0525         1864 /1826 /1698        45 /  37 /26         178 / 107 /5          533 / 391 /17  
+mraW/0524         1874 /1449 /365         58 /  38 /19         273 /  35 /1          641 /  72 /2   
+ftsA/0523          718 / 194 /65          60 /  26 /6          186 /  13 /2          253 /  20 /0   
+ftsZ/0522         2602 /2407 /725        223 / 138 /78         941 /   2 /0         2114 /  11 /0   
+sepF/0521         1509 / 970 /877        222 / 177 /143        289 / 183 /8          804 / 503 /33  
+hyp/0520          1085 / 394 /196        414 / 295 /153        465 / 103 /9         1583 / 392 /24  
+
 Reduction paired table (mean-normalised rel units; TPM=Illumina):
 gene        relTPM_s1  relTPM_s3   TPM_FC  relIPM_s1  relIPM_s3   iPM_FC
 0527             5.58       0.50     0.09       0.39       0.38     0.95
