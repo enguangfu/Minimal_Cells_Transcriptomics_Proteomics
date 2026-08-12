@@ -81,7 +81,14 @@ SCALE = (sys.argv[2] if len(sys.argv) > 2 else ("abs" if MODE == "stack" else "l
 if MODE == "pacbio":
     SCALE = "log"
 if SCALE not in ("log", "linear", "abs"):
-    sys.exit(f"usage: {os.path.basename(__file__)} [pacbio|stack] [abs|linear|log]")
+    sys.exit(f"usage: {os.path.basename(__file__)} [pacbio|stack] [abs|linear|log] [sub|all]")
+# Read-stack row budget. Default "all" = one row per read, nothing dropped; at a 35pt panel
+# 2-12 reads share each printable row (see N_STACK), so the panels read as read density rather
+# than countable molecules - which the figure legend must say. "sub" = even subsample to
+# N_STACK rows, where each row stays individually resolvable.
+ROWMODE = (sys.argv[3] if len(sys.argv) > 3 else "all").lower()
+if ROWMODE not in ("sub", "all"):
+    sys.exit(f"usage: {os.path.basename(__file__)} [pacbio|stack] [abs|linear|log] [sub|all]")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
@@ -208,7 +215,13 @@ def rel_arrays(pwl, anchor, ch, glen):
     return rel[order], sense[order], anti[order], m
 
 
-N_STACK = 190   # rows drawn per read-stack panel (even subsample of the 5'-sorted read list)
+# Rows drawn per read-stack panel (even subsample of the 5'-sorted read list). At the 7x7 figure
+# size a stack panel is ~1.25/14.85 of ~6.5in of axes = ~0.55in = ~39pt tall, so ~190 rows is the
+# point at which one row still gets ~0.2pt and stays individually resolvable. ROWMODE="all" lifts
+# the cap: every read gets a row, but 1,402-8,171 rows into 39pt is 0.005-0.03pt each, far below
+# the ~0.05pt minimum stroke, so rows overlap 6-40x and the panel becomes a density silhouette
+# rather than a stack of distinguishable molecules.
+N_STACK = 190
 
 
 def read_spans(bam, ch, anchor):
@@ -236,7 +249,7 @@ def read_spans(bam, ch, anchor):
 
 def stack_rows(sp, n=N_STACK):
     """Evenly subsample the 5'-sorted read list down to <=n rows, preserving the landscape."""
-    if len(sp) <= n:
+    if ROWMODE == "all" or len(sp) <= n:
         return sp
     return sp[np.unique(np.linspace(0, len(sp) - 1, n).round().astype(int))]
 
@@ -291,7 +304,7 @@ else:
         if t[0] in READ_BAM:
             ROWS.append(("stack", t)); HGT.append(1.25)
         ROWS.append(("depth", t)); HGT.append(1.0)
-    fig_h = 9.0
+    fig_h = 7.0
 fig, axes = plt.subplots(len(ROWS), 1, figsize=(7, fig_h), sharex=True,
                          height_ratios=HGT, constrained_layout=True)
 if MODE == "stack":
@@ -341,8 +354,11 @@ else:
         sp = spans[name]
         shown = stack_rows(sp)
         col = SYN1_COL if kind == "s1" else SYN3A_COL
+        # alpha stays at 1.0 in "all" mode: with 6-40x row overlap, any transparency would
+        # fade the isolated ftsA-crossing reads into invisibility while dense regions saturate.
+        lw_, al_ = (0.08, 1.0) if ROWMODE == "all" else (0.35, 0.75)
         ax.add_collection(LineCollection([[(a, i), (b, i)] for i, (a, b) in enumerate(shown)],
-                                         colors=col, linewidths=0.35, alpha=0.75, zorder=2))
+                                         colors=col, linewidths=lw_, alpha=al_, zorder=2))
         ax.set_ylim(len(shown) + 1, -2)
         lab = f"{name} reads\nn={len(sp):,}"
         if len(shown) < len(sp):
@@ -439,13 +455,11 @@ for ax, (rk, _t) in zip(axes, ROWS):          # ROWS has no "gap" rows in pacbio
     for xr, cc, _ in MARKS:
         ax.axvline(xr, color=cc, lw=0.6, ls=(0, (2, 2)), alpha=0.85, zorder=3)
 
-xlab = "Relative genome position from the 5′ end of 0527 (nt)"
-if SCALE == "abs":
-    xlab += "        y = sense-strand read depth (raw ×)"
-axes[-1].set_xlabel(xlab, fontsize=7)
+axes[-1].set_xlabel("Relative genome position from the 5′ end of 0527 (nt)", fontsize=7)
 axes[-1].ticklabel_format(axis="x", style="plain")
 
-sfx = "" if MODE == "pacbio" else "_readstack_" + {"abs": "abs", "linear": "rel", "log": "log"}[SCALE]
+sfx = "" if MODE == "pacbio" else ("_readstack_" + {"abs": "abs", "linear": "rel", "log": "log"}[SCALE]
+                                   + ("" if ROWMODE == "all" else f"_sub{N_STACK}"))
 out_pdf = os.path.join(OUT, f"dcw_operon_rnaseq{sfx}.pdf")
 fig.savefig(out_pdf, dpi=300)
 plt.close(fig)

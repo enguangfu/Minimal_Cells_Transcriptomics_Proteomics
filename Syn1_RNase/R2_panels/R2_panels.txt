@@ -1,7 +1,7 @@
 R2 panels -- per-gene erosion-category composition (operon-contained isoforms, n_reads>=2)
 ==============================================================================
 
-R2c_lap_5p_erosion.pdf  --  lap (MMSYN1_0154, + strand, operon 197657-199153)
+R2c_lap_5p_erosion.pdf  --  0154/leucyl aminopeptidase (MMSYN1_0154, + strand, operon 197657-199153)
    isoforms shown 134 ; reads 2035
    category                isoforms    % iso       reads   % reads
    unprocessed                   10     7.5%        1011     49.7%
@@ -10,7 +10,7 @@ R2c_lap_5p_erosion.pdf  --  lap (MMSYN1_0154, + strand, operon 197657-199153)
    both_intragenic                3     2.2%           6      0.3%
    5'/3' eroded reads ratio = 4.954
 
-R2b_0178_3p_erosion.pdf  --  0178 (MMSYN1_0178, - strand, operon 232650-234512)
+R2b_0178_3p_erosion.pdf  --  0178/neopullulanase (MMSYN1_0178, - strand, operon 232650-234512)
    isoforms shown 85 ; reads 3056
    category                isoforms    % iso       reads   % reads
    unprocessed                    4     4.7%        2001     65.5%

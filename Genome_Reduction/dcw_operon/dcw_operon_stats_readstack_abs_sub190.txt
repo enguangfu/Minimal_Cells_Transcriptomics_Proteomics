@@ -24,10 +24,10 @@ hyp/0520            464.41    279.25    150.74    124.80    542.20    910.29
 Read stacks - primary MINUS-strand (= sense) alignments in the window.
 Syn3A is syntenic over this operon (same 6,026 bp span), so the same rel window applies.
 run            reads  med_len  p90_len  rows_drawn
-Syn1 PacBio     5879     1335     2190        5879
-Syn1 ONT 1      1402      370     1992        1402
-Syn1 ONT 2      3907      256      528        3907
-Syn3A ONT       8171      277      575        8171
+Syn1 PacBio     5879     1335     2190         190
+Syn1 ONT 1      1402      370     1992         190
+Syn1 ONT 2      3907      256      528         190
+Syn3A ONT       8171      277      575         190
 
 Reads on each gene, per run  (overlap / covering >=50% of the gene / full span):
 gene                 Syn1 PacBio          Syn1 ONT 1          Syn1 ONT 2           Syn3A ONT

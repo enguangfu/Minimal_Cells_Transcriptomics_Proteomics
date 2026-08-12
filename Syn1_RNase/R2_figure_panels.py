@@ -51,9 +51,9 @@ CCOL = {"unprocessed": "#9e9e9e", "5p_intragenic_only": "#3b6db3",
 KB = FuncFormatter(lambda x, _: f"{x/1000:.1f}")
 
 # example loci; op = operon span (0-based half-open), the display + containment window
-A = dict(locus="MMSYN1_0154", name="lap", strand="+", gstart=197743, gend=199098,
+A = dict(locus="MMSYN1_0154", name="0154/leucyl aminopeptidase", strand="+", gstart=197743, gend=199098,
          tss=197657, tts=199153, op=(197657, 199153), flip=False)
-B = dict(locus="MMSYN1_0178", name="0178", strand="-", gstart=232672, gend=234468,
+B = dict(locus="MMSYN1_0178", name="0178/neopullulanase", strand="-", gstart=232672, gend=234468,
          tss=234512, tts=232650, op=(232650, 234512), flip=True)
 
 STATS = {}   # panel -> breakdown, filled by panel_a / panel_b
