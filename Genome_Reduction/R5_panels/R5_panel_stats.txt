@@ -1,4 +1,16 @@
 
+[panel c] central-carbon operons OP_00121 + OP_00122 decapitated (DEL 288391-292905 & 298422-300803); operon-spanning isoforms 8+8; log-y depth -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5c_central_carbon.pdf
+  average depth (x genome mean), retained genes; FC = Syn3A/Syn1:
+    REGION OP_00121 (pdhC-lpdA-pta-ackA)  Syn1   9.51x  Syn3A   3.01x  FC 0.317
+    REGION OP_00122 (ptsI-crr-0235)       Syn1   1.41x  Syn3A   0.63x  FC 0.445
+    gene   pdhC/0227                      Syn1   8.51x  Syn3A   3.68x  FC 0.432
+    gene   lpdA/0228                      Syn1  10.34x  Syn3A   3.64x  FC 0.352
+    gene   pta/0229                       Syn1   9.65x  Syn3A   2.57x  FC 0.267
+    gene   ackA/0230                      Syn1   9.19x  Syn3A   1.65x  FC 0.180
+    gene   ptsI/0233                      Syn1   0.93x  Syn3A   0.40x  FC 0.434
+    gene   crr/0234                       Syn1   3.86x  Syn3A   1.53x  FC 0.396
+    gene   0235                           Syn1   0.45x  Syn3A   0.43x  FC 0.956
+
 [panel d] HupA operon OP_00187 decapitated (DEL_050; TSS 441031 deleted); depth=Illumina both organisms; hupA syn1=7.6x vs syn3A=0.13x mean -> /data/enguang/Transcriptomics/Minimal_Cells_Transcriptomics_Proteomics/Genome_Reduction/R5_panels/R5d_hupA_operon.pdf
   syn1 ONT: 3313 reads over hupA in 42 clusters; 1540 reads start at/upstream of the junction (into deleted 0349); top isoform 5'=441040 (rel -19), n=1072
 

@@ -30,6 +30,8 @@ This repository holds the complete pipeline, from raw-read retrieval to the figu
 │
 ├── Genome_Reduction/         syn1 → syn3A comparison (deletions, operon remodeling, expression)
 │
+├── Transcription_Visualization/  per-gene browser: every RNA-seq library over any gene, both organisms
+│
 └── env/                      conda environment specification
 ```
 
@@ -89,6 +91,12 @@ flowchart TD
     ONTP1 --> GR
     ONTP --> GR
 
+    SYN1 --> VIZ["Transcription_Visualization<br/>per-gene browser"]
+    SYN3 --> VIZ
+    OPN --> VIZ
+    PROT --> VIZ
+    GR --> VIZ
+
     PBP --> RC["RNAseq_Comparison<br/>cross-platform QC"]
     ILP1 --> RC
     ONTP1 --> RC
@@ -116,8 +124,27 @@ Run the stages in this order; each folder's scripts read the outputs of the stag
 7. **Operons** — `Syn1_Operon/` segments and annotates operons from the isoforms, with promoter and terminator signatures.
 8. **Per-organism analyses** — `Syn1_Corr_RNA_Proteins/` (RNA↔protein correlation), `Syn3A_Corr_RNA_Proteins/` (absolute RNA copies per cell, fed into the proteome browser), `Syn1_RNase/` (RNA processing + ribonuclease cleavage-site mapping), `Syn1_Novel_ORF/` (antisense / intergenic / novel ORFs).
 9. **Genome reduction** — `Genome_Reduction/` runs scripts `01`→`10` in numeric order to recast the syn1→syn3A deletions as operon junctions and quantify the transcriptome/proteome reallocation. Run with `Genome_Reduction/` as the working directory.
+10. **Browse any gene** — `Transcription_Visualization/` draws every library over a region of your choosing (see below). Nothing downstream depends on it, so run it whenever you want to look at a gene.
 
 > Most Python scripts carry their full method, parameters, and a result summary in a header docstring, and write a companion `.txt` log next to their outputs.
+
+---
+
+## Browsing transcription at any gene
+
+To look at one gene rather than a genome-wide table, **navigate to [`Transcription_Visualization/`](Transcription_Visualization/)** and open [`Transcription_Visualization.ipynb`](Transcription_Visualization/Transcription_Visualization.ipynb):
+
+```python
+import transcription_viz as tv
+
+tv.check_inputs()                       # confirms every upstream file this needs is reachable
+fig, txt, R = tv.plot_region("ptsG")    # or "0779", "MMSYN1_0779", "JCVISYN3A_0779"
+tv.show(R)
+```
+
+One call stacks **every RNA-seq library over that region in a single figure** — syn1 PacBio, ONT run 1, ONT run 2 and Illumina; syn3A ONT and Illumina — each as a read stack over its own depth track, above gene arrows for both organisms. The window, anchor, gene lists, operon bracket, TSS and terminator marks, and the red *absent from Syn3A* deletion bands are all derived from the pipeline tables, so a gene name is the only input. Every call writes a PDF, a PNG and a `_stats.txt` (per-gene depth, read counts, protein copies per cell, promoter −10 scan, predicted terminators) into `Transcription_Visualization/regions/`.
+
+It reads the depth bedGraphs and BAMs from steps 2–3, the operon map from step 7, the proteomics tables from step 6, and the deletion map from step 9 — so run those first. Options and conventions are documented in [`Transcription_Visualization/README.md`](Transcription_Visualization/README.md).
 
 ---
 
